@@ -1,0 +1,39 @@
+{
+  "name": "buyer_fulfillment",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env DOCKER_ENV=\"development\" vue-cli-service serve",
+    "build": "cross-env DOCKER_ENV=\"production\" vue-cli-service build",
+    "beta": "cross-env DOCKER_ENV=\"beta\" vue-cli-service build",
+    "staging": "cross-env DOCKER_ENV=\"staging\"  vue-cli-service build",
+    "lint": "cross-env DOCKER_ENV=\"development\" vue-cli-service lint --fix",
+    "test:unit": "cross-env DOCKER_ENV=\"development\" vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "axios": "^0.21.3",
+    "core-js": "^3.6.5",
+    "cross-env": "^7.0.3",
+    "element-ui": "^2.15.6",
+    "moment": "^2.29.1",
+    "vue": "^2.6.11",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-unit-mocha": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-airbnb": "^5.0.2",
+    "@vue/test-utils": "^1.0.3",
+    "babel-eslint": "^10.1.0",
+    "chai": "^4.1.2",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "vue-template-compiler": "^2.6.11"
+  }
+}

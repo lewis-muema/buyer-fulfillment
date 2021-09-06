@@ -1,0 +1,38 @@
+image: node
+  
+stages:
+  - lint
+  - test
+
+# Lets name our Job eslint, because that's what it's doing.
+eslint:
+  # tell eslint what stage it is. (This could also be build or test for example)
+  stage: lint
+  # What scripts do we want to run?
+  tags:
+    - docker
+  script:
+    # install eslint
+    - npm i eslint
+    # Run eslint
+    - npm run lint
+  only:
+    - dev
+    - staging
+
+# Lets name our Job unitTest, because that's what it's doing.
+unitTest:
+  # tell eslint what stage it is. (This could also be build or test for example)
+  stage: test
+  # What scripts do we want to run?
+  tags:
+    - docker
+  script:
+    # install mocha
+    - npm i mocha
+    # Run tests
+    - npm run test:unit
+  only:
+    - dev
+    - staging
+
