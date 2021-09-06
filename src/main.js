@@ -9,6 +9,7 @@ import {
   Dialog,
   DropdownMenu,
   DropdownItem,
+  Divider,
   Input,
   InputNumber,
   Radio,
@@ -51,6 +52,7 @@ Vue.use(RadioGroup);
 Vue.use(RadioButton);
 Vue.use(Dropdown);
 Vue.use(Dialog);
+Vue.use(Divider);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 Vue.use(Input);
