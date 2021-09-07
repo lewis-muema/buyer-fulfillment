@@ -3,6 +3,8 @@ import moment from 'moment';
 import lang from 'element-ui/lib/locale/lang/en';
 import locale from 'element-ui/lib/locale';
 import 'element-ui/lib/theme-chalk/index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';
 import {
   Pagination,
   Dropdown,
@@ -14,13 +16,19 @@ import {
   InputNumber,
   Radio,
   Checkbox,
+  Card,
   Select,
+  Form,
+  FormItem,
   Option,
   Button,
   Table,
+  Tag,
   TableColumn,
   DatePicker,
   TimeSelect,
+  Timeline,
+  TimelineItem,
   TimePicker,
   Icon,
   Rate,
@@ -59,14 +67,20 @@ Vue.use(Input);
 Vue.use(InputNumber);
 Vue.use(Radio);
 Vue.use(Checkbox);
+Vue.use(Card);
 Vue.use(Steps);
 Vue.use(Step);
 Vue.use(Select);
+Vue.use(Form);
+Vue.use(FormItem);
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(Option);
 Vue.use(Button);
 Vue.use(Table);
+Vue.use(Tag);
+Vue.use(Timeline);
+Vue.use(TimelineItem);
 Vue.use(TableColumn);
 Vue.use(DatePicker);
 Vue.use(TimeSelect);
