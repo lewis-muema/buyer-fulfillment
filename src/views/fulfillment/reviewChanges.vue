@@ -22,7 +22,7 @@
           {{ house }}
         </div>
         <div class="d-grid gap-2 col-12 mx-auto mt-3">
-          <button class="btn btn-primary updateInfoButton" type="button" @click="reviewChanges">
+          <button class="btn btn-primary update-info-button" type="button" @click="reviewChanges">
             Confirm Changes
           </button>
         </div>

@@ -30,7 +30,7 @@
           />
         </div>
         <div class="mt-3">
-          <label for="exampleFormControlInput1" class="form-label">Delivery options</label>
+          <label for="Delivery options" class="form-label">Delivery options</label>
           <div class="mb-3">
             <el-row>
               <el-col :span="12">
@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="d-grid gap-2 col-12 mx-auto">
-          <button class="btn btn-primary updateInfoButton" type="button" @click="showReviewModal">
+          <button class="btn btn-primary update-info-button" type="button" @click="showReviewModal">
             Update Delivery Info
           </button>
         </div>
@@ -88,7 +88,7 @@ export default {
 </script>
 
 <style>
-.updateInfoButton {
+.update-info-button {
   background: #324ba8 !important;
 }
 </style>

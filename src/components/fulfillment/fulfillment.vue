@@ -19,7 +19,7 @@
               </div>
               <div v-if="isPackageDelivered && !isDeliveryPlaced" class="delivery mt-5">
                 <p class="date">Package has been delivered</p>
-                <p >{{ date }}</p>
+                <p>{{ date }}</p>
               </div>
               <div v-if="isMorning">
                 <p class="date">{{ time }}</p>
@@ -32,7 +32,10 @@
         </el-col>
       </el-row>
       <el-row class="el-row">
-        <el-col :span="12">
+        <el-col :span="12" v-if="isPackageDelivered">
+          <Rating />
+        </el-col>
+        <el-col :span="12" v-else>
           <Timeline />
         </el-col>
         <el-col :span="12">
@@ -48,6 +51,7 @@ import Header from '../../views/fulfillment/header.vue';
 import Recepient from '../../views/fulfillment/recipient.vue';
 import Timeline from '../../views/fulfillment/timeline.vue';
 import OrderItems from '../../views/fulfillment/orderItems.vue';
+import Rating from '../../views/fulfillment/rating.vue';
 import NotificationMxn from '../../mixins/nofication_mixin';
 
 export default {
@@ -58,6 +62,7 @@ export default {
     Recepient,
     Timeline,
     OrderItems,
+    Rating,
   },
   data() {
     return {
