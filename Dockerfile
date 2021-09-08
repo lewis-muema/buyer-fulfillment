@@ -25,9 +25,9 @@ FROM sendy-docker-local.jfrog.io/nginx:stable-alpine
 
 RUN adduser -D sendy
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-RUN mkdir -p mkdir -p /var/run/nginx /var/tmp/nginx \
+RUN mkdir -p /var/run/nginx /var/tmp/nginx \
     && chown -R sendy:sendy /usr/share/nginx/ /var/run/ /var/tmp/nginx /etc/nginx 
 
 COPY ./nginx/default.conf  /etc/nginx/conf.d/
