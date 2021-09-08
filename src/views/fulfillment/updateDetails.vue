@@ -45,7 +45,7 @@
                 <el-tag type="info">Leave At the door</el-tag>
               </el-col>
               <el-col :span="12">
-                <el-tag type="info">Other</el-tag>
+                <el-tag type="primary" icon="el-icon-plus">Other</el-tag>
               </el-col>
             </el-row>
           </div>
@@ -57,7 +57,7 @@
         </div>
       </form>
     </el-dialog>
-    <ReviewChanges :dialog-visible="showDialog" />
+    <ReviewChanges :dialog-visible="showDialog" @close="showDialog = false" />
   </div>
 </template>
 

@@ -6,6 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import {
+  Badge,
   Pagination,
   Dropdown,
   Dialog,
@@ -56,6 +57,7 @@ Vue.prototype.moment = moment;
 locale.use(lang);
 
 Vue.use(Pagination);
+Vue.use(Badge);
 Vue.use(RadioGroup);
 Vue.use(RadioButton);
 Vue.use(Dropdown);

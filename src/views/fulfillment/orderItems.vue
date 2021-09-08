@@ -1,8 +1,18 @@
 <template>
   <div>
-    <h2>Items being delivered</h2>
-    <div v-for="orderItem in orderItems" :key="orderItem.name">
-      <p>{{ orderItem.name }}</p>
+    <div class="items-delivered">
+      <h3>Items being delivered</h3>
+      <div class="d-flex flex-row mt-3" v-for="orderItem in orderItems" :key="orderItem.name">
+        <el-badge :value="2" class="item" type="primary">
+          <div class="p-2">
+            <img src="../../assets/shear-butter.jpg" alt="" class="img-fluid"  />
+          </div>
+        </el-badge>
+        <div class="d-flex flex-column">
+          <p class="order-name">{{ orderItem.name }}</p>
+          <p class="text-muted">KES {{ orderItem.price }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -29,8 +39,15 @@ export default {
       ],
     };
   },
-
 };
 </script>
 
-<style></style>
+<style>
+.items-delivered {
+  text-align: left;
+  padding-left: 100px;
+}
+.order-name {
+  margin-bottom: 5%;
+}
+</style>
