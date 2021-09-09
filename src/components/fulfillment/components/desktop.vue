@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    <el-container>
+    <div>
       <el-row>
         <el-col :span="12">
           <el-card shadow="never">
@@ -42,7 +42,7 @@
           <OrderItems />
         </el-col>
       </el-row>
-    </el-container>
+    </div>
   </div>
 </template>
 

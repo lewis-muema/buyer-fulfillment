@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import Vue from 'vue';
 import moment from 'moment';
 import lang from 'element-ui/lib/locale/lang/en';

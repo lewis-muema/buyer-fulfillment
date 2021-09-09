@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Mobile v-if="isMobile()" />
+    <Mobile v-if="$store.getters.getMobile" />
     <Desktop v-else />
   </div>
 </template>
@@ -22,7 +22,12 @@ export default {
       data: '',
     };
   },
-  mounted() {},
+  mounted() {
+    this.isMobile();
+    window.onresize = (() => {
+      this.isMobile();
+    });
+  },
   methods: {
     showNotification() {
       const notification = {
@@ -39,9 +44,10 @@ export default {
         || navigator.userAgent.match(/iPhone/i)
         || navigator.userAgent.match(/iPod/i)
       ) {
-        return true;
+        this.$store.commit('setMobile', true);
+      } else {
+        this.$store.commit('setMobile', false);
       }
-      return false;
     },
   },
 };
