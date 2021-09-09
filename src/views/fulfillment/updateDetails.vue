@@ -2,10 +2,11 @@
   <div>
     <el-dialog
       title="Update delivery Info"
-      :visible.sync="dialogVisible"
-      width="30%"
+      :visible.sync="visibleDialog"
+      :width="$store.getters.getMobile ? '100%' : '30%'"
+      :fullscreen="$store.getters.getMobile ? true : false"
+      :show-close="$store.getters.getMobile ? true : false"
       center
-      :show-close="false"
       :close-on-click-modal="true"
     >
       <form>
@@ -66,13 +67,22 @@ import ReviewChanges from './reviewChanges.vue';
 
 export default {
   name: 'UpdateDetails',
-  props: ['dialogVisible', 'name', 'phone', 'location'],
+  props: ['name', 'phone', 'location'],
   components: {
     ReviewChanges,
+  },
+  watch: {
+    '$store.getters.getDialogVisible': function setDialogStatus(val) {
+      this.visibleDialog = val;
+    },
+    visibleDialog(val) {
+      this.$store.commit('setDialogVisible', val);
+    },
   },
   data() {
     return {
       showDialog: false,
+      visibleDialog: false,
     };
   },
   methods: {

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="items-delivered">
-      <h3>Items being delivered</h3>
+    <div :class="!$store.getters.getMobile ? 'items-delivered-desktop' : 'items-delivered-mobile'">
+      <h3 v-if="!$store.getters.getMobile">Items being delivered</h3>
       <div class="d-flex flex-row mt-3" v-for="orderItem in orderItems" :key="orderItem.name">
         <el-badge :value="2" class="item" type="primary">
           <div class="p-2">
@@ -43,9 +43,12 @@ export default {
 </script>
 
 <style>
-.items-delivered {
+.items-delivered-desktop {
   text-align: left;
   padding-left: 100px;
+}
+.items-delivered-mobile {
+  margin: 15px 0px;
 }
 .order-name {
   margin-bottom: 5%;

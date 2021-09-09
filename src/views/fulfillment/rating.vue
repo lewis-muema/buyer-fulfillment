@@ -44,7 +44,7 @@ export default {
 .icons{
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
 }
 .el-dropdown-link {
   color: #324ba8;
