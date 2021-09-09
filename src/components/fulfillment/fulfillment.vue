@@ -2,14 +2,13 @@
   <div>
     <Mobile v-if="isMobile()" />
     <Desktop v-else />
-    <el-button @click="showNotification()">Show</el-button>
   </div>
 </template>
 
 <script>
+import NotificationMxn from '../../mixins/nofication_mixin';
 import Desktop from './components/desktop.vue';
 import Mobile from './components/mobile.vue';
-import NotificationMxn from '../../mixins/nofication_mixin';
 
 export default {
   name: 'fulfillment',
@@ -34,7 +33,12 @@ export default {
       this.displayNotification(notification);
     },
     isMobile() {
-      if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)) {
+      if (
+        navigator.userAgent.match(/Android/i)
+        || navigator.userAgent.match(/webOS/i)
+        || navigator.userAgent.match(/iPhone/i)
+        || navigator.userAgent.match(/iPod/i)
+      ) {
         return true;
       }
       return false;
@@ -43,6 +47,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>

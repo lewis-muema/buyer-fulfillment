@@ -3,23 +3,36 @@ import moment from 'moment';
 import lang from 'element-ui/lib/locale/lang/en';
 import locale from 'element-ui/lib/locale';
 import 'element-ui/lib/theme-chalk/index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faSpinner, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
+  Badge,
   Pagination,
   Dropdown,
   Dialog,
   DropdownMenu,
   DropdownItem,
+  Divider,
   Input,
   InputNumber,
   Radio,
   Checkbox,
+  Card,
   Select,
+  Form,
+  FormItem,
   Option,
   Button,
   Table,
+  Tag,
   TableColumn,
   DatePicker,
   TimeSelect,
+  Timeline,
+  TimelineItem,
   TimePicker,
   Icon,
   Rate,
@@ -47,24 +60,32 @@ Vue.prototype.moment = moment;
 locale.use(lang);
 
 Vue.use(Pagination);
+Vue.use(Badge);
 Vue.use(RadioGroup);
 Vue.use(RadioButton);
 Vue.use(Dropdown);
 Vue.use(Dialog);
+Vue.use(Divider);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 Vue.use(Input);
 Vue.use(InputNumber);
 Vue.use(Radio);
 Vue.use(Checkbox);
+Vue.use(Card);
 Vue.use(Steps);
 Vue.use(Step);
 Vue.use(Select);
+Vue.use(Form);
+Vue.use(FormItem);
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(Option);
 Vue.use(Button);
 Vue.use(Table);
+Vue.use(Tag);
+Vue.use(Timeline);
+Vue.use(TimelineItem);
 Vue.use(TableColumn);
 Vue.use(DatePicker);
 Vue.use(TimeSelect);
@@ -85,6 +106,9 @@ Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
+
+library.add(faSpinner, faThumbsUp, faThumbsDown);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 
