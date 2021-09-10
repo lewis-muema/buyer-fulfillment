@@ -63,11 +63,11 @@
         <h5 :class="$store.getters.getMobile ? 'items-title-mobile' : ''">
           Delivery history
         </h5>
-        <el-dropdown>
+        <div>
           <span class="el-dropdown-link">
             View Delivery history<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
-        </el-dropdown>
+        </div>
       </div>
     </div>
   </div>

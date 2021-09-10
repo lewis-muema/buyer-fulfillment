@@ -23,12 +23,12 @@
         Wednesday, 25th Aug
       </p>
       <div>
-        <button class="reschedule">
+        <button class="reschedule" @click="showDatePicker()">
           Reschedule delivery date
         </button>
-        <Reschedule />
       </div>
     </div>
+    <Reschedule />
     <Rating />
     <Timeline />
     <Recipient />
@@ -56,6 +56,11 @@ export default {
     return {
       showItems: false,
     };
+  },
+  methods: {
+    showDatePicker() {
+      this.$store.commit('setDatePickerVisible', true);
+    },
   },
 };
 </script>

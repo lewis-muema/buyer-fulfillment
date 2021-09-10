@@ -13,6 +13,7 @@ export default new Vuex.Store({
       data: [],
       mobile: false,
       dialogVisible: false,
+      datePickerVisible: false,
     };
   },
   actions,

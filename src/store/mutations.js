@@ -8,4 +8,7 @@ export default {
   setDialogVisible(state, val) {
     state.dialogVisible = val;
   },
+  setDatePickerVisible(state, val) {
+    state.datePickerVisible = val;
+  },
 };
