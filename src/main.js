@@ -56,6 +56,7 @@ import {
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import vuetify from './plugins/vuetify';
 
 Vue.prototype.moment = moment;
 locale.use(lang);
@@ -116,5 +117,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  vuetify,
   render: (h) => h(App),
 }).$mount('#app');

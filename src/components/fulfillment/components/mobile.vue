@@ -22,7 +22,14 @@
       <p class="fulfillemnt-order-items-expected-deivery-date">
         Wednesday, 25th Aug
       </p>
+      <div>
+        <button class="reschedule" @click="showDatePicker()">
+          Reschedule delivery date
+        </button>
+      </div>
     </div>
+    <Reschedule />
+    <Rating />
     <Timeline />
     <Recipient />
   </div>
@@ -33,6 +40,8 @@ import Header from '../../../views/fulfillment/header.vue';
 import orderItems from '../../../views/fulfillment/orderItems.vue';
 import Timeline from '../../../views/fulfillment/timeline.vue';
 import Recipient from '../../../views/fulfillment/recipient.vue';
+import Rating from '../../../views/fulfillment/rating.vue';
+import Reschedule from '../../../views/fulfillment/reschedule.vue';
 
 export default {
   components: {
@@ -40,11 +49,18 @@ export default {
     orderItems,
     Timeline,
     Recipient,
+    Rating,
+    Reschedule,
   },
   data() {
     return {
       showItems: false,
     };
+  },
+  methods: {
+    showDatePicker() {
+      this.$store.commit('setDatePickerVisible', true);
+    },
   },
 };
 </script>

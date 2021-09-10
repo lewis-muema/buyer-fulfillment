@@ -64,6 +64,7 @@ export default {
   background: #324ba8 !important;
   border-color: #324ba8 !important;
   margin: 10px 0px;
+  color: white !important;
 }
 .recepient-info-desktop {
   padding-left: 100px;
