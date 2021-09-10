@@ -11,6 +11,9 @@ export default new Vuex.Store({
   state() {
     return {
       data: [],
+      mobile: false,
+      dialogVisible: false,
+      datePickerVisible: false,
     };
   },
   actions,

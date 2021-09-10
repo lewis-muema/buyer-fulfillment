@@ -3,9 +3,9 @@
     <el-dialog
       title="Review Changes"
       :visible.sync="dialogVisible"
-      width="30%"
+      :width="$store.getters.getMobile ? '80%' : '30%'"
       center
-      :show-close="true"
+      :show-close="false"
       :close-on-click-modal="true"
     >
       <form action="">

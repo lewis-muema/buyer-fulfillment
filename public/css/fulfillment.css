@@ -1,0 +1,85 @@
+.fulfillment-header {
+  display: flex;
+  height: 100px;
+  border-bottom: 1px solid #E4E4E4;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.fulfillment-header-logo {
+  width: 50%;
+}
+
+.fulfillment-header-menu {
+  width: 50%;
+}
+
+.fulfillment-header-sendy-logo {
+  height: 50px;
+  float: left;
+  margin-left: 10%;
+}
+
+.fulfillment-header-language-menu {
+  float: right;
+  margin-right: 20%;
+  width: max-content;
+}
+
+.fulfillemnt-order-items-container {
+  margin: 20px;
+}
+
+.fulfillemnt-order-items-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.fulfillemnt-order-items-description {
+  font-weight: 600;
+}
+
+.fulfillemnt-order-items-expected-deivery {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px 20px;
+  background: #F1F4FF;
+  color: #17224D;
+  border-radius: 5px;
+}
+
+.fulfillemnt-order-items-expected-deivery-title {
+  margin: 10px 0px;
+  color: #606266;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 1.5px;
+  text-align: left;
+}
+
+.fulfillemnt-order-items-expected-deivery-date {
+  margin: 0px 0px 10px 0px;
+  color: #17224D;
+  font-family: Nunito;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.25px;
+  text-align: left;
+}
+
+.reschedule {
+  border: none;
+  background: #D3DDF6;
+  width: fit-content;
+  padding: 5px 25px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}

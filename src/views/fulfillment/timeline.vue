@@ -1,9 +1,11 @@
 <template>
   <div>
-    <h3 class="timeline">Timeline</h3>
-    <div class="block mt-3">
+    <h3 :class="!$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'">Timeline</h3>
+    <div :class="!$store.getters.getMobile ? 'block mt-3' : 'timeline-events-mobile'">
       <el-timeline>
         <el-timeline-item
+          :class="!$store.getters.getMobile ?
+            'el-timeline-item-desktop' : ''"
           v-for="(activity, index) in activities"
           :key="index"
           :icon="activity.icon"
@@ -49,14 +51,29 @@ export default {
 };
 </script>
 <style>
-.el-timeline-item{
+.el-timeline-item-desktop {
   padding-right: 40%;
 }
 .block {
   text-align: left;
   margin-left: 50px;
 }
-.timeline {
+.timeline-events-mobile {
+  margin: 25px 0px;
+}
+.timeline-desktop {
   margin-right: 60%;
+  margin-left: 80px;
+}
+.timeline-mobile {
+  margin: 10px 20px;
+  color: #606266;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 1.5px;
+  text-align: left;
 }
 </style>

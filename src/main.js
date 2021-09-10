@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import Vue from 'vue';
 import moment from 'moment';
 import lang from 'element-ui/lib/locale/lang/en';
@@ -55,6 +56,7 @@ import {
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import vuetify from './plugins/vuetify';
 
 Vue.prototype.moment = moment;
 locale.use(lang);
@@ -115,5 +117,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  vuetify,
   render: (h) => h(App),
 }).$mount('#app');
