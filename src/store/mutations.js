@@ -11,4 +11,7 @@ export default {
   setDatePickerVisible(state, val) {
     state.datePickerVisible = val;
   },
+  setDeliveryStatus(state, val) {
+    state.deliveryStatus = val;
+  },
 };

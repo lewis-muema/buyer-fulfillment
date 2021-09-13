@@ -14,6 +14,7 @@ export default new Vuex.Store({
       mobile: false,
       dialogVisible: false,
       datePickerVisible: false,
+      deliveryStatus: 0,
     };
   },
   actions,
