@@ -15,8 +15,27 @@
           :timestamp="activity.timestamp"
         >
           {{ activity.content }}
+          <div v-if="$store.getters.getDeliveryStatus === 2 && index === 2" class="timeline-rider">
+            <div class="timeline-rider-thumbnail-container">
+              <img class="timeline-rider-thumbnail" src="../../assets/rider.png" alt="">
+            </div>
+            <div>
+              <p class="timeline-rider-details">James</p>
+              <p class="timeline-rider-details">Bike</p>
+              <p class="timeline-rider-details">KCEK 345V</p>
+            </div>
+            <div>
+              <el-button type="primary">
+                <i class="el-icon-phone"></i>
+                Call
+              </el-button>
+            </div>
+          </div>
         </el-timeline-item>
       </el-timeline>
+      <el-button class="trigger-button" type="primary" @click="changeDeliveryStatus()">
+        Trigger for Dorcas
+      </el-button>
     </div>
   </div>
 </template>
@@ -39,14 +58,34 @@ export default {
           size: 'large',
         },
         {
-          content: 'Your package is on the way',
+          content: 'Your rider has arrived',
           size: 'large',
+          color: '',
         },
         {
-          content: 'Arriving Wednesday',
+          content: 'Delivery has been completed',
+          size: 'large',
+          color: '',
         },
       ],
     };
+  },
+  mounted() {},
+  watch: {
+    '$store.getters.getDeliveryStatus': function setDeliveryStatus(val) {
+      if (val < this.activities.length - 1) {
+        this.activities[val + 1].color = '#324ba8';
+      }
+      if (val < this.activities.length) {
+        this.activities[val].icon = 'el-icon-check';
+        this.activities[val].color = '#EE7D00';
+      }
+    },
+  },
+  methods: {
+    changeDeliveryStatus() {
+      this.$store.commit('setDeliveryStatus', this.$store.getters.getDeliveryStatus + 1);
+    },
   },
 };
 </script>
@@ -75,5 +114,27 @@ export default {
   line-height: 16px;
   letter-spacing: 1.5px;
   text-align: left;
+}
+.timeline-rider {
+  display: flex;
+  padding: 20px;
+  padding: 20px 0px 0px 0px;
+}
+.timeline-rider-thumbnail-container {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.timeline-rider-thumbnail {
+  width: 70px;
+}
+.timeline-rider-details {
+  margin: 5px 0px;
+  margin-bottom: 5px !important;
+  width: 100px;
+}
+.trigger-button {
+  margin-left: 20px;
 }
 </style>

@@ -29,7 +29,7 @@
       </div>
     </div>
     <Reschedule />
-    <Rating />
+    <Rating v-if="$store.getters.getDeliveryStatus === 3" />
     <Timeline />
     <Recipient />
   </div>
@@ -56,6 +56,11 @@ export default {
     return {
       showItems: false,
     };
+  },
+  watch: {
+    '$store.getters.getDeliveryStatus': function setDeliveryStatus(val) {
+      console.log(val);
+    },
   },
   methods: {
     showDatePicker() {
