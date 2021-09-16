@@ -12,17 +12,16 @@
           :type="activity.type"
           :color="activity.color"
           :size="activity.size"
-          :timestamp="activity.timestamp"
         >
-          {{ activity.content }}
+          {{ activity.message }}
           <div v-if="$store.getters.getDeliveryStatus === 2 && index === 2" class="timeline-rider">
             <div class="timeline-rider-thumbnail-container">
               <img class="timeline-rider-thumbnail" src="../../assets/rider.png" alt="">
             </div>
             <div>
-              <p class="timeline-rider-details">James</p>
-              <p class="timeline-rider-details">Bike</p>
-              <p class="timeline-rider-details">KCEK 345V</p>
+              <p class="timeline-rider-details">{{ rider.name }}</p>
+              <p class="timeline-rider-details">{{ rider.vendor_type }}</p>
+              <p class="timeline-rider-details">{{ rider.licensePlateNumber }}</p>
             </div>
             <div>
               <el-button type="primary">
@@ -45,32 +44,18 @@ export default {
   name: 'Timeline',
   data() {
     return {
-      activities: [
-        {
-          content: 'Order received Mon, August 23rd',
-          size: 'large',
-          color: '#EE7D00',
-          icon: 'el-icon-check',
-        },
-        {
-          content: 'We are Preparing your order',
-          color: '#324ba8',
-          size: 'large',
-        },
-        {
-          content: 'Your rider has arrived',
-          size: 'large',
-          color: '',
-        },
-        {
-          content: 'Delivery has been completed',
-          size: 'large',
-          color: '',
-        },
-      ],
+      activities: [],
+      rider: {},
     };
   },
-  mounted() {},
+  mounted() {
+    this.activities = this.$store.getters.getData.data.eventTimeline
+      ? this.$store.getters.getData.data.eventTimeline : [];
+    this.activities[this.$store.getters.getDeliveryStatus + 1].color = '#324ba8';
+    this.activities[this.$store.getters.getDeliveryStatus].icon = 'el-icon-check';
+    this.activities[this.$store.getters.getDeliveryStatus].color = '#EE7D00';
+    this.rider = this.$store.getters.getData.data.partnerContactInformation;
+  },
   watch: {
     '$store.getters.getDeliveryStatus': function setDeliveryStatus(val) {
       if (val < this.activities.length - 1) {
