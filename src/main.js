@@ -3,6 +3,7 @@ import Vue from 'vue';
 import moment from 'moment';
 import lang from 'element-ui/lib/locale/lang/en';
 import locale from 'element-ui/lib/locale';
+import * as VueGoogleMaps from 'vue2-google-maps';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
@@ -100,7 +101,12 @@ Vue.use(Loading.directive);
 Vue.use(Upload);
 Vue.use(CheckboxGroup);
 Vue.use(Progress);
-
+Vue.use(VueGoogleMaps, {
+  load: {
+    libraries: ['places', 'geometry'],
+    key: process.env.GOOGLE_API_KEY,
+  },
+});
 Vue.prototype.$loading = Loading.service;
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;

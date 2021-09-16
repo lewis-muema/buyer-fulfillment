@@ -4,31 +4,41 @@
       <h3 :class="!$store.getters.getMobile ? '' : 'recepient-info-title-mobile'">Receiver</h3>
       <div class="recepient">
         <div class="recipient-details">
-          <p><i class="el-icon-user"></i>{{ recepientInfo.name }}</p>
+          <p><i class="el-icon-user"></i>{{ recepientInfo.customer_name }}</p>
         </div>
         <div class="recipient-details">
-          <p><i class="el-icon-phone"></i>{{ recepientInfo.phone }}</p>
+          <p><i class="el-icon-phone"></i>{{ recepientInfo.customer_phone_number }}</p>
         </div>
         <div class="recipient-details">
-          <p><i class="el-icon-location-outline"></i>{{ recepientInfo.location }}</p>
+          <p><i class="el-icon-location-outline"></i>
+            {{ recepientInfo.customer_delivery_location
+            ? recepientInfo.customer_delivery_location.description
+            : '' }}
+          </p>
           <p class="">
             <small class="text-muted recipient-indent-text">
-              Building name, floor or flat number
+              {{ recepientInfo.house_location }}
             </small>
           </p>
         </div>
-        <div class="recipient-details">
+        <div v-if="$store.getters.getDeliveryStatus !== 3" class="recipient-details">
           <p class="recipient-details-leave-delivery">
             <i class="el-icon-info"></i>Tell us where you leave your delivery
           </p>
         </div>
       </div>
-      <el-button type="primary" @click="showUpdateModal">Update Delivery Info</el-button>
+      <el-button
+        v-if="$store.getters.getDeliveryStatus !== 3"
+        type="primary" @click="showUpdateModal"
+      >Update Delivery Info</el-button>
     </div>
     <UpdateDetails
-      :name="recepientInfo.name"
-      :phone="recepientInfo.phone"
-      :location="recepientInfo.location"
+      :name="recepientInfo.customer_name"
+      :phone="recepientInfo.customer_phone_number"
+      :location="recepientInfo.customer_delivery_location
+      ? recepientInfo.customer_delivery_location.description
+      : ''"
+      :house="recepientInfo.house_location"
     />
   </div>
 </template>
@@ -50,6 +60,9 @@ export default {
         location: 'Umoja Heights, Lumumba Drive',
       },
     };
+  },
+  mounted() {
+    this.recepientInfo = this.$store.getters.getData.data.recipientContactInformation;
   },
   methods: {
     showUpdateModal() {

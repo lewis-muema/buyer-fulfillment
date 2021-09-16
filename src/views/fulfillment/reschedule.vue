@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       visibleDatePicker: false,
-      date: moment().format('YYYY-MM-DD'),
+      date: moment(new Date(this.$store.getters.getData.data.expectedDeliveryDate.date)).format('YYYY-MM-DD'),
     };
   },
 };

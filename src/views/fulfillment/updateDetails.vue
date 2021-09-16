@@ -19,8 +19,16 @@
           <label for="floatingInput">Phone number</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="floatingInput" :value="location" />
-          <label for="floatingInput">Location</label>
+          <label for="floatingInput" class="location-input-label">Location</label>
+          <gmap-autocomplete
+            :options="map_options"
+            :value="location"
+            class="form-control"
+            id="floatingInput"
+            placeholder="Enter location"
+            :select-first-on-enter="true"
+            @place_changed="setLocation($event)"
+          />
         </div>
         <div>
           <input
@@ -28,6 +36,7 @@
             class="form-control"
             id="floatingInput"
             placeholder="Floor, apartment or house number"
+            :value="house"
           />
         </div>
         <div class="mt-3">
@@ -67,7 +76,7 @@ import ReviewChanges from './reviewChanges.vue';
 
 export default {
   name: 'UpdateDetails',
-  props: ['name', 'phone', 'location'],
+  props: ['name', 'phone', 'location', 'house'],
   components: {
     ReviewChanges,
   },
@@ -83,6 +92,19 @@ export default {
     return {
       showDialog: false,
       visibleDialog: false,
+      locations: this.location,
+      map_options: {
+        componentRestrictions: {
+          country: ['ke', 'ug', 'tz', 'ci'],
+        },
+        bounds: {
+          north: 35.6,
+          east: 59.4,
+          south: -28.3,
+          west: -19.1,
+        },
+        strictBounds: true,
+      },
     };
   },
   methods: {
@@ -93,6 +115,9 @@ export default {
     showReviewModal() {
       this.showDialog = true;
     },
+    setLocation(place) {
+      console.log(place);
+    },
   },
 };
 </script>
@@ -100,5 +125,8 @@ export default {
 <style>
 .update-info-button {
   background: #324ba8 !important;
+}
+.location-input-label {
+  padding: 5px .75rem !important;
 }
 </style>
