@@ -30,40 +30,62 @@
             @place_changed="setLocation($event)"
           />
         </div>
-        <div>
+        <div class="form-floating mb-3">
           <input
-            type="email"
+            type="text"
             class="form-control"
             id="floatingInput"
             placeholder="Floor, apartment or house number"
             :value="house"
           />
+          <label for="floatingInput">Description</label>
         </div>
         <div class="mt-3">
           <label for="Delivery options" class="form-label">Delivery options</label>
           <div class="mb-3">
             <el-row>
               <el-col :span="12">
-                <el-tag type="info">Leave With Guard</el-tag>
+                <div :class="deliveryOption === 1
+                  ? 'delivery-options-tag-active'
+                  : 'delivery-options-tag-inactive'"
+                  @click="deliveryOption = 1"
+                >Leave With Guard</div>
               </el-col>
               <el-col :span="12">
-                <el-tag type="info">Leave At the Reception</el-tag>
+                <div :class="deliveryOption === 2
+                  ? 'delivery-options-tag-active'
+                  : 'delivery-options-tag-inactive'"
+                  @click="deliveryOption = 2"
+                >Leave At the Reception</div>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="12">
-                <el-tag type="info">Leave At the door</el-tag>
+                <div :class="deliveryOption === 3
+                  ? 'delivery-options-tag-active'
+                  : 'delivery-options-tag-inactive'"
+                  @click="deliveryOption = 3"
+                >Leave At the door</div>
               </el-col>
               <el-col :span="12">
-                <el-tag type="primary" icon="el-icon-plus">Other</el-tag>
+                <div
+                   :class="deliveryOption === 4
+                  ? 'delivery-options-tag-active'
+                  : 'delivery-options-tag-inactive'"
+                  @click="deliveryOption = 4"
+                ><i class="el-icon-plus"></i> Other</div>
               </el-col>
             </el-row>
           </div>
         </div>
         <div class="d-grid gap-2 col-12 mx-auto">
-          <button class="btn btn-primary update-info-button" type="button" @click="showReviewModal">
+          <el-button
+            class="btn btn-primary update-info-button"
+            type="button"
+            @click="showReviewModal"
+          >
             Update Delivery Info
-          </button>
+          </el-button>
         </div>
       </form>
     </el-dialog>
@@ -105,6 +127,7 @@ export default {
         },
         strictBounds: true,
       },
+      deliveryOption: 0,
     };
   },
   methods: {
@@ -128,5 +151,23 @@ export default {
 }
 .location-input-label {
   padding: 5px .75rem !important;
+}
+.delivery-options-tag-inactive {
+  border-radius: 30px;
+  padding: 15px 30px;
+  background: #F3F3F3;
+  color: black;
+  cursor: pointer;
+  width: 95%;
+  text-align: center;
+}
+.delivery-options-tag-active {
+  border-radius: 30px;
+  padding: 15px 30px;
+  background: #324ba8;
+  color: white;
+  cursor: pointer;
+  width: 95%;
+  text-align: center;
 }
 </style>
