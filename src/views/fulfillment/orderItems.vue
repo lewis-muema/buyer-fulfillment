@@ -39,6 +39,6 @@ export default {
   margin: 15px 0px;
 }
 .order-name {
-  margin-bottom: 5%;
+  margin: 5px 0px !important;
 }
 </style>

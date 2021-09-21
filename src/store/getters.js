@@ -4,4 +4,5 @@ export default {
   getDialogVisible: (state) => state.dialogVisible,
   getDatePickerVisible: (state) => state.datePickerVisible,
   getDeliveryStatus: (state) => state.deliveryStatus,
+  getTimelineVisible: (state) => state.timelineVisible,
 };

@@ -84,7 +84,6 @@ export default {
 }
 .recepient-info-mobile {
   margin-left: 20px;
-  margin-top: -30px;
 }
 .recepient-info-title-mobile {
   margin: 20px 0px;
@@ -106,7 +105,7 @@ export default {
 .recipient-details {
   display: flex;
   height: 40px;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
 }
 .recipient-indent-text {

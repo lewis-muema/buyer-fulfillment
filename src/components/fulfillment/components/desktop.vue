@@ -7,7 +7,7 @@
           <el-card shadow="never">
             <div class="order">
               <h3>{{ Object.keys(data).length > 0 ?
-                data.data.recipientContactInformation.customer_name :
+                data.data.seller :
                 '--' }}
               </h3>
               <div
@@ -57,10 +57,8 @@
         </el-col>
       </el-row>
       <el-row class="el-row">
-        <el-col :span="12" v-if="isPackageDelivered">
-          <Rating />
-        </el-col>
-        <el-col :span="12" v-else>
+        <el-col :span="12">
+          <Rating v-if="$store.getters.getDeliveryStatus === 3" />
           <Timeline />
         </el-col>
         <el-col :span="12">

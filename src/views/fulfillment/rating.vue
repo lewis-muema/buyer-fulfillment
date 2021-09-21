@@ -1,43 +1,57 @@
 <template>
   <div>
-    <div v-if="!$store.getters.getMobile" class="rate-delivery-desktop">
-      <p class="pt-3">How was your delivery?</p>
-      <div class="icons">
-      <font-awesome-icon icon="thumbs-up" class="h1 thumbs-up" />
-      <font-awesome-icon icon="thumbs-down" class="h1" />
-      </div>
-    </div>
-    <div v-else class="rate-delivery-mobile">
-      <p class="pt-3">How was your delivery?</p>
-      <div class="icons-mobile">
-        <div class="thumbs-desktop">
+    <div :class="$store.getters.getMobile
+      ? 'rate-delivery-mobile'
+      : 'rate-delivery-desktop'"
+    >
+      <p :class="$store.getters.getMobile
+        ? 'delivery-title-mobile'
+        : 'delivery-title-desktop'"
+      >
+        How was your delivery?
+      </p>
+      <div :class="$store.getters.getMobile
+      ? 'icons-mobile'
+      : 'icons-desktop'">
+        <div
+          class="thumbs"
+          :class="$store.getters.getMobile
+            ? 'thumbs-mobile'
+            : 'thumbs-desktop'"
+        >
           <div
             class="thumbs-outline"
-            :class="rating === 1 ? 'thumbs-outline-active' : ''"
+            :class="rating === 1 ? 'thumbs-outline-active' : activeClass"
             @click="rating = 1"
           >
             <font-awesome-icon icon="thumbs-up" class="h1 thumbs-icon" />
           </div>
-          <div>
+          <div v-if="$store.getters.getMobile">
             I liked it
           </div>
         </div>
-        <div class="thumbs-desktop">
+        <div class="thumbs"
+          :class="$store.getters.getMobile
+            ? 'thumbs-mobile'
+            : 'thumbs-desktop'"
+        >
           <div
             class="thumbs-outline"
-            :class="rating === 2 ? 'thumbs-outline-active' : ''"
+            :class="rating === 2 ? 'thumbs-outline-active' : activeClass"
             @click="rating = 2"
           >
             <font-awesome-icon icon="thumbs-down" class="h1 thumbs-icon" />
           </div>
-          <div>
+          <div v-if="$store.getters.getMobile">
             I didn't like it
           </div>
         </div>
       </div>
       <div
         v-if="rating === 2"
-        class="rating-feedback-container"
+        :class="$store.getters.getMobile
+          ? 'rating-feedback-container-mobile'
+          : 'rating-feedback-container-desktop'"
       >
         <div class="rating-feedback">
           <div>
@@ -64,7 +78,10 @@
           Delivery history
         </h5>
         <div>
-          <span class="el-dropdown-link">
+          <span
+            class="el-dropdown-link"
+            @click="$store.commit('setTimelineVisible', !$store.getters.getTimelineVisible)"
+          >
             View Delivery history<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
         </div>
@@ -80,6 +97,11 @@ export default {
     return {
       rating: 0,
     };
+  },
+  computed: {
+    activeClass() {
+      return !this.$store.getters.getMobile ? 'thumbs-outline-desktop' : 'thumbs-outline-mobile';
+    },
   },
 };
 </script>
@@ -98,21 +120,25 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.thumbs-desktop {
+.thumbs {
   width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #C0C4CC;
   font-size: 14px;
   padding-bottom: 20px;
+}
+.thumbs-desktop {
+  color: black;
+}
+.thumbs-mobile {
+  color: #C0C4CC;
 }
 .thumbs-icon {
   margin: 0px !important;
 }
 .thumbs-outline {
-  border: 1px solid #C0C4CC;
   border-radius: 100px;
   height: 70px;
   width: 70px;
@@ -122,11 +148,22 @@ export default {
   justify-content: center;
   margin-bottom: 10px;
 }
-.rating-feedback-container {
+.thumbs-outline-desktop {
+  border: 1px solid black;
+}
+.thumbs-outline-mobile {
+  border: 1px solid #C0C4CC;
+}
+.rating-feedback-container-mobile {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0px 0px 20px 0px;
+}
+.rating-feedback-container-desktop {
+  display: flex;
+  align-items: center;
+  padding: 0px 0px 20px 20px;
 }
 .rating-feedback {
   width: min-content;
@@ -174,10 +211,22 @@ export default {
   display: flex;
   width: 100%;
 }
+.icons-desktop {
+  display: flex;
+  width: 30%;
+}
 .el-dropdown-link {
   color: #324ba8;
 }
 .thumbs-up {
   margin-right: 20px !important;
+}
+.delivery-title-desktop {
+  padding: 20px;
+  margin-bottom: 0px !important;
+  font-weight: 700;
+}
+.delivery-title-mobile {
+  margin: 15px 0px;
 }
 </style>
