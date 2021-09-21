@@ -14,4 +14,7 @@ export default {
   setDeliveryStatus(state, val) {
     state.deliveryStatus = val;
   },
+  setTimelineVisible(state, val) {
+    state.timelineVisible = val;
+  },
 };
