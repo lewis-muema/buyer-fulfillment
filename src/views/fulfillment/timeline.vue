@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="$store.getters.getTimelineVisible">
     <h3 :class="!$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'">Timeline</h3>
     <div :class="!$store.getters.getMobile ? 'block mt-3' : 'timeline-events-mobile'">
       <el-timeline>
@@ -13,8 +13,13 @@
           :color="activity.color"
           :size="activity.size"
         >
-          {{ activity.message }}
-          <div v-if="$store.getters.getDeliveryStatus === 2 && index === 2" class="timeline-rider">
+          <span
+            :class="index - 1 === $store.getters.getDeliveryStatus
+            ? 'active-timeline-text' : ''"
+          >
+            {{ activity.message }}
+          </span>
+          <div v-if="$store.getters.getDeliveryStatus === 1 && index === 2" class="timeline-rider">
             <div class="timeline-rider-thumbnail-container">
               <img class="timeline-rider-thumbnail" src="../../assets/rider.png" alt="">
             </div>
@@ -52,6 +57,7 @@ export default {
     this.activities = this.$store.getters.getData.data.eventTimeline
       ? this.$store.getters.getData.data.eventTimeline : [];
     this.activities[this.$store.getters.getDeliveryStatus + 1].color = '#324ba8';
+    this.activities[this.$store.getters.getDeliveryStatus + 1].icon = 'el-icon-time';
     this.activities[this.$store.getters.getDeliveryStatus].icon = 'el-icon-check';
     this.activities[this.$store.getters.getDeliveryStatus].color = '#EE7D00';
     this.rider = this.$store.getters.getData.data.partnerContactInformation;
@@ -60,6 +66,7 @@ export default {
     '$store.getters.getDeliveryStatus': function setDeliveryStatus(val) {
       if (val < this.activities.length - 1) {
         this.activities[val + 1].color = '#324ba8';
+        this.activities[val + 1].icon = 'el-icon-time';
       }
       if (val < this.activities.length) {
         this.activities[val].icon = 'el-icon-check';
@@ -70,6 +77,9 @@ export default {
   methods: {
     changeDeliveryStatus() {
       this.$store.commit('setDeliveryStatus', this.$store.getters.getDeliveryStatus + 1);
+      if (this.$store.getters.getDeliveryStatus >= this.activities.length - 1) {
+        this.$store.commit('setTimelineVisible', false);
+      }
     },
   },
 };
@@ -121,5 +131,32 @@ export default {
 }
 .trigger-button {
   margin-left: 20px;
+}
+.active-timeline-text {
+  color: #324BA8;
+  font-weight: 700;
+}
+.el-icon-time {
+  background: #324ba8;
+  color: #324ba8 !important;
+  box-shadow: 0 0 0 0 #324ba8;
+  border-radius: 20px;
+  animation: pulse-blue 2s infinite;
+}
+@keyframes pulse-blue {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 #324ba8;
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+  }
 }
 </style>

@@ -5,7 +5,7 @@
       <div>
         <div class="fulfillemnt-order-items-title">
           {{ Object.keys(data).length > 0 ?
-              data.data.recipientContactInformation.customer_name :
+              data.data.seller :
               '--' }}
         </div>
         <div class="fulfillemnt-order-items-description">
@@ -23,8 +23,7 @@
     </div>
     <div
       class="fulfillemnt-order-items-expected-deivery"
-      v-if="$store.getters.getDeliveryStatus === 0 ||
-        $store.getters.getDeliveryStatus === 1"
+      v-if="$store.getters.getDeliveryStatus === 0"
     >
       <p class="fulfillemnt-order-items-expected-deivery-title">
         Expected delivery
@@ -42,7 +41,8 @@
     </div>
     <div
       class="fulfillemnt-order-items-expected-deivery"
-      v-if="$store.getters.getDeliveryStatus === 2"
+      v-if="$store.getters.getDeliveryStatus === 1
+        || $store.getters.getDeliveryStatus === 2"
     >
       <p class="fulfillemnt-order-items-expected-deivery-title">
         Give this pin to the delivery person

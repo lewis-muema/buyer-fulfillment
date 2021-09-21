@@ -23,6 +23,7 @@ export default new Vuex.Store({
             },
           },
           confirmationPin: 2345,
+          seller: 'Marina Products',
           returns: [
             {
               return_id: 'R_ASD123',
@@ -51,7 +52,7 @@ export default new Vuex.Store({
               date_created: '2019-9-12T05:20:50.52z',
             },
             {
-              message: 'We are Preparing your order',
+              message: 'We are preparing your order',
               date_created: '2019-9-12T07:20:50.52z',
             },
             {
@@ -78,6 +79,7 @@ export default new Vuex.Store({
       },
       mobile: false,
       dialogVisible: false,
+      timelineVisible: true,
       datePickerVisible: false,
       deliveryStatus: 0,
     };
