@@ -1,40 +1,23 @@
 <template>
   <div>
-    <div :class="$store.getters.getMobile
-      ? 'rate-delivery-mobile'
-      : 'rate-delivery-desktop'"
-    >
-      <p :class="$store.getters.getMobile
-        ? 'delivery-title-mobile'
-        : 'delivery-title-desktop'"
-      >
+    <div :class="$store.getters.getMobile ? 'rate-delivery-mobile' : 'rate-delivery-desktop'">
+      <p :class="$store.getters.getMobile ? 'delivery-title-mobile' : 'delivery-title-desktop'">
         How was your delivery?
       </p>
-      <div :class="$store.getters.getMobile
-      ? 'icons-mobile'
-      : 'icons-desktop'">
-        <div
-          class="thumbs"
-          :class="$store.getters.getMobile
-            ? 'thumbs-mobile'
-            : 'thumbs-desktop'"
-        >
+      <div :class="$store.getters.getMobile ? 'icons-mobile' : 'icons-desktop'">
+        <div class="thumbs" :class="$store.getters.getMobile ? 'thumbs-mobile' : 'thumbs-desktop'">
           <div
             class="thumbs-outline"
             :class="rating === 1 ? 'thumbs-outline-active' : activeClass"
             @click="rating = 1"
           >
-            <font-awesome-icon icon="thumbs-up" class="h1 thumbs-icon" />
+            <font-awesome-icon icon="thumbs-up" class="h1 thumbs-icon" @click="likeRating" />
           </div>
           <div v-if="$store.getters.getMobile">
             I liked it
           </div>
         </div>
-        <div class="thumbs"
-          :class="$store.getters.getMobile
-            ? 'thumbs-mobile'
-            : 'thumbs-desktop'"
-        >
+        <div class="thumbs" :class="$store.getters.getMobile ? 'thumbs-mobile' : 'thumbs-desktop'">
           <div
             class="thumbs-outline"
             :class="rating === 2 ? 'thumbs-outline-active' : activeClass"
@@ -49,9 +32,11 @@
       </div>
       <div
         v-if="rating === 2"
-        :class="$store.getters.getMobile
-          ? 'rating-feedback-container-mobile'
-          : 'rating-feedback-container-desktop'"
+        :class="
+          $store.getters.getMobile
+            ? 'rating-feedback-container-mobile'
+            : 'rating-feedback-container-desktop'
+        "
       >
         <div class="rating-feedback">
           <div>
@@ -59,9 +44,7 @@
           </div>
           <textarea class="feedback-input" cols="40" rows="5" placeholder="Tell us what went wrong">
           </textarea>
-          <button
-            class="feedback-submit-button"
-          >
+          <button class="feedback-submit-button">
             Submit feedback
           </button>
         </div>
@@ -91,8 +74,11 @@
 </template>
 
 <script>
+import NotificationMxn from '../../mixins/nofication_mixin';
+
 export default {
   name: 'Rating',
+  mixins: [NotificationMxn],
   data() {
     return {
       rating: 0,
@@ -101,6 +87,16 @@ export default {
   computed: {
     activeClass() {
       return !this.$store.getters.getMobile ? 'thumbs-outline-desktop' : 'thumbs-outline-mobile';
+    },
+  },
+  methods: {
+    likeRating() {
+      const notification = {
+        title: 'Rating submitted successfully',
+        level: 1,
+        message: '',
+      };
+      this.displayNotification(notification);
     },
   },
 };
@@ -113,7 +109,7 @@ export default {
 }
 .rate-delivery-mobile {
   margin: 20px;
-  border: 1px solid #C8C8C8;
+  border: 1px solid #c8c8c8;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -133,7 +129,7 @@ export default {
   color: black;
 }
 .thumbs-mobile {
-  color: #C0C4CC;
+  color: #c0c4cc;
 }
 .thumbs-icon {
   margin: 0px !important;
@@ -152,7 +148,7 @@ export default {
   border: 1px solid black;
 }
 .thumbs-outline-mobile {
-  border: 1px solid #C0C4CC;
+  border: 1px solid #c0c4cc;
 }
 .rating-feedback-container-mobile {
   display: flex;
@@ -170,27 +166,27 @@ export default {
   font-size: 14px;
 }
 .feedback-input {
-  border: 1px solid #C0C4CC;
+  border: 1px solid #c0c4cc;
   border-radius: 5px;
   margin: 10px 0px;
 }
 .feedback-submit-button {
-  border: 1px solid #324BA8;
+  border: 1px solid #324ba8;
   border-radius: 5px;
   padding: 10px 20px;
   background: white;
-  color: #324BA8;
+  color: #324ba8;
   font-weight: 600;
 }
 .thumbs-outline-active {
-  background: #EDF1FF;
-  border: 1px solid #EDF1FF !important;
-  color: #324BA8;
+  background: #edf1ff;
+  border: 1px solid #edf1ff !important;
+  color: #324ba8;
 }
 .font-awesome-icon {
   margin-left: 50px !important;
 }
-.items{
+.items {
   text-align: left;
   margin-left: 80px;
 }
@@ -202,7 +198,7 @@ export default {
   font-size: 16px !important;
   font-weight: 600;
 }
-.icons{
+.icons {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
