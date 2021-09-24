@@ -9,15 +9,9 @@
       <div class="date-picker-title">
         Pick a date that works for you
       </div>
-      <v-date-picker
-        v-model="date"
-        color="#324BA8"
-      ></v-date-picker>
+      <v-date-picker v-model="date" color="#324BA8"></v-date-picker>
       <div>
-        <button
-          class="back-button"
-          @click="visibleDatePicker = false"
-        >Back</button>
+        <button class="back-button" @click="visibleDatePicker = false">Back</button>
         <el-button class="save-button">Save</el-button>
       </div>
     </el-dialog>
@@ -40,7 +34,9 @@ export default {
   data() {
     return {
       visibleDatePicker: false,
-      date: moment(new Date(this.$store.getters.getData.data.expectedDeliveryDate.date)).format('YYYY-MM-DD'),
+      date: moment(new Date(this.$store.getters.getData.data.expectedDeliveryDate.date)).format(
+        'YYYY-MM-DD',
+      ),
     };
   },
 };
@@ -65,5 +61,8 @@ export default {
   color: black;
   text-transform: uppercase;
   font-size: 12px;
+}
+.v-picker__body {
+  width: auto !important;
 }
 </style>

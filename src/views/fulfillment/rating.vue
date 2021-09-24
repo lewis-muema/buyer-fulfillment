@@ -225,4 +225,5 @@ export default {
 .delivery-title-mobile {
   margin: 15px 0px;
 }
+
 </style>
