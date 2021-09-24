@@ -104,7 +104,7 @@ Vue.use(Progress);
 Vue.use(VueGoogleMaps, {
   load: {
     libraries: ['places', 'geometry'],
-    key: process.env.GOOGLE_API_KEY,
+    key: process.env.GOOGLE_API_KEY_TEST,
   },
 });
 Vue.prototype.$loading = Loading.service;

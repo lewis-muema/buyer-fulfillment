@@ -10,10 +10,13 @@
           <p><i class="el-icon-phone"></i>{{ recepientInfo.customer_phone_number }}</p>
         </div>
         <div class="recipient-details">
-          <p><i class="el-icon-location-outline"></i>
-            {{ recepientInfo.customer_delivery_location
-            ? recepientInfo.customer_delivery_location.description
-            : '' }}
+          <p>
+            <i class="el-icon-location-outline"></i>
+            {{
+              recepientInfo.customer_delivery_location
+                ? recepientInfo.customer_delivery_location.description
+                : ""
+            }}
           </p>
           <p class="">
             <small class="text-muted recipient-indent-text">
@@ -29,15 +32,22 @@
       </div>
       <el-button
         v-if="$store.getters.getDeliveryStatus !== 3"
-        type="primary" @click="showUpdateModal"
-      >Update Delivery Info</el-button>
+        type="primary"
+        @click="showUpdateModal"
+        :class="
+          !$store.getters.getMobile ? 'update-info-button-desktop' : 'update-info-button-mobile'
+        "
+        >Update Delivery Info</el-button
+      >
     </div>
     <UpdateDetails
       :name="recepientInfo.customer_name"
       :phone="recepientInfo.customer_phone_number"
-      :location="recepientInfo.customer_delivery_location
-      ? recepientInfo.customer_delivery_location.description
-      : ''"
+      :location="
+        recepientInfo.customer_delivery_location
+          ? recepientInfo.customer_delivery_location.description
+          : ''
+      "
       :house="recepientInfo.house_location"
     />
   </div>
@@ -85,6 +95,12 @@ export default {
 .recepient-info-mobile {
   margin-left: 20px;
 }
+.update-info-button-mobile {
+  margin-bottom: 80px !important;
+}
+.update-info-button-desktop {
+  margin-bottom: 0;
+}
 .recepient-info-title-mobile {
   margin: 20px 0px;
   color: #606266;
@@ -112,7 +128,7 @@ export default {
   margin-left: 25px;
 }
 .recipient-details-leave-delivery {
-  color: #324BA8 !important;
+  color: #324ba8 !important;
   margin: 10px 0px;
 }
 </style>

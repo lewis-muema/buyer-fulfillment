@@ -45,35 +45,54 @@
           <div class="mb-3">
             <el-row>
               <el-col :span="12">
-                <div :class="deliveryOption === 1
-                  ? 'delivery-options-tag-active'
-                  : 'delivery-options-tag-inactive'"
+                <div
+                  :class="
+                    deliveryOption === 1
+                      ? 'delivery-options-tag-active'
+                      : 'delivery-options-tag-inactive'
+                  "
                   @click="deliveryOption = 1"
-                >Leave With Guard</div>
+                >
+                  Leave With Guard
+                </div>
               </el-col>
               <el-col :span="12">
-                <div :class="deliveryOption === 2
-                  ? 'delivery-options-tag-active'
-                  : 'delivery-options-tag-inactive'"
+                <div
+                  :class="
+                    deliveryOption === 2
+                      ? 'delivery-options-tag-active'
+                      : 'delivery-options-tag-inactive'
+                  "
                   @click="deliveryOption = 2"
-                >Leave At the Reception</div>
+                >
+                  Leave At the Reception
+                </div>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="12">
-                <div :class="deliveryOption === 3
-                  ? 'delivery-options-tag-active'
-                  : 'delivery-options-tag-inactive'"
+                <div
+                  :class="
+                    deliveryOption === 3
+                      ? 'delivery-options-tag-active'
+                      : 'delivery-options-tag-inactive'
+                  "
                   @click="deliveryOption = 3"
-                >Leave At the door</div>
+                >
+                  Leave At the door
+                </div>
               </el-col>
               <el-col :span="12">
                 <div
-                   :class="deliveryOption === 4
-                  ? 'delivery-options-tag-active'
-                  : 'delivery-options-tag-inactive'"
+                  :class="
+                    deliveryOption === 4
+                      ? 'delivery-options-tag-active'
+                      : 'delivery-options-tag-inactive'
+                  "
                   @click="deliveryOption = 4"
-                ><i class="el-icon-plus"></i> Other</div>
+                >
+                  <i class="el-icon-plus"></i> Other
+                </div>
               </el-col>
             </el-row>
           </div>
@@ -83,6 +102,9 @@
             class="btn btn-primary update-info-button"
             type="button"
             @click="showReviewModal"
+            :class="
+              !$store.getters.getMobile ? 'update-info-button-desktop' : 'update-info-button-mobile'
+            "
           >
             Update Delivery Info
           </el-button>
@@ -126,6 +148,7 @@ export default {
           west: -19.1,
         },
         strictBounds: true,
+        type: ['establishment'],
       },
       deliveryOption: 0,
     };
@@ -150,12 +173,12 @@ export default {
   background: #324ba8 !important;
 }
 .location-input-label {
-  padding: 5px .75rem !important;
+  padding: 5px 0.75rem !important;
 }
 .delivery-options-tag-inactive {
   border-radius: 30px;
   padding: 15px 30px;
-  background: #F3F3F3;
+  background: #f3f3f3;
   color: black;
   cursor: pointer;
   width: 95%;
@@ -169,5 +192,8 @@ export default {
   cursor: pointer;
   width: 95%;
   text-align: center;
+}
+.pac-icon {
+  display: none;
 }
 </style>
