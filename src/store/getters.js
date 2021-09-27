@@ -5,4 +5,5 @@ export default {
   getDatePickerVisible: (state) => state.datePickerVisible,
   getDeliveryStatus: (state) => state.deliveryStatus,
   getTimelineVisible: (state) => state.timelineVisible,
+  getRecipientVisible: (state) => state.recipientVisible,
 };

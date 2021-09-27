@@ -80,6 +80,7 @@ export default new Vuex.Store({
       mobile: false,
       dialogVisible: false,
       timelineVisible: true,
+      recipientVisible: true,
       datePickerVisible: false,
       deliveryStatus: 0,
     };

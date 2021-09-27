@@ -1,5 +1,7 @@
 /* eslint-disable import/no-unresolved */
+
 import Vue from 'vue';
+import * as firebase from 'firebase/app';
 import moment from 'moment';
 import lang from 'element-ui/lib/locale/lang/en';
 import locale from 'element-ui/lib/locale';
@@ -120,6 +122,15 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 
+firebase.initializeApp({
+  messagingSenderId: '809840261046',
+});
+navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: 'firebase-cloud-messaging-push-scope' }).then((registration) => {
+  const messaging = firebase.messaging();
+  messaging.useServiceWorker(registration);
+}).catch((err) => {
+  console.log(`error$ ${err}`);
+});
 new Vue({
   router,
   store,

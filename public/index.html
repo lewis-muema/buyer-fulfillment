@@ -13,6 +13,8 @@
       rel="stylesheet"
     />
 
+    <link rel="”manifest”" href="”manifest.json”" />
+
     <title><%= htmlWebpackPlugin.options.title %></title>
     <script>
       function initFreshChat() {
@@ -38,6 +40,7 @@
         ? window.addEventListener("load", initiateCall, !1)
         : window.attachEvent("load", initiateCall, !1);
     </script>
+
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"

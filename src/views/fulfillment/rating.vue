@@ -63,7 +63,10 @@
         <div>
           <span
             class="el-dropdown-link"
-            @click="$store.commit('setTimelineVisible', !$store.getters.getTimelineVisible)"
+            @click="
+              $store.commit('setTimelineVisible', !$store.getters.getTimelineVisible),
+              $store.commit('setRecipientVisible', !$store.getters.getRecipientVisible)
+            "
           >
             View Delivery history<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
@@ -225,5 +228,4 @@ export default {
 .delivery-title-mobile {
   margin: 15px 0px;
 }
-
 </style>
