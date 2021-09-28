@@ -132,12 +132,12 @@ firebase.initializeApp({
   appId: '1:809840261046:web:173c5b76f2f807c1657317',
   measurementId: 'G-7CLVXLT1BW',
 });
+
 Vue.prototype.$messaging = firebase.messaging();
 navigator.serviceWorker
   .register('./firebase-messaging-sw.js')
   .then((registration) => {
     Vue.prototype.$messaging.useServiceWorker(registration);
-    console.log('test', registration);
   })
   .catch((err) => {
     console.log(err);

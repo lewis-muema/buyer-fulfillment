@@ -7,7 +7,7 @@
 </template>
 <script>
 
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/messaging';
 
 export default {
@@ -15,7 +15,6 @@ export default {
     return {};
   },
   created() {
-    console.log('here');
     try {
       firebase.messaging()
         .requestPermission().then(() => {

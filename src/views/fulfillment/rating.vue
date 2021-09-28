@@ -64,8 +64,7 @@
           <span
             class="el-dropdown-link"
             @click="
-              $store.commit('setTimelineVisible', !$store.getters.getTimelineVisible),
-              $store.commit('setRecipientVisible', !$store.getters.getRecipientVisible)
+              $store.commit('setTimelineVisible', !$store.getters.getTimelineVisible)
             "
           >
             View Delivery history<i class="el-icon-arrow-down el-icon--right"></i>
