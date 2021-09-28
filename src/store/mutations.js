@@ -17,4 +17,7 @@ export default {
   setTimelineVisible(state, val) {
     state.timelineVisible = val;
   },
+  setRecipientVisible(state, val) {
+    state.recipient = val;
+  },
 };
