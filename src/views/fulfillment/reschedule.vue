@@ -65,4 +65,8 @@ export default {
 .v-picker__body {
   width: auto !important;
 }
+.v-date-picker-table {
+  padding: 0, 0 !important;
+  height: auto !important;
+}
 </style>
