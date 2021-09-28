@@ -17,14 +17,15 @@ export default {
   created() {
     console.log('here');
     try {
-      this.$messaging.requestPermission().then(() => {
-        console.log('notificationn permission granted');
-        return firebase.messaging().getToken().then((token) => {
-          window.console.log(token);
+      firebase.messaging()
+        .requestPermission().then(() => {
+          console.log('notificationn permission granted');
+          return firebase.messaging().getToken().then((token) => {
+            window.console.log(token);
+          });
+        }).catch((err) => {
+          console.log(`unable to get the token${err}`);
         });
-      }).catch((err) => {
-        console.log(`unable to get the token${err}`);
-      });
     } catch (error) {
       console.log(error);
     }

@@ -1,8 +1,9 @@
 /* eslint-disable import/no-unresolved */
 
 import Vue from 'vue';
-import * as firebase from 'firebase/app';
 import moment from 'moment';
+import firebase from 'firebase/app';
+import 'firebase/messaging';
 import lang from 'element-ui/lib/locale/lang/en';
 import locale from 'element-ui/lib/locale';
 import * as VueGoogleMaps from 'vue2-google-maps';
@@ -123,14 +124,24 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 
 firebase.initializeApp({
+  apiKey: 'AIzaSyCgetfUGhkVy1c_QePUgxtyr8vDOvB0Ru4',
+  authDomain: 'buyer-fulfillment.firebaseapp.com',
+  projectId: 'buyer-fulfillment',
+  storageBucket: 'buyer-fulfillment.appspot.com',
   messagingSenderId: '809840261046',
+  appId: '1:809840261046:web:173c5b76f2f807c1657317',
+  measurementId: 'G-7CLVXLT1BW',
 });
-navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: 'firebase-cloud-messaging-push-scope' }).then((registration) => {
-  const messaging = firebase.messaging();
-  messaging.useServiceWorker(registration);
-}).catch((err) => {
-  console.log(`error$ ${err}`);
-});
+Vue.prototype.$messaging = firebase.messaging();
+navigator.serviceWorker
+  .register('./firebase-messaging-sw.js')
+  .then((registration) => {
+    Vue.prototype.$messaging.useServiceWorker(registration);
+    console.log('test', registration);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 new Vue({
   router,
   store,
