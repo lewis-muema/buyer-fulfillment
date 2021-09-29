@@ -44,12 +44,13 @@
 </template>
 
 <script>
+import eventsMixin from '../../mixins/events_mixin';
 import NotificationMxn from '../../mixins/nofication_mixin';
 
 export default {
   props: ['dialogVisible'],
   name: 'ReviewChanges',
-  mixins: [NotificationMxn],
+  mixins: [NotificationMxn, eventsMixin],
   data() {
     return {
       name: 'James Doe',
@@ -67,6 +68,22 @@ export default {
       this.displayNotification(notification);
       this.$emit('close', false);
       this.$store.commit('setDialogVisible', false);
+      this.sendSegmentEvents({
+        event: 'Update Delivery Info',
+        data: {
+          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+          // eslint-disable-next-line max-len
+          region: this.$store.getters.getData.data.recipientContactInformation.customer_delivery_location.description,
+        },
+      });
+      this.sendSegmentEvents({
+        event: 'Confirm Delivery Details',
+        data: {
+          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+          // eslint-disable-next-line max-len
+          region: this.$store.getters.getData.data.recipientContactInformation.customer_delivery_location.description,
+        },
+      });
     },
     handleClose() {
       this.$emit('close', false);

@@ -47,11 +47,11 @@
               <el-col :span="12">
                 <div
                   :class="
-                    deliveryOption === 1
+                    deliveryOption === 'Leave With Guard'
                       ? 'delivery-options-tag-active'
                       : 'delivery-options-tag-inactive'
                   "
-                  @click="deliveryOption = 1"
+                  @click="deliveryOption = 'Leave With Guard'"
                 >
                   Leave With Guard
                 </div>
@@ -59,11 +59,11 @@
               <el-col :span="12">
                 <div
                   :class="
-                    deliveryOption === 2
+                    deliveryOption === 'Leave At the Reception'
                       ? 'delivery-options-tag-active'
                       : 'delivery-options-tag-inactive'
                   "
-                  @click="deliveryOption = 2"
+                  @click="deliveryOption = 'Leave At the Reception'"
                 >
                   Leave At the Reception
                 </div>
@@ -73,11 +73,11 @@
               <el-col :span="12">
                 <div
                   :class="
-                    deliveryOption === 3
+                    deliveryOption === 'Leave At the door'
                       ? 'delivery-options-tag-active'
                       : 'delivery-options-tag-inactive'
                   "
-                  @click="deliveryOption = 3"
+                  @click="deliveryOption = 'Leave At the door'"
                 >
                   Leave At the door
                 </div>
@@ -85,11 +85,11 @@
               <el-col :span="12">
                 <div
                   :class="
-                    deliveryOption === 4
+                    deliveryOption === 'Other'
                       ? 'delivery-options-tag-active'
                       : 'delivery-options-tag-inactive'
                   "
-                  @click="deliveryOption = 4"
+                  @click="deliveryOption = 'Other'"
                 >
                   <i class="el-icon-plus"></i> Other
                 </div>
@@ -116,11 +116,13 @@
 </template>
 
 <script>
+import eventsMixin from '../../mixins/events_mixin';
 import ReviewChanges from './reviewChanges.vue';
 
 export default {
   name: 'UpdateDetails',
   props: ['name', 'phone', 'location', 'house'],
+  mixins: [eventsMixin],
   components: {
     ReviewChanges,
   },
@@ -130,6 +132,17 @@ export default {
     },
     visibleDialog(val) {
       this.$store.commit('setDialogVisible', val);
+    },
+    deliveryOption(val) {
+      this.sendSegmentEvents({
+        event: 'Select Delivery Method',
+        data: {
+          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+          // eslint-disable-next-line max-len
+          region: this.$store.getters.getData.data.recipientContactInformation.customer_delivery_location.description,
+          deliveryMethod: val,
+        },
+      });
     },
   },
   data() {
@@ -150,7 +163,7 @@ export default {
         strictBounds: true,
         type: ['establishment'],
       },
-      deliveryOption: 0,
+      deliveryOption: '',
     };
   },
   methods: {
