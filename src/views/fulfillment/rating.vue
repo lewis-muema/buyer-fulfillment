@@ -62,7 +62,7 @@
         </h5>
         <div>
           <span
-            class="el-dropdown-link"
+            class="el-dropdown-link view-history"
             @click="
               $store.commit('setTimelineVisible', !$store.getters.getTimelineVisible)
             "
@@ -76,15 +76,36 @@
 </template>
 
 <script>
+import eventsMixin from '../../mixins/events_mixin';
 import NotificationMxn from '../../mixins/nofication_mixin';
 
 export default {
   name: 'Rating',
-  mixins: [NotificationMxn],
+  mixins: [NotificationMxn, eventsMixin],
   data() {
     return {
       rating: 0,
     };
+  },
+  watch: {
+    rating(val) {
+      this.sendSegmentEvents({
+        event: 'Rate Delivery',
+        data: {
+          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+          // eslint-disable-next-line max-len
+          rating: val === 1 ? val : 0,
+        },
+      });
+    },
+    '$store.getters.getTimelineVisible': function getTimelineVisible() {
+      this.sendSegmentEvents({
+        event: 'View Delivery History',
+        data: {
+          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+        },
+      });
+    },
   },
   computed: {
     activeClass() {
@@ -226,5 +247,8 @@ export default {
 }
 .delivery-title-mobile {
   margin: 15px 0px;
+}
+.view-history {
+  cursor: pointer;
 }
 </style>

@@ -7,6 +7,7 @@
 
 <script>
 import NotificationMxn from '../../mixins/nofication_mixin';
+import eventsMixin from '../../mixins/events_mixin';
 import Desktop from './components/desktop.vue';
 import Mobile from './components/mobile.vue';
 
@@ -16,13 +17,21 @@ export default {
     Desktop,
     Mobile,
   },
-  mixins: [NotificationMxn],
+  mixins: [NotificationMxn, eventsMixin],
   data() {
     return {
       data: '',
     };
   },
   mounted() {
+    window.addEventListener('freshchat-loaded', () => {
+      this.sendSegmentEvents({
+        event: 'Select Help Chat',
+        data: {
+          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+        },
+      });
+    });
     this.isMobile();
     window.onresize = (() => {
       this.isMobile();

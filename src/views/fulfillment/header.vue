@@ -9,12 +9,12 @@
           />
       </div>
       <div class="fulfillment-header-menu">
-        <el-dropdown class="fulfillment-header-language-menu">
+        <el-dropdown @command="changeLanguage" class="fulfillment-header-language-menu">
             <span class="el-dropdown-link language-change ">
               English<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>French</el-dropdown-item>
+              <el-dropdown-item command="french">French</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
       </div>
@@ -23,8 +23,24 @@
 </template>
 
 <script>
+import eventsMixin from '../../mixins/events_mixin';
+
 export default {
   name: 'Header',
+  mixins: [eventsMixin],
+  methods: {
+    changeLanguage(command) {
+      this.sendSegmentEvents({
+        event: 'Select Language',
+        data: {
+          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+          language: command,
+          // eslint-disable-next-line max-len
+          region: this.$store.getters.getData.data.recipientContactInformation.customer_delivery_location.description,
+        },
+      });
+    },
+  },
 };
 </script>
 
