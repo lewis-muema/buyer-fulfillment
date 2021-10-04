@@ -20,6 +20,7 @@ export default {
         });
     });
   },
+  // eslint-disable-next-line no-unused-vars
   requestAxiosGet({ commit }, payload) {
     const config = {
       headers: {
@@ -30,7 +31,6 @@ export default {
       axios
         .get(`${payload.app}${payload.endpoint}`, config)
         .then((response) => {
-          commit('setData', response);
           resolve(response);
         })
         .catch((error) => {

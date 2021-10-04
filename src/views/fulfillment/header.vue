@@ -33,10 +33,10 @@ export default {
       this.sendSegmentEvents({
         event: 'Select Language',
         data: {
-          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+          userId: this.$store.getters.getData.data.destination.name,
           language: command,
           // eslint-disable-next-line max-len
-          region: this.$store.getters.getData.data.recipientContactInformation.customer_delivery_location.description,
+          region: this.$store.getters.getData.data.destination.delivery_location.description,
         },
       });
     },

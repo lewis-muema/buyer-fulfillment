@@ -4,17 +4,17 @@
       <h3 :class="!$store.getters.getMobile ? '' : 'recepient-info-title-mobile'">Receiver</h3>
       <div class="recepient">
         <div class="recipient-details">
-          <p><i class="el-icon-user"></i>{{ recepientInfo.customer_name }}</p>
+          <p><i class="el-icon-user"></i>{{ recepientInfo.name }}</p>
         </div>
         <div class="recipient-details">
-          <p><i class="el-icon-phone"></i>{{ recepientInfo.customer_phone_number }}</p>
+          <p><i class="el-icon-phone"></i>{{ recepientInfo.phone_number }}</p>
         </div>
         <div class="recipient-details">
           <p>
             <i class="el-icon-location-outline"></i>
             {{
-              recepientInfo.customer_delivery_location
-                ? recepientInfo.customer_delivery_location.description
+              recepientInfo.delivery_location
+                ? recepientInfo.delivery_location.description
                 : ""
             }}
           </p>
@@ -24,14 +24,17 @@
             </small>
           </p>
         </div>
-        <div v-if="$store.getters.getDeliveryStatus !== 3" class="recipient-details">
+        <div
+          v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
+          class="recipient-details"
+        >
           <p class="recipient-details-leave-delivery">
             <i class="el-icon-info"></i>Tell us where you leave your delivery
           </p>
         </div>
       </div>
       <el-button
-        v-if="$store.getters.getDeliveryStatus !== 3"
+        v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
         type="primary"
         @click="showUpdateModal"
         :class="
@@ -41,14 +44,15 @@
       >
     </div>
     <UpdateDetails
-      :name="recepientInfo.customer_name"
-      :phone="recepientInfo.customer_phone_number"
+      :name="recepientInfo.name"
+      :phone="recepientInfo.phone_number"
       :location="
-        recepientInfo.customer_delivery_location
-          ? recepientInfo.customer_delivery_location.description
+        recepientInfo.delivery_location
+          ? recepientInfo.delivery_location.description
           : ''
       "
       :house="recepientInfo.house_location"
+      :instructions="recepientInfo.delivery_instructions"
     />
   </div>
 </template>
@@ -72,11 +76,20 @@ export default {
     };
   },
   mounted() {
-    this.recepientInfo = this.$store.getters.getData.data.recipientContactInformation;
+    this.recepientInfo = this.$store.getters.getData.data.destination;
   },
   methods: {
     showUpdateModal() {
       this.$store.commit('setDialogVisible', true);
+    },
+    getStatus(index) {
+      const statuses = [];
+      this.$store.getters.getOrderStatuses.forEach((row, i) => {
+        if (index.includes(i)) {
+          statuses.push(row);
+        }
+      });
+      return statuses;
     },
   },
 };
