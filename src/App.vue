@@ -15,21 +15,16 @@ export default {
   created() {
     try {
       const messaging = getMessaging();
-      getToken(messaging, { vapidKey: 'BPgdAI3aB7pNsVM_dzkUzmTRBbuR64GAxAKJvuXWU5J2JIISBvWneZ8gc65Mf8g1uUj4NaVdDWZGsBrx3Y54z3E' })
-        .then((currentToken) => {
-          if (currentToken) {
-            console.log(currentToken);
-          } else {
-            console.log(
-              'No registration token available. Request permission to generate one.',
-            );
-          }
-        })
-        .catch((err) => {
-          console.log('An error occurred while retrieving token. ', err);
-        });
+      getToken(messaging, {
+        vapidKey:
+          'BPgdAI3aB7pNsVM_dzkUzmTRBbuR64GAxAKJvuXWU5J2JIISBvWneZ8gc65Mf8g1uUj4NaVdDWZGsBrx3Y54z3E',
+      }).then((currentToken) => {
+        if (currentToken) {
+          // ...
+        }
+      });
     } catch (error) {
-      console.log(error);
+      // ...
     }
   },
 };

@@ -133,12 +133,7 @@ initializeApp({
 });
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: './' })
-      .then((reg) => {
-        console.log(`Registration succeeded. Scope is ${reg.scope}`);
-      }).catch((error) => {
-        console.log(`Registration failed with ${error}`);
-      });
+    navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: './' });
   });
 }
 new Vue({
