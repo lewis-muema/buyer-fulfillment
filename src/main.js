@@ -2,8 +2,7 @@
 
 import Vue from 'vue';
 import moment from 'moment';
-import firebase from 'firebase/app';
-import 'firebase/messaging';
+import { initializeApp } from 'firebase/app';
 import lang from 'element-ui/lib/locale/lang/en';
 import locale from 'element-ui/lib/locale';
 import * as VueGoogleMaps from 'vue2-google-maps';
@@ -123,7 +122,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 
-firebase.initializeApp({
+initializeApp({
   apiKey: 'AIzaSyCgetfUGhkVy1c_QePUgxtyr8vDOvB0Ru4',
   authDomain: 'buyer-fulfillment.firebaseapp.com',
   projectId: 'buyer-fulfillment',
@@ -132,16 +131,11 @@ firebase.initializeApp({
   appId: '1:809840261046:web:173c5b76f2f807c1657317',
   measurementId: 'G-7CLVXLT1BW',
 });
-
-Vue.prototype.$messaging = firebase.messaging();
-navigator.serviceWorker
-  .register('./firebase-messaging-sw.js')
-  .then((registration) => {
-    Vue.prototype.$messaging.useServiceWorker(registration);
-  })
-  .catch((err) => {
-    console.log(err);
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: './' });
   });
+}
 new Vue({
   router,
   store,

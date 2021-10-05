@@ -6,9 +6,7 @@
   </v-app>
 </template>
 <script>
-
-import firebase from 'firebase/app';
-import 'firebase/messaging';
+import { getMessaging, getToken } from 'firebase/messaging';
 
 export default {
   data() {
@@ -16,17 +14,17 @@ export default {
   },
   created() {
     try {
-      firebase.messaging()
-        .requestPermission().then(() => {
-          console.log('notificationn permission granted');
-          return firebase.messaging().getToken().then((token) => {
-            window.console.log(token);
-          });
-        }).catch((err) => {
-          console.log(`unable to get the token${err}`);
-        });
+      const messaging = getMessaging();
+      getToken(messaging, {
+        vapidKey:
+          'BPgdAI3aB7pNsVM_dzkUzmTRBbuR64GAxAKJvuXWU5J2JIISBvWneZ8gc65Mf8g1uUj4NaVdDWZGsBrx3Y54z3E',
+      }).then((currentToken) => {
+        if (currentToken) {
+          // ...
+        }
+      });
     } catch (error) {
-      console.log(error);
+      // ...
     }
   },
 };
