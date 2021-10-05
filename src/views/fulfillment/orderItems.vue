@@ -3,14 +3,16 @@
     <div :class="!$store.getters.getMobile ? 'items-delivered-desktop' : 'items-delivered-mobile'">
       <h3 v-if="!$store.getters.getMobile">Items being delivered</h3>
       <div class="d-flex flex-row mt-3" v-for="(orderItem, index) in orderItems" :key="index">
-        <el-badge :value="orderItem.product_quantity" class="item" type="primary">
+        <el-badge :value="orderItem.product_unit_count" class="item" type="primary">
           <div class="p-2">
-            <img src="../../assets/shear-butter.jpg" alt="" class="img-fluid" />
+            <img :src="orderItem.product_image_link" alt="" class="item-image" />
           </div>
         </el-badge>
         <div class="order-items">
           <p>{{ orderItem.product_name }}</p>
-          <p class="text-muted">KES {{ orderItem.product_unit_price }}</p>
+          <p class="text-muted">
+            {{ orderItem.product_unit_price_currency}} {{ orderItem.product_unit_price }}
+          </p>
         </div>
       </div>
     </div>
@@ -37,7 +39,10 @@ export default {
 .items-delivered-mobile {
   margin: 15px 0px;
 }
-
+.item-image {
+  height: 60px;
+  width: 60px;
+}
 .order-items {
   line-height: 8px !important;
   margin: 15px 5px !important;

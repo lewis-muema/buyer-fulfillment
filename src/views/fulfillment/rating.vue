@@ -92,7 +92,7 @@ export default {
       this.sendSegmentEvents({
         event: 'Rate Delivery',
         data: {
-          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+          userId: this.$store.getters.getData.data.destination.name,
           // eslint-disable-next-line max-len
           rating: val === 1 ? val : 0,
         },
@@ -102,7 +102,7 @@ export default {
       this.sendSegmentEvents({
         event: 'View Delivery History',
         data: {
-          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+          userId: this.$store.getters.getData.data.destination.name,
         },
       });
     },

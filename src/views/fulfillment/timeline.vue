@@ -14,12 +14,15 @@
           :size="activity.size"
         >
           <span
-            :class="index - 1 === $store.getters.getDeliveryStatus
+            :class="index + 1 === activities.length
             ? 'active-timeline-text' : ''"
           >
-            {{ activity.message }}
+            {{ formatEventName(activity.event_code) }}
           </span>
-          <div v-if="$store.getters.getDeliveryStatus === 1 && index === 2" class="timeline-rider">
+          <div
+            v-if="getStatus([5]).includes($store.getters.getDeliveryStatus)"
+            class="timeline-rider"
+          >
             <div class="timeline-rider-thumbnail-container">
               <img class="timeline-rider-thumbnail" src="../../assets/rider.png" alt="">
             </div>
@@ -37,9 +40,6 @@
           </div>
         </el-timeline-item>
       </el-timeline>
-      <el-button class="trigger-button" type="primary" @click="changeDeliveryStatus()">
-        Trigger for Dorcas
-      </el-button>
     </div>
   </div>
 </template>
@@ -54,32 +54,33 @@ export default {
     };
   },
   mounted() {
-    this.activities = this.$store.getters.getData.data.eventTimeline
-      ? this.$store.getters.getData.data.eventTimeline : [];
-    this.activities[this.$store.getters.getDeliveryStatus + 1].color = '#324ba8';
-    this.activities[this.$store.getters.getDeliveryStatus + 1].icon = 'el-icon-time';
-    this.activities[this.$store.getters.getDeliveryStatus].icon = 'el-icon-check';
-    this.activities[this.$store.getters.getDeliveryStatus].color = '#EE7D00';
-    this.rider = this.$store.getters.getData.data.partnerContactInformation;
-  },
-  watch: {
-    '$store.getters.getDeliveryStatus': function setDeliveryStatus(val) {
-      if (val < this.activities.length - 1) {
-        this.activities[val + 1].color = '#324ba8';
-        this.activities[val + 1].icon = 'el-icon-time';
+    this.activities = this.$store.getters.getData.data.event_time_line
+      ? this.$store.getters.getData.data.event_time_line : [];
+    this.activities.forEach((row, index) => {
+      if (this.activities.length === index + 1) {
+        this.activities[index].color = '#324ba8';
+        this.activities[index].icon = 'el-icon-time';
+      } else {
+        this.activities[index].icon = 'el-icon-check';
+        this.activities[index].color = '#EE7D00';
       }
-      if (val < this.activities.length) {
-        this.activities[val].icon = 'el-icon-check';
-        this.activities[val].color = '#EE7D00';
-      }
-    },
+    });
+    this.rider = this.$store.getters.getData.data.partner_contact_information;
   },
   methods: {
-    changeDeliveryStatus() {
-      this.$store.commit('setDeliveryStatus', this.$store.getters.getDeliveryStatus + 1);
-      if (this.$store.getters.getDeliveryStatus >= this.activities.length - 1) {
-        this.$store.commit('setTimelineVisible', false);
-      }
+    formatEventName(name) {
+      let event = name.replace('event.', '');
+      event = event.charAt(0).toUpperCase() + event.slice(1);
+      return event.replaceAll('.', ' ');
+    },
+    getStatus(index) {
+      const statuses = [];
+      this.$store.getters.getOrderStatuses.forEach((row, i) => {
+        if (index.includes(i)) {
+          statuses.push(row);
+        }
+      });
+      return statuses;
     },
   },
 };

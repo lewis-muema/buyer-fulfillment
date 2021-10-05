@@ -47,11 +47,11 @@
               <el-col :span="12">
                 <div
                   :class="
-                    deliveryOption === 'Leave With Guard'
+                    deliveryOption === 'Leave with guard'
                       ? 'delivery-options-tag-active'
                       : 'delivery-options-tag-inactive'
                   "
-                  @click="deliveryOption = 'Leave With Guard'"
+                  @click="deliveryOption = 'Leave with guard'"
                 >
                   Leave With Guard
                 </div>
@@ -59,11 +59,11 @@
               <el-col :span="12">
                 <div
                   :class="
-                    deliveryOption === 'Leave At the Reception'
+                    deliveryOption === 'Leave at the reception'
                       ? 'delivery-options-tag-active'
                       : 'delivery-options-tag-inactive'
                   "
-                  @click="deliveryOption = 'Leave At the Reception'"
+                  @click="deliveryOption = 'Leave at the reception'"
                 >
                   Leave At the Reception
                 </div>
@@ -73,11 +73,11 @@
               <el-col :span="12">
                 <div
                   :class="
-                    deliveryOption === 'Leave At the door'
+                    deliveryOption === 'Leave at the door'
                       ? 'delivery-options-tag-active'
                       : 'delivery-options-tag-inactive'
                   "
-                  @click="deliveryOption = 'Leave At the door'"
+                  @click="deliveryOption = 'Leave at the door'"
                 >
                   Leave At the door
                 </div>
@@ -121,7 +121,7 @@ import ReviewChanges from './reviewChanges.vue';
 
 export default {
   name: 'UpdateDetails',
-  props: ['name', 'phone', 'location', 'house'],
+  props: ['name', 'phone', 'location', 'house', 'instructions'],
   mixins: [eventsMixin],
   components: {
     ReviewChanges,
@@ -132,14 +132,15 @@ export default {
     },
     visibleDialog(val) {
       this.$store.commit('setDialogVisible', val);
+      this.deliveryOption = val ? this.instructions : '';
     },
     deliveryOption(val) {
       this.sendSegmentEvents({
         event: 'Select Delivery Method',
         data: {
-          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+          userId: this.$store.getters.getData.data.destination.name,
           // eslint-disable-next-line max-len
-          region: this.$store.getters.getData.data.recipientContactInformation.customer_delivery_location.description,
+          region: this.$store.getters.getData.data.destination.delivery_location.description,
           deliveryMethod: val,
         },
       });
@@ -174,9 +175,7 @@ export default {
     showReviewModal() {
       this.showDialog = true;
     },
-    setLocation(place) {
-      console.log(place);
-    },
+    setLocation() {},
   },
 };
 </script>

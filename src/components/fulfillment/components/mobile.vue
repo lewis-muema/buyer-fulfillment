@@ -5,7 +5,7 @@
       <div>
         <div class="fulfillemnt-order-items-title">
           {{ Object.keys(data).length > 0 ?
-              data.data.seller :
+              data.data.seller_name :
               '--' }}
         </div>
         <div class="fulfillemnt-order-items-description">
@@ -23,14 +23,15 @@
     </div>
     <div
       class="fulfillemnt-order-items-expected-deivery"
-      v-if="$store.getters.getDeliveryStatus === 0"
+      v-if="getStatus([0, 1, 2, 3, 4, 6, 7, 8])
+        .includes($store.getters.getDeliveryStatus)"
     >
       <p class="fulfillemnt-order-items-expected-deivery-title">
         Expected delivery
       </p>
       <p class="fulfillemnt-order-items-expected-deivery-date">
         {{ Object.keys(data).length > 0 ?
-              formatDate(data.data.expectedDeliveryDate.date) :
+              formatDate(data.data.expected_delivery_date) :
               '--' }}
       </p>
       <div>
@@ -41,8 +42,7 @@
     </div>
     <div
       class="fulfillemnt-order-items-expected-deivery"
-      v-if="$store.getters.getDeliveryStatus === 1
-        || $store.getters.getDeliveryStatus === 2"
+      v-if="getStatus([5]).includes($store.getters.getDeliveryStatus)"
     >
       <p class="fulfillemnt-order-items-expected-deivery-title">
         Give this pin to the delivery person
@@ -50,20 +50,20 @@
       <p class="fulfillemnt-order-items-expected-deivery-date">
         <span class="rider-pin-mobile">
           PIN: {{ Object.keys(data).length > 0 ?
-              data.data.confirmationPin :
+              data.data.confirmation_pin :
               '--' }}
         </span>
       </p>
     </div>
     <div
-      v-if="$store.getters.getDeliveryStatus === 3"
+      v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
       class="fulfillemnt-order-items-expected-deivery"
     >
       <p class="delivered-title">Package has been delivered</p>
-      <p class="delivered-date">{{ formatDate(data.data.expectedDeliveryDate.date) }}</p>
+      <p class="delivered-date">{{ formatDate(data.data.order_completion_date) }}</p>
     </div>
     <Reschedule />
-    <Rating v-if="$store.getters.getDeliveryStatus === 3" />
+    <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
     <Timeline />
     <Recipient />
   </div>
@@ -104,6 +104,15 @@ export default {
     },
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
+    },
+    getStatus(index) {
+      const statuses = [];
+      this.$store.getters.getOrderStatuses.forEach((row, i) => {
+        if (index.includes(i)) {
+          statuses.push(row);
+        }
+      });
+      return statuses;
     },
   },
 };

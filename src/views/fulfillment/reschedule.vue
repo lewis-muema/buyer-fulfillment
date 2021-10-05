@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       visibleDatePicker: false,
-      date: moment(new Date(this.$store.getters.getData.data.expectedDeliveryDate.date)).format(
+      date: moment(new Date(this.$store.getters.getData.data.expected_delivery_date)).format(
         'YYYY-MM-DD',
       ),
     };

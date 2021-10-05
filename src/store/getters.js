@@ -6,4 +6,5 @@ export default {
   getDeliveryStatus: (state) => state.deliveryStatus,
   getTimelineVisible: (state) => state.timelineVisible,
   getRecipientVisible: (state) => state.recipientVisible,
+  getOrderStatuses: (state) => state.orderStatuses,
 };
