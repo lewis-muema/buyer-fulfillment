@@ -13,25 +13,29 @@
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatingInput" v-model="params.name" />
           <label for="floatingInput">Name of recipient</label>
-          {{ params.name }}
+        </div>
+        <div v-if="!$v.params.name.required" class="invalidFeedback">
+          name is required
         </div>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatingInput" v-model="params.phone" />
           <label for="floatingInput">Phone number</label>
+        </div>
+        <div v-if="!$v.params.phone.required" class="invalidFeedback">
+          phone number is required
         </div>
         <div class="form-floating mb-3">
           <label for="floatingInput" class="location-input-label">Location</label>
           <gmap-autocomplete
             :value="params.deliveryLocation.description"
             :options="map_options"
-            class="form-control"
+            class="form-control form"
             id="floatingInput"
             placeholder="Enter location"
             :select-first-on-enter="true"
             @place_changed="setLocation($event)"
           />
         </div>
-        {{ params.deliveryLocation.description }}
         <div class="form-floating mb-3">
           <input
             type="text"
@@ -42,6 +46,9 @@
           />
           <label for="floatingInput">Description</label>
         </div>
+        <div v-if="!$v.params.house_location.required" class="invalidFeedback">
+            description is required
+          </div>
         <div class="mt-3">
           <label for="Delivery options" class="form-label">Delivery options</label>
           <div class="mb-3">
@@ -116,11 +123,11 @@
       :dialog-visible="showDialog"
       :name="params.name"
       :phone="params.phone"
-      :deliveryLocationDescription='params.deliveryLocation.description'
-      :deliveryLocationLongitude='params.deliveryLocation.longitude'
-      :deliveryLocationLatitude='params.deliveryLocation.latitude'
-      :houseLocation='params.house_location'
-      :deliveryOption='deliveryOption'
+      :deliveryLocationDescription="params.deliveryLocation.description"
+      :deliveryLocationLongitude="params.deliveryLocation.longitude"
+      :deliveryLocationLatitude="params.deliveryLocation.latitude"
+      :houseLocation="params.house_location"
+      :deliveryOption="deliveryOption"
       @close="showDialog = false"
     />
   </div>
@@ -128,33 +135,16 @@
 
 <script>
 import eventsMixin from '../../mixins/events_mixin';
+import statusMixin from '../../mixins/status_mixin';
 import ReviewChanges from './reviewChanges.vue';
+
+const { required } = require('vuelidate/lib/validators');
 
 export default {
   name: 'UpdateDetails',
-  mixins: [eventsMixin],
+  mixins: [eventsMixin, statusMixin],
   components: {
     ReviewChanges,
-  },
-  watch: {
-    '$store.getters.getDialogVisible': function setDialogStatus(val) {
-      this.visibleDialog = val;
-    },
-    visibleDialog(val) {
-      this.$store.commit('setDialogVisible', val);
-      this.deliveryOption = val ? this.instructions : '';
-    },
-    deliveryOption(val) {
-      this.sendSegmentEvents({
-        event: 'Select Delivery Method',
-        data: {
-          userId: this.$store.getters.getData.data.destination.name,
-          // eslint-disable-next-line max-len
-          region: this.$store.getters.getData.data.destination.delivery_location.description,
-          deliveryMethod: val,
-        },
-      });
-    },
   },
   data() {
     return {
@@ -187,6 +177,45 @@ export default {
       },
       deliveryOption: '',
     };
+  },
+  validations: {
+    params: {
+      name: {
+        required,
+      },
+      phone: {
+        required,
+      },
+      description: {
+        required,
+      },
+      house_location: {
+        required,
+      },
+      deliveryOption: {
+        required,
+      },
+    },
+  },
+  watch: {
+    '$store.getters.getDialogVisible': function setDialogStatus(val) {
+      this.visibleDialog = val;
+    },
+    visibleDialog(val) {
+      this.$store.commit('setDialogVisible', val);
+      this.deliveryOption = val ? this.instructions : '';
+    },
+    deliveryOption(val) {
+      this.sendSegmentEvents({
+        event: 'Select Delivery Method',
+        data: {
+          userId: this.$store.getters.getData.data.destination.name,
+          // eslint-disable-next-line max-len
+          region: this.$store.getters.getData.data.destination.delivery_location.description,
+          deliveryMethod: val,
+        },
+      });
+    },
   },
   methods: {
     handleClose() {
@@ -231,5 +260,11 @@ export default {
 }
 .pac-icon {
   display: none;
+}
+.invalidFeedback {
+  color: red !important;
+}
+.pac-target-input {
+  user-select: none;
 }
 </style>

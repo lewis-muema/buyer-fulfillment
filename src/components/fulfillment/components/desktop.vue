@@ -79,6 +79,7 @@ import Recepient from '../../../views/fulfillment/recipient.vue';
 import Timeline from '../../../views/fulfillment/timeline.vue';
 import OrderItems from '../../../views/fulfillment/orderItems.vue';
 import Rating from '../../../views/fulfillment/rating.vue';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
   components: {
@@ -88,14 +89,9 @@ export default {
     OrderItems,
     Rating,
   },
+  mixins: [statusMixin],
   data() {
     return {
-      isMorning: false,
-      hasRiderArrived: false,
-      isDeliveryPlaced: true,
-      isPackageDelivered: false,
-      time: '2pm - 4pm',
-      date: 'Wednesday, 25th August',
       data: this.$store.getters.getData,
     };
   },
@@ -107,15 +103,6 @@ export default {
   methods: {
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
-    },
-    getStatus(index) {
-      const statuses = [];
-      this.$store.getters.getOrderStatuses.forEach((row, i) => {
-        if (index.includes(i)) {
-          statuses.push(row);
-        }
-      });
-      return statuses;
     },
   },
 };

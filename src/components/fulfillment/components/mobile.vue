@@ -77,6 +77,7 @@ import Timeline from '../../../views/fulfillment/timeline.vue';
 import Recipient from '../../../views/fulfillment/recipient.vue';
 import Rating from '../../../views/fulfillment/rating.vue';
 import Reschedule from '../../../views/fulfillment/reschedule.vue';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
   components: {
@@ -87,6 +88,7 @@ export default {
     Rating,
     Reschedule,
   },
+  mixins: [statusMixin],
   data() {
     return {
       showItems: false,
@@ -104,15 +106,6 @@ export default {
     },
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
-    },
-    getStatus(index) {
-      const statuses = [];
-      this.$store.getters.getOrderStatuses.forEach((row, i) => {
-        if (index.includes(i)) {
-          statuses.push(row);
-        }
-      });
-      return statuses;
     },
   },
 };
