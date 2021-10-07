@@ -20,4 +20,7 @@ export default {
   setRecipientVisible(state, val) {
     state.recipient = val;
   },
+  setUpdateDelivery(state, val) {
+    state.updateDelivery = val;
+  },
 };

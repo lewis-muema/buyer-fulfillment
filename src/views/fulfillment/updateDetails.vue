@@ -11,18 +11,19 @@
     >
       <form>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" :value="name" />
+          <input type="text" class="form-control" id="floatingInput" v-model="params.name" />
           <label for="floatingInput">Name of recipient</label>
+          {{ params.name }}
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" :value="phone" />
+          <input type="text" class="form-control" id="floatingInput" v-model="params.phone" />
           <label for="floatingInput">Phone number</label>
         </div>
         <div class="form-floating mb-3">
           <label for="floatingInput" class="location-input-label">Location</label>
           <gmap-autocomplete
+            :value="params.deliveryLocation.description"
             :options="map_options"
-            :value="location"
             class="form-control"
             id="floatingInput"
             placeholder="Enter location"
@@ -30,13 +31,14 @@
             @place_changed="setLocation($event)"
           />
         </div>
+        {{ params.deliveryLocation.description }}
         <div class="form-floating mb-3">
           <input
             type="text"
             class="form-control"
             id="floatingInput"
             placeholder="Floor, apartment or house number"
-            :value="house"
+            v-model="params.house_location"
           />
           <label for="floatingInput">Description</label>
         </div>
@@ -100,7 +102,6 @@
         <div class="d-grid gap-2 col-12 mx-auto">
           <el-button
             class="btn btn-primary update-info-button"
-            type="button"
             @click="showReviewModal"
             :class="
               !$store.getters.getMobile ? 'update-info-button-desktop' : 'update-info-button-mobile'
@@ -111,7 +112,17 @@
         </div>
       </form>
     </el-dialog>
-    <ReviewChanges :dialog-visible="showDialog" @close="showDialog = false" />
+    <ReviewChanges
+      :dialog-visible="showDialog"
+      :name="params.name"
+      :phone="params.phone"
+      :deliveryLocationDescription='params.deliveryLocation.description'
+      :deliveryLocationLongitude='params.deliveryLocation.longitude'
+      :deliveryLocationLatitude='params.deliveryLocation.latitude'
+      :houseLocation='params.house_location'
+      :deliveryOption='deliveryOption'
+      @close="showDialog = false"
+    />
   </div>
 </template>
 
@@ -121,7 +132,6 @@ import ReviewChanges from './reviewChanges.vue';
 
 export default {
   name: 'UpdateDetails',
-  props: ['name', 'phone', 'location', 'house', 'instructions'],
   mixins: [eventsMixin],
   components: {
     ReviewChanges,
@@ -148,9 +158,20 @@ export default {
   },
   data() {
     return {
+      test: '',
       showDialog: false,
       visibleDialog: false,
       locations: this.location,
+      params: {
+        name: this.$store.getters.getData.data.destination.name,
+        phone: this.$store.getters.getData.data.destination.phone_number,
+        deliveryLocation: {
+          description: this.$store.getters.getData.data.destination.delivery_location.description,
+          longitude: this.$store.getters.getData.data.destination.delivery_location.longitude,
+          latitude: this.$store.getters.getData.data.destination.delivery_location.latitude,
+        },
+        house_location: this.$store.getters.getData.data.destination.house_location,
+      },
       map_options: {
         componentRestrictions: {
           country: ['ke', 'ug', 'tz', 'ci'],
@@ -168,14 +189,17 @@ export default {
     };
   },
   methods: {
-    updateDeliveryInfo() {},
     handleClose() {
       this.$emit('close', false);
     },
     showReviewModal() {
       this.showDialog = true;
     },
-    setLocation() {},
+    setLocation(place) {
+      this.params.deliveryLocation.description = place.formatted_address;
+      this.params.deliveryLocation.latitude = place.geometry.location.lat();
+      this.params.deliveryLocation.longitude = place.geometry.location.lng();
+    },
   },
 };
 </script>

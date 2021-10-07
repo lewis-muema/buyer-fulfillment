@@ -10,7 +10,7 @@
       <form action="">
         <div class="">
           <div class="review-modal-title">Review changes</div>
-          <br>
+          <br />
         </div>
         <div class="">
           <div class="review-modal-description">Name of Recepient</div>
@@ -22,13 +22,13 @@
         </div>
         <div class="mt-3">
           <div class="review-modal-description">Floor, apartment or HouseNo</div>
-          <div class="review-modal-item">{{ house }}</div>
+          <div class="review-modal-item">{{ houseLocation }}</div>
         </div>
         <div class="d-grid gap-2 col-12 mx-auto mt-3">
           <el-button
             class="btn btn-primary update-info-button"
             type="button"
-            @click="reviewChanges"
+            @click="updateDeliveryInfo"
           >
             Confirm Changes
           </el-button>
@@ -44,46 +44,77 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import eventsMixin from '../../mixins/events_mixin';
 import NotificationMxn from '../../mixins/nofication_mixin';
 
 export default {
-  props: ['dialogVisible'],
+  props: [
+    'dialogVisible',
+    'name',
+    'phone',
+    'deliveryLocationDescription',
+    'deliveryLocationLongitude',
+    'deliveryLocationLatitude',
+    'houseLocation',
+    'deliveryOption',
+  ],
   name: 'ReviewChanges',
   mixins: [NotificationMxn, eventsMixin],
   data() {
-    return {
-      name: 'James Doe',
-      phone: '+254 7000000',
-      house: 'House 27',
-    };
+    return {};
   },
   methods: {
-    reviewChanges() {
-      const notification = {
-        title: 'Delivery information changed successfully',
-        level: 1,
-        message: '',
+    ...mapActions(['updateDeliveryInformation']),
+    async updateDeliveryInfo() {
+      const payload = {
+        name: this.name,
+        phone_number: this.phone,
+        delivery_location: {
+          description: this.deliveryLocationDescription,
+          longitude: this.deliveryLocationLongitude,
+          latitude: this.deliveryLocationLatitude,
+        },
+        house_location: this.houseLocation,
+        delivery_instructions: this.deliveryOption,
       };
-      this.displayNotification(notification);
-      this.$emit('close', false);
-      this.$store.commit('setDialogVisible', false);
-      this.sendSegmentEvents({
-        event: 'Update Delivery Info',
-        data: {
-          userId: this.$store.getters.getData.data.destination.name,
-          // eslint-disable-next-line max-len
-          region: this.$store.getters.getData.data.destination.delivery_location.description,
-        },
-      });
-      this.sendSegmentEvents({
-        event: 'Confirm Delivery Details',
-        data: {
-          userId: this.$store.getters.getData.data.destination.name,
-          // eslint-disable-next-line max-len
-          region: this.$store.getters.getData.data.destination.delivery_location.description,
-        },
-      });
+      const fullPayload = {
+        app: 'https://fulfillment-biz-logic-service-dev.sendyit.com/',
+        values: payload,
+        endpoint: `buyer/orders/${this.$route.params.deliveryId}/recipient/update`,
+      };
+      try {
+        const data = await this.updateDeliveryInformation(fullPayload);
+        if (data.errors.length === 0) {
+          const notification = {
+            title: 'Delivery information changed successfully',
+            level: 1,
+            message: '',
+          };
+          this.displayNotification(notification);
+          this.$emit('close', false);
+          this.$store.commit('setDialogVisible', false);
+          this.sendSegmentEvents({
+            event: 'Update Delivery Info',
+            data: {
+              userId: this.$store.getters.getData.data.destination.name,
+              // eslint-disable-next-line max-len
+              region: this.$store.getters.getData.data.destination.delivery_location.description,
+            },
+          });
+          this.sendSegmentEvents({
+            event: 'Confirm Delivery Details',
+            data: {
+              userId: this.$store.getters.getData.data.destination.name,
+              // eslint-disable-next-line max-len
+              region: this.$store.getters.getData.data.destination.delivery_location.description,
+            },
+          });
+        }
+        return data;
+      } catch (error) {
+        return error;
+      }
     },
     handleClose() {
       this.$emit('close', false);

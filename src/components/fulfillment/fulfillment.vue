@@ -62,7 +62,7 @@ export default {
     getDeliveryDetails() {
       if (this.$route.params.deliveryId) {
         this.$store.dispatch('requestAxiosGet', {
-          app: process.env.FULFILMENT_SERVER,
+          app: 'https://fulfillment-biz-logic-service-dev.sendyit.com/',
           endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
         }).then((response) => {
           this.$store.commit('setData', response.data);
