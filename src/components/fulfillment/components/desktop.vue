@@ -7,23 +7,23 @@
           <el-card shadow="never">
             <div class="order">
               <h3>{{ Object.keys(data).length > 0 ?
-                data.data.seller :
+                data.data.seller_name :
                 '--' }}
               </h3>
               <div
                 class="delivery mt-5"
-                v-if="$store.getters.getDeliveryStatus === 0 ||
-                  $store.getters.getDeliveryStatus === 1"
+                v-if="getStatus([0, 1, 2, 3, 4, 6, 7, 8])
+                  .includes($store.getters.getDeliveryStatus)"
               >
                 <p>Expected Delivery</p>
                 <p class="date">{{ Object.keys(data).length > 0 ?
-                  formatDate(data.data.expectedDeliveryDate.date) :
+                  formatDate(data.data.scheduled_delivery_date) :
                   '--' }}
                 </p>
               </div>
               <div
                 class="delivery mt-5"
-                v-if="$store.getters.getDeliveryStatus === 2"
+                v-if="getStatus([5]).includes($store.getters.getDeliveryStatus)"
               >
                 <p class="rider-pin">
                   <span>
@@ -31,7 +31,7 @@
                   </span>
                   <span class="rider-pin-value">
                     {{ Object.keys(data).length > 0 ?
-                        data.data.confirmationPin :
+                        data.data.confirmation_pin :
                         '--' }}
                   </span>
                 </p>
@@ -42,12 +42,12 @@
                   </span>
                 </p>
               </div>
-              <div v-if="$store.getters.getDeliveryStatus === 3" class="delivery mt-5">
+              <div
+                v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
+                class="delivery mt-5"
+              >
                 <p class="date">Package has been delivered</p>
-                <p>{{ formatDate(data.data.expectedDeliveryDate.date) }}</p>
-              </div>
-              <div v-if="isMorning">
-                <p class="date">{{ time }}</p>
+                <p>{{ formatDate(data.data.order_completion_date) }}</p>
               </div>
             </div>
           </el-card>
@@ -58,7 +58,7 @@
       </el-row>
       <el-row class="el-row">
         <el-col :span="12">
-          <Rating v-if="$store.getters.getDeliveryStatus === 3" />
+          <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
           <Timeline />
         </el-col>
         <el-col :span="12">
@@ -76,6 +76,7 @@ import Recepient from '../../../views/fulfillment/recipient.vue';
 import Timeline from '../../../views/fulfillment/timeline.vue';
 import OrderItems from '../../../views/fulfillment/orderItems.vue';
 import Rating from '../../../views/fulfillment/rating.vue';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
   components: {
@@ -85,14 +86,9 @@ export default {
     OrderItems,
     Rating,
   },
+  mixins: [statusMixin],
   data() {
     return {
-      isMorning: false,
-      hasRiderArrived: false,
-      isDeliveryPlaced: true,
-      isPackageDelivered: false,
-      time: '2pm - 4pm',
-      date: 'Wednesday, 25th August',
       data: this.$store.getters.getData,
     };
   },

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="Object.keys(this.$store.getters.getData).length > 0">
     <Mobile v-if="$store.getters.getMobile" />
     <Desktop v-else />
   </div>
@@ -28,7 +28,7 @@ export default {
       this.sendSegmentEvents({
         event: 'Select Help Chat',
         data: {
-          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+          userId: this.$store.getters.getData.data.destination.name,
         },
       });
     });
@@ -36,6 +36,7 @@ export default {
     window.onresize = (() => {
       this.isMobile();
     });
+    this.getDeliveryDetails();
   },
   methods: {
     showNotification() {
@@ -56,6 +57,17 @@ export default {
         this.$store.commit('setMobile', true);
       } else {
         this.$store.commit('setMobile', false);
+      }
+    },
+    getDeliveryDetails() {
+      if (this.$route.params.deliveryId) {
+        this.$store.dispatch('requestAxiosGet', {
+          app: process.env.FULFILMENT_SERVER,
+          endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
+        }).then((response) => {
+          this.$store.commit('setData', response.data);
+          this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
+        });
       }
     },
   },

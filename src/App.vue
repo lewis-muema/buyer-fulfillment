@@ -6,27 +6,46 @@
   </v-app>
 </template>
 <script>
-
-import firebase from 'firebase/app';
-import 'firebase/messaging';
+import { getMessaging, getToken } from 'firebase/messaging';
+import noficationMixin from './mixins/nofication_mixin';
 
 export default {
+  // eslint-disable-next-line camelcase
+  mixins: [noficationMixin],
   data() {
     return {};
   },
   created() {
     try {
-      firebase.messaging()
-        .requestPermission().then(() => {
-          console.log('notificationn permission granted');
-          return firebase.messaging().getToken().then((token) => {
-            window.console.log(token);
+      const messaging = getMessaging();
+      getToken(messaging, {
+        vapidKey: process.env.VAPIDKEY,
+      }).then((currentToken) => {
+        if (currentToken) {
+          // ...
+          const deviceId = Math.floor(new Date().getTime());
+          localStorage.deviceId = deviceId;
+          this.$store.dispatch('requestAxiosPut', {
+            app: process.env.FULFILMENT_SERVER,
+            endpoint: `buyer/orders/${this.$route.params.deliveryId}/fcm`,
+            values: {
+              token: currentToken,
+              device_id: deviceId,
+            },
           });
-        }).catch((err) => {
-          console.log(`unable to get the token${err}`);
-        });
+        }
+      });
+      messaging.onMessage((payload) => {
+        console.log('onMessage', payload);
+        const notification = {
+          title: 'Notification Recieved',
+          level: 1,
+          message: '',
+        };
+        this.displayNotification(notification);
+      });
     } catch (error) {
-      console.log(error);
+      // ...
     }
   },
 };

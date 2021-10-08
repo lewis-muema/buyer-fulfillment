@@ -9,7 +9,10 @@
           />
       </div>
       <div class="fulfillment-header-menu">
-        <el-dropdown @command="changeLanguage" class="fulfillment-header-language-menu">
+        <el-dropdown @command="changeLanguage"
+          class="fulfillment-header-language-menu"
+          v-if="showLanguageDropdown"
+        >
             <span class="el-dropdown-link language-change ">
               English<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
@@ -28,15 +31,20 @@ import eventsMixin from '../../mixins/events_mixin';
 export default {
   name: 'Header',
   mixins: [eventsMixin],
+  data() {
+    return {
+      showLanguageDropdown: false,
+    };
+  },
   methods: {
     changeLanguage(command) {
       this.sendSegmentEvents({
         event: 'Select Language',
         data: {
-          userId: this.$store.getters.getData.data.recipientContactInformation.customer_name,
+          userId: this.$store.getters.getData.data.destination.name,
           language: command,
           // eslint-disable-next-line max-len
-          region: this.$store.getters.getData.data.recipientContactInformation.customer_delivery_location.description,
+          region: this.$store.getters.getData.data.destination.delivery_location.description,
         },
       });
     },

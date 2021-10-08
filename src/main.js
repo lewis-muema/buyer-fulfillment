@@ -2,14 +2,16 @@
 
 import Vue from 'vue';
 import moment from 'moment';
-import firebase from 'firebase/app';
-import 'firebase/messaging';
+import { initializeApp } from 'firebase/app';
 import lang from 'element-ui/lib/locale/lang/en';
 import locale from 'element-ui/lib/locale';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
+import Vuelidate from 'vuelidate';
+import VueTelInput from 'vue-tel-input';
+import 'vue-tel-input/dist/vue-tel-input.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSpinner, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -104,6 +106,8 @@ Vue.use(Loading.directive);
 Vue.use(Upload);
 Vue.use(CheckboxGroup);
 Vue.use(Progress);
+Vue.use(Vuelidate);
+Vue.use(VueTelInput);
 Vue.use(VueGoogleMaps, {
   load: {
     libraries: ['places', 'geometry'],
@@ -123,25 +127,20 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 
-firebase.initializeApp({
-  apiKey: 'AIzaSyCgetfUGhkVy1c_QePUgxtyr8vDOvB0Ru4',
-  authDomain: 'buyer-fulfillment.firebaseapp.com',
-  projectId: 'buyer-fulfillment',
-  storageBucket: 'buyer-fulfillment.appspot.com',
-  messagingSenderId: '809840261046',
-  appId: '1:809840261046:web:173c5b76f2f807c1657317',
-  measurementId: 'G-7CLVXLT1BW',
+initializeApp({
+  apiKey: 'AIzaSyDAAvZPAgy7HX8JUqxWsFxn28ixGoOnHPs',
+  authDomain: 'sendy-fulfilment.firebaseapp.com',
+  projectId: 'sendy-fulfilment',
+  storageBucket: 'sendy-fulfilment.appspot.com',
+  messagingSenderId: '724697801657',
+  appId: '1:724697801657:web:69355a1ba4a87949430c68',
+  measurementId: 'G-YFWVL6YKF7',
 });
-
-Vue.prototype.$messaging = firebase.messaging();
-navigator.serviceWorker
-  .register('./firebase-messaging-sw.js')
-  .then((registration) => {
-    Vue.prototype.$messaging.useServiceWorker(registration);
-  })
-  .catch((err) => {
-    console.log(err);
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: './' });
   });
+}
 new Vue({
   router,
   store,

@@ -1,20 +1,20 @@
 <template>
-  <div v-if="$store.getters.getRecipientVisible">
+  <div v-if="$store.getters.getRecipientVisible && $store.getters.getTimelineVisible">
     <div :class="!$store.getters.getMobile ? 'recepient-info-desktop' : 'recepient-info-mobile'">
       <h3 :class="!$store.getters.getMobile ? '' : 'recepient-info-title-mobile'">Receiver</h3>
       <div class="recepient">
         <div class="recipient-details">
-          <p><i class="el-icon-user"></i>{{ recepientInfo.customer_name }}</p>
+          <p><i class="el-icon-user"></i>{{ recepientInfo.name }}</p>
         </div>
         <div class="recipient-details">
-          <p><i class="el-icon-phone"></i>{{ recepientInfo.customer_phone_number }}</p>
+          <p><i class="el-icon-phone"></i>{{ recepientInfo.phone_number }}</p>
         </div>
         <div class="recipient-details">
           <p>
             <i class="el-icon-location-outline"></i>
             {{
-              recepientInfo.customer_delivery_location
-                ? recepientInfo.customer_delivery_location.description
+              recepientInfo.delivery_location
+                ? recepientInfo.delivery_location.description
                 : ""
             }}
           </p>
@@ -24,59 +24,66 @@
             </small>
           </p>
         </div>
-        <div v-if="$store.getters.getDeliveryStatus !== 3" class="recipient-details">
-          <p class="recipient-details-leave-delivery">
+        <div
+          v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
+          class="recipient-details"
+        >
+          <p
+            v-if="!$store.getters.getMobile"
+            class="recipient-details-leave-delivery"
+          >
             <i class="el-icon-info"></i>Tell us where you leave your delivery
           </p>
         </div>
       </div>
       <el-button
-        v-if="$store.getters.getDeliveryStatus !== 3"
+        v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)
+          && !$store.getters.getMobile"
         type="primary"
-        @click="showUpdateModal"
-        :class="
-          !$store.getters.getMobile ? 'update-info-button-desktop' : 'update-info-button-mobile'
-        "
-        >Update Delivery Info</el-button
+        @click="showDetailsPicker"
+        class="update-info-button-desktop"
+        >Change Delivery details</el-button
       >
     </div>
     <UpdateDetails
-      :name="recepientInfo.customer_name"
-      :phone="recepientInfo.customer_phone_number"
+      :name="recepientInfo.name"
+      :phone="recepientInfo.phone_number"
       :location="
-        recepientInfo.customer_delivery_location
-          ? recepientInfo.customer_delivery_location.description
+        recepientInfo.delivery_location
+          ? recepientInfo.delivery_location.description
           : ''
       "
       :house="recepientInfo.house_location"
+      :instructions="recepientInfo.delivery_instructions"
     />
+    <changeInfo />
   </div>
 </template>
 
 <script>
 import UpdateDetails from './updateDetails.vue';
+import changeInfo from './changeInfo.vue';
+import statusMixin from '../../mixins/status_mixin';
 
 export default {
   name: 'Recepient',
   components: {
     UpdateDetails,
+    changeInfo,
   },
+  mixins: [statusMixin],
   data() {
     return {
       showDialog: false,
-      recepientInfo: {
-        name: 'James Doe',
-        phone: ' +254 700 000 000',
-        location: 'Umoja Heights, Lumumba Drive',
-      },
+      recepientInfo: {},
     };
   },
   mounted() {
-    this.recepientInfo = this.$store.getters.getData.data.recipientContactInformation;
+    this.recepientInfo = this.$store.getters.getData.data.destination;
   },
   methods: {
-    showUpdateModal() {
-      this.$store.commit('setDialogVisible', true);
+    showDetailsPicker() {
+      this.$store.commit('setDetailsDialogVisible', true);
     },
   },
 };
@@ -96,7 +103,7 @@ export default {
   margin-left: 20px;
 }
 .update-info-button-mobile {
-  margin-bottom: 80px !important;
+  width: 100%;
 }
 .update-info-button-desktop {
   margin-bottom: 0;
