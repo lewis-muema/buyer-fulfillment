@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       visibleDatePicker: false,
-      date: moment(new Date(this.$store.getters.getData.data.expected_delivery_date)).format(
+      date: moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date)).format(
         'YYYY-MM-DD',
       ),
     };
@@ -54,8 +54,7 @@ export default {
       }).then((res) => {
         this.$store.commit('setLoading', false);
         if (res.status === 200) {
-          let message = res.data.message.replaceAll('.', ' ');
-          message = message.charAt(0).toUpperCase() + message.slice(1);
+          const message = 'Order rescheduled successfully';
           const notification = {
             title: '',
             level: 1,
@@ -67,7 +66,7 @@ export default {
             endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
           }).then((response) => {
             this.$store.commit('setData', response.data);
-            this.$store.commit('setDeliveryStatus', response.data.data.order_status);
+            this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
           });
         } else {
           let message = res.data.message.replaceAll('.', ' ');

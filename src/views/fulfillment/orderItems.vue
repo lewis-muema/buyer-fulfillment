@@ -11,7 +11,7 @@
         <div class="order-items">
           <p>{{ orderItem.product_name }}</p>
           <p class="text-muted">
-            {{ orderItem.product_unit_price_currency}} {{ orderItem.product_unit_price }}
+            {{ orderItem.product_unit_currency}} {{ orderItem.product_unit_price }}
           </p>
         </div>
       </div>

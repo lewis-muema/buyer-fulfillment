@@ -9,7 +9,9 @@
               '--' }}
         </div>
         <div class="fulfillemnt-order-items-description">
-          <span v-if="Object.keys(data).length > 0 && data.data.products.length > 0"
+          <span
+            class="fulfillemnt-order-items-header"
+            v-if="Object.keys(data).length > 0 && data.data.products.length > 0"
             @click="showItems = !showItems">
             {{ Object.keys(data).length > 0 && data.data.products.length > 0 ?
               data.data.products[0].product_name :
@@ -31,7 +33,7 @@
       </p>
       <p class="fulfillemnt-order-items-expected-deivery-date">
         {{ Object.keys(data).length > 0 ?
-              formatDate(data.data.expected_delivery_date) :
+              formatDate(data.data.scheduled_delivery_date) :
               '--' }}
       </p>
       <div>
@@ -89,6 +91,7 @@ import Timeline from '../../../views/fulfillment/timeline.vue';
 import Recipient from '../../../views/fulfillment/recipient.vue';
 import Rating from '../../../views/fulfillment/rating.vue';
 import changeinfo from '../../../views/fulfillment/changeInfo.vue';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
   components: {
@@ -99,6 +102,7 @@ export default {
     Rating,
     changeinfo,
   },
+  mixins: [statusMixin],
   data() {
     return {
       showItems: false,
@@ -116,15 +120,6 @@ export default {
     },
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
-    },
-    getStatus(index) {
-      const statuses = [];
-      this.$store.getters.getOrderStatuses.forEach((row, i) => {
-        if (index.includes(i)) {
-          statuses.push(row);
-        }
-      });
-      return statuses;
     },
   },
 };
@@ -150,5 +145,8 @@ export default {
   color: #909399;
   font-size: 13px;
   margin: 5px 0px;
+}
+.fulfillemnt-order-items-header {
+  text-transform: capitalize;
 }
 </style>

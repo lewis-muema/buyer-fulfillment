@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$store.getters.getRecipientVisible">
+  <div v-if="$store.getters.getRecipientVisible && $store.getters.getTimelineVisible">
     <div :class="!$store.getters.getMobile ? 'recepient-info-desktop' : 'recepient-info-mobile'">
       <h3 :class="!$store.getters.getMobile ? '' : 'recepient-info-title-mobile'">Receiver</h3>
       <div class="recepient">
@@ -63,6 +63,7 @@
 <script>
 import UpdateDetails from './updateDetails.vue';
 import changeInfo from './changeInfo.vue';
+import statusMixin from '../../mixins/status_mixin';
 
 export default {
   name: 'Recepient',
@@ -70,6 +71,7 @@ export default {
     UpdateDetails,
     changeInfo,
   },
+  mixins: [statusMixin],
   data() {
     return {
       showDialog: false,
@@ -82,15 +84,6 @@ export default {
   methods: {
     showDetailsPicker() {
       this.$store.commit('setDetailsDialogVisible', true);
-    },
-    getStatus(index) {
-      const statuses = [];
-      this.$store.getters.getOrderStatuses.forEach((row, i) => {
-        if (index.includes(i)) {
-          statuses.push(row);
-        }
-      });
-      return statuses;
     },
   },
 };

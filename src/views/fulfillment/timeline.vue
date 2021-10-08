@@ -29,13 +29,8 @@
             <div>
               <p class="timeline-rider-details">{{ rider.name }}</p>
               <p class="timeline-rider-details">{{ rider.vendor_type }}</p>
-              <p class="timeline-rider-details">{{ rider.licensePlateNumber }}</p>
-            </div>
-            <div>
-              <el-button type="primary">
-                <i class="el-icon-phone"></i>
-                Call
-              </el-button>
+              <p class="timeline-rider-details">{{ rider.vehicle_identifier }}</p>
+              <p class="timeline-rider-details">{{ rider.phone_number }}</p>
             </div>
           </div>
         </el-timeline-item>
@@ -45,8 +40,11 @@
 </template>
 
 <script>
+import statusMixin from '../../mixins/status_mixin';
+
 export default {
   name: 'Timeline',
+  mixins: [statusMixin],
   data() {
     return {
       activities: [],
@@ -71,15 +69,6 @@ export default {
   methods: {
     formatEventName(name) {
       return name.charAt(0).toUpperCase() + name.slice(1);
-    },
-    getStatus(index) {
-      const statuses = [];
-      this.$store.getters.getOrderStatuses.forEach((row, i) => {
-        if (index.includes(i)) {
-          statuses.push(row);
-        }
-      });
-      return statuses;
     },
   },
 };

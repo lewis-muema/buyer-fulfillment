@@ -65,16 +65,31 @@ export default {
         'Content-Type': 'application/json',
       },
     };
-    return new Promise((resolve) => {
-      axios
-        .patch(`${payload.app}${payload.endpoint}`, payload.values, config)
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          resolve(error.response);
-          return false;
-        });
+    return new Promise((resolve, reject) => {
+      axios.patch(`${payload.app}${payload.endpoint}`, payload.values, config).then((response) => {
+        resolve(response);
+      }).catch((error) => {
+        reject(error);
+        return false;
+      });
     });
+  },
+  async updateDeliveryInformation({ dispatch, commit }, payload) {
+    try {
+      const res = await dispatch('requestAxiosPatch', payload, { root: true });
+      commit('setUpdateDelivery', res.data);
+      return res.data;
+    } catch (error) {
+      return error.response;
+    }
+  },
+  async rateOrder({ dispatch, commit }, payload) {
+    try {
+      const res = await dispatch('requestAxiosPut', payload, { root: true });
+      commit('setRateOrder', res.data);
+      return res.data;
+    } catch (error) {
+      return error.response;
+    }
   },
 };

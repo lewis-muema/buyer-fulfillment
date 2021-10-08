@@ -63,7 +63,7 @@
             <p>
               <i class="el-icon-time"></i>
               {{ Object.keys($store.getters.getData).length > 0 ?
-                    formatDate($store.getters.getData.data.expected_delivery_date) :
+                    formatDate($store.getters.getData.data.scheduled_delivery_date) :
                     '--' }}
             </p>
             <button
@@ -83,9 +83,11 @@
 <script>
 import moment from 'moment';
 import reschedule from './reschedule.vue';
+import statusMixin from '../../mixins/status_mixin';
 
 export default {
   components: { reschedule },
+  mixins: [statusMixin],
   watch: {
     '$store.getters.getDetailsDialogVisible': function setDetailsDialogStatus(val) {
       this.visibleDetailsDialog = val;
@@ -113,15 +115,6 @@ export default {
     },
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
-    },
-    getStatus(index) {
-      const statuses = [];
-      this.$store.getters.getOrderStatuses.forEach((row, i) => {
-        if (index.includes(i)) {
-          statuses.push(row);
-        }
-      });
-      return statuses;
     },
   },
 };

@@ -9,6 +9,9 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
+import Vuelidate from 'vuelidate';
+import VueTelInput from 'vue-tel-input';
+import 'vue-tel-input/dist/vue-tel-input.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSpinner, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -103,6 +106,8 @@ Vue.use(Loading.directive);
 Vue.use(Upload);
 Vue.use(CheckboxGroup);
 Vue.use(Progress);
+Vue.use(Vuelidate);
+Vue.use(VueTelInput);
 Vue.use(VueGoogleMaps, {
   load: {
     libraries: ['places', 'geometry'],
@@ -123,13 +128,13 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 
 initializeApp({
-  apiKey: 'AIzaSyCgetfUGhkVy1c_QePUgxtyr8vDOvB0Ru4',
-  authDomain: 'buyer-fulfillment.firebaseapp.com',
-  projectId: 'buyer-fulfillment',
-  storageBucket: 'buyer-fulfillment.appspot.com',
-  messagingSenderId: '809840261046',
-  appId: '1:809840261046:web:173c5b76f2f807c1657317',
-  measurementId: 'G-7CLVXLT1BW',
+  apiKey: 'AIzaSyDAAvZPAgy7HX8JUqxWsFxn28ixGoOnHPs',
+  authDomain: 'sendy-fulfilment.firebaseapp.com',
+  projectId: 'sendy-fulfilment',
+  storageBucket: 'sendy-fulfilment.appspot.com',
+  messagingSenderId: '724697801657',
+  appId: '1:724697801657:web:69355a1ba4a87949430c68',
+  measurementId: 'G-YFWVL6YKF7',
 });
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
