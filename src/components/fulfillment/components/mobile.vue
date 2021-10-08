@@ -35,9 +35,21 @@
               '--' }}
       </p>
       <div>
-        <button class="reschedule" @click="showDatePicker()">
-          Reschedule delivery date
-        </button>
+        <div
+          class="change-details-title"
+          v-if="getStatus([0, 1, 2, 3, 4]).includes($store.getters.getDeliveryStatus)"
+        >
+          Not going to be in?
+        </div>
+        <div
+          class="change-details-title"
+          v-if="getStatus([5]).includes($store.getters.getDeliveryStatus)"
+        >
+          Not in?
+        </div>
+        <el-button @click="showDetailsPicker()">
+          Change Delivery details
+        </el-button>
       </div>
     </div>
     <div
@@ -62,7 +74,7 @@
       <p class="delivered-title">Package has been delivered</p>
       <p class="delivered-date">{{ formatDate(data.data.order_completion_date) }}</p>
     </div>
-    <Reschedule />
+    <changeinfo />
     <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
     <Timeline />
     <Recipient />
@@ -76,7 +88,7 @@ import orderItems from '../../../views/fulfillment/orderItems.vue';
 import Timeline from '../../../views/fulfillment/timeline.vue';
 import Recipient from '../../../views/fulfillment/recipient.vue';
 import Rating from '../../../views/fulfillment/rating.vue';
-import Reschedule from '../../../views/fulfillment/reschedule.vue';
+import changeinfo from '../../../views/fulfillment/changeInfo.vue';
 
 export default {
   components: {
@@ -85,7 +97,7 @@ export default {
     Timeline,
     Recipient,
     Rating,
-    Reschedule,
+    changeinfo,
   },
   data() {
     return {
@@ -99,8 +111,8 @@ export default {
     },
   },
   methods: {
-    showDatePicker() {
-      this.$store.commit('setDatePickerVisible', true);
+    showDetailsPicker() {
+      this.$store.commit('setDetailsDialogVisible', true);
     },
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
@@ -133,5 +145,10 @@ export default {
   letter-spacing: 0.25px;
   color: #EE7D00;
   font-weight: 700;
+}
+.change-details-title {
+  color: #909399;
+  font-size: 13px;
+  margin: 5px 0px;
 }
 </style>

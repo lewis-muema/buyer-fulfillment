@@ -8,6 +8,9 @@ export default {
   setDialogVisible(state, val) {
     state.dialogVisible = val;
   },
+  setLoading(state, val) {
+    state.loading = val;
+  },
   setDatePickerVisible(state, val) {
     state.datePickerVisible = val;
   },
@@ -19,5 +22,8 @@ export default {
   },
   setRecipientVisible(state, val) {
     state.recipient = val;
+  },
+  setDetailsDialogVisible(state, val) {
+    state.detailsDialogVisible = val;
   },
 };
