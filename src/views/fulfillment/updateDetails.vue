@@ -20,7 +20,6 @@
         <div class="form-floating mb-3">
           <vue-tel-input
             v-model.trim="params.phone"
-            v-validate="'required|check_phone'"
             class="form-control cop-edit-form phone-input-display"
             name="phone"
             value=""
@@ -102,18 +101,6 @@
                   @click="deliveryOption = 'Leave at the door'"
                 >
                   Leave At the door
-                </div>
-              </el-col>
-              <el-col :span="12">
-                <div
-                  :class="
-                    deliveryOption === 'Other'
-                      ? 'delivery-options-tag-active'
-                      : 'delivery-options-tag-inactive'
-                  "
-                  @click="deliveryOption = 'Other'"
-                >
-                  <i class="el-icon-plus"></i> Other
                 </div>
               </el-col>
             </el-row>
@@ -240,7 +227,7 @@ export default {
     },
     visibleDialog(val) {
       this.$store.commit('setDialogVisible', val);
-      this.deliveryOption = val ? this.instructions : '';
+      this.deliveryOption = val ? this.$store.getters.getData.data.destination.delivery_instructions : '';
     },
     deliveryOption(val) {
       this.sendSegmentEvents({

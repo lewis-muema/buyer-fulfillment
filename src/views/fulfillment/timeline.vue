@@ -17,7 +17,7 @@
             :class="index + 1 === activities.length
             ? 'active-timeline-text' : ''"
           >
-            {{ formatEventName(activity.event_code) }}
+            {{ formatEventName($store.getters.getOrderEvents[index]) }}
           </span>
           <div
             v-if="getStatus([5]).includes($store.getters.getDeliveryStatus)"
@@ -29,13 +29,8 @@
             <div>
               <p class="timeline-rider-details">{{ rider.name }}</p>
               <p class="timeline-rider-details">{{ rider.vendor_type }}</p>
-              <p class="timeline-rider-details">{{ rider.licensePlateNumber }}</p>
-            </div>
-            <div>
-              <el-button type="primary">
-                <i class="el-icon-phone"></i>
-                Call
-              </el-button>
+              <p class="timeline-rider-details">{{ rider.vehicle_identifier }}</p>
+              <p class="timeline-rider-details">{{ rider.phone_number }}</p>
             </div>
           </div>
         </el-timeline-item>
@@ -45,11 +40,15 @@
 </template>
 
 <script>
+import statusMixin from '../../mixins/status_mixin';
+
 export default {
   name: 'Timeline',
+  mixins: [statusMixin],
   data() {
     return {
       activities: [],
+      events: [],
       rider: {},
     };
   },
@@ -59,7 +58,7 @@ export default {
     this.activities.forEach((row, index) => {
       if (this.activities.length === index + 1) {
         this.activities[index].color = '#324ba8';
-        this.activities[index].icon = 'el-icon-time';
+        this.activities[index].icon = 'el-icon-minus';
       } else {
         this.activities[index].icon = 'el-icon-check';
         this.activities[index].color = '#EE7D00';
@@ -69,18 +68,7 @@ export default {
   },
   methods: {
     formatEventName(name) {
-      let event = name.replace('event.', '');
-      event = event.charAt(0).toUpperCase() + event.slice(1);
-      return event.replaceAll('.', ' ');
-    },
-    getStatus(index) {
-      const statuses = [];
-      this.$store.getters.getOrderStatuses.forEach((row, i) => {
-        if (index.includes(i)) {
-          statuses.push(row);
-        }
-      });
-      return statuses;
+      return name.charAt(0).toUpperCase() + name.slice(1);
     },
   },
 };
@@ -137,7 +125,7 @@ export default {
   color: #324BA8;
   font-weight: 700;
 }
-.el-icon-time {
+.el-icon-minus {
   background: #324ba8;
   color: #324ba8 !important;
   box-shadow: 0 0 0 0 #324ba8;

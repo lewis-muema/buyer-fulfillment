@@ -94,6 +94,13 @@ export default {
           this.displayNotification(notification);
           this.$emit('close', false);
           this.$store.commit('setDialogVisible', false);
+          this.$store.dispatch('requestAxiosGet', {
+            app: process.env.FULFILMENT_SERVER,
+            endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
+          }).then((response) => {
+            this.$store.commit('setData', response.data);
+            this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
+          });
           this.sendSegmentEvents({
             event: 'Update Delivery Info',
             data: {

@@ -17,7 +17,7 @@
               >
                 <p>Expected Delivery</p>
                 <p class="date">{{ Object.keys(data).length > 0 ?
-                  formatDate(data.data.expected_delivery_date) :
+                  formatDate(data.data.scheduled_delivery_date) :
                   '--' }}
                 </p>
               </div>
@@ -48,9 +48,6 @@
               >
                 <p class="date">Package has been delivered</p>
                 <p>{{ formatDate(data.data.order_completion_date) }}</p>
-              </div>
-              <div v-if="isMorning">
-                <p class="date">{{ time }}</p>
               </div>
             </div>
           </el-card>

@@ -28,19 +28,21 @@
           v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
           class="recipient-details"
         >
-          <p class="recipient-details-leave-delivery">
+          <p
+            v-if="!$store.getters.getMobile"
+            class="recipient-details-leave-delivery"
+          >
             <i class="el-icon-info"></i>Tell us where you leave your delivery
           </p>
         </div>
       </div>
       <el-button
-        v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
+        v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)
+          && !$store.getters.getMobile"
         type="primary"
-        @click="showUpdateModal"
-        :class="
-          !$store.getters.getMobile ? 'update-info-button-desktop' : 'update-info-button-mobile'
-        "
-        >Update Delivery Info</el-button
+        @click="showDetailsPicker"
+        class="update-info-button-desktop"
+        >Change Delivery details</el-button
       >
     </div>
     <UpdateDetails
@@ -54,42 +56,34 @@
       :house="recepientInfo.house_location"
       :instructions="recepientInfo.delivery_instructions"
     />
+    <changeInfo />
   </div>
 </template>
 
 <script>
 import UpdateDetails from './updateDetails.vue';
+import changeInfo from './changeInfo.vue';
+import statusMixin from '../../mixins/status_mixin';
 
 export default {
   name: 'Recepient',
   components: {
     UpdateDetails,
+    changeInfo,
   },
+  mixins: [statusMixin],
   data() {
     return {
       showDialog: false,
-      recepientInfo: {
-        name: 'James Doe',
-        phone: ' +254 700 000 000',
-        location: 'Umoja Heights, Lumumba Drive',
-      },
+      recepientInfo: {},
     };
   },
   mounted() {
     this.recepientInfo = this.$store.getters.getData.data.destination;
   },
   methods: {
-    showUpdateModal() {
-      this.$store.commit('setDialogVisible', true);
-    },
-    getStatus(index) {
-      const statuses = [];
-      this.$store.getters.getOrderStatuses.forEach((row, i) => {
-        if (index.includes(i)) {
-          statuses.push(row);
-        }
-      });
-      return statuses;
+    showDetailsPicker() {
+      this.$store.commit('setDetailsDialogVisible', true);
     },
   },
 };
@@ -109,7 +103,7 @@ export default {
   margin-left: 20px;
 }
 .update-info-button-mobile {
-  margin-bottom: 80px !important;
+  width: 100%;
 }
 .update-info-button-desktop {
   margin-bottom: 0;
