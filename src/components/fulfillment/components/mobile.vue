@@ -63,7 +63,7 @@
       <p class="delivered-date">{{ formatDate(data.data.order_completion_date) }}</p>
     </div>
     <Reschedule />
-    <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
+    <Rating v-if="getStatus([0]).includes($store.getters.getDeliveryStatus)" />
     <Timeline />
     <Recipient />
   </div>

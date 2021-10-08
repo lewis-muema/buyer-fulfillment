@@ -79,7 +79,7 @@ export default {
         delivery_instructions: this.deliveryOption,
       };
       const fullPayload = {
-        app: 'https://fulfillment-biz-logic-service-dev.sendyit.com/',
+        app: process.env.FULFILMENT_SERVER,
         values: payload,
         endpoint: `buyer/orders/${this.$route.params.deliveryId}/recipient/update`,
       };

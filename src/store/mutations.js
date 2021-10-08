@@ -23,4 +23,7 @@ export default {
   setUpdateDelivery(state, val) {
     state.updateDelivery = val;
   },
+  setRateOrder(state, val) {
+    state.rateOrder = val;
+  },
 };

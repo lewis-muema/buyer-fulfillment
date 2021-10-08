@@ -18,6 +18,7 @@ export default new Vuex.Store({
       datePickerVisible: false,
       deliveryStatus: 0,
       updateDelivery: null,
+      rateOrder: null,
       orderStatuses: [
         'event.delivery.order.created',
         'event.delivery.at.hub.processing.for.delivery',
