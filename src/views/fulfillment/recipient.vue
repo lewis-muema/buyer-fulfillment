@@ -1,5 +1,5 @@
 <template>
-  <div v-if="$store.getters.getRecipientVisible">
+  <div v-if="$store.getters.getRecipientVisible && $store.getters.getTimelineVisible">
     <div :class="!$store.getters.getMobile ? 'recepient-info-desktop' : 'recepient-info-mobile'">
       <h3 :class="!$store.getters.getMobile ? '' : 'recepient-info-title-mobile'">Receiver</h3>
       <div class="recepient">

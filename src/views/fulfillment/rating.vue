@@ -11,7 +11,11 @@
             :class="rating === 1 ? 'thumbs-outline-active' : activeClass"
             @click="rating = 1"
           >
-            <font-awesome-icon icon="thumbs-up" class="h1 thumbs-icon" @click="likeRating" />
+            <font-awesome-icon
+              icon="thumbs-up"
+              class="h1 thumbs-icon"
+              @click="submitRating(1)"
+            />
           </div>
           <div v-if="$store.getters.getMobile">
             I liked it
@@ -31,7 +35,7 @@
         </div>
       </div>
       <div
-        v-if="rating === 2"
+        v-if="rating === 2 && !submitStatus"
         :class="
           $store.getters.getMobile
             ? 'rating-feedback-container-mobile'
@@ -42,9 +46,15 @@
           <div>
             What went wrong?
           </div>
-          <textarea class="feedback-input" cols="40" rows="5" placeholder="Tell us what went wrong">
+          <textarea
+            class="feedback-input"
+            cols="40"
+            rows="5"
+            placeholder="Tell us what went wrong"
+            v-model="comment"
+          >
           </textarea>
-          <button class="feedback-submit-button">
+          <button class="feedback-submit-button" @click="submitRating(2)">
             Submit feedback
           </button>
         </div>
@@ -63,9 +73,7 @@
         <div>
           <span
             class="el-dropdown-link view-history"
-            @click="
-              $store.commit('setTimelineVisible', !$store.getters.getTimelineVisible)
-            "
+            @click="$store.commit('setTimelineVisible', !$store.getters.getTimelineVisible)"
           >
             View Delivery history<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
@@ -76,6 +84,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import eventsMixin from '../../mixins/events_mixin';
 import NotificationMxn from '../../mixins/nofication_mixin';
 
@@ -85,6 +94,9 @@ export default {
   data() {
     return {
       rating: 0,
+      rate: true,
+      comment: '',
+      submitStatus: false,
     };
   },
   watch: {
@@ -97,6 +109,7 @@ export default {
           rating: val === 1 ? val : 0,
         },
       });
+      this.submitStatus = false;
     },
     '$store.getters.getTimelineVisible': function getTimelineVisible() {
       this.sendSegmentEvents({
@@ -113,13 +126,36 @@ export default {
     },
   },
   methods: {
-    likeRating() {
-      const notification = {
-        title: 'Rating submitted successfully',
-        level: 1,
-        message: '',
+    ...mapActions(['rateOrder']),
+    async submitRating(status) {
+      const payload = {
+        love: status === 1,
+        comment: this.comment,
       };
-      this.displayNotification(notification);
+      const fullPayload = {
+        app: process.env.FULFILMENT_SERVER,
+        values: payload,
+        endpoint: `buyer/orders/${this.$route.params.deliveryId}/rate`,
+      };
+      try {
+        this.submitStatus = true;
+        const data = await this.rateOrder(fullPayload);
+        const notification = {
+          title: 'Rating submitted successfully',
+          level: 1,
+          message: '',
+        };
+        this.displayNotification(notification);
+        return data;
+      } catch (error) {
+        const notification = {
+          title: 'Rating failed',
+          level: 3,
+          message: '',
+        };
+        this.displayNotification(notification);
+        return error;
+      }
     },
   },
 };

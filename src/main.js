@@ -9,6 +9,9 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
+import Vuelidate from 'vuelidate';
+import VueTelInput from 'vue-tel-input';
+import 'vue-tel-input/dist/vue-tel-input.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSpinner, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -103,6 +106,8 @@ Vue.use(Loading.directive);
 Vue.use(Upload);
 Vue.use(CheckboxGroup);
 Vue.use(Progress);
+Vue.use(Vuelidate);
+Vue.use(VueTelInput);
 Vue.use(VueGoogleMaps, {
   load: {
     libraries: ['places', 'geometry'],
