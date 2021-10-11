@@ -12,12 +12,13 @@
           :type="activity.type"
           :color="activity.color"
           :size="activity.size"
+          :timestamp="formatDate(activity.event_date)"
         >
           <span
             :class="index + 1 === activities.length
             ? 'active-timeline-text' : ''"
           >
-            {{ formatEventName($store.getters.getOrderEvents[index]) }}
+            {{ formatEventName($store.getters.getOrderEvents[activity.index]) }}
           </span>
           <div
             v-if="$store.getters.getDeliveryStatus === activity.event_code
@@ -56,7 +57,7 @@ export default {
   },
   mounted() {
     this.activities = this.$store.getters.getData.data.event_time_line
-      ? this.$store.getters.getData.data.event_time_line : [];
+      ? this.filteredEventTimeline() : [];
     this.activities.forEach((row, index) => {
       if (this.activities.length === index + 1
         && row.event_code !== 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code') {
@@ -70,11 +71,22 @@ export default {
     this.rider = this.$store.getters.getData.data.partner_contact_information;
   },
   methods: {
+    filteredEventTimeline() {
+      const events = [];
+      this.$store.getters.getData.data.event_time_line.forEach((row, index) => {
+        // eslint-disable-next-line no-param-reassign
+        row.index = index;
+        if (this.getStatus([0, 7, 8, 9]).includes(row.event_code)) {
+          events.push(row);
+        }
+      });
+      return events;
+    },
     formatEventName(name) {
       return name.charAt(0).toUpperCase() + name.slice(1);
     },
     formatDate(date) {
-      moment(date).format('YYYY-MM-DD HH:mm:ss');
+      return moment(date).format('HH:mm a, dddd Do MMMM YYYY');
     },
   },
 };

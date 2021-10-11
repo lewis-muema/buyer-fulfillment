@@ -37,6 +37,7 @@ export default {
       this.isMobile();
     });
     this.getDeliveryDetails();
+    this.poll();
   },
   methods: {
     showNotification() {
@@ -46,6 +47,11 @@ export default {
         message: 'test',
       };
       this.displayNotification(notification);
+    },
+    poll() {
+      setInterval(() => {
+        this.getDeliveryDetails();
+      }, 900000);
     },
     isMobile() {
       if (
