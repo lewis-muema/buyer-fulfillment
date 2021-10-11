@@ -9,7 +9,7 @@
       <div class="date-picker-title">
         Pick a date that works for you
       </div>
-      <v-date-picker v-model="date" color="#324BA8"></v-date-picker>
+      <v-date-picker v-model="date" :allowed-dates="allowedDates" color="#324BA8"></v-date-picker>
       <div>
         <button class="back-button" @click="visibleDatePicker = false">Back</button>
         <el-button class="save-button" @click="rescheduleDelivery()">Save</el-button>
@@ -42,6 +42,11 @@ export default {
     };
   },
   methods: {
+    allowedDates(date) {
+      // Can not select days before today and today
+      return new Date(date).valueOf() >= Date.now()
+        && new Date(date).valueOf() <= Date.now() + (1000 * 60 * 60 * 24 * 2);
+    },
     rescheduleDelivery() {
       this.$store.commit('setLoading', true);
       this.$store.commit('setDatePickerVisible', false);

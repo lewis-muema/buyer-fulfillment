@@ -136,11 +136,13 @@ initializeApp({
   appId: '1:724697801657:web:69355a1ba4a87949430c68',
   measurementId: 'G-YFWVL6YKF7',
 });
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: './' });
   });
 }
+
 new Vue({
   router,
   store,

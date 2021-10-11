@@ -21,7 +21,7 @@ export default {
     state.timelineVisible = val;
   },
   setRecipientVisible(state, val) {
-    state.recipient = val;
+    state.recipientVisible = val;
   },
   setDetailsDialogVisible(state, val) {
     state.detailsDialogVisible = val;
