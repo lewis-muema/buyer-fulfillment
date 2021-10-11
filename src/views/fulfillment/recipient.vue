@@ -1,26 +1,30 @@
 <template>
-  <div v-if="$store.getters.getRecipientVisible && $store.getters.getTimelineVisible">
+  <div v-if="$store.getters.getRecipientVisible"
+  >
     <div :class="!$store.getters.getMobile ? 'recepient-info-desktop' : 'recepient-info-mobile'">
       <h3 :class="!$store.getters.getMobile ? '' : 'recepient-info-title-mobile'">Receiver</h3>
       <div class="recepient">
         <div class="recipient-details">
-          <p><i class="el-icon-user"></i>{{ recepientInfo.name }}</p>
+          <p><i class="el-icon-user"></i>{{ $store.getters.getData.data.destination.name }}</p>
         </div>
         <div class="recipient-details">
-          <p><i class="el-icon-phone"></i>{{ recepientInfo.phone_number }}</p>
+          <p>
+            <i class="el-icon-phone"></i>
+            {{ $store.getters.getData.data.destination.phone_number }}
+          </p>
         </div>
         <div class="recipient-details">
           <p>
             <i class="el-icon-location-outline"></i>
             {{
-              recepientInfo.delivery_location
-                ? recepientInfo.delivery_location.description
+              $store.getters.getData.data.destination.delivery_location
+                ? $store.getters.getData.data.destination.delivery_location.description
                 : ""
             }}
           </p>
           <p class="">
             <small class="text-muted recipient-indent-text">
-              {{ recepientInfo.house_location }}
+              {{ $store.getters.getData.data.destination.house_location }}
             </small>
           </p>
         </div>
@@ -46,15 +50,15 @@
       >
     </div>
     <UpdateDetails
-      :name="recepientInfo.name"
-      :phone="recepientInfo.phone_number"
+      :name="$store.getters.getData.data.destination.name"
+      :phone="$store.getters.getData.data.destination.phone_number"
       :location="
-        recepientInfo.delivery_location
-          ? recepientInfo.delivery_location.description
+        $store.getters.getData.data.destination.delivery_location
+          ? $store.getters.getData.data.destination.delivery_location.description
           : ''
       "
-      :house="recepientInfo.house_location"
-      :instructions="recepientInfo.delivery_instructions"
+      :house="$store.getters.getData.data.destination.house_location"
+      :instructions="$store.getters.getData.data.destination.delivery_instructions"
     />
     <changeInfo />
   </div>
@@ -75,11 +79,7 @@ export default {
   data() {
     return {
       showDialog: false,
-      recepientInfo: {},
     };
-  },
-  mounted() {
-    this.recepientInfo = this.$store.getters.getData.data.destination;
   },
   methods: {
     showDetailsPicker() {

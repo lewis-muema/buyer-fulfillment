@@ -3,6 +3,7 @@
 import Vue from 'vue';
 import moment from 'moment';
 import { initializeApp } from 'firebase/app';
+import { getRemoteConfig, fetchAndActivate, getValue } from 'firebase/remote-config';
 import lang from 'element-ui/lib/locale/lang/en';
 import locale from 'element-ui/lib/locale';
 import * as VueGoogleMaps from 'vue2-google-maps';
@@ -136,11 +137,27 @@ initializeApp({
   appId: '1:724697801657:web:69355a1ba4a87949430c68',
   measurementId: 'G-YFWVL6YKF7',
 });
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: './' });
+const remoteConfig = getRemoteConfig();
+fetchAndActivate(remoteConfig)
+  .then((res) => {
+    // ...
+    console.log(res);
+  })
+  .catch((err) => {
+    // ...
+    console.log(err);
   });
-}
+
+const buyerEvents = getValue(remoteConfig, 'event.delivery.order.created');
+console.log('remoteConfig', remoteConfig);
+
+console.log('buyerEvents', buyerEvents);
+
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: './' });
+//   });
+// }
 new Vue({
   router,
   store,

@@ -31,7 +31,7 @@ export default new Vuex.Store({
         'event.delivery.partner.pickup.from.hub.confirmed.via.code',
         'event.delivery.partner.enroute.to.buyer.location',
         'event.delivery.partner.arrived.at.buyer.location',
-        'event.delivery.partner.submitted.items.to.buyer',
+        'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code',
         'event.delivery.order.canceled.by.seller',
       ],
       orderEvents: [
@@ -43,8 +43,8 @@ export default new Vuex.Store({
         'The partner has arrived at the pickup location for your order',
         'The partner has picked your package for delivery',
         'The partner is in transit to your location',
-        'The partner has arrived at your location and is ready to submit your package',
-        'The partner has submitted your package. Please share the code for the order to be completed',
+        'The partner has arrived at your location and is ready to submit your package, Please share the code for the order to be completed.',
+        'The partner has submitted your package.',
         'Your order has been cancelled by the seller',
       ],
     };

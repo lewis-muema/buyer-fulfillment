@@ -14,7 +14,6 @@
             <font-awesome-icon
               icon="thumbs-up"
               class="h1 thumbs-icon"
-              @click="submitRating(1)"
             />
           </div>
           <div v-if="$store.getters.getMobile">
@@ -35,7 +34,7 @@
         </div>
       </div>
       <div
-        v-if="rating === 2 && !submitStatus"
+        v-if="[1, 2].includes(rating) && !submitStatus"
         :class="
           $store.getters.getMobile
             ? 'rating-feedback-container-mobile'
@@ -44,17 +43,17 @@
       >
         <div class="rating-feedback">
           <div>
-            What went wrong?
+            {{ title }}
           </div>
           <textarea
             class="feedback-input"
             cols="40"
             rows="5"
-            placeholder="Tell us what went wrong"
+            :placeholder="placeholder"
             v-model="comment"
           >
           </textarea>
-          <button class="feedback-submit-button" @click="submitRating(2)">
+          <button class="feedback-submit-button" @click="submitRating(rating)">
             Submit feedback
           </button>
         </div>
@@ -97,10 +96,14 @@ export default {
       rate: true,
       comment: '',
       submitStatus: false,
+      placeholder: '',
+      title: '',
     };
   },
   watch: {
     rating(val) {
+      this.title = this.rating === 1 ? 'What did you like?' : 'What went wrong?';
+      this.placeholder = this.rating === 1 ? 'Tell us what you liked' : 'Tell us what went wrong';
       this.sendSegmentEvents({
         event: 'Rate Delivery',
         data: {
@@ -111,7 +114,10 @@ export default {
       });
       this.submitStatus = false;
     },
-    '$store.getters.getTimelineVisible': function getTimelineVisible() {
+    '$store.getters.getTimelineVisible': function getTimelineVisible(val) {
+      if (this.$store.getters.getMobile) {
+        this.$store.commit('setRecipientVisible', val);
+      }
       this.sendSegmentEvents({
         event: 'View Delivery History',
         data: {
@@ -248,6 +254,7 @@ export default {
 .items {
   text-align: left;
   margin-left: 80px;
+  margin-bottom: 50px;
 }
 .items-mobile {
   margin: 40px 20px;

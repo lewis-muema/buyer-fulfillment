@@ -20,13 +20,14 @@
             {{ formatEventName($store.getters.getOrderEvents[index]) }}
           </span>
           <div
-            v-if="getStatus([5]).includes($store.getters.getDeliveryStatus)"
+            v-if="$store.getters.getDeliveryStatus === activity.event_code
+              && $store.getters.getOrderStatuses[4] === activity.event_code"
             class="timeline-rider"
           >
             <div class="timeline-rider-thumbnail-container">
               <img class="timeline-rider-thumbnail" src="../../assets/rider.png" alt="">
             </div>
-            <div>
+            <div v-if="rider">
               <p class="timeline-rider-details">{{ rider.name }}</p>
               <p class="timeline-rider-details">{{ rider.vendor_type }}</p>
               <p class="timeline-rider-details">{{ rider.vehicle_identifier }}</p>
@@ -40,6 +41,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import statusMixin from '../../mixins/status_mixin';
 
 export default {
@@ -56,7 +58,8 @@ export default {
     this.activities = this.$store.getters.getData.data.event_time_line
       ? this.$store.getters.getData.data.event_time_line : [];
     this.activities.forEach((row, index) => {
-      if (this.activities.length === index + 1) {
+      if (this.activities.length === index + 1
+        && row.event_code !== 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code') {
         this.activities[index].color = '#324ba8';
         this.activities[index].icon = 'el-icon-minus';
       } else {
@@ -69,6 +72,9 @@ export default {
   methods: {
     formatEventName(name) {
       return name.charAt(0).toUpperCase() + name.slice(1);
+    },
+    formatDate(date) {
+      moment(date).format('YYYY-MM-DD HH:mm:ss');
     },
   },
 };
