@@ -37,6 +37,7 @@ export default {
       this.isMobile();
     });
     this.getDeliveryDetails();
+    this.poll();
   },
   methods: {
     showNotification() {
@@ -47,6 +48,11 @@ export default {
       };
       this.displayNotification(notification);
     },
+    poll() {
+      setInterval(() => {
+        this.getDeliveryDetails();
+      }, 900000);
+    },
     isMobile() {
       if (
         navigator.userAgent.match(/Android/i)
@@ -55,8 +61,10 @@ export default {
         || navigator.userAgent.match(/iPod/i)
       ) {
         this.$store.commit('setMobile', true);
+        this.$store.commit('setRecipientVisible', this.$store.getters.getTimelineVisible);
       } else {
         this.$store.commit('setMobile', false);
+        this.$store.commit('setRecipientVisible', true);
       }
     },
     getDeliveryDetails() {
