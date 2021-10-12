@@ -74,7 +74,9 @@ export default {
   methods: {
     filteredEventTimeline() {
       const events = [];
-      this.$store.getters.getData.data.event_time_line.forEach((row, index) => {
+      this.$store.getters.getData.data.event_time_line.forEach((row) => {
+        const index = this.$store.getters.getOrderStatuses
+          .findIndex((evt) => evt === row.event_code);
         // eslint-disable-next-line no-param-reassign
         row.index = index;
         if (this.getStatus([0, 7, 8, 9]).includes(row.event_code)) {
