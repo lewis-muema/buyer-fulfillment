@@ -12,7 +12,7 @@
           :type="activity.type"
           :color="activity.color"
           :size="activity.size"
-          :timestamp="formatDate(activity.event_date)"
+          :timestamp="formatDate(activity.event_date, activity.event_code)"
         >
           <span
             :class="index + 1 === activities.length
@@ -22,13 +22,14 @@
           </span>
           <div
             v-if="$store.getters.getDeliveryStatus === activity.event_code
-              && $store.getters.getOrderStatuses[4] === activity.event_code"
+              && $store.getters.getOrderStatuses[4] === activity.event_code
+              && rider"
             class="timeline-rider"
           >
             <div class="timeline-rider-thumbnail-container">
               <img class="timeline-rider-thumbnail" src="../../assets/rider.png" alt="">
             </div>
-            <div v-if="rider">
+            <div>
               <p class="timeline-rider-details">{{ rider.name }}</p>
               <p class="timeline-rider-details">{{ rider.vendor_type }}</p>
               <p class="timeline-rider-details">{{ rider.vehicle_identifier }}</p>
@@ -85,8 +86,11 @@ export default {
     formatEventName(name) {
       return name.charAt(0).toUpperCase() + name.slice(1);
     },
-    formatDate(date) {
-      return moment(date).format('HH:mm a, dddd Do MMMM YYYY');
+    formatDate(date, code) {
+      if (this.getStatus([0, 9]).includes(code)) {
+        return moment(date).format('ddd, MMM Do');
+      }
+      return '';
     },
   },
 };

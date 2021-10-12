@@ -25,7 +25,7 @@
     </div>
     <div
       class="fulfillemnt-order-items-expected-deivery"
-      v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 8])
+      v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7])
         .includes($store.getters.getDeliveryStatus)"
     >
       <p class="fulfillemnt-order-items-expected-deivery-title">
@@ -49,7 +49,7 @@
     </div>
     <div
       class="fulfillemnt-order-items-expected-deivery"
-      v-if="getStatus([7]).includes($store.getters.getDeliveryStatus)"
+      v-if="getStatus([8]).includes($store.getters.getDeliveryStatus)"
     >
       <p class="fulfillemnt-order-items-expected-deivery-title">
         Give this pin to the delivery person
