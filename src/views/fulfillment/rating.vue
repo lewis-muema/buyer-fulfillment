@@ -104,6 +104,7 @@ export default {
     rating(val) {
       this.title = this.rating === 1 ? 'What did you like?' : 'What went wrong?';
       this.placeholder = this.rating === 1 ? 'Tell us what you liked' : 'Tell us what went wrong';
+      this.comment = '';
       this.sendSegmentEvents({
         event: 'Rate Delivery',
         data: {
