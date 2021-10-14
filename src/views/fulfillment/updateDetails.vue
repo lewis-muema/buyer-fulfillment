@@ -266,20 +266,20 @@ export default {
 }
 .delivery-options-tag-inactive {
   border-radius: 30px;
-  padding: 15px 30px;
+  padding: 15px 0px;
   background: #f3f3f3;
   color: black;
   cursor: pointer;
-  width: 95%;
+  width: 100%;
   text-align: center;
 }
 .delivery-options-tag-active {
   border-radius: 30px;
-  padding: 15px 30px;
+  padding: 15px 0px;
   background: #324ba8;
   color: white;
   cursor: pointer;
-  width: 95%;
+  width: 100%;
   text-align: center;
 }
 .pac-icon {
