@@ -68,6 +68,7 @@ export default {
             message,
           };
           this.displayNotification(notification);
+          this.$store.commit('setDetailsDialogVisible', false);
           this.$store.dispatch('requestAxiosGet', {
             app: process.env.FULFILMENT_SERVER,
             endpoint: `buyer/orders/${this.$route.params.deliveryId}`,

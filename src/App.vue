@@ -6,7 +6,7 @@
   </v-app>
 </template>
 <script>
-import { getMessaging, getToken } from 'firebase/messaging';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import noficationMixin from './mixins/nofication_mixin';
 
 export default {
@@ -35,7 +35,7 @@ export default {
           });
         }
       });
-      messaging.onMessage((payload) => {
+      onMessage(messaging, (payload) => {
         console.log('onMessage', payload);
         const notification = {
           title: 'Notification Recieved',
