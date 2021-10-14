@@ -48,8 +48,8 @@ export default {
         && new Date(date).valueOf() <= Date.now() + (1000 * 60 * 60 * 24 * 2);
     },
     rescheduleDelivery() {
-      const date = moment().format('YYYY-MM-DD') <= this.date
-        ? new Date().getTime() + 60000 : this.date;
+      const date = moment().format('YYYY-MM-DD') === this.date
+        ? new Date().getTime() + 60000 : new Date(this.date).getTime();
       this.$store.commit('setLoading', true);
       this.$store.commit('setDatePickerVisible', false);
       this.$store.dispatch('requestAxiosPut', {
