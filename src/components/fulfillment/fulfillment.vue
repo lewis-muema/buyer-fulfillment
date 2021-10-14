@@ -69,6 +69,7 @@ export default {
     },
     getDeliveryDetails() {
       if (this.$route.params.deliveryId) {
+        localStorage.fulfilmentOrderNo = this.$route.params.deliveryId;
         this.$store.dispatch('requestAxiosGet', {
           app: process.env.FULFILMENT_SERVER,
           endpoint: `buyer/orders/${this.$route.params.deliveryId}`,

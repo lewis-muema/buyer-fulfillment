@@ -36,13 +36,19 @@ export default {
         }
       });
       onMessage(messaging, (payload) => {
-        console.log('onMessage', payload);
         const notification = {
-          title: 'Notification Recieved',
+          title: `${payload.notification.title}`,
           level: 1,
-          message: '',
+          message: payload.notification.body,
         };
         this.displayNotification(notification);
+        this.$store.dispatch('requestAxiosGet', {
+          app: process.env.FULFILMENT_SERVER,
+          endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
+        }).then((response) => {
+          this.$store.commit('setData', response.data);
+          this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
+        });
       });
     } catch (error) {
       // ...
