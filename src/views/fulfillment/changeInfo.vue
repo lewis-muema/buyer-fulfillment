@@ -19,13 +19,19 @@
             <h3 class="recepient-info-title-mobile">Receiver</h3>
             <div class="recepient">
               <div class="recipient-details">
-                <p><i class="el-icon-user"></i>{{ recepientInfo.name }}</p>
+                <p class="change-info-data-fields">
+                  <i class="el-icon-user"></i>
+                    {{ recepientInfo.name }}
+                </p>
               </div>
               <div class="recipient-details">
-                <p><i class="el-icon-phone"></i>{{ recepientInfo.phone_number }}</p>
+                <p class="change-info-data-fields">
+                  <i class="el-icon-phone"></i>
+                    {{ recepientInfo.phone_number }}
+                </p>
               </div>
               <div class="recipient-details">
-                <p>
+                <p class="change-info-data-fields">
                   <i class="el-icon-location-outline"></i>
                   {{
                     recepientInfo.delivery_location
@@ -84,10 +90,11 @@
 import moment from 'moment';
 import reschedule from './reschedule.vue';
 import statusMixin from '../../mixins/status_mixin';
+import notificationMxn from '../../mixins/nofication_mixin';
 
 export default {
   components: { reschedule },
-  mixins: [statusMixin],
+  mixins: [statusMixin, notificationMxn],
   watch: {
     '$store.getters.getDetailsDialogVisible': function setDetailsDialogStatus(val) {
       this.visibleDetailsDialog = val;
@@ -111,7 +118,17 @@ export default {
       this.$store.commit('setDatePickerVisible', true);
     },
     showUpdateModal() {
-      this.$store.commit('setDialogVisible', true);
+      if (moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date))
+        .format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
+        const notification = {
+          title: 'Warning',
+          level: 2,
+          message: 'You will not be able to change the delivery details on the day of the delivery. Kindly reschedule to a later date to edit details',
+        };
+        this.displayNotification(notification);
+      } else {
+        this.$store.commit('setDialogVisible', true);
+      }
     },
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
@@ -133,6 +150,13 @@ export default {
   padding: 20px;
   border-radius: 5px;
   margin: 10px;
+}
+.change-info-data-fields {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  margin-bottom: 10px !important;
 }
 .section-alignment {
   margin-left: -20px !important;

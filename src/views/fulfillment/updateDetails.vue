@@ -134,15 +134,17 @@
 </template>
 
 <script>
+import moment from 'moment';
 import eventsMixin from '../../mixins/events_mixin';
 import statusMixin from '../../mixins/status_mixin';
+import notificationMxn from '../../mixins/nofication_mixin';
 import ReviewChanges from './reviewChanges.vue';
 
 const { required, maxLength } = require('vuelidate/lib/validators');
 
 export default {
   name: 'UpdateDetails',
-  mixins: [eventsMixin, statusMixin],
+  mixins: [eventsMixin, statusMixin, notificationMxn],
   components: {
     ReviewChanges,
   },
@@ -246,7 +248,17 @@ export default {
       this.$emit('close', false);
     },
     showReviewModal() {
-      this.showDialog = true;
+      if (moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date))
+        .format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
+        const notification = {
+          title: 'Warning',
+          level: 2,
+          message: 'You will not be able to change the delivery details on the day of the delivery. Kindly reschedule to a later date to edit details',
+        };
+        this.displayNotification(notification);
+      } else {
+        this.showDialog = true;
+      }
     },
     setLocation(place) {
       this.params.deliveryLocation.description = place.name;
