@@ -19,13 +19,19 @@
             <h3 class="recepient-info-title-mobile">Receiver</h3>
             <div class="recepient">
               <div class="recipient-details">
-                <p><i class="el-icon-user"></i>{{ recepientInfo.name }}</p>
+                <p class="change-info-data-fields">
+                  <i class="el-icon-user"></i>
+                    {{ recepientInfo.name }}
+                </p>
               </div>
               <div class="recipient-details">
-                <p><i class="el-icon-phone"></i>{{ recepientInfo.phone_number }}</p>
+                <p class="change-info-data-fields">
+                  <i class="el-icon-phone"></i>
+                    {{ recepientInfo.phone_number }}
+                </p>
               </div>
               <div class="recipient-details">
-                <p>
+                <p class="change-info-data-fields">
                   <i class="el-icon-location-outline"></i>
                   {{
                     recepientInfo.delivery_location
@@ -133,6 +139,13 @@ export default {
   padding: 20px;
   border-radius: 5px;
   margin: 10px;
+}
+.change-info-data-fields {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  margin-bottom: 10px !important;
 }
 .section-alignment {
   margin-left: -20px !important;
