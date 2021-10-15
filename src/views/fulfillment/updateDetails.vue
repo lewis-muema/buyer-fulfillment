@@ -56,10 +56,10 @@
             placeholder="Floor, apartment or house number"
             v-model="params.house_location"
           />
-          <label for="floatingInput">Description</label>
+          <label for="floatingInput">Floor Number</label>
         </div>
         <div v-if="!$v.params.house_location.required" class="invalidFeedback">
-          description is required
+          Floor number is required
         </div>
         <div class="mt-3">
           <label for="Delivery options" class="form-label">Delivery options</label>
@@ -134,15 +134,17 @@
 </template>
 
 <script>
+import moment from 'moment';
 import eventsMixin from '../../mixins/events_mixin';
 import statusMixin from '../../mixins/status_mixin';
+import notificationMxn from '../../mixins/nofication_mixin';
 import ReviewChanges from './reviewChanges.vue';
 
 const { required, maxLength } = require('vuelidate/lib/validators');
 
 export default {
   name: 'UpdateDetails',
-  mixins: [eventsMixin, statusMixin],
+  mixins: [eventsMixin, statusMixin, notificationMxn],
   components: {
     ReviewChanges,
   },
@@ -227,7 +229,9 @@ export default {
     },
     visibleDialog(val) {
       this.$store.commit('setDialogVisible', val);
-      this.deliveryOption = val ? this.$store.getters.getData.data.destination.delivery_instructions : '';
+      this.deliveryOption = val
+        ? this.$store.getters.getData.data.destination.delivery_instructions
+        : '';
     },
     deliveryOption(val) {
       this.sendSegmentEvents({
@@ -246,7 +250,17 @@ export default {
       this.$emit('close', false);
     },
     showReviewModal() {
-      this.showDialog = true;
+      if (moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date))
+        .format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
+        const notification = {
+          title: 'Warning',
+          level: 2,
+          message: 'You will not be able to change the delivery details on the day of the delivery. Kindly reschedule to a later date to edit details',
+        };
+        this.displayNotification(notification);
+      } else {
+        this.showDialog = true;
+      }
     },
     setLocation(place) {
       this.params.deliveryLocation.description = place.name;

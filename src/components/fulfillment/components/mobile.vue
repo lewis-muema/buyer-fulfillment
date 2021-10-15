@@ -42,7 +42,7 @@
         >
           Not going to be in?
         </div>
-        <el-button @click="showDetailsPicker()">
+        <el-button @click="showDetailsPicker()" class="el-button">
           Change Delivery details
         </el-button>
       </div>
@@ -141,5 +141,9 @@ export default {
 }
 .fulfillemnt-order-items-header {
   text-transform: capitalize;
+}
+.el-button {
+margin: 0px 0px 20px !important;
+
 }
 </style>
