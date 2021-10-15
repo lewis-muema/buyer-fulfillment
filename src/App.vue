@@ -24,13 +24,13 @@ export default {
         if (currentToken) {
           // ...
           const deviceId = Math.floor(new Date().getTime());
-          localStorage.deviceId = deviceId;
+          localStorage.deviceId = localStorage.deviceId ? localStorage.deviceId : deviceId;
           this.$store.dispatch('requestAxiosPut', {
             app: process.env.FULFILMENT_SERVER,
             endpoint: `buyer/orders/${this.$route.params.deliveryId}/fcm`,
             values: {
               token: currentToken,
-              device_id: deviceId,
+              device_id: localStorage.deviceId,
             },
           });
         }

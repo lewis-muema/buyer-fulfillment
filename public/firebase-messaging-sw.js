@@ -18,6 +18,7 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 let notificationData = {};
+let orderId;
 
 self.addEventListener('install', event => {
   event.waitUntil(self.skipWaiting());
@@ -28,10 +29,11 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('push', event => {
   notificationData = JSON.parse(event.data.text());
+  orderId = notificationData.data.order_id;
   const { title } = notificationData.notification;
   const options = {
     body: notificationData.notification.body,
-    icon: '/notification-logo.png',
+    icon: './favicon.ico',
   };
 
   event.waitUntil(self.registration.showNotification(title, options));
@@ -39,7 +41,7 @@ self.addEventListener('push', event => {
 
 self.addEventListener('notificationclick', event => {
   const { origin } = event.currentTarget.location;
-  event.waitUntil(clients.openWindow(origin));
+  event.waitUntil(clients.openWindow(`${origin}/${orderId}`));
   event.notification.close();
 });
 
