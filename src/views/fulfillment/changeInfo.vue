@@ -10,7 +10,7 @@
       :close-on-click-modal="true"
     >
       <div v-loading="$store.getters.getLoading">
-        <div class="ml-2">
+        <div class="ml-2 change-info-title">
           Help us ensure that you get your package on the first delivery attempt
         </div>
         <div class="change-info-section-divider">
@@ -210,5 +210,8 @@ export default {
 .recipient-details-leave-delivery {
   color: #324ba8 !important;
   margin: 10px 0px;
+}
+.change-info-title {
+  word-break: normal;
 }
 </style>
