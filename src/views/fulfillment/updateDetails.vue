@@ -56,10 +56,10 @@
             placeholder="Floor, apartment or house number"
             v-model="params.house_location"
           />
-          <label for="floatingInput">Description</label>
+          <label for="floatingInput">Floor Number</label>
         </div>
         <div v-if="!$v.params.house_location.required" class="invalidFeedback">
-          description is required
+          Floor number is required
         </div>
         <div class="mt-3">
           <label for="Delivery options" class="form-label">Delivery options</label>
@@ -229,7 +229,9 @@ export default {
     },
     visibleDialog(val) {
       this.$store.commit('setDialogVisible', val);
-      this.deliveryOption = val ? this.$store.getters.getData.data.destination.delivery_instructions : '';
+      this.deliveryOption = val
+        ? this.$store.getters.getData.data.destination.delivery_instructions
+        : '';
     },
     deliveryOption(val) {
       this.sendSegmentEvents({

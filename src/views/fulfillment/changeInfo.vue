@@ -10,7 +10,7 @@
       :close-on-click-modal="true"
     >
       <div v-loading="$store.getters.getLoading">
-        <div>
+        <div class="ml-2">
           Help us ensure that you get your package on the first delivery attempt
         </div>
         <div class="change-info-section-divider">
