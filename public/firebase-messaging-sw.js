@@ -26,7 +26,6 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(self.clients.claim());
 });
-
 self.addEventListener('push', event => {
   notificationData = JSON.parse(event.data.text());
   orderId = notificationData.data.order_id;
@@ -35,10 +34,8 @@ self.addEventListener('push', event => {
     body: notificationData.notification.body,
     icon: './favicon.ico',
   };
-
   event.waitUntil(self.registration.showNotification(title, options));
 });
-
 self.addEventListener('notificationclick', event => {
   const { origin } = event.currentTarget.location;
   event.waitUntil(clients.openWindow(`${origin}/${orderId}`));
