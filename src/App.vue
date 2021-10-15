@@ -24,25 +24,31 @@ export default {
         if (currentToken) {
           // ...
           const deviceId = Math.floor(new Date().getTime());
-          localStorage.deviceId = deviceId;
+          localStorage.deviceId = localStorage.deviceId ? localStorage.deviceId : deviceId;
           this.$store.dispatch('requestAxiosPut', {
             app: process.env.FULFILMENT_SERVER,
             endpoint: `buyer/orders/${this.$route.params.deliveryId}/fcm`,
             values: {
               token: currentToken,
-              device_id: deviceId,
+              device_id: localStorage.deviceId,
             },
           });
         }
       });
       onMessage(messaging, (payload) => {
-        console.log('onMessage', payload);
         const notification = {
-          title: 'Notification Recieved',
+          title: `${payload.notification.title}`,
           level: 1,
-          message: '',
+          message: payload.notification.body,
         };
         this.displayNotification(notification);
+        this.$store.dispatch('requestAxiosGet', {
+          app: process.env.FULFILMENT_SERVER,
+          endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
+        }).then((response) => {
+          this.$store.commit('setData', response.data);
+          this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
+        });
       });
     } catch (error) {
       // ...
