@@ -90,10 +90,11 @@
 import moment from 'moment';
 import reschedule from './reschedule.vue';
 import statusMixin from '../../mixins/status_mixin';
+import notificationMxn from '../../mixins/nofication_mixin';
 
 export default {
   components: { reschedule },
-  mixins: [statusMixin],
+  mixins: [statusMixin, notificationMxn],
   watch: {
     '$store.getters.getDetailsDialogVisible': function setDetailsDialogStatus(val) {
       this.visibleDetailsDialog = val;
@@ -117,7 +118,17 @@ export default {
       this.$store.commit('setDatePickerVisible', true);
     },
     showUpdateModal() {
-      this.$store.commit('setDialogVisible', true);
+      if (moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date))
+        .format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
+        const notification = {
+          title: 'Warning',
+          level: 2,
+          message: 'You will not be able to change the delivery details on the day of the delivery. Kindly reschedule to a later date to edit details',
+        };
+        this.displayNotification(notification);
+      } else {
+        this.$store.commit('setDialogVisible', true);
+      }
     },
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
