@@ -20,6 +20,10 @@
                   formatDate(data.data.scheduled_delivery_date) :
                   '--' }}
                 </p>
+                <p v-if="data.data.estimated_delivery_date"
+                  class="date">
+                  {{ formatDeliveryWindow(data.data.estimated_delivery_date) }}
+                </p>
               </div>
               <div
                 class="delivery mt-5"
@@ -47,7 +51,7 @@
                 class="delivery mt-5"
               >
                 <p class="date">Package has been delivered</p>
-                <p>{{ formatDate(data.data.order_completion_date) }}</p>
+                <p>{{ formatCompletionDate(data.data.order_completion_date) }}</p>
               </div>
             </div>
           </el-card>
@@ -100,6 +104,14 @@ export default {
   methods: {
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
+    },
+    formatCompletionDate(date) {
+      return `${moment(new Date(date)).format('ddd, Do MMMM')} at ${moment(new Date(date)).format('h:mm a')}`;
+    },
+    formatDeliveryWindow(date) {
+      const lowerLimit = moment(new Date(date.estimated_delivery_time - (date.large_lower_limit * 60 * 1000))).format('h a');
+      const upperLimit = moment(new Date(date.estimated_delivery_time + (date.large_upper_limit * 60 * 1000))).format('h a');
+      return `${lowerLimit} - ${upperLimit}`;
     },
   },
 };

@@ -36,6 +36,10 @@
               formatDate(data.data.scheduled_delivery_date) :
               '--' }}
       </p>
+      <p v-if="data.data.estimated_delivery_date"
+        class="date">
+        {{ formatDeliveryWindow(data.data.estimated_delivery_date) }}
+      </p>
       <div>
         <div
           class="change-details-title"
@@ -67,7 +71,7 @@
       class="fulfillemnt-order-items-expected-deivery"
     >
       <p class="delivered-title">Package has been delivered</p>
-      <p class="delivered-date">{{ formatDate(data.data.order_completion_date) }}</p>
+      <p class="delivered-date">{{ formatCompletionDate(data.data.order_completion_date) }}</p>
     </div>
     <changeinfo />
     <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
@@ -113,6 +117,14 @@ export default {
     },
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
+    },
+    formatCompletionDate(date) {
+      return `${moment(new Date(date)).format('ddd, Do MMMM')} at ${moment(new Date(date)).format('h:mm a')}`;
+    },
+    formatDeliveryWindow(date) {
+      const lowerLimit = moment(new Date(date.estimated_delivery_time - (date.large_lower_limit * 60 * 1000))).format('h a');
+      const upperLimit = moment(new Date(date.estimated_delivery_time + (date.large_upper_limit * 60 * 1000))).format('h a');
+      return `${lowerLimit} - ${upperLimit}`;
     },
   },
 };

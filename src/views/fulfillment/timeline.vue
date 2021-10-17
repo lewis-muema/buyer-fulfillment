@@ -56,22 +56,30 @@ export default {
       rider: {},
     };
   },
+  watch: {
+    '$store.getters.getData.data.event_time_line': function refreshTimeline() {
+      this.initializeTimeline();
+    },
+  },
   mounted() {
-    this.activities = this.$store.getters.getData.data.event_time_line
-      ? this.filteredEventTimeline() : [];
-    this.activities.forEach((row, index) => {
-      if (this.activities.length === index + 1
-        && row.event_code !== 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code') {
-        this.activities[index].color = '#324ba8';
-        this.activities[index].icon = 'el-icon-minus';
-      } else {
-        this.activities[index].icon = 'el-icon-check';
-        this.activities[index].color = '#EE7D00';
-      }
-    });
-    this.rider = this.$store.getters.getData.data.partner_contact_information;
+    this.initializeTimeline();
   },
   methods: {
+    initializeTimeline() {
+      this.activities = this.$store.getters.getData.data.event_time_line
+        ? this.filteredEventTimeline() : [];
+      this.activities.forEach((row, index) => {
+        if (this.activities.length === index + 1
+        && row.event_code !== 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code') {
+          this.activities[index].color = '#324ba8';
+          this.activities[index].icon = 'el-icon-minus';
+        } else {
+          this.activities[index].icon = 'el-icon-check';
+          this.activities[index].color = '#EE7D00';
+        }
+      });
+      this.rider = this.$store.getters.getData.data.partner_contact_information;
+    },
     filteredEventTimeline() {
       const events = [];
       this.$store.getters.getData.data.event_time_line.forEach((row) => {
