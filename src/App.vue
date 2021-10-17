@@ -35,13 +35,7 @@ export default {
           });
         }
       });
-      onMessage(messaging, (payload) => {
-        const notification = {
-          title: `${payload.notification.title}`,
-          level: 1,
-          message: payload.notification.body,
-        };
-        this.displayNotification(notification);
+      onMessage(messaging, () => {
         this.$store.dispatch('requestAxiosGet', {
           app: process.env.FULFILMENT_SERVER,
           endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
