@@ -64,8 +64,7 @@ buildpush:prod:
   before_script:
     - export FLUX_IMAGE_NAME="sendy-docker-local.jfrog.io/buyer-fulfillment:prod_$(date +%Y-%m-%d-%H-%M)"
   script:
-    - docker build --build-arg DOCKER_ENV=production --build-arg VUE_APP_OWNER_SEARCH="https://gate.sendyit.com/solr/owner/" --build-arg VUE_APP_ENVIRONMENT="production" --build-arg VUE_APP_SENTRY_DSN="https://d017eeb1a2594094a9c30753d9e0b6bb@o32379.ingest.sentry.io/5922214" --build-arg VUE_APP_NODE_PRIVATE_URL="https://auth.sendyit.com/v1/" --build-arg VUE_APP_AUTH_URL="https://auth.sendyit.com/" --build-arg VUE_APP_ADONIS_URL="https://auth.sendyit.com/adonis/" --build-arg VUE_APP_CUSTOMERS_URL="https://auth.sendyit.com/customers/" --build-arg VUE_APP_PARTNERS_URL="https://auth.sendyit.com/partners/" --build-arg VUE_APP_ORDERS_URL="https://auth.sendyit.com/orders/" --pull -t $PROD_IMAGE_NAME -t $FLUX_IMAGE_NAME -f Dockerfile .
-    - docker push $PROD_IMAGE_NAME
+    - docker build --build-arg DOCKER_ENV=production --build-arg VUE_APP_OWNER_SEARCH="https://gate.sendyit.com/solr/owner/" --build-arg VUE_APP_ENVIRONMENT="production" --build-arg VUE_APP_SENTRY_DSN="https://d017eeb1a2594094a9c30753d9e0b6bb@o32379.ingest.sentry.io/5922214" --build-arg VUE_APP_NODE_PRIVATE_URL="https://auth.sendyit.com/v1/" --build-arg VUE_APP_AUTH_URL="https://auth.sendyit.com/" --build-arg VUE_APP_ADONIS_URL="https://auth.sendyit.com/adonis/" --build-arg VUE_APP_CUSTOMERS_URL="https://auth.sendyit.com/customers/" --build-arg VUE_APP_PARTNERS_URL="https://auth.sendyit.com/partners/" --build-arg VUE_APP_ORDERS_URL="https://auth.sendyit.com/orders/" --pull -t $FLUX_IMAGE_NAME -f Dockerfile .
     - docker push $FLUX_IMAGE_NAME
   only:
     - master
