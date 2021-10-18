@@ -7,4 +7,7 @@ module.exports = {
   configureWebpack: {
     plugins: [new webpack.EnvironmentPlugin(variables)],
   },
+  transpileDependencies: [
+    'vuetify',
+  ],
 };

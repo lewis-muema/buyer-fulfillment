@@ -1,15 +1,183 @@
 <template>
-  <div>
-    Timeline
+  <div v-if="$store.getters.getTimelineVisible">
+    <h3 :class="!$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'">Timeline</h3>
+    <div :class="!$store.getters.getMobile ? 'block mt-3' : 'timeline-events-mobile'">
+      <el-timeline>
+        <el-timeline-item
+          :class="!$store.getters.getMobile ?
+            'el-timeline-item-desktop' : ''"
+          v-for="(activity, index) in activities"
+          :key="index"
+          :icon="activity.icon"
+          :type="activity.type"
+          :color="activity.color"
+          :size="activity.size"
+          :timestamp="formatDate(activity.event_date, activity.event_code)"
+        >
+          <span
+            :class="index + 1 === activities.length
+            ? 'active-timeline-text' : ''"
+          >
+            {{ formatEventName($store.getters.getOrderEvents[activity.index]) }}
+          </span>
+          <div
+            v-if="$store.getters.getDeliveryStatus === activity.event_code
+              && $store.getters.getOrderStatuses[4] === activity.event_code
+              && rider"
+            class="timeline-rider"
+          >
+            <div class="timeline-rider-thumbnail-container">
+              <img class="timeline-rider-thumbnail" src="../../assets/rider.png" alt="">
+            </div>
+            <div>
+              <p class="timeline-rider-details">{{ rider.name }}</p>
+              <p class="timeline-rider-details">{{ rider.vendor_type }}</p>
+              <p class="timeline-rider-details">{{ rider.vehicle_identifier }}</p>
+              <p class="timeline-rider-details">{{ rider.phone_number }}</p>
+            </div>
+          </div>
+        </el-timeline-item>
+      </el-timeline>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
+import moment from 'moment';
+import statusMixin from '../../mixins/status_mixin';
 
+export default {
+  name: 'Timeline',
+  mixins: [statusMixin],
+  data() {
+    return {
+      activities: [],
+      events: [],
+      rider: {},
+    };
+  },
+  watch: {
+    '$store.getters.getData.data.event_time_line': function refreshTimeline() {
+      this.initializeTimeline();
+    },
+  },
+  mounted() {
+    this.initializeTimeline();
+  },
+  methods: {
+    initializeTimeline() {
+      this.activities = this.$store.getters.getData.data.event_time_line
+        ? this.filteredEventTimeline() : [];
+      this.activities.forEach((row, index) => {
+        if (this.activities.length === index + 1
+        && row.event_code !== 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code') {
+          this.activities[index].color = '#324ba8';
+          this.activities[index].icon = 'el-icon-minus';
+        } else {
+          this.activities[index].icon = 'el-icon-check';
+          this.activities[index].color = '#EE7D00';
+        }
+      });
+      this.rider = this.$store.getters.getData.data.partner_contact_information;
+    },
+    filteredEventTimeline() {
+      const events = [];
+      this.$store.getters.getData.data.event_time_line.forEach((row) => {
+        const index = this.$store.getters.getOrderStatuses
+          .findIndex((evt) => evt === row.event_code);
+        // eslint-disable-next-line no-param-reassign
+        row.index = index;
+        if (this.getStatus([0, 7, 8, 9]).includes(row.event_code)) {
+          events.push(row);
+        }
+      });
+      return events;
+    },
+    formatEventName(name) {
+      return name.charAt(0).toUpperCase() + name.slice(1);
+    },
+    formatDate(date, code) {
+      if (this.getStatus([0, 9]).includes(code)) {
+        return moment(date).format('ddd, MMM Do');
+      }
+      return '';
+    },
+  },
 };
 </script>
-
 <style>
+.el-timeline-item-desktop {
+  padding-right: 40%;
+}
+.block {
+  text-align: left;
+  margin-left: 50px;
+}
+.timeline-events-mobile {
+  margin: 25px 0px;
+}
+.timeline-desktop {
+  margin-right: 60%;
+  margin-left: 80px;
+}
+.timeline-mobile {
+  margin: 10px 20px;
+  color: #606266;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 1.5px;
+  text-align: left;
+}
+.timeline-rider {
+  display: flex;
+  padding: 20px;
+  padding: 20px 0px 0px 0px;
+}
+.timeline-rider-thumbnail-container {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.timeline-rider-thumbnail {
+  width: 70px;
+}
+.timeline-rider-details {
+  margin: 5px 0px;
+  margin-bottom: 5px !important;
+  width: 100px;
+}
+.trigger-button {
+  margin-left: 20px;
+}
+.active-timeline-text {
+  color: #324BA8;
+  font-weight: 700;
+}
+.el-icon-minus {
+  background: #324ba8;
+  color: #324ba8 !important;
+  box-shadow: 0 0 0 0 #324ba8;
+  border-radius: 20px;
+  animation: pulse-blue 2s infinite;
+}
+@keyframes pulse-blue {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 #324ba8;
+  }
 
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+  }
+}
 </style>

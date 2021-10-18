@@ -1,52 +1,95 @@
-// import axios from 'axios';
+import axios from 'axios';
 
-// export default {
-//   // payload = {
-//   //   app: 'NODE_PRIVATE_API',
-//   //   endpoint: 'sign_in',
-//   //   values: '',
-//   // }
-//   requestAxiosPost({ state }, payload) {
-//     const baseUrl = window.location.origin;
-//     const url = process.env;
-//     const config = {
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//     };
-//     return new Promise((resolve, reject) => {
-//       axios
-//         .post(`${url}${payload.endpoint}`, payload.values, config)
-//         .then((response) => {
-//           resolve(response);
-//         })
-//         .catch((error) => {
-//           if (error.response.status === 403 || error.response.status === 401) {
-//             const data = {
-//               access_token: localStorage.getItem('jwtToken'),
-//               refresh_token: localStorage.getItem('refreshToken'),
-//             };
-//             axios
-//               .post(`${state.ENV.AUTH}token`, data)
-//               .then((response) => {
-//                 if (response.status === 200) {
-//                   localStorage.setItem('jwtToken', response.data);
-//                 } else {
-//                   localStorage.removeItem('_sessionSnack');
-//                   localStorage.removeItem('jwtToken');
-//                   window.location.href = loginUrl;
-//                 }
-//               })
-//               .catch(() => {
-//                 localStorage.removeItem('_sessionSnack');
-//                 localStorage.removeItem('jwtToken');
-//                 window.location.href = loginUrl;
-//               });
-//             return true;
-//           }
-//           reject(error);
-//           return false;
-//         });
-//     });
-//   },
-// };
+export default {
+  // eslint-disable-next-line no-unused-vars
+  requestAxiosPost({ commit }, payload) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    return new Promise((resolve) => {
+      axios
+        .post(`${payload.app}${payload.endpoint}`, payload.values, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          resolve(error.response);
+          return false;
+        });
+    });
+  },
+  // eslint-disable-next-line no-unused-vars
+  requestAxiosGet({ commit }, payload) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    return new Promise((resolve) => {
+      axios
+        .get(`${payload.app}${payload.endpoint}`, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          resolve(error.response);
+          return false;
+        });
+    });
+  },
+  // eslint-disable-next-line no-unused-vars
+  requestAxiosPut({ commit }, payload) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    return new Promise((resolve) => {
+      axios
+        .put(`${payload.app}${payload.endpoint}`, payload.values, config)
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          resolve(error.response);
+          return false;
+        });
+    });
+  },
+  // eslint-disable-next-line no-unused-vars
+  requestAxiosPatch({ commit }, payload) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    return new Promise((resolve, reject) => {
+      axios.patch(`${payload.app}${payload.endpoint}`, payload.values, config).then((response) => {
+        resolve(response);
+      }).catch((error) => {
+        reject(error);
+        return false;
+      });
+    });
+  },
+  async updateDeliveryInformation({ dispatch, commit }, payload) {
+    try {
+      const res = await dispatch('requestAxiosPatch', payload, { root: true });
+      commit('setUpdateDelivery', res.data);
+      return res.data;
+    } catch (error) {
+      return error.response;
+    }
+  },
+  async rateOrder({ dispatch, commit }, payload) {
+    try {
+      const res = await dispatch('requestAxiosPut', payload, { root: true });
+      commit('setRateOrder', res.data);
+      return res.data;
+    } catch (error) {
+      return error.response;
+    }
+  },
+};
