@@ -8,10 +8,11 @@
 <script>
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import noficationMixin from './mixins/nofication_mixin';
+import eventsMixin from './mixins/events_mixin';
 
 export default {
   // eslint-disable-next-line camelcase
-  mixins: [noficationMixin],
+  mixins: [noficationMixin, eventsMixin],
   data() {
     return {};
   },
@@ -35,7 +36,15 @@ export default {
           });
         }
       });
-      onMessage(messaging, () => {
+      onMessage(messaging, (payload) => {
+        this.sendSegmentEvents({
+          event: 'Trigger for User',
+          data: {
+            userId: this.$store.getters.getData.data.destination.name,
+            // eslint-disable-next-line max-len
+            trigger: payload.notification.body,
+          },
+        });
         this.$store.dispatch('requestAxiosGet', {
           app: process.env.FULFILMENT_SERVER,
           endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
