@@ -101,18 +101,10 @@ export default {
     };
   },
   watch: {
-    rating(val) {
+    rating() {
       this.title = this.rating === 1 ? 'What did you like?' : 'What went wrong?';
       this.placeholder = this.rating === 1 ? 'Tell us what you liked' : 'Tell us what went wrong';
       this.comment = '';
-      this.sendSegmentEvents({
-        event: 'Rate Delivery',
-        data: {
-          userId: this.$store.getters.getData.data.destination.name,
-          // eslint-disable-next-line max-len
-          rating: val === 1 ? val : 0,
-        },
-      });
       this.submitStatus = false;
     },
     '$store.getters.getTimelineVisible': function getTimelineVisible(val) {
@@ -153,6 +145,14 @@ export default {
           message: '',
         };
         this.displayNotification(notification);
+        this.sendSegmentEvents({
+          event: 'Rate Delivery',
+          data: {
+            userId: this.$store.getters.getData.data.destination.name,
+            // eslint-disable-next-line max-len
+            rating: status === 1 ? status : 0,
+          },
+        });
         return data;
       } catch (error) {
         const notification = {
