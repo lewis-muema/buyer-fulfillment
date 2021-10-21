@@ -12,6 +12,7 @@ import Desktop from './components/desktop.vue';
 import Mobile from './components/mobile.vue';
 
 export default {
+  title: 'Buyer Fulfilment',
   name: 'fulfillment',
   components: {
     Desktop,

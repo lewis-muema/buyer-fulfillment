@@ -1,8 +1,10 @@
 const eventsMixin = {
   methods: {
     sendSegmentEvents(payload) {
-      // eslint-disable-next-line no-undef
-      analytics.track(payload.event, payload.data);
+      if (process.env.NODE_ENV === 'production') {
+        // eslint-disable-next-line no-undef
+        analytics.track(payload.event, payload.data);
+      }
     },
   },
 };
