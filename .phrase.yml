@@ -1,0 +1,20 @@
+phrase:
+  access_token: beb8d4b2ca41c5079f9f0cd14133980e28627f80ea456ec78ad19d755e8053ab
+  project_id: 273addfabbe1e5014e918c00fda8c000
+  push:
+    sources:
+    - file: ./locales/en.json
+      params:
+        file_format: simple_json
+        locale_id: 4e67dc85921d3fdc335bc97050c18088
+  pull:
+    targets:
+    - file: ./locales/en.json
+      params:
+        file_format: simple_json
+        locale_id: 4e67dc85921d3fdc335bc97050c18088
+
+    - file: ./locales/fr.json
+      params:
+        file_format: simple_json
+        locale_id: ea7d2cb19c3dc4018e858588f6bc89dd

@@ -1,6 +1,8 @@
 <template>
   <div v-if="$store.getters.getTimelineVisible">
-    <h3 :class="!$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'">Timeline</h3>
+    <h3 :class="!$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'">
+      {{ $t('timeline.timeline') }}
+    </h3>
     <div :class="!$store.getters.getMobile ? 'block mt-3' : 'timeline-events-mobile'">
       <el-timeline>
         <el-timeline-item
@@ -18,7 +20,7 @@
             :class="index + 1 === activities.length
             ? 'active-timeline-text' : ''"
           >
-            {{ formatEventName($store.getters.getOrderEvents[activity.index]) }}
+            {{ formatEventName($t(`${$store.getters.getOrderEvents[activity.index]}`)) }}
           </span>
           <div
             v-if="$store.getters.getDeliveryStatus === activity.event_code

@@ -22,6 +22,7 @@ export default new Vuex.Store({
       deliveryStatus: 0,
       updateDelivery: null,
       rateOrder: null,
+      language: 'en',
       orderStatuses: [
         'event.delivery.order.created',
         'event.delivery.at.hub.processing.for.delivery',

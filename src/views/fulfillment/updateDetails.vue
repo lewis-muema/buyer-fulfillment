@@ -11,11 +11,11 @@
     >
       <form>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" v-model="params.name"/>
-          <label for="floatingInput">{{ $t("reviewChanges.recipientName") }}</label>
+          <input type="text" class="form-control" id="floatingInput" v-model="params.name" />
+          <label for="floatingInput">{{ $t('reviewChanges.recipientName') }}</label>
         </div>
         <div v-if="!$v.params.name.required" class="invalidFeedback">
-          Name is required
+          {{ $t('updateDetails.recipientName') }}
         </div>
         <div class="form-floating mb-3">
           <vue-tel-input
@@ -27,16 +27,18 @@
             v-bind="sendyPhoneProps"
             :input-options="vueTelInputProps"
           />
-          <label for="floatingInput">Phone number</label>
+          <label for="floatingInput">{{ $t('updateDetails.phoneNumber') }}</label>
         </div>
         <div v-if="!$v.params.phone.required" class="invalidFeedback">
-          Phone number is required
+          {{ $t('updateDetails.phoneNumberRequired') }}
         </div>
         <div v-if="!$v.params.phone.maxLength" class="invalidFeedback">
-          Enter a valid phone number
+          {{ $t('updateDetails.validPhoneNumber') }}
         </div>
         <div class="form-floating mb-3">
-          <label for="floatingInput" class="location-input-label">Location</label>
+          <label for="floatingInput" class="location-input-label">
+            {{ $t('updateDetails.location') }}
+          </label>
           <gmap-autocomplete
             :value="params.deliveryLocation.description"
             :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)"
@@ -56,13 +58,15 @@
             placeholder="Floor, apartment or house number"
             v-model="params.house_location"
           />
-          <label for="floatingInput">Description</label>
+          <label for="floatingInput">{{ $t('updateDetails.floorNumber') }}</label>
         </div>
         <div v-if="!$v.params.house_location.required" class="invalidFeedback">
-          description is required
+          {{ $t('updateDetails.floorNumberRequired') }}
         </div>
         <div class="mt-3">
-          <label for="Delivery options" class="form-label">Delivery options</label>
+          <label for="Delivery options" class="form-label">
+            {{ $t('updateDetails.deliveryOptions') }}
+          </label>
           <div class="mb-3">
             <el-row>
               <el-col :span="12">
@@ -74,7 +78,7 @@
                   "
                   @click="deliveryOption = 'Leave with guard'"
                 >
-                  Leave With Guard
+                  {{ $t('updateDetails.leaveWithGuard') }}
                 </div>
               </el-col>
               <el-col :span="12">
@@ -86,7 +90,7 @@
                   "
                   @click="deliveryOption = 'Leave at the reception'"
                 >
-                  Leave At the Reception
+                  {{ $t('updateDetails.leaveAtTheReception') }}
                 </div>
               </el-col>
             </el-row>
@@ -100,7 +104,7 @@
                   "
                   @click="deliveryOption = 'Leave at the door'"
                 >
-                  Leave At the door
+                  {{ $t('updateDetails.leaveAtTheDoor') }}
                 </div>
               </el-col>
             </el-row>
@@ -114,7 +118,7 @@
               !$store.getters.getMobile ? 'update-info-button-desktop' : 'update-info-button-mobile'
             "
           >
-            Update Delivery Info
+            {{ $t('updateDetails.updateDeliveryInfo') }}
           </el-button>
         </div>
       </form>

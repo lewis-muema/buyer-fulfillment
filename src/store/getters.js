@@ -12,4 +12,5 @@ export default {
   getOrderStatuses: (state) => state.orderStatuses,
   getOrderTimelines: (state) => state.orderTimelines,
   getOrderEvents: (state) => state.orderEvents,
+  getLanguage: (state) => state.language,
 };

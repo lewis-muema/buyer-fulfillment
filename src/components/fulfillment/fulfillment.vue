@@ -40,14 +40,6 @@ export default {
     this.poll();
   },
   methods: {
-    showNotification() {
-      const notification = {
-        title: 'test',
-        level: 1,
-        message: 'test',
-      };
-      this.displayNotification(notification);
-    },
     poll() {
       setInterval(() => {
         this.getDeliveryDetails();

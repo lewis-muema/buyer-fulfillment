@@ -7,12 +7,16 @@
       :close-on-click-modal="true"
     >
       <div class="date-picker-title">
-        Pick a date that works for you
+        {{ $t('reschedule.pickADate') }}
       </div>
       <v-date-picker v-model="date" :allowed-dates="allowedDates" color="#324BA8"></v-date-picker>
       <div>
-        <button class="back-button" @click="visibleDatePicker = false">Back</button>
-        <el-button class="save-button" @click="rescheduleDelivery()">Save</el-button>
+        <button class="back-button" @click="visibleDatePicker = false">
+          {{ $t('reschedule.back') }}
+        </button>
+        <el-button class="save-button" @click="rescheduleDelivery()">
+          {{ $t('reschedule.save') }}
+        </el-button>
       </div>
     </el-dialog>
   </div>
