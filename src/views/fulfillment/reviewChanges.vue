@@ -9,19 +9,19 @@
     >
       <form action="">
         <div class="">
-          <div class="review-modal-title">Review changes</div>
+          <div class="review-modal-title">{{ $t('reviewChanges.reviewChanges') }}</div>
           <br />
         </div>
         <div class="">
-          <div class="review-modal-description">Name of Recepient</div>
+          <div class="review-modal-description">{{ $t('reviewChanges.recipientName') }}</div>
           <div class="review-modal-item">{{ name }}</div>
         </div>
         <div class="mt-3">
-          <div class="review-modal-description">Phone Number</div>
+          <div class="review-modal-description">{{ $t('reviewChanges.phoneNumber') }}</div>
           <div class="review-modal-item">{{ phone }}</div>
         </div>
         <div class="mt-3">
-          <div class="review-modal-description">Floor, apartment or HouseNo</div>
+          <div class="review-modal-description">{{ $t('reviewChanges.houseLocation') }}</div>
           <div class="review-modal-item">{{ houseLocation }}</div>
         </div>
         <div class="d-grid gap-2 col-12 mx-auto mt-3">
@@ -32,12 +32,12 @@
             v-loading="loading"
             element-loading-background="rgba(0, 0, 0, 0.5)"
           >
-            Confirm Changes
+            {{ $t('reviewChanges.confirmChanges') }}
           </el-button>
         </div>
         <div class="d-grid gap-2 col-12 mx-auto mt-3">
           <button class="btn btn-light" type="button" @click="handleClose">
-            Cancel
+            {{ $t('reviewChanges.cancel') }}
           </button>
         </div>
       </form>
@@ -93,7 +93,7 @@ export default {
         if (data.errors.length === 0) {
           this.loading = false;
           const notification = {
-            title: 'Delivery information changed successfully',
+            title: this.$t('reviewChanges.infoChanged'),
             level: 1,
             message: '',
           };

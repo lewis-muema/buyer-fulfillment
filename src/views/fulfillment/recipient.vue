@@ -2,7 +2,9 @@
   <div v-if="$store.getters.getRecipientVisible"
   >
     <div :class="!$store.getters.getMobile ? 'recepient-info-desktop' : 'recepient-info-mobile'">
-      <h3 :class="!$store.getters.getMobile ? '' : 'recepient-info-title-mobile'">Receiver</h3>
+      <h3 :class="!$store.getters.getMobile ? '' : 'recepient-info-title-mobile'">
+        {{ $t('changeInfo.Receiver') }}
+      </h3>
       <div class="recepient">
         <div class="recipient-details">
           <p><i class="el-icon-user"></i>{{ $store.getters.getData.data.destination.name }}</p>
@@ -36,7 +38,7 @@
             v-if="!$store.getters.getMobile"
             class="recipient-details-leave-delivery"
           >
-            <i class="el-icon-info"></i>Tell us where you leave your delivery
+            <i class="el-icon-info"></i>{{ $t('recipient.whereToLeaveYourDelivery') }}
           </p>
         </div>
       </div>
@@ -46,7 +48,7 @@
         type="primary"
         @click="showDetailsPicker"
         class="update-info-button-desktop"
-        >Change Delivery details</el-button
+        >{{ $t('mobile.changeDetails') }}</el-button
       >
     </div>
     <UpdateDetails
