@@ -15,7 +15,7 @@
                 v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7])
                   .includes($store.getters.getDeliveryStatus)"
               >
-                <p>Expected Delivery</p>
+                <p>{{ $t('mobile.expectedDelivery') }}</p>
                 <p class="date">{{ Object.keys(data).length > 0 ?
                   formatDate(data.data.scheduled_delivery_date) :
                   '--' }}
@@ -31,7 +31,7 @@
               >
                 <p class="rider-pin">
                   <span>
-                    PIN:
+                    {{ $t('mobile.pin') }}
                   </span>
                   <span class="rider-pin-value">
                     {{ Object.keys(data).length > 0 ?
@@ -42,7 +42,7 @@
                 <p class="rider-pin-description">
                  <i class="el-icon-info"></i>
                  <span class="rider-pin-description-text">
-                   Give this PIN to the delivery person
+                   {{ $t('desktop.givePin') }}
                   </span>
                 </p>
               </div>
@@ -50,7 +50,7 @@
                 v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
                 class="delivery mt-5"
               >
-                <p class="date">Package has been delivered</p>
+                <p class="date">{{ $t('desktop.packageDelivered') }}</p>
                 <p>{{ formatCompletionDate(data.data.order_completion_date) }}</p>
               </div>
             </div>

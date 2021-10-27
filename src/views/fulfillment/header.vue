@@ -11,13 +11,14 @@
       <div class="fulfillment-header-menu">
         <el-dropdown @command="changeLanguage"
           class="fulfillment-header-language-menu"
-          v-if="showLanguageDropdown"
         >
             <span class="el-dropdown-link language-change ">
-              English<i class="el-icon-arrow-down el-icon--right"></i>
+              {{ language === 'en' ? $t('header.english') : $t('header.french') }}
+              <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="french">French</el-dropdown-item>
+              <el-dropdown-item command="en">{{ $t('header.english') }}</el-dropdown-item>
+              <el-dropdown-item command="fr">{{ $t('header.french') }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
       </div>
@@ -34,10 +35,16 @@ export default {
   data() {
     return {
       showLanguageDropdown: false,
+      language: '',
     };
+  },
+  mounted() {
+    this.language = localStorage.buyerTimeLocale;
   },
   methods: {
     changeLanguage(command) {
+      this.language = command;
+      window.dispatchEvent(new CustomEvent('language-changed', { detail: this.language }));
       this.sendSegmentEvents({
         event: 'Select Language',
         data: {

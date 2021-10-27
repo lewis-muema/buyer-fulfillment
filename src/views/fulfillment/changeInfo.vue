@@ -11,12 +11,12 @@
     >
       <div v-loading="$store.getters.getLoading">
         <div class="ml-2 change-info-title">
-          Help us ensure that you get your package on the first delivery attempt
+          {{ $t('changeInfo.firstAttempt') }}
         </div>
         <div class="change-info-section-divider">
           <div class="section-alignment">
           <div class="recepient-info-mobile">
-            <h3 class="recepient-info-title-mobile">Receiver</h3>
+            <h3 class="recepient-info-title-mobile">{{ $t('changeInfo.Receiver') }}</h3>
             <div class="recepient">
               <div class="recipient-details">
                 <p class="change-info-data-fields">
@@ -56,7 +56,7 @@
               type="primary"
               @click="showUpdateModal"
               class="change-info-button-mobile"
-              >Change Receiver Info</el-button
+              >{{ $t('changeInfo.changeRecieverInfo') }}</el-button
             >
           </div>
           </div>
@@ -64,7 +64,7 @@
         <div class="change-info-section-divider">
           <div class="change-info-section-reschedule">
             <p class="fulfillemnt-order-items-expected-deivery-title">
-              Delivery Date
+              {{ $t('changeInfo.deliveryDate') }}
             </p>
             <p>
               <i class="el-icon-time"></i>
@@ -76,7 +76,7 @@
               class="reschedule-button"
               @click="showDatePicker()"
             >
-              Reschedule Date
+              {{ $t('changeInfo.Reschadule') }}
             </button>
           </div>
         </div>
