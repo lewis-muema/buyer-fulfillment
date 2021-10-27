@@ -31,9 +31,10 @@ function fetchCountry() {
   const { EXTREME_IP_KEY } = process.env;
   axios(`https://extreme-ip-lookup.com/json/?key=${EXTREME_IP_KEY}`)
     .then((response) => {
-      i18n.locale = response.data.countryCode === 'FR' || response.data.countryCode === 'CI' ? 'fr' : 'en';
-      const lang = response.data.countryCode === 'FR' || response.data.countryCode === 'CI' ? `fr-${response.data.countryCode}` : 'en-US,en;q=0.9';
-      const locale = response.data.countryCode === 'FR' || response.data.countryCode === 'CI' ? 'fr' : 'en';
+      const francoPhoneCountries = ['FR', 'CI'].includes(response.data.countryCode);
+      i18n.locale = francoPhoneCountries ? 'fr' : 'en';
+      const lang = francoPhoneCountries ? `fr-${response.data.countryCode}` : 'en-US,en;q=0.9';
+      const locale = francoPhoneCountries ? 'fr' : 'en';
       localStorage.setItem('buyerTimeLocale', locale);
       localStorage.setItem('buyerLanguage', lang);
       localStorage.setItem('buyerCountryCode', response.data.countryCode);
