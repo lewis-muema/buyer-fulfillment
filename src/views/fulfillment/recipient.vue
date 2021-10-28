@@ -7,16 +7,19 @@
       </h3>
       <div class="recepient">
         <div class="recipient-details">
-          <p><i class="el-icon-user"></i>{{ $store.getters.getData.data.destination.name }}</p>
+          <p class="reciepient-details-rows">
+            <i class="el-icon-user"></i>
+            {{ $store.getters.getData.data.destination.name }}
+          </p>
         </div>
         <div class="recipient-details">
-          <p>
+          <p class="reciepient-details-rows">
             <i class="el-icon-phone"></i>
             {{ $store.getters.getData.data.destination.phone_number }}
           </p>
         </div>
         <div class="recipient-details">
-          <p>
+          <p class="reciepient-details-rows">
             <i class="el-icon-location-outline"></i>
             {{
               $store.getters.getData.data.destination.delivery_location
@@ -24,7 +27,7 @@
                 : ""
             }}
           </p>
-          <p class="">
+          <p class="reciepient-details-rows">
             <small class="text-muted recipient-indent-text">
               {{ $store.getters.getData.data.destination.house_location }}
             </small>
@@ -139,5 +142,8 @@ export default {
 .recipient-details-leave-delivery {
   color: #324ba8 !important;
   margin: 10px 0px;
+}
+.reciepient-details-rows {
+  line-height: normal;
 }
 </style>
