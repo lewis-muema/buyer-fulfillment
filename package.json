@@ -25,11 +25,8 @@
     "firebase": "^9.1.1",
     "moment": "^2.29.1",
     "vue": "^2.6.11",
-<<<<<<< HEAD
-=======
     "vue-i18n": "^8.26.5",
     "vue-page-title": "^1.2.5",
->>>>>>> 473fdf9 (Add language support using phrase)
     "vue-router": "^3.2.0",
     "vue-tel-input": "^5.6.2",
     "vue2-google-maps": "^0.10.7",
