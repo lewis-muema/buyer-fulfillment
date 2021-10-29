@@ -1,3 +1,4 @@
+/* eslint-disable */
 // import Vuex from 'vuex';
 // import ElementUI from 'element-ui';
 // import { shallowMount, createLocalVue } from '@vue/test-utils';

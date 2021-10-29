@@ -1,3 +1,4 @@
+/* eslint-disable */
 // import Vuex from 'vuex';
 // import { expect } from 'chai';
 // import ElementUI from 'element-ui';
