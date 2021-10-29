@@ -75,7 +75,6 @@ export default {
           endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
         }).then((response) => {
           this.$store.commit('setData', response.data);
-          console.log('test', response);
           this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
         });
       }
