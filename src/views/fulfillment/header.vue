@@ -13,12 +13,13 @@
           class="fulfillment-header-language-menu"
         >
             <span class="el-dropdown-link language-change ">
-              {{ language === 'en' ? $t('header.english') : $t('header.french') }}
+              {{ activeLanguage }}
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="en">{{ $t('header.english') }}</el-dropdown-item>
               <el-dropdown-item command="fr">{{ $t('header.french') }}</el-dropdown-item>
+              <el-dropdown-item command="en-ng">{{ $t('header.englishNg') }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
       </div>
@@ -40,6 +41,17 @@ export default {
   },
   mounted() {
     this.language = localStorage.buyerTimeLocale;
+  },
+  computed: {
+    activeLanguage() {
+      if (this.language === 'en-ng') {
+        return this.$t('header.englishNg');
+      }
+      if (this.language === 'fr') {
+        return this.$t('header.french');
+      }
+      return this.$t('header.english');
+    },
   },
   methods: {
     changeLanguage(command) {
