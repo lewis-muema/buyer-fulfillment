@@ -2,7 +2,7 @@
   <div>
     <el-dialog
       title="Update delivery Info"
-      :visible.sync="visibleDetailsDialog"
+      :visible.sync="setDetailsDialogStatus"
       :width="$store.getters.getMobile ? '100%' : '30%'"
       :fullscreen="$store.getters.getMobile ? true : false"
       :show-close="$store.getters.getMobile ? true : false"
@@ -39,11 +39,13 @@
                   </small>
                 </p>
               </div>
-              <div
+              <el-button
                 v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
-                class="recipient-details"
+                type="primary"
+                @click="showUpdateModal"
+                class="change-info-button-mobile"
+                >Change Receiver Info</el-button
               >
-              </div>
             </div>
             <el-button
               v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
@@ -62,9 +64,11 @@
             </p>
             <p>
               <i class="el-icon-time"></i>
-              {{ Object.keys($store.getters.getData).length > 0 ?
-                    formatDate($store.getters.getData.data.scheduled_delivery_date) :
-                    '--' }}
+              {{
+                Object.keys($store.getters.getData).length > 0
+                  ? formatDate($store.getters.getData.data.scheduled_delivery_date)
+                  : "--"
+              }}
             </p>
             <button
               class="reschedule-button"
@@ -82,6 +86,7 @@
 
 <script>
 import moment from 'moment';
+import { mapGetters } from 'vuex';
 import reschedule from './reschedule.vue';
 import statusMixin from '../../mixins/status_mixin';
 
@@ -89,22 +94,18 @@ export default {
   components: { reschedule },
   mixins: [statusMixin],
   watch: {
-    '$store.getters.getDetailsDialogVisible': function setDetailsDialogStatus(val) {
-      this.visibleDetailsDialog = val;
-    },
-    visibleDetailsDialog(val) {
+    setDetailsDialogStatus(val) {
       this.$store.commit('setDetailsDialogVisible', val);
     },
   },
   computed: {
+    ...mapGetters(['getDetailsDialogVisible', 'getData']),
     recepientInfo() {
-      return this.$store.getters.getData.data.destination;
+      return this.getData.data.destination;
     },
-  },
-  data() {
-    return {
-      visibleDetailsDialog: false,
-    };
+    setDetailsDialogStatus() {
+      return this.getDetailsDialogVisible;
+    },
   },
   methods: {
     showDatePicker() {
@@ -129,7 +130,7 @@ export default {
   border-radius: 5px;
 }
 .change-info-section-divider {
-  border: 1px solid #DCDFE6;
+  border: 1px solid #dcdfe6;
   padding: 20px;
   border-radius: 5px;
   margin: 10px;
