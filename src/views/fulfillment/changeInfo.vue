@@ -50,20 +50,13 @@
                 ></div>
               </div>
               <el-button
-                v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
-                type="primary"
-                @click="showUpdateModal"
-                class="change-info-button-mobile"
-                >Change Receiver Info</el-button
-              >
-            </div>
-            <el-button
               v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
               type="primary"
               @click="showUpdateModal"
               class="change-info-button-mobile"
               >{{ $t('changeInfo.changeRecieverInfo') }}</el-button
             >
+            </div>
           </div>
           </div>
         </div>
@@ -88,7 +81,6 @@
             </button>
           </div>
         </div>
-      </div>
     </el-dialog>
     <reschedule />
   </div>
