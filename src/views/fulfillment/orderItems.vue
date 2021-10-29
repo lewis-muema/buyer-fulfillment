@@ -20,13 +20,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'OrderItems',
   data() {
-    return {
-      title: 'Marini Natural Order',
-      orderItems: this.$store.getters.getData.data.products,
-    };
+    return {};
+  },
+  computed: {
+    ...mapGetters(['getData']),
+    orderItems() {
+      return this.getData.data.products;
+    },
   },
 };
 </script>
