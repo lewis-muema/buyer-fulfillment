@@ -1,6 +1,8 @@
 <template>
   <div v-if="$store.getters.getTimelineVisible">
-    <h3 :class="!$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'">Timeline</h3>
+    <h3 :class="!$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'">
+      {{ $t('timeline.timeline') }}
+    </h3>
     <div :class="!$store.getters.getMobile ? 'block mt-3' : 'timeline-events-mobile'">
       <el-timeline>
         <el-timeline-item
@@ -18,16 +20,16 @@
             :class="index + 1 === activities.length
             ? 'active-timeline-text' : ''"
           >
-            {{ formatEventName($store.getters.getOrderEvents[activity.index]) }}
+            {{ formatEventName($t(`${$store.getters.getOrderEvents[activity.index]}`)) }}
           </span>
           <div
             v-if="$store.getters.getDeliveryStatus === activity.event_code
-              && $store.getters.getOrderStatuses[4] === activity.event_code
+              && $store.getters.getOrderStatuses[7] === activity.event_code
               && rider"
             class="timeline-rider"
           >
             <div class="timeline-rider-thumbnail-container">
-              <img class="timeline-rider-thumbnail" src="../../assets/rider.png" alt="">
+              <i class="el-icon-user timeline-rider-thumbnail"></i>
             </div>
             <div>
               <p class="timeline-rider-details">{{ rider.name }}</p>
@@ -144,11 +146,18 @@ export default {
 }
 .timeline-rider-thumbnail {
   width: 70px;
+  height: 70px;
+  border: 2px solid #303133;
+  border-radius: 50px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .timeline-rider-details {
   margin: 5px 0px;
   margin-bottom: 5px !important;
-  width: 100px;
+  width: 200px;
 }
 .trigger-button {
   margin-left: 20px;

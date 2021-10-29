@@ -2,7 +2,7 @@
   <div>
     <div :class="$store.getters.getMobile ? 'rate-delivery-mobile' : 'rate-delivery-desktop'">
       <p :class="$store.getters.getMobile ? 'delivery-title-mobile' : 'delivery-title-desktop'">
-        How was your delivery?
+        {{ $t('rating.howWasYourDelivery') }}
       </p>
       <div :class="$store.getters.getMobile ? 'icons-mobile' : 'icons-desktop'">
         <div class="thumbs" :class="$store.getters.getMobile ? 'thumbs-mobile' : 'thumbs-desktop'">
@@ -14,7 +14,7 @@
             <font-awesome-icon icon="thumbs-up" class="h1 thumbs-icon" />
           </div>
           <div v-if="$store.getters.getMobile">
-            I liked it
+            {{ $t('rating.liked') }}
           </div>
         </div>
         <div class="thumbs" :class="$store.getters.getMobile ? 'thumbs-mobile' : 'thumbs-desktop'">
@@ -26,7 +26,7 @@
             <font-awesome-icon icon="thumbs-down" class="h1 thumbs-icon" />
           </div>
           <div v-if="$store.getters.getMobile">
-            I didn't like it
+            {{ $t('rating.disliked') }}
           </div>
         </div>
       </div>
@@ -51,29 +51,29 @@
           >
           </textarea>
           <button class="feedback-submit-button" @click="submitRating(rating)">
-            Submit feedback
+            {{ $t('rating.submitFeedback') }}
           </button>
         </div>
       </div>
     </div>
     <div :class="!$store.getters.getMobile ? 'items mt-3' : 'items-mobile'">
       <h5 :class="$store.getters.getMobile ? 'items-title-mobile' : ''">
-        Issues with your items
+        {{ $t('rating.issues') }}
       </h5>
       <p>
-        If you have issues with your items, contact {{ seller_name }}
+        {{ $t('rating.contact') }} {{ seller_name }}
       </p>
       <br />
       <div class="div">
         <h5 :class="$store.getters.getMobile ? 'items-title-mobile' : ''">
-          Delivery history
+          {{ $t('rating.deliveryHistory') }}
         </h5>
         <div>
           <span
             class="el-dropdown-link view-history"
             @click="$store.commit('setTimelineVisible', !$store.getters.getTimelineVisible)"
           >
-            View Delivery history<i class="el-icon-arrow-down el-icon--right"></i>
+            {{ $t('rating.viewDeliveryHistory') }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
         </div>
       </div>
@@ -102,8 +102,8 @@ export default {
   },
   watch: {
     rating() {
-      this.title = this.rating === 1 ? 'What did you like?' : 'What went wrong?';
-      this.placeholder = this.rating === 1 ? 'Tell us what you liked' : 'Tell us what went wrong';
+      this.title = this.rating === 1 ? this.$t('rating.whatDidYouLike') : this.$t('rating.whatWentWrong');
+      this.placeholder = this.rating === 1 ? this.$t('rating.tellUsWhatYouLiked') : this.$t('rating.tellUsWhatWentWrong');
       this.comment = '';
       this.submitStatus = false;
     },
@@ -124,6 +124,12 @@ export default {
       return !this.$store.getters.getMobile ? 'thumbs-outline-desktop' : 'thumbs-outline-mobile';
     },
   },
+  mounted() {
+    window.addEventListener('language-changed', () => {
+      this.title = this.rating === 1 ? this.$t('rating.whatDidYouLike') : this.$t('rating.whatWentWrong');
+      this.placeholder = this.rating === 1 ? this.$t('rating.tellUsWhatYouLiked') : this.$t('rating.tellUsWhatWentWrong');
+    });
+  },
   methods: {
     ...mapActions(['rateOrder']),
     async submitRating(status) {
@@ -140,7 +146,7 @@ export default {
         this.submitStatus = true;
         const data = await this.rateOrder(fullPayload);
         const notification = {
-          title: 'Rating submitted successfully',
+          title: this.$t('rating.ratingSubmitted'),
           level: 1,
           message: '',
         };
@@ -156,7 +162,7 @@ export default {
         return data;
       } catch (error) {
         const notification = {
-          title: 'Rating failed',
+          title: this.$t('rating.ratingFailed'),
           level: 3,
           message: '',
         };

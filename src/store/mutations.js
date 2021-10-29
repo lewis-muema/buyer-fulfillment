@@ -32,4 +32,7 @@ export default {
   setRateOrder(state, val) {
     state.rateOrder = val;
   },
+  setLanguage(state, val) {
+    state.language = val;
+  },
 };

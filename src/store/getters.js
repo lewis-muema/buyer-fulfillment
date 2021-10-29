@@ -10,4 +10,5 @@ export default {
   getRecipientVisible: (state) => state.recipientVisible,
   getOrderStatuses: (state) => state.orderStatuses,
   getOrderEvents: (state) => state.orderEvents,
+  getLanguage: (state) => state.language,
 };

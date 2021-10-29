@@ -11,13 +11,15 @@
       <div class="fulfillment-header-menu">
         <el-dropdown @command="changeLanguage"
           class="fulfillment-header-language-menu"
-          v-if="showLanguageDropdown"
         >
             <span class="el-dropdown-link language-change ">
-              English<i class="el-icon-arrow-down el-icon--right"></i>
+              {{ activeLanguage }}
+              <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="french">French</el-dropdown-item>
+              <el-dropdown-item command="en">{{ $t('header.english') }}</el-dropdown-item>
+              <el-dropdown-item command="fr">{{ $t('header.french') }}</el-dropdown-item>
+              <el-dropdown-item command="en-ng">{{ $t('header.englishNg') }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
       </div>
@@ -34,10 +36,27 @@ export default {
   data() {
     return {
       showLanguageDropdown: false,
+      language: '',
     };
+  },
+  mounted() {
+    this.language = localStorage.buyerTimeLocale;
+  },
+  computed: {
+    activeLanguage() {
+      if (this.language === 'en-ng') {
+        return this.$t('header.englishNg');
+      }
+      if (this.language === 'fr') {
+        return this.$t('header.french');
+      }
+      return this.$t('header.english');
+    },
   },
   methods: {
     changeLanguage(command) {
+      this.language = command;
+      window.dispatchEvent(new CustomEvent('language-changed', { detail: this.language }));
       this.sendSegmentEvents({
         event: 'Select Language',
         data: {
