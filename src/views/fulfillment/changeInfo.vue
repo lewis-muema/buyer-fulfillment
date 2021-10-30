@@ -96,18 +96,18 @@ import notificationMxn from '../../mixins/nofication_mixin';
 export default {
   components: { reschedule },
   mixins: [statusMixin, notificationMxn],
-  watch: {
-    setDetailsDialogStatus(val) {
-      this.$store.commit('setDetailsDialogVisible', val);
-    },
-  },
   computed: {
     ...mapGetters(['getDetailsDialogVisible', 'getData']),
     recepientInfo() {
       return this.getData.data.destination;
     },
-    setDetailsDialogStatus() {
-      return this.getDetailsDialogVisible;
+    setDetailsDialogStatus: {
+      get() {
+        return this.getDetailsDialogVisible;
+      },
+      set(val) {
+        return this.$store.commit('setDetailsDialogVisible', val);
+      },
     },
   },
   methods: {
