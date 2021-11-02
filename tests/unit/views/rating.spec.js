@@ -1,6 +1,8 @@
 /* eslint-disable */
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
+import moxios from 'moxios';
 import ElementUI from 'element-ui';
 import VueRouter from 'vue-router';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
@@ -8,7 +10,7 @@ import { expect } from 'chai';
 import VueI18n from 'vue-i18n';
 import messages from './messages';
 import './localstorage';
-import ChangeInfo from '@/views/fulfillment/rating.vue';
+import rating from '@/views/fulfillment/rating.vue';
 import storeMutations from '../../../src/store/mutations';
 import storeActions from '../../../src/store/actions';
 import StatusMixin from '../../../src/mixins/status_mixin';
@@ -73,8 +75,10 @@ const orderData = {
   },
   error: [],
 };
-describe('changeInfo.vue', () => {
+describe('Rating.vue', () => {
   beforeEach(() => {
+    moxios.install(axios);
+    window.axios = axios;
     getters = {
       getData: () => orderData,
       getOrderStatuses: () => [
@@ -119,9 +123,38 @@ describe('changeInfo.vue', () => {
       actions,
       mutations,
     });
-    wrapper = shallowMount(ChangeInfo, { i18n, store, mixins: [StatusMixin], localVue, router, sync: false, });
+    wrapper = shallowMount(rating, { i18n, store, mixins: [StatusMixin], localVue, router, sync: false, });
+  });
+  afterEach(() => {
+    moxios.uninstall();
   });
   it('switch ratings based on rating value', async () => {
-    console.log('passed');
+    wrapper.vm.submitRating(2);
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request
+        .respondWith({
+          status: 200,
+          response: {
+            status: true,
+            data: {
+              message:"order.rate.success",
+              data:{
+                data:{
+                  love:false,
+                  comment:"Reason"
+                }},
+              errors: [],
+            },
+          },
+        })
+        .then((response) => {
+          expect(wrapper.vm.submitStatus).to.equal(true);
+          done();
+        })
+        .catch(error => {
+          console.log('caught', error.message);
+        });
+    });
   });
 });

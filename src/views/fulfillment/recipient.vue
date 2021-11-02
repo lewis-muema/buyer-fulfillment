@@ -145,5 +145,6 @@ export default {
 }
 .reciepient-details-rows {
   line-height: normal;
+  height: 0px !important;
 }
 </style>

@@ -73,7 +73,7 @@ const orderData = {
   },
   error: [],
 };
-describe('changeInfo.vue', () => {
+describe('Reschedule.vue', () => {
   beforeEach(() => {
     getters = {
       getData: () => orderData,
