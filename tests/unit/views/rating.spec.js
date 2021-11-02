@@ -128,7 +128,7 @@ describe('Rating.vue', () => {
   afterEach(() => {
     moxios.uninstall();
   });
-  it('switch ratings based on rating value', async () => {
+  it('submits the rating and changes the rating status', done => {
     wrapper.vm.submitRating(2);
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
@@ -149,6 +149,7 @@ describe('Rating.vue', () => {
           },
         })
         .then((response) => {
+          expect(response.data.data.message).to.equal('order.rate.success');
           expect(wrapper.vm.submitStatus).to.equal(true);
           done();
         })
