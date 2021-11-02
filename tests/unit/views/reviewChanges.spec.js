@@ -73,7 +73,7 @@ const orderData = {
   },
   error: [],
 };
-describe('changeInfo.vue', () => {
+describe('ReviewChanges.vue', () => {
   beforeEach(() => {
     getters = {
       getData: () => orderData,
