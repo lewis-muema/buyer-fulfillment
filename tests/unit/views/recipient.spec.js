@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import VueI18n from 'vue-i18n';
 import messages from './messages';
 import './localstorage';
-import ChangeInfo from '@/views/fulfillment/header.vue';
+import recipient from '@/views/fulfillment/recipient.vue';
 import StatusMixin from '../../../src/mixins/status_mixin';
 import store from './store';
 
@@ -25,15 +25,12 @@ localVue.use(VueRouter);
 const router = new VueRouter();
 let wrapper;
 
-describe('Header.vue', () => {
+describe('changeInfo.vue', () => {
   beforeEach(() => {
-    wrapper = shallowMount(ChangeInfo, { i18n, store, mixins: [StatusMixin], localVue, router, sync: false, });
+    wrapper = shallowMount(recipient, { i18n, store, mixins: [StatusMixin], localVue, router, sync: false, });
   });
-  it('check if language dropdown  is set to false ', () => {
-    expect(wrapper.vm.showLanguageDropdown).to.equal(false);
-  });
-  it('checks if language changes on selecting dropdown', () => {
-    wrapper.vm.changeLanguage('en');
-    expect(wrapper.vm.language).to.equal('en');
+  it('should show details dialog', () => {
+    wrapper.vm.showDetailsPicker();
+    expect(store.getters.getDetailsDialogVisible).to.equal(false);
   });
 });
