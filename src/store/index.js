@@ -22,6 +22,9 @@ export default new Vuex.Store({
       updateDelivery: null,
       rateOrder: null,
       language: 'en',
+      countryData: {
+        countryCode: 'KE',
+      },
       orderStatuses: [
         'event.delivery.order.created',
         'event.delivery.at.hub.processing.for.delivery',

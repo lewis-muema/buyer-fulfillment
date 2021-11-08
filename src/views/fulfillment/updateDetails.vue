@@ -249,6 +249,17 @@ export default {
       });
     },
   },
+  computed: {
+    countryCodes() {
+      return [this.$store.getters.getCountryData.countryCode.toLowerCase()];
+    },
+  },
+  beforeMount() {
+    this.map_options.componentRestrictions.country = this.countryCodes;
+    this.sendyPhoneProps.defaultCountry = this.$store.getters.getCountryData.countryCode
+      .toLowerCase();
+    this.sendyPhoneProps.preferredCountries = this.countryCodes;
+  },
   methods: {
     handleClose() {
       this.$emit('close', false);

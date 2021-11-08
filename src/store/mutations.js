@@ -35,4 +35,7 @@ export default {
   setLanguage(state, val) {
     state.language = val;
   },
+  setCountryData(state, val) {
+    state.countryData = val;
+  },
 };
