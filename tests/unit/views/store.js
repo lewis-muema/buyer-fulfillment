@@ -56,9 +56,13 @@ const orderData = {
   },
   error: [],
 };
+const country = {
+  countryCode: 'KE'
+};
 
 getters = {
   getData: () => orderData,
+  getCountryData: () => country,
   getOrderStatuses: () => [
     'event.delivery.order.created',
     'event.delivery.at.hub.processing.for.delivery',
