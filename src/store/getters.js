@@ -9,6 +9,7 @@ export default {
   getTimelineVisible: (state) => state.timelineVisible,
   getRecipientVisible: (state) => state.recipientVisible,
   getOrderStatuses: (state) => state.orderStatuses,
+  getOrderTimelines: (state) => state.orderTimelines,
   getOrderEvents: (state) => state.orderEvents,
   getLanguage: (state) => state.language,
   getCountryData: (state) => state.countryData,

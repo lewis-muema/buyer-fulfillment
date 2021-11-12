@@ -73,6 +73,26 @@
       <p class="delivered-title">{{ $t('desktop.packageDelivered') }}</p>
       <p class="delivered-date">{{ formatCompletionDate(data.data.order_completion_date) }}</p>
     </div>
+    <div
+      v-if="getStatus([10]).includes($store.getters.getDeliveryStatus)"
+      class="fulfillemnt-order-items-expected-deivery"
+    >
+      <p class="delivered-title">{{ $t('desktop.orderCancelled') }}</p>
+      <p class="delivered-date">
+        {{ formatCompletionDate(
+        data.data.event_time_line[data.data.event_time_line.length - 1].event_date
+      ) }}</p>
+    </div>
+    <div
+      v-if="getStatus([11]).includes($store.getters.getDeliveryStatus)"
+      class="fulfillemnt-order-items-expected-deivery"
+    >
+      <p class="delivered-title">{{ $t('desktop.deliveryFailed') }}</p>
+      <p class="delivered-date">
+        {{ formatCompletionDate(
+        data.data.event_time_line[data.data.event_time_line.length - 1].event_date
+      ) }}</p>
+    </div>
     <changeinfo />
     <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
     <Timeline />
