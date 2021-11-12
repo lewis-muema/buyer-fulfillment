@@ -38,4 +38,7 @@ export default {
   setCountryData(state, val) {
     state.countryData = val;
   },
+  setOrderTimelines(state, val) {
+    state.orderTimelines = val;
+  },
 };
