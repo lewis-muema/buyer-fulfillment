@@ -49,6 +49,24 @@
                 <p class="date">Package has been delivered</p>
                 <p>{{ formatDate(data.data.order_completion_date) }}</p>
               </div>
+              <div
+                v-if="getStatus([10]).includes($store.getters.getDeliveryStatus)"
+                class="delivery mt-5"
+              >
+                <p class="date">{{ $t('desktop.orderCancelled') }}</p>
+                <p>{{ formatCompletionDate(
+                  data.data.event_time_line[data.data.event_time_line.length - 1].event_date
+                ) }}</p>
+              </div>
+              <div
+                v-if="getStatus([11]).includes($store.getters.getDeliveryStatus)"
+                class="delivery mt-5"
+              >
+                <p class="date">{{ $t('desktop.deliveryFailed') }}</p>
+                <p>{{ formatCompletionDate(
+                  data.data.event_time_line[data.data.event_time_line.length - 1].event_date
+                ) }}</p>
+              </div>
             </div>
           </el-card>
         </el-col>

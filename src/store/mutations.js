@@ -35,4 +35,13 @@ export default {
   setRateOrder(state, val) {
     state.rateOrder = val;
   },
+  setLanguage(state, val) {
+    state.language = val;
+  },
+  setCountryData(state, val) {
+    state.countryData = val;
+  },
+  setOrderTimelines(state, val) {
+    state.orderTimelines = val;
+  },
 };

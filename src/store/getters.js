@@ -10,5 +10,6 @@ export default {
   getRecipientVisible: (state) => state.recipientVisible,
   getRatingVisible: (state) => state.ratingVisible,
   getOrderStatuses: (state) => state.orderStatuses,
+  getOrderTimelines: (state) => state.orderTimelines,
   getOrderEvents: (state) => state.orderEvents,
 };
