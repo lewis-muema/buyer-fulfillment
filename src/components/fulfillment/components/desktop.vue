@@ -15,7 +15,7 @@
                 v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7])
                   .includes($store.getters.getDeliveryStatus)"
               >
-                <p>Expected Delivery</p>
+                <p>{{ $t('mobile.expectedDelivery') }}</p>
                 <p class="date">{{ Object.keys(data).length > 0 ?
                   formatDate(data.data.scheduled_delivery_date) :
                   '--' }}
@@ -31,7 +31,7 @@
               >
                 <p class="rider-pin">
                   <span>
-                    PIN:
+                    {{ $t('mobile.pin') }}
                   </span>
                   <span class="rider-pin-value">
                     {{ Object.keys(data).length > 0 ?
@@ -42,7 +42,7 @@
                 <p class="rider-pin-description">
                  <i class="el-icon-info"></i>
                  <span class="rider-pin-description-text">
-                   Give this PIN to the delivery person
+                   {{ $t('desktop.givePin') }}
                   </span>
                 </p>
               </div>
@@ -50,8 +50,26 @@
                 v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
                 class="delivery mt-5"
               >
-                <p class="date">Package has been delivered</p>
+                <p class="date">{{ $t('desktop.packageDelivered') }}</p>
                 <p>{{ formatCompletionDate(data.data.order_completion_date) }}</p>
+              </div>
+              <div
+                v-if="getStatus([10]).includes($store.getters.getDeliveryStatus)"
+                class="delivery mt-5"
+              >
+                <p class="date">{{ $t('desktop.orderCancelled') }}</p>
+                <p>{{ formatCompletionDate(
+                  data.data.event_time_line[data.data.event_time_line.length - 1].event_date
+                ) }}</p>
+              </div>
+              <div
+                v-if="getStatus([11]).includes($store.getters.getDeliveryStatus)"
+                class="delivery mt-5"
+              >
+                <p class="date">{{ $t('desktop.deliveryFailed') }}</p>
+                <p>{{ formatCompletionDate(
+                  data.data.event_time_line[data.data.event_time_line.length - 1].event_date
+                ) }}</p>
               </div>
             </div>
           </el-card>
@@ -77,7 +95,7 @@
 import moment from 'moment';
 import Header from '../../../views/fulfillment/header.vue';
 import Recepient from '../../../views/fulfillment/recipient.vue';
-import Timeline from '../../../views/fulfillment/timeline.vue';
+import Timeline from '../../../views/fulfillment/timelineV2.vue';
 import OrderItems from '../../../views/fulfillment/orderItems.vue';
 import Rating from '../../../views/fulfillment/rating.vue';
 import statusMixin from '../../../mixins/status_mixin';

@@ -1,8 +1,9 @@
 <template>
-  <div v-if="$store.getters.getRecipientVisible"
-  >
+  <div v-if="$store.getters.getRecipientVisible">
     <div :class="!$store.getters.getMobile ? 'recepient-info-desktop' : 'recepient-info-mobile'">
-      <h3 :class="!$store.getters.getMobile ? '' : 'recepient-info-title-mobile'">Receiver</h3>
+      <h3 :class="!$store.getters.getMobile ? '' : 'recepient-info-title-mobile'">
+        {{ $t("changeInfo.Receiver") }}
+      </h3>
       <div class="recepient">
         <div class="recipient-details">
           <p class="reciepient-details-rows">
@@ -25,31 +26,33 @@
                 : ""
             }}
           </p>
-          <p class="reciepient-details-rows">
-            <small class="text-muted recipient-indent-text">
-              {{ $store.getters.getData.data.destination.house_location }}
-            </small>
-          </p>
+          <div
+            class="recipient-details"
+            v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7]).includes($store.getters.getDeliveryStatus)"
+          >
+            <a class="reciepient-delivery-instructions-mobile" @click="showUpdateModal"
+              >Add delivery instructions</a
+            >
+          </div>
         </div>
         <div
           v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
           class="recipient-details"
         >
-          <p
-            v-if="!$store.getters.getMobile"
-            class="recipient-details-leave-delivery"
-          >
-            <i class="el-icon-info"></i>Tell us where you leave your delivery
+          <p v-if="!$store.getters.getMobile" class="recipient-details-leave-delivery">
+            <i class="el-icon-info"></i>{{ $t("recipient.whereToLeaveYourDelivery") }}
           </p>
         </div>
       </div>
       <el-button
-        v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)
-          && !$store.getters.getMobile"
+        v-if="
+          !getStatus([9, 10]).includes($store.getters.getDeliveryStatus) &&
+            !$store.getters.getMobile
+        "
         type="primary"
         @click="showDetailsPicker"
         class="update-info-button-desktop"
-        >Change Delivery details</el-button
+        >{{ $t("mobile.changeDetails") }}</el-button
       >
     </div>
     <UpdateDetails
@@ -87,6 +90,9 @@ export default {
   methods: {
     showDetailsPicker() {
       this.$store.commit('setDetailsDialogVisible', true);
+    },
+    showUpdateModal() {
+      this.$store.commit('setDialogVisible', true);
     },
   },
 };
@@ -134,8 +140,11 @@ export default {
   justify-content: flex-start;
   flex-direction: column;
 }
-.recipient-indent-text {
-  margin-left: 25px;
+.reciepient-delivery-instructions-mobile {
+  margin-left: 30px;
+  text-decoration: none !important;
+  line-height: 3em !important;
+  color: #324ba8 !important;
 }
 .recipient-details-leave-delivery {
   color: #324ba8 !important;
@@ -143,5 +152,6 @@ export default {
 }
 .reciepient-details-rows {
   line-height: normal;
+  height: 0px !important;
 }
 </style>

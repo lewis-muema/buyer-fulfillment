@@ -2,7 +2,7 @@
   <div>
     <el-dialog
       title="Update delivery Info"
-      :visible.sync="visibleDetailsDialog"
+      :visible.sync="setDetailsDialogStatus"
       :width="$store.getters.getMobile ? '100%' : '30%'"
       :fullscreen="$store.getters.getMobile ? true : false"
       :show-close="$store.getters.getMobile ? true : false"
@@ -11,76 +11,76 @@
     >
       <div v-loading="$store.getters.getLoading">
         <div class="ml-2 change-info-title">
-          Help us ensure that you get your package on the first delivery attempt
+          {{ $t('changeInfo.firstAttempt') }}
         </div>
         <div class="change-info-section-divider">
           <div class="section-alignment">
           <div class="recepient-info-mobile">
-            <h3 class="recepient-info-title-mobile">Receiver</h3>
+            <h3 class="recepient-info-title-mobile">{{ $t('changeInfo.Receiver') }}</h3>
             <div class="recepient">
               <div class="recipient-details">
                 <p class="change-info-data-fields">
                   <i class="el-icon-user"></i>
                     {{ recepientInfo.name }}
-                </p>
-              </div>
-              <div class="recipient-details">
-                <p class="change-info-data-fields">
-                  <i class="el-icon-phone"></i>
+                  </p>
+                </div>
+                <div class="recipient-details">
+                  <p class="change-info-data-fields">
+                    <i class="el-icon-phone"></i>
                     {{ recepientInfo.phone_number }}
-                </p>
+                  </p>
+                </div>
+                <div class="recipient-details">
+                  <p class="change-info-data-fields">
+                    <i class="el-icon-location-outline"></i>
+                    {{
+                      recepientInfo.delivery_location
+                        ? recepientInfo.delivery_location.description
+                        : ""
+                    }}
+                  <p class="">
+                    <small class="text-muted recipient-indent-text">
+                      {{ recepientInfo.house_location }}
+                    </small>
+                  </p>
+                </div>
+                <div
+                  v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
+                  class="recipient-details"
+                ></div>
               </div>
-              <div class="recipient-details">
-                <p class="change-info-data-fields">
-                  <i class="el-icon-location-outline"></i>
-                  {{
-                    recepientInfo.delivery_location
-                      ? recepientInfo.delivery_location.description
-                      : ""
-                  }}
-                </p>
-                <p class="">
-                  <small class="text-muted recipient-indent-text">
-                    {{ recepientInfo.house_location }}
-                  </small>
-                </p>
-              </div>
-              <div
-                v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
-                class="recipient-details"
-              >
-              </div>
-            </div>
-            <el-button
+              <el-button
               v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
               type="primary"
               @click="showUpdateModal"
               class="change-info-button-mobile"
-              >Change Receiver Info</el-button
+              >{{ $t('changeInfo.changeRecieverInfo') }}</el-button
             >
+            </div>
           </div>
           </div>
         </div>
         <div class="change-info-section-divider">
           <div class="change-info-section-reschedule">
             <p class="fulfillemnt-order-items-expected-deivery-title">
-              Delivery Date
+              {{ $t('changeInfo.deliveryDate') }}
             </p>
             <p>
               <i class="el-icon-time"></i>
-              {{ Object.keys($store.getters.getData).length > 0 ?
-                    formatDate($store.getters.getData.data.scheduled_delivery_date) :
-                    '--' }}
+              {{
+                Object.keys($store.getters.getData).length > 0
+                  ? formatDate($store.getters.getData.data.scheduled_delivery_date)
+                  : "--"
+              }}
             </p>
             <button
               class="reschedule-button"
               @click="showDatePicker()"
             >
-              Reschedule Date
+              {{ $t('changeInfo.Reschadule') }}
             </button>
           </div>
         </div>
-      </div>
     </el-dialog>
     <reschedule />
   </div>
@@ -88,6 +88,7 @@
 
 <script>
 import moment from 'moment';
+import { mapGetters } from 'vuex';
 import reschedule from './reschedule.vue';
 import statusMixin from '../../mixins/status_mixin';
 import notificationMxn from '../../mixins/nofication_mixin';
@@ -95,35 +96,35 @@ import notificationMxn from '../../mixins/nofication_mixin';
 export default {
   components: { reschedule },
   mixins: [statusMixin, notificationMxn],
-  watch: {
-    '$store.getters.getDetailsDialogVisible': function setDetailsDialogStatus(val) {
-      this.visibleDetailsDialog = val;
-    },
-    visibleDetailsDialog(val) {
-      this.$store.commit('setDetailsDialogVisible', val);
-    },
-  },
   computed: {
+    ...mapGetters(['getDetailsDialogVisible', 'getData']),
     recepientInfo() {
-      return this.$store.getters.getData.data.destination;
+      return this.getData.data.destination;
     },
-  },
-  data() {
-    return {
-      visibleDetailsDialog: false,
-    };
+    setDetailsDialogStatus: {
+      get() {
+        return this.getDetailsDialogVisible;
+      },
+      set(val) {
+        return this.$store.commit('setDetailsDialogVisible', val);
+      },
+    },
   },
   methods: {
     showDatePicker() {
       this.$store.commit('setDatePickerVisible', true);
     },
     showUpdateModal() {
-      if (moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date))
-        .format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
+      if (
+        moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date)).format(
+          'YYYY-MM-DD',
+        ) === moment().format('YYYY-MM-DD')
+      ) {
         const notification = {
           title: 'Warning',
           level: 2,
-          message: 'You will not be able to change the delivery details on the day of the delivery. Kindly reschedule to a later date to edit details',
+          message:
+            'You will not be able to change the delivery details on the day of the delivery. Kindly reschedule to a later date to edit details',
         };
         this.displayNotification(notification);
       } else {
@@ -146,7 +147,7 @@ export default {
   border-radius: 5px;
 }
 .change-info-section-divider {
-  border: 1px solid #DCDFE6;
+  border: 1px solid #dcdfe6;
   padding: 20px;
   border-radius: 5px;
   margin: 10px;

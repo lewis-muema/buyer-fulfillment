@@ -29,7 +29,7 @@
         .includes($store.getters.getDeliveryStatus)"
     >
       <p class="fulfillemnt-order-items-expected-deivery-title">
-        Expected delivery
+        {{ $t('mobile.expectedDelivery') }}
       </p>
       <p class="fulfillemnt-order-items-expected-deivery-date">
         {{ Object.keys(data).length > 0 ?
@@ -44,10 +44,10 @@
         <div
           class="change-details-title"
         >
-          Not going to be in?
+          {{ $t('mobile.notIn') }}
         </div>
         <el-button @click="showDetailsPicker()" class="el-button">
-          Change Delivery details
+          {{ $t('mobile.changeDetails') }}
         </el-button>
       </div>
     </div>
@@ -56,11 +56,11 @@
       v-if="getStatus([8]).includes($store.getters.getDeliveryStatus)"
     >
       <p class="fulfillemnt-order-items-expected-deivery-title">
-        Give this pin to the delivery person
+        {{ $t('desktop.givePin') }}
       </p>
       <p class="fulfillemnt-order-items-expected-deivery-date">
         <span class="rider-pin-mobile">
-          PIN: {{ Object.keys(data).length > 0 ?
+          {{ $t('mobile.pin') }} {{ Object.keys(data).length > 0 ?
               data.data.confirmation_pin :
               '--' }}
         </span>
@@ -70,8 +70,28 @@
       v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
       class="fulfillemnt-order-items-expected-deivery"
     >
-      <p class="delivered-title">Package has been delivered</p>
+      <p class="delivered-title">{{ $t('desktop.packageDelivered') }}</p>
       <p class="delivered-date">{{ formatCompletionDate(data.data.order_completion_date) }}</p>
+    </div>
+    <div
+      v-if="getStatus([10]).includes($store.getters.getDeliveryStatus)"
+      class="fulfillemnt-order-items-expected-deivery"
+    >
+      <p class="delivered-title">{{ $t('desktop.orderCancelled') }}</p>
+      <p class="delivered-date">
+        {{ formatCompletionDate(
+        data.data.event_time_line[data.data.event_time_line.length - 1].event_date
+      ) }}</p>
+    </div>
+    <div
+      v-if="getStatus([11]).includes($store.getters.getDeliveryStatus)"
+      class="fulfillemnt-order-items-expected-deivery"
+    >
+      <p class="delivered-title">{{ $t('desktop.deliveryFailed') }}</p>
+      <p class="delivered-date">
+        {{ formatCompletionDate(
+        data.data.event_time_line[data.data.event_time_line.length - 1].event_date
+      ) }}</p>
     </div>
     <changeinfo />
     <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
@@ -84,7 +104,7 @@
 import moment from 'moment';
 import Header from '../../../views/fulfillment/header.vue';
 import orderItems from '../../../views/fulfillment/orderItems.vue';
-import Timeline from '../../../views/fulfillment/timeline.vue';
+import Timeline from '../../../views/fulfillment/timelineV2.vue';
 import Recipient from '../../../views/fulfillment/recipient.vue';
 import Rating from '../../../views/fulfillment/rating.vue';
 import changeinfo from '../../../views/fulfillment/changeInfo.vue';

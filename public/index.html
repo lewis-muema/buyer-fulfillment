@@ -25,6 +25,9 @@
         window.fcWidget.on('widget:opened', () => {
           window.dispatchEvent(new CustomEvent('freshchat-loaded', {}));
         });
+        window.fcWidget.on('widget:loaded', () => {
+          window.dispatchEvent(new CustomEvent('freshchat-initialized', {}));
+        });
       }
       function initialize(i, t) {
         var e;

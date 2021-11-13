@@ -33,6 +33,16 @@ export default {
         },
       });
     });
+    window.addEventListener('freshchat-initialized', () => {
+      window.fcWidget.user.setProperties({
+        firstName: this.$store.getters.getData.data.destination.name,
+        phone: this.$store.getters.getData.data.destination.phone_number,
+        phoneCountry: this.$store.getters.getCountryData.country,
+      });
+    });
+    window.addEventListener('country-fetched', (event) => {
+      this.$store.commit('setCountryData', event.detail);
+    });
     this.isMobile();
     window.onresize = (() => {
       this.isMobile();
@@ -41,14 +51,6 @@ export default {
     this.poll();
   },
   methods: {
-    showNotification() {
-      const notification = {
-        title: 'test',
-        level: 1,
-        message: 'test',
-      };
-      this.displayNotification(notification);
-    },
     poll() {
       setInterval(() => {
         this.getDeliveryDetails();

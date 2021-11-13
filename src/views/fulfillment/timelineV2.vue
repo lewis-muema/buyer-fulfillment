@@ -14,24 +14,21 @@
           :type="activity.type"
           :color="activity.color"
           :size="activity.size"
-          :timestamp="formatDate(activity.event_date, activity.event_code)"
         >
           <span
-            :class="index + 1 === activities.length
-            ? 'active-timeline-text' : ''"
+            :class="activity.active ? 'active-timeline-text' : ''"
           >
-            {{ formatEventName($t(`${$store.getters.getOrderEvents[activity.index]}`)) }}
+            {{ formatEventName($t(`${$store.getters.getOrderEvents[activity.title]}`,
+            { Date: activity.date })) }}
           </span>
           <div
-            v-if="$store.getters.getDeliveryStatus === activity.event_code
-              && $store.getters.getOrderStatuses[7] === activity.event_code
-              && rider"
+            v-if="activity.showDriver"
             class="timeline-rider"
           >
             <div class="timeline-rider-thumbnail-container">
               <i class="el-icon-user timeline-rider-thumbnail"></i>
             </div>
-            <div>
+            <div v-if="rider">
               <p class="timeline-rider-details">{{ rider.name }}</p>
               <p class="timeline-rider-details">{{ rider.vendor_type }}</p>
               <p class="timeline-rider-details">{{ rider.vehicle_identifier }}</p>
@@ -56,41 +53,49 @@ export default {
       activities: [],
       events: [],
       rider: {},
+      timeline: [],
+      activeEvent: '',
+      activeIndex: 0,
     };
   },
   watch: {
     '$store.getters.getData.data.event_time_line': function refreshTimeline() {
-      this.initializeTimeline();
+      this.sortTimelineEvents();
     },
   },
   mounted() {
-    this.initializeTimeline();
+    this.sortTimelineEvents();
   },
   methods: {
-    initializeTimeline() {
-      this.activities = this.$store.getters.getData.data.event_time_line
-        ? this.filteredEventTimeline() : [];
-      this.activities.forEach((row, index) => {
-        if (this.activities.length === index + 1
-        && row.event_code !== 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code') {
-          this.activities[index].color = '#324ba8';
-          this.activities[index].icon = 'el-icon-minus';
-        } else {
-          this.activities[index].icon = 'el-icon-check';
-          this.activities[index].color = '#EE7D00';
-        }
-      });
+    sortTimelineEvents() {
+      const timeline = this.$store.getters.getData.data.event_time_line;
+      const activeEvent = timeline[timeline.length - 1].event_code;
+      this.activeIndex = this.$store.getters.getOrderStatuses.findIndex(
+        (evt) => evt === activeEvent,
+      );
+      this.activities = this.filteredEventTimelineV2();
       this.rider = this.$store.getters.getData.data.partner_contact_information;
     },
-    filteredEventTimeline() {
+    filteredEventTimelineV2() {
       const events = [];
-      this.$store.getters.getData.data.event_time_line.forEach((row) => {
-        const index = this.$store.getters.getOrderStatuses
-          .findIndex((evt) => evt === row.event_code);
-        // eslint-disable-next-line no-param-reassign
-        row.index = index;
-        if (this.getStatus([0, 7, 8, 9]).includes(row.event_code)) {
-          events.push(row);
+      this.$store.getters.getOrderTimelines.forEach((row, index) => {
+        if (this.activeIndex === index) {
+          row.steps.forEach((step, i) => {
+            const evts = this.$store.getters.getData.data.event_time_line.filter(
+              (timeline) => timeline.event_code === this.$store.getters.getOrderStatuses[step],
+            );
+            const evtDate = evts.length > 0 ? evts[evts.length - 1].event_date : '';
+            events.push({
+              event_code: this.$store.getters.getOrderStatuses[step],
+              index,
+              active: row.colors[i] === '#324ba8',
+              title: row.titles[i],
+              color: row.colors[i],
+              icon: row.icons[i],
+              date: this.formatEventDate(row.dates[i], evtDate),
+              showDriver: row.showDriver[i],
+            });
+          });
         }
       });
       return events;
@@ -98,11 +103,27 @@ export default {
     formatEventName(name) {
       return name.charAt(0).toUpperCase() + name.slice(1);
     },
-    formatDate(date, code) {
-      if (this.getStatus([0, 9]).includes(code)) {
-        return moment(date).format('ddd, MMM Do');
+    formatEventDate(date, timeline) {
+      if (date.status) {
+        if (date.type === 'timeline') {
+          return moment(timeline).format(date.format);
+        }
+        if (date.type === 'scheduled') {
+          return moment(this.$store.getters.getData.data.scheduled_delivery_date)
+            .format(date.format);
+        }
+        if (date.type === 'completed') {
+          return moment(this.$store.getters.getData.data.order_completion_date)
+            .format(date.format);
+        }
+        if (date.type === 'today') {
+          return 'Today';
+        }
       }
       return '';
+    },
+    formatDate(date) {
+      return moment(date).format('ddd, MMM Do');
     },
   },
 };
