@@ -40,7 +40,7 @@ deploy:staging:
   tags:
     - shell
   script:
-    - ssh -v -f -o StrictHostKeyChecking=no -i ~/keys/id_rsa -l admin kubetest-master.sendyit.com "kubectl set image deploy buyer-fulfillment buyer-fulfillment=$STAGING_IMAGE_NAME"
+    - ssh -v -f -o StrictHostKeyChecking=no -l admin kubetest-master.sendyit.com "kubectl set image deploy buyer-fulfillment buyer-fulfillment=$STAGING_IMAGE_NAME"
   only:
     - staging
   
