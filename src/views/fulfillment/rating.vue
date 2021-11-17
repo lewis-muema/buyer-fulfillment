@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="$store.getters.getRatingVisible">
     <div :class="$store.getters.getMobile ? 'rate-delivery-mobile' : 'rate-delivery-desktop'">
       <p :class="$store.getters.getMobile ? 'delivery-title-mobile' : 'delivery-title-desktop'">
         {{ $t('rating.howWasYourDelivery') }}
@@ -151,6 +151,7 @@ export default {
           message: '',
         };
         this.displayNotification(notification);
+        this.$store.commit('setRatingVisible', !this.$store.getters.getRatingVisible);
         this.sendSegmentEvents({
           event: 'Rate Delivery',
           data: {
