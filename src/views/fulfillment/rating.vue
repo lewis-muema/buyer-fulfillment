@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="$store.getters.getRatingVisible">
     <div :class="$store.getters.getMobile ? 'rate-delivery-mobile' : 'rate-delivery-desktop'">
       <p :class="$store.getters.getMobile ? 'delivery-title-mobile' : 'delivery-title-desktop'">
         How was your delivery?
@@ -152,6 +152,15 @@ export default {
           message: '',
         };
         this.displayNotification(notification);
+        this.$store.commit('setRatingVisible', !this.$store.getters.getRatingVisible);
+        this.sendSegmentEvents({
+          event: 'Rate Delivery',
+          data: {
+            userId: this.$store.getters.getData.data.destination.name,
+            // eslint-disable-next-line max-len
+            rating: status === 1 ? status : 0,
+          },
+        });
         return data;
       } catch (error) {
         const notification = {
