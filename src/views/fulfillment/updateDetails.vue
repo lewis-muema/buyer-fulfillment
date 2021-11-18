@@ -52,6 +52,7 @@
         </div>
         <div class="form-floating mb-3">
           <input
+           :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)"
             type="text"
             class="form-control"
             id="floatingInput"
