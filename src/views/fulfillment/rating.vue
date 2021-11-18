@@ -131,6 +131,15 @@ export default {
       return !this.$store.getters.getMobile ? 'thumbs-outline-desktop' : 'thumbs-outline-mobile';
     },
   },
+  mounted() {
+    if (this.$store.getters.getData.data.rated === true) {
+      this.$store.commit('setRatingVisible', !this.$store.getters.getRatingVisible);
+    }
+    window.addEventListener('language-changed', () => {
+      this.title = this.rating === 1 ? this.$t('rating.whatDidYouLike') : this.$t('rating.whatWentWrong');
+      this.placeholder = this.rating === 1 ? this.$t('rating.tellUsWhatYouLiked') : this.$t('rating.tellUsWhatWentWrong');
+    });
+  },
   methods: {
     ...mapActions(['rateOrder']),
     async submitRating(status) {
