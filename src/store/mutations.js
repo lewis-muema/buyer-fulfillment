@@ -23,6 +23,9 @@ export default {
   setRecipientVisible(state, val) {
     state.recipientVisible = val;
   },
+  setRatingVisible(state, val) {
+    state.ratingVisible = val;
+  },
   setDetailsDialogVisible(state, val) {
     state.detailsDialogVisible = val;
   },

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="$store.getters.getRatingVisible">
     <div :class="$store.getters.getMobile ? 'rate-delivery-mobile' : 'rate-delivery-desktop'">
       <p :class="$store.getters.getMobile ? 'delivery-title-mobile' : 'delivery-title-desktop'">
         {{ $t('rating.howWasYourDelivery') }}
@@ -125,6 +125,9 @@ export default {
     },
   },
   mounted() {
+    if (this.$store.getters.getData.data.rated === true) {
+      this.$store.commit('setRatingVisible', !this.$store.getters.getRatingVisible);
+    }
     window.addEventListener('language-changed', () => {
       this.title = this.rating === 1 ? this.$t('rating.whatDidYouLike') : this.$t('rating.whatWentWrong');
       this.placeholder = this.rating === 1 ? this.$t('rating.tellUsWhatYouLiked') : this.$t('rating.tellUsWhatWentWrong');
@@ -151,6 +154,7 @@ export default {
           message: '',
         };
         this.displayNotification(notification);
+        this.$store.commit('setRatingVisible', !this.$store.getters.getRatingVisible);
         this.sendSegmentEvents({
           event: 'Rate Delivery',
           data: {
