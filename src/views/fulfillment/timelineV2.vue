@@ -1,13 +1,12 @@
 <template>
   <div v-if="$store.getters.getTimelineVisible">
     <h3 :class="!$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'">
-      {{ $t('timeline.timeline') }}
+      {{ $t("timeline.timeline") }}
     </h3>
     <div :class="!$store.getters.getMobile ? 'block mt-3' : 'timeline-events-mobile'">
       <el-timeline>
         <el-timeline-item
-          :class="!$store.getters.getMobile ?
-            'el-timeline-item-desktop' : ''"
+          :class="!$store.getters.getMobile ? 'el-timeline-item-desktop' : ''"
           v-for="(activity, index) in activities"
           :key="index"
           :icon="activity.icon"
@@ -15,16 +14,14 @@
           :color="activity.color"
           :size="activity.size"
         >
-          <span
-            :class="activity.active ? 'active-timeline-text' : ''"
-          >
-            {{ formatEventName($t(`${$store.getters.getOrderEvents[activity.title]}`,
-            { Date: activity.date })) }}
+          <span :class="activity.active ? 'active-timeline-text' : ''">
+            {{
+              formatEventName(
+                $t(`${$store.getters.getOrderEvents[activity.title]}`, { Date: activity.date })
+              )
+            }}
           </span>
-          <div
-            v-if="activity.showDriver"
-            class="timeline-rider"
-          >
+          <div v-if="activity.showDriver" class="timeline-rider">
             <div class="timeline-rider-thumbnail-container">
               <i class="el-icon-user timeline-rider-thumbnail"></i>
             </div>
@@ -35,6 +32,10 @@
               <p class="timeline-rider-details">{{ rider.phone_number }}</p>
             </div>
           </div>
+          <div v-if="$store.getters.getOrderStatuses[8] === activity.event_code"
+            class="ml-3 mt-3 mobile-confirmation-pin-container">
+            PIN is <span class="mobile-confirmation-pin">{{confirmationPin}}</span>
+          </div>
         </el-timeline-item>
       </el-timeline>
     </div>
@@ -43,6 +44,7 @@
 
 <script>
 import moment from 'moment';
+import { mapGetters } from 'vuex';
 import statusMixin from '../../mixins/status_mixin';
 
 export default {
@@ -70,9 +72,8 @@ export default {
     sortTimelineEvents() {
       const timeline = this.$store.getters.getData.data.event_time_line;
       const activeEvent = timeline[timeline.length - 1].event_code;
-      this.activeIndex = this.$store.getters.getOrderStatuses.findIndex(
-        (evt) => evt === activeEvent,
-      );
+      this.activeIndex = this.$store.getters.getOrderStatuses
+        .findIndex((evt) => evt === activeEvent);
       this.activities = this.filteredEventTimelineV2();
       this.rider = this.$store.getters.getData.data.partner_contact_information;
     },
@@ -109,12 +110,12 @@ export default {
           return moment(timeline).format(date.format);
         }
         if (date.type === 'scheduled') {
-          return moment(this.$store.getters.getData.data.scheduled_delivery_date)
-            .format(date.format);
+          return moment(this.$store.getters.getData.data.scheduled_delivery_date).format(
+            date.format,
+          );
         }
         if (date.type === 'completed') {
-          return moment(this.$store.getters.getData.data.order_completion_date)
-            .format(date.format);
+          return moment(this.$store.getters.getData.data.order_completion_date).format(date.format);
         }
         if (date.type === 'today') {
           return 'Today';
@@ -124,6 +125,12 @@ export default {
     },
     formatDate(date) {
       return moment(date).format('ddd, MMM Do');
+    },
+  },
+  computed: {
+    ...mapGetters(['getData']),
+    confirmationPin() {
+      return this.getData.data.confirmation_pin;
     },
   },
 };
@@ -184,7 +191,7 @@ export default {
   margin-left: 20px;
 }
 .active-timeline-text {
-  color: #324BA8;
+  color: #324ba8;
   font-weight: 700;
 }
 .el-icon-minus {
@@ -193,6 +200,16 @@ export default {
   box-shadow: 0 0 0 0 #324ba8;
   border-radius: 20px;
   animation: pulse-blue 2s infinite;
+}
+.mobile-confirmation-pin {
+  color: #324BA8;
+  font-weight: 700;
+}
+.mobile-confirmation-pin-container {
+  background: #F5F5F5;
+  width: 104px;
+  height: 27px;
+  padding: 3px 0px 3px 20px;
 }
 @keyframes pulse-blue {
   0% {
