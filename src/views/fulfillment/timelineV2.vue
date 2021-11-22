@@ -32,12 +32,13 @@
               <p class="timeline-rider-details">{{ rider.phone_number }}</p>
             </div>
           </div>
-          <div v-if="$store.getters.getOrderStatuses[8] === activity.event_code"
-            class="ml-3 mt-3 mobile-confirmation-pin-container">
-            PIN is <span class="mobile-confirmation-pin">{{confirmationPin}}</span>
-          </div>
         </el-timeline-item>
       </el-timeline>
+        <div
+            class="mobile-confirmation-pin-container"
+            v-if="!getStatus([9]).includes($store.getters.getDeliveryStatus)">
+            PIN is <span class="mobile-confirmation-pin" >{{confirmationPin}}</span>
+          </div>
     </div>
   </div>
 </template>
@@ -207,8 +208,10 @@ export default {
 }
 .mobile-confirmation-pin-container {
   background: #F5F5F5;
-  width: 104px;
+  width: 124px;
   height: 27px;
+  margin-left: 50px;
+  margin-top: -20px;
   padding: 3px 0px 3px 20px;
 }
 @keyframes pulse-blue {
