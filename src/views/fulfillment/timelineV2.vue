@@ -34,11 +34,14 @@
           </div>
         </el-timeline-item>
       </el-timeline>
+      <div class="d-flex mobile-confirmation-pin-container">
+        <img src="../../assets/keypad.png" class="img-fluid mobile-confirmation-pin-img">
         <div
-            class="mobile-confirmation-pin-container"
+            class="mobile-confirmation-pin-text"
             v-if="!getStatus([9]).includes($store.getters.getDeliveryStatus)">
             PIN is <span class="mobile-confirmation-pin" >{{confirmationPin}}</span>
           </div>
+      </div>
     </div>
   </div>
 </template>
@@ -208,11 +211,17 @@ export default {
 }
 .mobile-confirmation-pin-container {
   background: #F5F5F5;
-  width: 124px;
-  height: 27px;
+  width: 134px;
+  height: 35px;
   margin-left: 50px;
   margin-top: -20px;
-  padding: 3px 0px 3px 20px;
+  padding: 7px 10px 7px 10px;
+}
+.mobile-confirmation-pin-img{
+margin-top: 2px;
+}
+.mobile-confirmation-pin-text{
+  padding-left: 10px;
 }
 @keyframes pulse-blue {
   0% {
