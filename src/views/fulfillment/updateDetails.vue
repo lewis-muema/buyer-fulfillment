@@ -138,7 +138,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import eventsMixin from '../../mixins/events_mixin';
 import statusMixin from '../../mixins/status_mixin';
 import notificationMxn from '../../mixins/nofication_mixin';
@@ -265,17 +264,7 @@ export default {
       this.$emit('close', false);
     },
     showReviewModal() {
-      if (moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date))
-        .format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
-        const notification = {
-          title: this.$t('updateDetails.warning'),
-          level: 2,
-          message: this.$t('updateDetails.changeDate'),
-        };
-        this.displayNotification(notification);
-      } else {
-        this.showDialog = true;
-      }
+      this.showDialog = true;
     },
     setLocation(place) {
       this.params.deliveryLocation.description = place.name;
