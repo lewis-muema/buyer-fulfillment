@@ -34,13 +34,14 @@
           </div>
         </el-timeline-item>
       </el-timeline>
-      <div class="d-flex mobile-confirmation-pin-container">
-        <img src="../../assets/keypad.png" class="img-fluid mobile-confirmation-pin-img">
-        <div
-            class="mobile-confirmation-pin-text"
-            v-if="!getStatus([9]).includes($store.getters.getDeliveryStatus)">
-            PIN is <span class="mobile-confirmation-pin" >{{confirmationPin}}</span>
-          </div>
+      <div
+        class="d-flex mobile-confirmation-pin-container"
+        v-if="!getStatus([9]).includes($store.getters.getDeliveryStatus)"
+      >
+        <img src="../../assets/keypad.png" class="img-fluid mobile-confirmation-pin-img" />
+        <div class="mobile-confirmation-pin-text">
+          {{ $t("timeline.pin")}} <span class="mobile-confirmation-pin">{{ confirmationPin }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -206,21 +207,21 @@ export default {
   animation: pulse-blue 2s infinite;
 }
 .mobile-confirmation-pin {
-  color: #324BA8;
+  color: #324ba8;
   font-weight: 700;
 }
 .mobile-confirmation-pin-container {
-  background: #F5F5F5;
+  background: #f5f5f5;
   width: 134px;
   height: 35px;
   margin-left: 50px;
   margin-top: -20px;
   padding: 7px 10px 7px 10px;
 }
-.mobile-confirmation-pin-img{
-margin-top: 2px;
+.mobile-confirmation-pin-img {
+  margin-top: 2px;
 }
-.mobile-confirmation-pin-text{
+.mobile-confirmation-pin-text {
   padding-left: 10px;
 }
 @keyframes pulse-blue {
