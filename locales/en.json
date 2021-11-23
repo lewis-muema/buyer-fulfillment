@@ -65,6 +65,7 @@
   "timeline.preparingDelivery": "We are preparing your delivery",
   "timeline.preparedDelivery": "Your delivery has been prepared",
   "timeline.orderFailed": "Delivery failed on {Date}",
+  "timeline.pin": "PIN is",
   "updateDetails.recipientName": "Name is required",
   "updateDetails.phoneNumber": "Phone number",
   "updateDetails.phoneNumberRequired": "Phone number is required",
