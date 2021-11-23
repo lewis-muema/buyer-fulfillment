@@ -138,7 +138,6 @@
 </template>
 
 <script>
-// import moment from 'moment';
 import eventsMixin from '../../mixins/events_mixin';
 import statusMixin from '../../mixins/status_mixin';
 import notificationMxn from '../../mixins/nofication_mixin';
