@@ -39,9 +39,6 @@
           v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
           class="recipient-details"
         >
-          <!-- <p v-if="!$store.getters.getMobile" class="recipient-details-leave-delivery">
-            <i class="el-icon-info"></i>{{ $t("recipient.whereToLeaveYourDelivery") }}
-          </p> -->
         </div>
       </div>
       <el-button
