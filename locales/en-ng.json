@@ -16,6 +16,7 @@
   "header.french": "French",
   "header.englishNg": "English (Nigeria)",
   "orderItems.itemsDelivered": "Items being delivered",
+  "recipient.deliveryInstructions": "Add delivery instructions",
   "rating.howWasYourDelivery": "How was your delivery?",
   "rating.liked": "I liked it",
   "rating.disliked": "I didn't like it",
@@ -71,13 +72,17 @@
   "updateDetails.phoneNumberRequired": "Phone number is required",
   "updateDetails.validPhoneNumber": "Enter a valid phone number",
   "updateDetails.location": "Location",
-  "updateDetails.floorNumber": "Floor Number",
-  "updateDetails.floorNumberRequired": "Floor number is required",
+  "updateDetails.floorNumber": "FloorNo/Apt/Hse No",
+  "updateDetails.floorNumberRequired": "FloorNo/Apt/Hse No is required",
   "updateDetails.deliveryOptions": "Delivery options",
   "updateDetails.leaveWithGuard": "Leave With Guard",
   "updateDetails.leaveAtTheReception": "Leave At the Reception",
   "updateDetails.leaveAtTheDoor": "Leave At the door",
   "updateDetails.updateDeliveryInfo": "Update Delivery Info",
   "updateDetails.warning": "Warning",
-  "updateDetails.changeDate": "You will not be able to change the delivery details on the day of the delivery. Kindly reschedule to a later date to edit details"
+  "updateDetails.changeDate": "You will not be able to change the delivery details on the day of the delivery. Kindly reschedule to a later date to edit details",
+  "updateDetails.changeLocation": "Sorry you can't update the location on the day of delivery.",
+  "updateDetails.reschedule": "reschedule",
+  "updateDetails.youCan": "You can",
+  "updateDetails.laterDate": "to a later date to edit the location"
 }
