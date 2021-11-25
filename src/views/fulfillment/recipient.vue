@@ -30,8 +30,8 @@
             class="recipient-details"
             v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7]).includes($store.getters.getDeliveryStatus)"
           >
-            <a class="reciepient-delivery-instructions-mobile" @click="showUpdateModal"
-              >Add delivery instructions</a
+            <a class="reciepient-delivery-instructions-mobile pt-3" @click="showUpdateModal"
+              >{{$t("recipient.deliveryInstructions")}}</a
             >
           </div>
         </div>
@@ -39,9 +39,6 @@
           v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
           class="recipient-details"
         >
-          <p v-if="!$store.getters.getMobile" class="recipient-details-leave-delivery">
-            <i class="el-icon-info"></i>{{ $t("recipient.whereToLeaveYourDelivery") }}
-          </p>
         </div>
       </div>
       <el-button
