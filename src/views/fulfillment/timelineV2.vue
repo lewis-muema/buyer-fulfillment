@@ -212,7 +212,7 @@ export default {
 }
 .mobile-confirmation-pin-container {
   background: #f5f5f5;
-  width: 134px;
+  width: 150px;
   height: 35px;
   margin-left: 50px;
   margin-top: -20px;
