@@ -11,8 +11,8 @@
     >
       <form>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" v-model="params.name" />
-          <label for="floatingInput">{{ $t('reviewChanges.recipientName') }}</label>
+          <input type="text" class="form-control" id="floatingInput" v-model="params.name"/>
+          <label for="floatingInput">{{ $t("reviewChanges.recipientName") }}</label>
         </div>
         <div v-if="!$v.params.name.required" class="invalidFeedback">
           {{ $t('updateDetails.recipientName') }}
