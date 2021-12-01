@@ -11,7 +11,7 @@
     >
       <form>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" v-model="params.name" />
+          <input type="text" class="form-control" id="floatingInput" v-model="params.name"/>
           <label for="floatingInput">{{ $t("reviewChanges.recipientName") }}</label>
         </div>
         <div v-if="!$v.params.name.required" class="invalidFeedback">
@@ -232,13 +232,7 @@ export default {
         required,
         maxLength: maxLength(25),
       },
-      description: {
-        required,
-      },
       house_location: {
-        required,
-      },
-      deliveryOption: {
         required,
       },
     },
@@ -287,6 +281,7 @@ export default {
       this.$emit('close', false);
     },
     showReviewModal() {
+      if (this.$v.$invalid) return;
       this.showDialog = true;
     },
     showDatePicker() {
