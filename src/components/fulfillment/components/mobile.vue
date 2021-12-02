@@ -74,7 +74,7 @@
       <p class="delivered-date">{{ formatCompletionDate(data.data.order_completion_date) }}</p>
     </div>
     <div
-      v-if="getStatus([10]).includes($store.getters.getDeliveryStatus)"
+      v-if="getStatus([10, 11]).includes($store.getters.getDeliveryStatus)"
       class="fulfillemnt-order-items-expected-deivery"
     >
       <p class="delivered-title">{{ $t('desktop.orderCancelled') }}</p>
@@ -84,7 +84,7 @@
       ) }}</p>
     </div>
     <div
-      v-if="getStatus([11]).includes($store.getters.getDeliveryStatus)"
+      v-if="getStatus([12]).includes($store.getters.getDeliveryStatus)"
       class="fulfillemnt-order-items-expected-deivery"
     >
       <p class="delivered-title">{{ $t('desktop.deliveryFailed') }}</p>
