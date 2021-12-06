@@ -61,9 +61,6 @@
           />
           <label for="floatingInput">{{ $t('updateDetails.floorNumber') }}</label>
         </div>
-        <div v-if="!$v.params.house_location.required" class="invalidFeedback">
-          {{ $t('updateDetails.floorNumberRequired') }}
-        </div>
         <div class="mt-3">
           <label for="Delivery options" class="form-label">
             {{ $t('updateDetails.deliveryOptions') }}
@@ -215,9 +212,6 @@ export default {
       phone: {
         required,
         maxLength: maxLength(25),
-      },
-      house_location: {
-        required,
       },
     },
   },
