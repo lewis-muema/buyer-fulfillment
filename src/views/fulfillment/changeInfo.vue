@@ -74,6 +74,7 @@
               }}
             </p>
             <button
+            :disabled="getStatus([7, 8, 9]).includes($store.getters.getDeliveryStatus)"
               class="reschedule-button"
               @click="showDatePicker()"
             >
@@ -200,5 +201,9 @@ export default {
 }
 .change-info-title {
   word-break: normal;
+}
+.reschedule-button:disabled {
+  background-color:#E5E5E5;
+  color: grey;
 }
 </style>
