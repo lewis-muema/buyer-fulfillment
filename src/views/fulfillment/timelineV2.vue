@@ -39,7 +39,7 @@
       </el-timeline>
       <div
         class="d-flex mobile-confirmation-pin-container"
-        v-if="!getStatus([9]).includes($store.getters.getDeliveryStatus)"
+        v-if="!getStatus([9, 10, 11, 12]).includes($store.getters.getDeliveryStatus)"
       >
         <img src="../../assets/keypad.png" class="img-fluid mobile-confirmation-pin-img" />
         <div class="mobile-confirmation-pin-text">
