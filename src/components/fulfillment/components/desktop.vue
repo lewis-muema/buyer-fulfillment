@@ -12,7 +12,7 @@
               </h3>
               <div
                 class="delivery mt-5"
-                v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 8])
+                v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7])
                   .includes($store.getters.getDeliveryStatus)"
               >
                 <p>{{ $t('mobile.expectedDelivery') }}</p>
@@ -20,10 +20,14 @@
                   formatDate(data.data.scheduled_delivery_date) :
                   '--' }}
                 </p>
+                <p v-if="data.data.estimated_delivery_date"
+                  class="date">
+                  {{ formatDeliveryWindow(data.data.estimated_delivery_date) }}
+                </p>
               </div>
               <div
                 class="delivery mt-5"
-                v-if="getStatus([7]).includes($store.getters.getDeliveryStatus)"
+                v-if="getStatus([8]).includes($store.getters.getDeliveryStatus)"
               >
                 <p class="rider-pin">
                   <span>
@@ -49,6 +53,24 @@
                 <p class="date">{{ $t('desktop.packageDelivered') }}</p>
                 <p>{{ formatCompletionDate(data.data.order_completion_date) }}</p>
               </div>
+              <div
+                v-if="getStatus([10, 11]).includes($store.getters.getDeliveryStatus)"
+                class="delivery mt-5"
+              >
+                <p class="date">{{ $t('desktop.orderCancelled') }}</p>
+                <p>{{ formatCompletionDate(
+                  data.data.event_time_line[data.data.event_time_line.length - 1].event_date
+                ) }}</p>
+              </div>
+              <div
+                v-if="getStatus([12]).includes($store.getters.getDeliveryStatus)"
+                class="delivery mt-5"
+              >
+                <p class="date">{{ $t('desktop.deliveryFailed') }}</p>
+                <p>{{ formatCompletionDate(
+                  data.data.event_time_line[data.data.event_time_line.length - 1].event_date
+                ) }}</p>
+              </div>
             </div>
           </el-card>
         </el-col>
@@ -73,7 +95,7 @@
 import moment from 'moment';
 import Header from '../../../views/fulfillment/header.vue';
 import Recepient from '../../../views/fulfillment/recipient.vue';
-import Timeline from '../../../views/fulfillment/timeline.vue';
+import Timeline from '../../../views/fulfillment/timelineV2.vue';
 import OrderItems from '../../../views/fulfillment/orderItems.vue';
 import Rating from '../../../views/fulfillment/rating.vue';
 import statusMixin from '../../../mixins/status_mixin';
@@ -100,6 +122,14 @@ export default {
   methods: {
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
+    },
+    formatCompletionDate(date) {
+      return `${moment(new Date(date)).format('ddd, Do MMMM')} at ${moment(new Date(date)).format('h:mm a')}`;
+    },
+    formatDeliveryWindow(date) {
+      const lowerLimit = moment(new Date(date.estimated_delivery_time - (date.large_lower_limit * 60 * 1000))).format('h a');
+      const upperLimit = moment(new Date(date.estimated_delivery_time + (date.large_upper_limit * 60 * 1000))).format('h a');
+      return `${lowerLimit} - ${upperLimit}`;
     },
   },
 };

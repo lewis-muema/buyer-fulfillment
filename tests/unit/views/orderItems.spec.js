@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import VueI18n from 'vue-i18n';
 import messages from './messages';
 import './localstorage';
-import ChangeInfo from '@/views/fulfillment/changeInfo.vue';
+import ChangeInfo from '@/views/fulfillment/orderItems.vue';
 import StatusMixin from '../../../src/mixins/status_mixin';
 import store from './store';
 
@@ -25,18 +25,12 @@ localVue.use(VueRouter);
 const router = new VueRouter();
 let wrapper;
 
-describe('changeInfo.vue', () => {
+describe('OrderItems.vue', () => {
   beforeEach(() => {
     wrapper = shallowMount(ChangeInfo, { i18n, store, mixins: [StatusMixin], localVue, router, sync: false, });
   });
-  it('should set dialog to false', () => {
-    expect(wrapper.vm.setDetailsDialogStatus).to.equal(false);
-  });
-  it('shows the datepicker', () => {
-    wrapper.vm.showDatePicker();
-    expect(store.getters.getDatePickerVisible).to.equal(true);
-  });
-  it('formats the date', () => {
-    expect(wrapper.vm.formatDate(1634386603000)).to.equal('Saturday, 16th October');
+  it('check if products are retrieved correctly ', async () => {
+    await wrapper.vm.orderItems;
+    expect(wrapper.vm.orderItems).to.be.an('array').with.lengthOf(1);
   });
 });

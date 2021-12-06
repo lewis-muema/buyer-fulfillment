@@ -48,17 +48,19 @@ export default {
   methods: {
     allowedDates(date) {
       // Can not select days before today and today
-      return new Date(date).valueOf() >= Date.now()
+      return new Date(date).valueOf() >= Date.now() - (1000 * 60 * 60 * 24 * 1)
         && new Date(date).valueOf() <= Date.now() + (1000 * 60 * 60 * 24 * 2);
     },
     rescheduleDelivery() {
+      const date = moment().format('YYYY-MM-DD') === this.date
+        ? new Date().getTime() + 60000 : new Date(this.date).getTime();
       this.$store.commit('setLoading', true);
       this.$store.commit('setDatePickerVisible', false);
       this.$store.dispatch('requestAxiosPut', {
         app: process.env.FULFILMENT_SERVER,
         endpoint: `buyer/orders/${this.$route.params.deliveryId}/reschedule`,
         values: {
-          proposed_scheduled_date: new Date(this.date).getTime(),
+          proposed_scheduled_date: date,
         },
       }).then((res) => {
         this.$store.commit('setLoading', false);
@@ -70,6 +72,7 @@ export default {
             message,
           };
           this.displayNotification(notification);
+          this.$store.commit('setDetailsDialogVisible', false);
           this.$store.dispatch('requestAxiosGet', {
             app: process.env.FULFILMENT_SERVER,
             endpoint: `buyer/orders/${this.$route.params.deliveryId}`,

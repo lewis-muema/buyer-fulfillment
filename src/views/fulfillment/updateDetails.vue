@@ -138,15 +138,17 @@
 </template>
 
 <script>
+import moment from 'moment';
 import eventsMixin from '../../mixins/events_mixin';
 import statusMixin from '../../mixins/status_mixin';
+import notificationMxn from '../../mixins/nofication_mixin';
 import ReviewChanges from './reviewChanges.vue';
 
 const { required, maxLength } = require('vuelidate/lib/validators');
 
 export default {
   name: 'UpdateDetails',
-  mixins: [eventsMixin, statusMixin],
+  mixins: [eventsMixin, statusMixin, notificationMxn],
   components: {
     ReviewChanges,
   },
@@ -225,7 +227,9 @@ export default {
     },
     visibleDialog(val) {
       this.$store.commit('setDialogVisible', val);
-      this.deliveryOption = val ? this.$store.getters.getData.data.destination.delivery_instructions : '';
+      this.deliveryOption = val
+        ? this.$store.getters.getData.data.destination.delivery_instructions
+        : '';
     },
     deliveryOption(val) {
       this.sendSegmentEvents({
@@ -238,6 +242,17 @@ export default {
         },
       });
     },
+  },
+  computed: {
+    countryCodes() {
+      return [this.$store.getters.getCountryData.countryCode.toLowerCase()];
+    },
+  },
+  beforeMount() {
+    this.map_options.componentRestrictions.country = this.countryCodes;
+    this.sendyPhoneProps.defaultCountry = this.$store.getters.getCountryData.countryCode
+      .toLowerCase();
+    this.sendyPhoneProps.preferredCountries = this.countryCodes;
   },
   methods: {
     handleClose() {
@@ -265,20 +280,20 @@ export default {
 }
 .delivery-options-tag-inactive {
   border-radius: 30px;
-  padding: 15px 30px;
+  padding: 15px 0px;
   background: #f3f3f3;
   color: black;
   cursor: pointer;
-  width: 95%;
+  width: 100%;
   text-align: center;
 }
 .delivery-options-tag-active {
   border-radius: 30px;
-  padding: 15px 30px;
+  padding: 15px 0px;
   background: #324ba8;
   color: white;
   cursor: pointer;
-  width: 95%;
+  width: 100%;
   text-align: center;
 }
 .pac-icon {

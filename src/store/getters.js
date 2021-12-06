@@ -13,4 +13,5 @@ export default {
   getOrderTimelines: (state) => state.orderTimelines,
   getOrderEvents: (state) => state.orderEvents,
   getLanguage: (state) => state.language,
+  getCountryData: (state) => state.countryData,
 };

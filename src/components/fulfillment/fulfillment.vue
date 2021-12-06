@@ -12,6 +12,7 @@ import Desktop from './components/desktop.vue';
 import Mobile from './components/mobile.vue';
 
 export default {
+  title: 'Buyer Fulfilment',
   name: 'fulfillment',
   components: {
     Desktop,
@@ -31,6 +32,16 @@ export default {
           userId: this.$store.getters.getData.data.destination.name,
         },
       });
+    });
+    window.addEventListener('freshchat-initialized', () => {
+      window.fcWidget.user.setProperties({
+        firstName: this.$store.getters.getData.data.destination.name,
+        phone: this.$store.getters.getData.data.destination.phone_number,
+        phoneCountry: this.$store.getters.getCountryData.country,
+      });
+    });
+    window.addEventListener('country-fetched', (event) => {
+      this.$store.commit('setCountryData', event.detail);
     });
     this.isMobile();
     window.onresize = (() => {

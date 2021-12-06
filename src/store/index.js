@@ -23,6 +23,9 @@ export default new Vuex.Store({
       updateDelivery: null,
       rateOrder: null,
       language: 'en',
+      countryData: {
+        countryCode: 'KE',
+      },
       orderStatuses: [
         'event.delivery.order.created',
         'event.delivery.at.hub.processing.for.delivery',
@@ -35,6 +38,7 @@ export default new Vuex.Store({
         'event.delivery.partner.arrived.at.buyer.location',
         'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code',
         'event.delivery.order.canceled.by.seller',
+        'event.delivery.order.canceled.by.sendy',
         'event.delivery.failed',
       ],
       orderEvents: [
@@ -282,8 +286,26 @@ export default new Vuex.Store({
           titles: [0, 16],
         },
         {
-          event: 'event.delivery.failed',
+          event: 'event.delivery.order.canceled.by.sendy',
           steps: [0, 11],
+          colors: ['#EE7D00', '#EE7D00'],
+          icons: ['el-icon-check', 'el-icon-check'],
+          showDriver: [false, false],
+          dates: [{
+            type: 'timeline',
+            status: true,
+            format: 'ddd, MMM Do',
+          },
+          {
+            type: 'timeline',
+            status: true,
+            format: 'ddd, MMM Do',
+          }],
+          titles: [0, 16],
+        },
+        {
+          event: 'event.delivery.failed',
+          steps: [0, 12],
           colors: ['#EE7D00', '#EE7D00'],
           icons: ['el-icon-check', 'el-icon-check'],
           showDriver: [false, false],

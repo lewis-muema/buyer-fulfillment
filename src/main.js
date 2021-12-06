@@ -5,6 +5,7 @@ import moment from 'moment';
 import { initializeApp } from 'firebase/app';
 import lang from 'element-ui/lib/locale/lang/en';
 import locale from 'element-ui/lib/locale';
+import VuePageTitle from 'vue-page-title';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -109,6 +110,7 @@ Vue.use(CheckboxGroup);
 Vue.use(Progress);
 Vue.use(Vuelidate);
 Vue.use(VueTelInput);
+Vue.use(VuePageTitle);
 Vue.use(VueGoogleMaps, {
   load: {
     libraries: ['places', 'geometry'],
@@ -140,7 +142,7 @@ initializeApp({
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('firebase-messaging-sw.js', { scope: './' });
+    navigator.serviceWorker.register('firebase-messaging-sw.js');
   });
 }
 

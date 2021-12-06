@@ -6,12 +6,13 @@
   </v-app>
 </template>
 <script>
-import { getMessaging, getToken } from 'firebase/messaging';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import noficationMixin from './mixins/nofication_mixin';
+import eventsMixin from './mixins/events_mixin';
 
 export default {
   // eslint-disable-next-line camelcase
-  mixins: [noficationMixin],
+  mixins: [noficationMixin, eventsMixin],
   data() {
     return {};
   },
@@ -24,25 +25,33 @@ export default {
         if (currentToken) {
           // ...
           const deviceId = Math.floor(new Date().getTime());
-          localStorage.deviceId = deviceId;
+          localStorage.deviceId = localStorage.deviceId ? localStorage.deviceId : deviceId;
           this.$store.dispatch('requestAxiosPut', {
             app: process.env.FULFILMENT_SERVER,
             endpoint: `buyer/orders/${this.$route.params.deliveryId}/fcm`,
             values: {
               token: currentToken,
-              device_id: deviceId,
+              device_id: localStorage.deviceId,
             },
           });
         }
       });
-      messaging.onMessage((payload) => {
-        console.log('onMessage', payload);
-        const notification = {
-          title: 'Notification Recieved',
-          level: 1,
-          message: '',
-        };
-        this.displayNotification(notification);
+      onMessage(messaging, (payload) => {
+        this.sendSegmentEvents({
+          event: 'Trigger for User',
+          data: {
+            userId: this.$store.getters.getData.data.destination.name,
+            // eslint-disable-next-line max-len
+            trigger: payload.notification.body,
+          },
+        });
+        this.$store.dispatch('requestAxiosGet', {
+          app: process.env.FULFILMENT_SERVER,
+          endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
+        }).then((response) => {
+          this.$store.commit('setData', response.data);
+          this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
+        });
       });
     } catch (error) {
       // ...

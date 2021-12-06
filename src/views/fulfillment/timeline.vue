@@ -14,7 +14,7 @@
           :type="activity.type"
           :color="activity.color"
           :size="activity.size"
-          :timestamp="formatDate(activity.event_date)"
+          :timestamp="formatDate(activity.event_date, activity.event_code)"
         >
           <span
             :class="index + 1 === activities.length
@@ -24,13 +24,14 @@
           </span>
           <div
             v-if="$store.getters.getDeliveryStatus === activity.event_code
-              && $store.getters.getOrderStatuses[4] === activity.event_code"
+              && $store.getters.getOrderStatuses[7] === activity.event_code
+              && rider"
             class="timeline-rider"
           >
             <div class="timeline-rider-thumbnail-container">
-              <img class="timeline-rider-thumbnail" src="../../assets/rider.png" alt="">
+              <i class="el-icon-user timeline-rider-thumbnail"></i>
             </div>
-            <div v-if="rider">
+            <div>
               <p class="timeline-rider-details">{{ rider.name }}</p>
               <p class="timeline-rider-details">{{ rider.vendor_type }}</p>
               <p class="timeline-rider-details">{{ rider.vehicle_identifier }}</p>
@@ -57,25 +58,35 @@ export default {
       rider: {},
     };
   },
+  watch: {
+    '$store.getters.getData.data.event_time_line': function refreshTimeline() {
+      this.initializeTimeline();
+    },
+  },
   mounted() {
-    this.activities = this.$store.getters.getData.data.event_time_line
-      ? this.filteredEventTimeline() : [];
-    this.activities.forEach((row, index) => {
-      if (this.activities.length === index + 1
-        && row.event_code !== 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code') {
-        this.activities[index].color = '#324ba8';
-        this.activities[index].icon = 'el-icon-minus';
-      } else {
-        this.activities[index].icon = 'el-icon-check';
-        this.activities[index].color = '#EE7D00';
-      }
-    });
-    this.rider = this.$store.getters.getData.data.partner_contact_information;
+    this.initializeTimeline();
   },
   methods: {
+    initializeTimeline() {
+      this.activities = this.$store.getters.getData.data.event_time_line
+        ? this.filteredEventTimeline() : [];
+      this.activities.forEach((row, index) => {
+        if (this.activities.length === index + 1
+        && row.event_code !== 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code') {
+          this.activities[index].color = '#324ba8';
+          this.activities[index].icon = 'el-icon-minus';
+        } else {
+          this.activities[index].icon = 'el-icon-check';
+          this.activities[index].color = '#EE7D00';
+        }
+      });
+      this.rider = this.$store.getters.getData.data.partner_contact_information;
+    },
     filteredEventTimeline() {
       const events = [];
-      this.$store.getters.getData.data.event_time_line.forEach((row, index) => {
+      this.$store.getters.getData.data.event_time_line.forEach((row) => {
+        const index = this.$store.getters.getOrderStatuses
+          .findIndex((evt) => evt === row.event_code);
         // eslint-disable-next-line no-param-reassign
         row.index = index;
         if (this.getStatus([0, 7, 8, 9]).includes(row.event_code)) {
@@ -87,8 +98,11 @@ export default {
     formatEventName(name) {
       return name.charAt(0).toUpperCase() + name.slice(1);
     },
-    formatDate(date) {
-      return moment(date).format('HH:mm a, dddd Do MMMM YYYY');
+    formatDate(date, code) {
+      if (this.getStatus([0, 9]).includes(code)) {
+        return moment(date).format('ddd, MMM Do');
+      }
+      return '';
     },
   },
 };
@@ -132,11 +146,18 @@ export default {
 }
 .timeline-rider-thumbnail {
   width: 70px;
+  height: 70px;
+  border: 2px solid #303133;
+  border-radius: 50px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .timeline-rider-details {
   margin: 5px 0px;
   margin-bottom: 5px !important;
-  width: 100px;
+  width: 200px;
 }
 .trigger-button {
   margin-left: 20px;

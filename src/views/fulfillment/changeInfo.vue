@@ -19,41 +19,44 @@
             <h3 class="recepient-info-title-mobile">{{ $t('changeInfo.Receiver') }}</h3>
             <div class="recepient">
               <div class="recipient-details">
-                <p><i class="el-icon-user"></i>{{ recepientInfo.name }}</p>
-              </div>
-              <div class="recipient-details">
-                <p><i class="el-icon-phone"></i>{{ recepientInfo.phone_number }}</p>
-              </div>
-              <div class="recipient-details">
-                <p>
-                  <i class="el-icon-location-outline"></i>
-                  {{
-                    recepientInfo.delivery_location
-                      ? recepientInfo.delivery_location.description
-                      : ""
-                  }}
-                </p>
-                <p class="">
-                  <small class="text-muted recipient-indent-text">
-                    {{ recepientInfo.house_location }}
-                  </small>
-                </p>
+                <p class="change-info-data-fields">
+                  <i class="el-icon-user"></i>
+                    {{ recepientInfo.name }}
+                  </p>
+                </div>
+                <div class="recipient-details">
+                  <p class="change-info-data-fields">
+                    <i class="el-icon-phone"></i>
+                    {{ recepientInfo.phone_number }}
+                  </p>
+                </div>
+                <div class="recipient-details">
+                  <p class="change-info-data-fields">
+                    <i class="el-icon-location-outline"></i>
+                    {{
+                      recepientInfo.delivery_location
+                        ? recepientInfo.delivery_location.description
+                        : ""
+                    }}
+                  <p class="">
+                    <small class="text-muted recipient-indent-text">
+                      {{ recepientInfo.house_location }}
+                    </small>
+                  </p>
+                </div>
+                <div
+                  v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
+                  class="recipient-details"
+                ></div>
               </div>
               <el-button
-                v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
-                type="primary"
-                @click="showUpdateModal"
-                class="change-info-button-mobile"
-                >Change Receiver Info</el-button
-              >
-            </div>
-            <el-button
               v-if="!getStatus([9, 10]).includes($store.getters.getDeliveryStatus)"
               type="primary"
               @click="showUpdateModal"
               class="change-info-button-mobile"
               >{{ $t('changeInfo.changeRecieverInfo') }}</el-button
             >
+            </div>
           </div>
           </div>
         </div>
@@ -78,7 +81,6 @@
             </button>
           </div>
         </div>
-      </div>
     </el-dialog>
     <reschedule />
   </div>
@@ -89,22 +91,23 @@ import moment from 'moment';
 import { mapGetters } from 'vuex';
 import reschedule from './reschedule.vue';
 import statusMixin from '../../mixins/status_mixin';
+import notificationMxn from '../../mixins/nofication_mixin';
 
 export default {
   components: { reschedule },
-  mixins: [statusMixin],
-  watch: {
-    setDetailsDialogStatus(val) {
-      this.$store.commit('setDetailsDialogVisible', val);
-    },
-  },
+  mixins: [statusMixin, notificationMxn],
   computed: {
     ...mapGetters(['getDetailsDialogVisible', 'getData']),
     recepientInfo() {
       return this.getData.data.destination;
     },
-    setDetailsDialogStatus() {
-      return this.getDetailsDialogVisible;
+    setDetailsDialogStatus: {
+      get() {
+        return this.getDetailsDialogVisible;
+      },
+      set(val) {
+        return this.$store.commit('setDetailsDialogVisible', val);
+      },
     },
   },
   methods: {
@@ -112,7 +115,21 @@ export default {
       this.$store.commit('setDatePickerVisible', true);
     },
     showUpdateModal() {
-      this.$store.commit('setDialogVisible', true);
+      if (
+        moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date)).format(
+          'YYYY-MM-DD',
+        ) === moment().format('YYYY-MM-DD')
+      ) {
+        const notification = {
+          title: 'Warning',
+          level: 2,
+          message:
+            'You will not be able to change the delivery details on the day of the delivery. Kindly reschedule to a later date to edit details',
+        };
+        this.displayNotification(notification);
+      } else {
+        this.$store.commit('setDialogVisible', true);
+      }
     },
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
@@ -134,6 +151,13 @@ export default {
   padding: 20px;
   border-radius: 5px;
   margin: 10px;
+}
+.change-info-data-fields {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  margin-bottom: 10px !important;
 }
 .section-alignment {
   margin-left: -20px !important;
@@ -187,5 +211,8 @@ export default {
 .recipient-details-leave-delivery {
   color: #324ba8 !important;
   margin: 10px 0px;
+}
+.change-info-title {
+  word-break: normal;
 }
 </style>

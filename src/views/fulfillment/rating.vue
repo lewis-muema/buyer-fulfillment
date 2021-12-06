@@ -11,10 +11,7 @@
             :class="rating === 1 ? 'thumbs-outline-active' : activeClass"
             @click="rating = 1"
           >
-            <font-awesome-icon
-              icon="thumbs-up"
-              class="h1 thumbs-icon"
-            />
+            <font-awesome-icon icon="thumbs-up" class="h1 thumbs-icon" />
           </div>
           <div v-if="$store.getters.getMobile">
             {{ $t('rating.liked') }}
@@ -100,6 +97,7 @@ export default {
       submitStatus: false,
       placeholder: '',
       title: '',
+      seller_name: this.$store.getters.getData.data.seller_name,
     };
   },
   watch: {
@@ -182,8 +180,13 @@ export default {
 
 <style>
 .rate-delivery-desktop {
-  background: rgb(231, 228, 228);
   margin-left: 80px;
+  border: 1px solid #c8c8c8;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .rate-delivery-mobile {
   margin: 20px;
@@ -204,7 +207,7 @@ export default {
   padding-bottom: 20px;
 }
 .thumbs-desktop {
-  color: black;
+  color: #c0c4cc;
 }
 .thumbs-mobile {
   color: #c0c4cc;
@@ -223,7 +226,7 @@ export default {
   margin-bottom: 10px;
 }
 .thumbs-outline-desktop {
-  border: 1px solid black;
+  border: 1px solid #c0c4cc;
 }
 .thumbs-outline-mobile {
   border: 1px solid #c0c4cc;

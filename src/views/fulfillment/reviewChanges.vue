@@ -29,6 +29,8 @@
             class="btn btn-primary update-info-button"
             type="button"
             @click="updateDeliveryInfo"
+            v-loading="loading"
+            element-loading-background="rgba(0, 0, 0, 0.5)"
           >
             {{ $t('reviewChanges.confirmChanges') }}
           </el-button>
@@ -62,11 +64,14 @@ export default {
   name: 'ReviewChanges',
   mixins: [NotificationMxn, eventsMixin],
   data() {
-    return {};
+    return {
+      loading: false,
+    };
   },
   methods: {
     ...mapActions(['updateDeliveryInformation']),
     async updateDeliveryInfo() {
+      this.loading = true;
       const payload = {
         name: this.name,
         phone_number: this.phone,
@@ -86,6 +91,7 @@ export default {
       try {
         const data = await this.updateDeliveryInformation(fullPayload);
         if (data.errors.length === 0) {
+          this.loading = false;
           const notification = {
             title: this.$t('reviewChanges.infoChanged'),
             level: 1,
@@ -94,13 +100,16 @@ export default {
           this.displayNotification(notification);
           this.$emit('close', false);
           this.$store.commit('setDialogVisible', false);
-          this.$store.dispatch('requestAxiosGet', {
-            app: process.env.FULFILMENT_SERVER,
-            endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
-          }).then((response) => {
-            this.$store.commit('setData', response.data);
-            this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
-          });
+          this.$store.commit('setDetailsDialogVisible', false);
+          this.$store
+            .dispatch('requestAxiosGet', {
+              app: process.env.FULFILMENT_SERVER,
+              endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
+            })
+            .then((response) => {
+              this.$store.commit('setData', response.data);
+              this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
+            });
           this.sendSegmentEvents({
             event: 'Update Delivery Info',
             data: {

@@ -31,6 +31,7 @@ function fetchCountry() {
   const { EXTREME_IP_KEY } = process.env;
   axios(`https://extreme-ip-lookup.com/json/?key=${EXTREME_IP_KEY}`)
     .then((response) => {
+      window.dispatchEvent(new CustomEvent('country-fetched', { detail: response.data }));
       const francoPhoneCountries = ['FR', 'CI'].includes(response.data.countryCode);
       let lang;
       let locale;

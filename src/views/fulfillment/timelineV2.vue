@@ -1,12 +1,13 @@
 <template>
   <div v-if="$store.getters.getTimelineVisible">
     <h3 :class="!$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'">
-      {{ $t("timeline.timeline") }}
+      {{ $t('timeline.timeline') }}
     </h3>
     <div :class="!$store.getters.getMobile ? 'block mt-3' : 'timeline-events-mobile'">
       <el-timeline>
         <el-timeline-item
-          :class="!$store.getters.getMobile ? 'el-timeline-item-desktop' : ''"
+          :class="!$store.getters.getMobile ?
+            'el-timeline-item-desktop' : ''"
           v-for="(activity, index) in activities"
           :key="index"
           :icon="activity.icon"
@@ -14,14 +15,16 @@
           :color="activity.color"
           :size="activity.size"
         >
-          <span :class="activity.active ? 'active-timeline-text' : ''">
-            {{
-              formatEventName(
-                $t(`${$store.getters.getOrderEvents[activity.title]}`, { Date: activity.date })
-              )
-            }}
+          <span
+            :class="activity.active ? 'active-timeline-text' : ''"
+          >
+            {{ formatEventName($t(`${$store.getters.getOrderEvents[activity.title]}`,
+            { Date: activity.date })) }}
           </span>
-          <div v-if="activity.showDriver" class="timeline-rider">
+          <div
+            v-if="activity.showDriver"
+            class="timeline-rider"
+          >
             <div class="timeline-rider-thumbnail-container">
               <i class="el-icon-user timeline-rider-thumbnail"></i>
             </div>
@@ -77,8 +80,9 @@ export default {
     sortTimelineEvents() {
       const timeline = this.$store.getters.getData.data.event_time_line;
       const activeEvent = timeline[timeline.length - 1].event_code;
-      this.activeIndex = this.$store.getters.getOrderStatuses
-        .findIndex((evt) => evt === activeEvent);
+      this.activeIndex = this.$store.getters.getOrderStatuses.findIndex(
+        (evt) => evt === activeEvent,
+      );
       this.activities = this.filteredEventTimelineV2();
       this.rider = this.$store.getters.getData.data.partner_contact_information;
     },
@@ -115,12 +119,12 @@ export default {
           return moment(timeline).format(date.format);
         }
         if (date.type === 'scheduled') {
-          return moment(this.$store.getters.getData.data.scheduled_delivery_date).format(
-            date.format,
-          );
+          return moment(this.$store.getters.getData.data.scheduled_delivery_date)
+            .format(date.format);
         }
         if (date.type === 'completed') {
-          return moment(this.$store.getters.getData.data.order_completion_date).format(date.format);
+          return moment(this.$store.getters.getData.data.order_completion_date)
+            .format(date.format);
         }
         if (date.type === 'today') {
           return 'Today';
@@ -196,7 +200,7 @@ export default {
   margin-left: 20px;
 }
 .active-timeline-text {
-  color: #324ba8;
+  color: #324BA8;
   font-weight: 700;
 }
 .el-icon-minus {
