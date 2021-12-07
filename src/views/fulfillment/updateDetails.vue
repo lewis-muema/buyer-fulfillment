@@ -11,8 +11,8 @@
     >
       <form>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" v-model="params.name" />
-          <label for="floatingInput">{{ $t('reviewChanges.recipientName') }}</label>
+          <input type="text" class="form-control" id="floatingInput" v-model="params.name"/>
+          <label for="floatingInput">{{ $t("reviewChanges.recipientName") }}</label>
         </div>
         <div v-if="!$v.params.name.required" class="invalidFeedback">
           {{ $t('updateDetails.recipientName') }}
@@ -52,6 +52,7 @@
         </div>
         <div class="form-floating mb-3">
           <input
+           :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)"
             type="text"
             class="form-control"
             id="floatingInput"
@@ -138,7 +139,6 @@
 </template>
 
 <script>
-import moment from 'moment';
 import eventsMixin from '../../mixins/events_mixin';
 import statusMixin from '../../mixins/status_mixin';
 import notificationMxn from '../../mixins/nofication_mixin';
@@ -216,13 +216,7 @@ export default {
         required,
         maxLength: maxLength(25),
       },
-      description: {
-        required,
-      },
       house_location: {
-        required,
-      },
-      deliveryOption: {
         required,
       },
     },
@@ -265,17 +259,8 @@ export default {
       this.$emit('close', false);
     },
     showReviewModal() {
-      if (moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date))
-        .format('YYYY-MM-DD') === moment().format('YYYY-MM-DD')) {
-        const notification = {
-          title: this.$t('updateDetails.warning'),
-          level: 2,
-          message: this.$t('updateDetails.changeDate'),
-        };
-        this.displayNotification(notification);
-      } else {
-        this.showDialog = true;
-      }
+      if (this.$v.$invalid) return;
+      this.showDialog = true;
     },
     setLocation(place) {
       this.params.deliveryLocation.description = place.name;

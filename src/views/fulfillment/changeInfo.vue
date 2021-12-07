@@ -115,21 +115,7 @@ export default {
       this.$store.commit('setDatePickerVisible', true);
     },
     showUpdateModal() {
-      if (
-        moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date)).format(
-          'YYYY-MM-DD',
-        ) === moment().format('YYYY-MM-DD')
-      ) {
-        const notification = {
-          title: 'Warning',
-          level: 2,
-          message:
-            'You will not be able to change the delivery details on the day of the delivery. Kindly reschedule to a later date to edit details',
-        };
-        this.displayNotification(notification);
-      } else {
-        this.$store.commit('setDialogVisible', true);
-      }
+      this.$store.commit('setDialogVisible', true);
     },
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');

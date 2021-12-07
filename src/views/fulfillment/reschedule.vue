@@ -49,7 +49,8 @@ export default {
     allowedDates(date) {
       // Can not select days before today and today
       return new Date(date).valueOf() >= Date.now() - (1000 * 60 * 60 * 24 * 1)
-        && new Date(date).valueOf() <= Date.now() + (1000 * 60 * 60 * 24 * 2);
+        && new Date(date).valueOf() <= Date.now() + (1000 * 60 * 60 * 24 * 2)
+        && moment(date).format('dddd') !== 'Sunday';
     },
     rescheduleDelivery() {
       const date = moment().format('YYYY-MM-DD') === this.date

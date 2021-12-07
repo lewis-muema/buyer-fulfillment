@@ -37,12 +37,22 @@
           </div>
         </el-timeline-item>
       </el-timeline>
+      <div
+        class="d-flex mobile-confirmation-pin-container"
+        v-if="!getStatus([9, 10, 11, 12]).includes($store.getters.getDeliveryStatus)"
+      >
+        <img src="../../assets/keypad.png" class="img-fluid mobile-confirmation-pin-img" />
+        <div class="mobile-confirmation-pin-text">
+          {{ $t("timeline.pin")}} <span class="mobile-confirmation-pin">{{ confirmationPin }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import moment from 'moment';
+import { mapGetters } from 'vuex';
 import statusMixin from '../../mixins/status_mixin';
 
 export default {
@@ -126,6 +136,12 @@ export default {
       return moment(date).format('ddd, MMM Do');
     },
   },
+  computed: {
+    ...mapGetters(['getData']),
+    confirmationPin() {
+      return this.getData.data.confirmation_pin;
+    },
+  },
 };
 </script>
 <style>
@@ -193,6 +209,24 @@ export default {
   box-shadow: 0 0 0 0 #324ba8;
   border-radius: 20px;
   animation: pulse-blue 2s infinite;
+}
+.mobile-confirmation-pin {
+  color: #324ba8;
+  font-weight: 700;
+}
+.mobile-confirmation-pin-container {
+  background: #f5f5f5;
+  width: 150px;
+  height: 35px;
+  margin-left: 50px;
+  margin-top: -20px;
+  padding: 7px 10px 7px 10px;
+}
+.mobile-confirmation-pin-img {
+  margin-top: 2px;
+}
+.mobile-confirmation-pin-text {
+  padding-left: 10px;
 }
 @keyframes pulse-blue {
   0% {
