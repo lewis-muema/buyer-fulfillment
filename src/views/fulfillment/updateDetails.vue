@@ -22,8 +22,6 @@
         <div class="form-floating mb-3">
           <vue-tel-input
             v-model.trim="params.phone"
-            :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)
-            || isToday"
             class="form-control cop-edit-form phone-input-display "
             name="phone"
             value=""
@@ -202,7 +200,8 @@ export default {
       },
       vueTelInputProps: {
         disabledFetchingCountry: false,
-        disabled: false,
+        disabled: (this.isToday
+        || !this.getStatus([0, 1]).includes(this.$store.getters.getDeliveryStatus)),
         disabledFormatting: false,
         placeholder: 'Enter phone number',
         required: false,
@@ -338,8 +337,5 @@ export default {
 .el-icon-info {
   color: #324ba8 !important;
   font-size: 20px;
-}
-vue-tel-input:disabled{
-  background-color: #e9ecef !important;
 }
 </style>
