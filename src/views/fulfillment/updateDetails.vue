@@ -57,13 +57,6 @@
             class="mobile-changeLocation-warning-container"
             v-if="isToday"
           >
-            <i class="el-icon-info mt-3"></i>
-            <p class="ml-2 mt-3 mobile-changeLocation-warning-text">
-              {{ $t("updateDetails.changeLocation") }} <br />
-              {{ $t("updateDetails.youCan")
-              }}<a @click="showDatePicker()"> {{ $t("updateDetails.reschedule") }}</a>
-              {{ $t("updateDetails.laterDate") }}
-            </p>
           </div>
         </div>
         <div class="form-floating mb-3">
