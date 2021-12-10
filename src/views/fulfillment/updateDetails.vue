@@ -11,7 +11,9 @@
     >
       <form>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" v-model="params.name"/>
+          <input type="text" class="form-control"
+          :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)
+            || isToday" id="floatingInput" v-model="params.name" />
           <label for="floatingInput">{{ $t("reviewChanges.recipientName") }}</label>
         </div>
         <div v-if="!$v.params.name.required" class="invalidFeedback">
@@ -21,7 +23,7 @@
           <div :class="isToday ? 'phone-no-enabled' : 'phone-no-disabled'"></div>
           <vue-tel-input
             v-model.trim="params.phone"
-            class="form-control cop-edit-form phone-input-display"
+            class="form-control cop-edit-form phone-input-display "
             name="phone"
             value=""
             data-vv-validate-on="blur"
@@ -55,13 +57,6 @@
             class="mobile-changeLocation-warning-container"
             v-if="isToday"
           >
-            <i class="el-icon-info mt-3"></i>
-            <p class="ml-2 mt-3 mobile-changeLocation-warning-text">
-              {{ $t("updateDetails.changeLocation") }} <br />
-              {{ $t("updateDetails.youCan")
-              }}<a @click="showDatePicker()"> {{ $t("updateDetails.reschedule") }}</a>
-              {{ $t("updateDetails.laterDate") }}
-            </p>
           </div>
         </div>
         <div class="form-floating mb-3">
@@ -77,9 +72,15 @@
           />
           <label for="floatingInput">{{ $t("updateDetails.floorNumber") }}</label>
         </div>
-        <div v-if="!$v.params.house_location.required" class="invalidFeedback">
-          {{ $t("updateDetails.floorNumberRequired") }}
-        </div>
+           <div
+            class="mobile-changeLocation-warning-container"
+            v-if="isToday"
+          >
+            <i class="el-icon-info mt-3"></i>
+            <p class="ml-2 mt-3 mobile-changeLocation-warning-text">
+              {{ $t("updateDetails.changeLocation") }}
+            </p>
+          </div>
         <div class="mt-3">
           <label for="Delivery options" class="form-label">
             {{ $t("updateDetails.deliveryOptions") }}
