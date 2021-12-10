@@ -268,7 +268,7 @@ export default {
       return moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date))
         .format(
           'YYYY-MM-DD',
-        ) === moment().format('YYYY-MM-DD');
+        ) === moment().format('YYYY-MM-DD') || !this.getStatus([0, 1]).includes(this.$store.getters.getDeliveryStatus);
     },
   },
   beforeMount() {
