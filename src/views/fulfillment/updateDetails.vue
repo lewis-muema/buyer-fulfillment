@@ -18,6 +18,7 @@
           {{ $t("updateDetails.recipientName") }}
         </div>
         <div class="form-floating mb-3">
+          <div :class="isToday ? 'phone-no-enabled' : 'phone-no-disabled'"></div>
           <vue-tel-input
             v-model.trim="params.phone"
             class="form-control cop-edit-form phone-input-display"
@@ -343,5 +344,19 @@ export default {
 .el-icon-info {
   color: #324ba8 !important;
   font-size: 20px;
+}
+.phone-no-disabled {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: none;
+  background: #c5cad370;
+}
+.phone-no-enabled {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: block;
+  background: #c5cad370;
 }
 </style>
