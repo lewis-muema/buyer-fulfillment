@@ -20,6 +20,7 @@
           {{ $t("updateDetails.recipientName") }}
         </div>
         <div class="form-floating mb-3">
+          <div :class="isToday ? 'phone-no-enabled' : 'phone-no-disabled'"></div>
           <vue-tel-input
             v-model.trim="params.phone"
             class="form-control cop-edit-form phone-input-display "
@@ -52,6 +53,18 @@
             :select-first-on-enter="true"
             @place_changed="setLocation($event)"
           />
+          <div
+            class="mobile-changeLocation-warning-container"
+            v-if="isToday"
+          >
+            <i class="el-icon-info mt-3"></i>
+            <p class="ml-2 mt-3 mobile-changeLocation-warning-text">
+              {{ $t("updateDetails.changeLocation") }} <br />
+              {{ $t("updateDetails.youCan")
+              }}<a @click="showDatePicker()"> {{ $t("updateDetails.reschedule") }}</a>
+              {{ $t("updateDetails.laterDate") }}
+            </p>
+          </div>
         </div>
         <div class="form-floating mb-3">
           <input
@@ -228,6 +241,9 @@ export default {
         required,
         maxLength: maxLength(25),
       },
+      house_location: {
+        required,
+      },
     },
   },
   watch: {
@@ -260,7 +276,7 @@ export default {
       return moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date))
         .format(
           'YYYY-MM-DD',
-        ) === moment().format('YYYY-MM-DD');
+        ) === moment().format('YYYY-MM-DD') || !this.getStatus([0, 1]).includes(this.$store.getters.getDeliveryStatus);
     },
   },
   beforeMount() {
@@ -336,5 +352,19 @@ export default {
 .el-icon-info {
   color: #324ba8 !important;
   font-size: 20px;
+}
+.phone-no-disabled {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: none;
+  background: #c5cad370;
+}
+.phone-no-enabled {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: block;
+  background: #c5cad370;
 }
 </style>

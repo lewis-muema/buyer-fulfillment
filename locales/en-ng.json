@@ -81,6 +81,13 @@
   "updateDetails.updateDeliveryInfo": "Update Delivery Info",
   "updateDetails.warning": "Warning",
   "updateDetails.changeDate": "You will not be able to change the delivery details on the day of the delivery. Kindly reschedule to a later date to edit details",
+<<<<<<< HEAD
   "updateDetails.changeLocation": "Sorry you can't update the info above on the day of delivery"
 
+=======
+  "updateDetails.changeLocation": "Sorry you can't update the location on the day of delivery.",
+  "updateDetails.reschedule": "reschedule",
+  "updateDetails.youCan": "You can",
+  "updateDetails.laterDate": "to a later date to edit the location"
+>>>>>>> af711f0b00a0ff08b00fe46e0588a8cff3a1cd92
 }
