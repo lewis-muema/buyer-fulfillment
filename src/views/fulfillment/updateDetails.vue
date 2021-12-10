@@ -200,8 +200,7 @@ export default {
       },
       vueTelInputProps: {
         disabledFetchingCountry: false,
-        disabled: (this.isToday
-        || !this.getStatus([0, 1]).includes(this.$store.getters.getDeliveryStatus)),
+        disabled: false,
         disabledFormatting: false,
         placeholder: 'Enter phone number',
         required: false,
