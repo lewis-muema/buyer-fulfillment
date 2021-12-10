@@ -142,6 +142,7 @@ export default {
   text-decoration: none !important;
   line-height: 3em !important;
   color: #324ba8 !important;
+  padding-top: 25px;
 }
 .recipient-details-leave-delivery {
   color: #324ba8 !important;
