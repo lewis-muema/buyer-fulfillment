@@ -11,37 +11,41 @@
     >
       <form>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="floatingInput" v-model="params.name"/>
+          <input type="text" class="form-control"
+          :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)
+            || isToday" id="floatingInput" v-model="params.name" />
           <label for="floatingInput">{{ $t("reviewChanges.recipientName") }}</label>
         </div>
         <div v-if="!$v.params.name.required" class="invalidFeedback">
-          {{ $t('updateDetails.recipientName') }}
+          {{ $t("updateDetails.recipientName") }}
         </div>
         <div class="form-floating mb-3">
+          <div :class="isToday ? 'phone-no-enabled' : 'phone-no-disabled'"></div>
           <vue-tel-input
             v-model.trim="params.phone"
-            class="form-control cop-edit-form phone-input-display"
+            class="form-control cop-edit-form phone-input-display "
             name="phone"
             value=""
             data-vv-validate-on="blur"
             v-bind="sendyPhoneProps"
             :input-options="vueTelInputProps"
           />
-          <label for="floatingInput">{{ $t('updateDetails.phoneNumber') }}</label>
+          <label for="floatingInput">{{ $t("updateDetails.phoneNumber") }}</label>
         </div>
         <div v-if="!$v.params.phone.required" class="invalidFeedback">
-          {{ $t('updateDetails.phoneNumberRequired') }}
+          {{ $t("updateDetails.phoneNumberRequired") }}
         </div>
         <div v-if="!$v.params.phone.maxLength" class="invalidFeedback">
-          {{ $t('updateDetails.validPhoneNumber') }}
+          {{ $t("updateDetails.validPhoneNumber") }}
         </div>
         <div class="form-floating mb-3">
           <label for="floatingInput" class="location-input-label">
-            {{ $t('updateDetails.location') }}
+            {{ $t("updateDetails.location") }}
           </label>
           <gmap-autocomplete
             :value="params.deliveryLocation.description"
-            :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)"
+            :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)
+            || isToday"
             :options="map_options"
             class="form-control form"
             id="floatingInput"
@@ -49,24 +53,37 @@
             :select-first-on-enter="true"
             @place_changed="setLocation($event)"
           />
+          <div
+            class="mobile-changeLocation-warning-container"
+            v-if="isToday"
+          >
+          </div>
         </div>
         <div class="form-floating mb-3">
           <input
-           :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)"
+            :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)
+            || isToday"
             type="text"
             class="form-control"
             id="floatingInput"
             placeholder="Floor, apartment or house number"
+            value="Enter FloorNo/Apt/Hse No"
             v-model="params.house_location"
           />
-          <label for="floatingInput">{{ $t('updateDetails.floorNumber') }}</label>
+          <label for="floatingInput">{{ $t("updateDetails.floorNumber") }}</label>
         </div>
-        <div v-if="!$v.params.house_location.required" class="invalidFeedback">
-          {{ $t('updateDetails.floorNumberRequired') }}
-        </div>
+           <div
+            class="mobile-changeLocation-warning-container"
+            v-if="isToday"
+          >
+            <i class="el-icon-info mt-3"></i>
+            <p class="ml-2 mt-3 mobile-changeLocation-warning-text">
+              {{ $t("updateDetails.changeLocation") }}
+            </p>
+          </div>
         <div class="mt-3">
           <label for="Delivery options" class="form-label">
-            {{ $t('updateDetails.deliveryOptions') }}
+            {{ $t("updateDetails.deliveryOptions") }}
           </label>
           <div class="mb-3">
             <el-row>
@@ -79,7 +96,7 @@
                   "
                   @click="deliveryOption = 'Leave with guard'"
                 >
-                  {{ $t('updateDetails.leaveWithGuard') }}
+                  {{ $t("updateDetails.leaveWithGuard") }}
                 </div>
               </el-col>
               <el-col :span="12">
@@ -91,7 +108,7 @@
                   "
                   @click="deliveryOption = 'Leave at the reception'"
                 >
-                  {{ $t('updateDetails.leaveAtTheReception') }}
+                  {{ $t("updateDetails.leaveAtTheReception") }}
                 </div>
               </el-col>
             </el-row>
@@ -105,7 +122,7 @@
                   "
                   @click="deliveryOption = 'Leave at the door'"
                 >
-                  {{ $t('updateDetails.leaveAtTheDoor') }}
+                  {{ $t("updateDetails.leaveAtTheDoor") }}
                 </div>
               </el-col>
             </el-row>
@@ -119,7 +136,7 @@
               !$store.getters.getMobile ? 'update-info-button-desktop' : 'update-info-button-mobile'
             "
           >
-            {{ $t('updateDetails.updateDeliveryInfo') }}
+            {{ $t("updateDetails.updateDeliveryInfo") }}
           </el-button>
         </div>
       </form>
@@ -139,6 +156,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import eventsMixin from '../../mixins/events_mixin';
 import statusMixin from '../../mixins/status_mixin';
 import notificationMxn from '../../mixins/nofication_mixin';
@@ -247,6 +265,12 @@ export default {
     countryCodes() {
       return [this.$store.getters.getCountryData.countryCode.toLowerCase()];
     },
+    isToday() {
+      return moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date))
+        .format(
+          'YYYY-MM-DD',
+        ) === moment().format('YYYY-MM-DD') || !this.getStatus([0, 1]).includes(this.$store.getters.getDeliveryStatus);
+    },
   },
   beforeMount() {
     this.map_options.componentRestrictions.country = this.countryCodes;
@@ -261,6 +285,9 @@ export default {
     showReviewModal() {
       if (this.$v.$invalid) return;
       this.showDialog = true;
+    },
+    showDatePicker() {
+      this.$store.commit('setDatePickerVisible', true);
     },
     setLocation(place) {
       this.params.deliveryLocation.description = place.name;
@@ -304,5 +331,33 @@ export default {
 }
 .pac-target-input {
   user-select: none;
+}
+.mobile-changeLocation-warning-text {
+  font-size: 12px;
+}
+.mobile-changeLocation-warning-text a {
+  text-decoration: none;
+  color: #324ba8 !important;
+}
+.mobile-changeLocation-warning-container {
+  display: flex;
+}
+.el-icon-info {
+  color: #324ba8 !important;
+  font-size: 20px;
+}
+.phone-no-disabled {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: none;
+  background: #c5cad370;
+}
+.phone-no-enabled {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: block;
+  background: #c5cad370;
 }
 </style>
