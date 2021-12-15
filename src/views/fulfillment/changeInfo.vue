@@ -74,7 +74,7 @@
               }}
             </p>
             <button
-            :disabled="getStatus([5, 6, 7, 8, 9]).includes($store.getters.getDeliveryStatus)"
+            :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)"
               class="reschedule-button"
               @click="showDatePicker()"
             >
