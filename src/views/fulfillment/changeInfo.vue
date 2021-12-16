@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      title="Update delivery Info"
+      :title="$t('updateDetails.updateDeliveryInfo')"
       :visible.sync="setDetailsDialogStatus"
       :width="$store.getters.getMobile ? '100%' : '30%'"
       :fullscreen="$store.getters.getMobile ? true : false"
