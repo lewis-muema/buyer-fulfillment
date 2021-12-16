@@ -41,7 +41,6 @@ export default {
   },
   mounted() {
     this.language = localStorage.buyerTimeLocale;
-    console.log(localStorage.buyerTimeLocale);
   },
   computed: {
     activeLanguage() {
