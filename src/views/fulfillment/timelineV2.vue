@@ -35,7 +35,8 @@
         </el-timeline-item>
       </el-timeline>
       <div
-        class="d-flex mobile-confirmation-pin-container"
+        :class="getLanguage == 'fr' ? 'd-flex mobile-confirmation-pin-container-french' :
+        'd-flex mobile-confirmation-pin-container'"
         v-if="!getStatus([9, 10, 11, 12]).includes($store.getters.getDeliveryStatus)"
       >
         <img src="../../assets/keypad.png" class="img-fluid mobile-confirmation-pin-img" />
@@ -72,6 +73,7 @@ export default {
   },
   mounted() {
     this.sortTimelineEvents();
+    this.language = localStorage.buyerTimeLocale;
   },
   methods: {
     sortTimelineEvents() {
@@ -136,6 +138,10 @@ export default {
     ...mapGetters(['getData']),
     confirmationPin() {
       return this.getData.data.confirmation_pin;
+    },
+    getLanguage() {
+      console.log('timeline', this.getData.data.language);
+      return this.getData.data.language;
     },
   },
 };
@@ -218,6 +224,15 @@ export default {
   margin-top: -20px;
   padding: 7px 10px 7px 10px;
 }
+.mobile-confirmation-pin-container-french {
+  background: #f5f5f5;
+  width: 220px;
+  height: 35px;
+  margin-left: 50px;
+  margin-top: -20px;
+  padding: 7px 10px 7px 10px;
+}
+
 .mobile-confirmation-pin-img {
   margin-top: 2px;
 }

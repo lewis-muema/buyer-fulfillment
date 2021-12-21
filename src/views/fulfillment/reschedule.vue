@@ -66,7 +66,7 @@ export default {
       }).then((res) => {
         this.$store.commit('setLoading', false);
         if (res.status === 200) {
-          const message = 'Order rescheduled successfully';
+          const message = this.$t('reschedule.success');
           const notification = {
             title: '',
             level: 1,
