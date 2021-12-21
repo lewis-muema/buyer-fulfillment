@@ -16,7 +16,8 @@
             {{ Object.keys(data).length > 0 && data.data.products.length > 0 ?
               data.data.products[0].product_name :
               '' }} {{ Object.keys(data).length > 0 && data.data.products.length > 1 ?
-              `and ${data.data.products.length - 1} other items` : '' }}
+              `${$t('mobile.and')} ${data.data.products.length - 1} ${$t('mobile.otherItems')} `
+               : '' }}
             <i :class="!showItems ? 'el-icon-arrow-down' : 'el-icon-arrow-up'"></i>
           </span>
           <order-items v-if="showItems" />
