@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      title="Update delivery Info"
+      :title="$t('updateDetails.updateDeliveryInfo')"
       :visible.sync="setDetailsDialogStatus"
       :width="$store.getters.getMobile ? '100%' : '30%'"
       :fullscreen="$store.getters.getMobile ? true : false"
@@ -74,7 +74,7 @@
               }}
             </p>
             <button
-            :disabled="getStatus([7, 8, 9]).includes($store.getters.getDeliveryStatus)"
+            :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)"
               class="reschedule-button"
               @click="showDatePicker()"
             >

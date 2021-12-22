@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import axios from 'axios';
+import moment from 'moment';
 
 Vue.use(VueI18n);
 
@@ -27,7 +28,13 @@ const i18n = new VueI18n({
 function fetchCountry() {
   window.addEventListener('language-changed', (event) => {
     i18n.locale = event.detail;
+    localStorage.setItem('buyerTimeLocale', event.detail);
+    moment.locale(event.detail);
   });
+}
+
+// eslint-disable-next-line no-unused-vars
+function ipLookUp() {
   const { EXTREME_IP_KEY } = process.env;
   axios(`https://extreme-ip-lookup.com/json/?key=${EXTREME_IP_KEY}`)
     .then((response) => {
