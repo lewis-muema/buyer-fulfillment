@@ -9,7 +9,12 @@
       <div class="date-picker-title">
         {{ $t('reschedule.pickADate') }}
       </div>
-      <v-date-picker v-model="date" :allowed-dates="allowedDates" color="#324BA8"></v-date-picker>
+      <v-date-picker
+        v-model="date"
+        :allowed-dates="allowedDates"
+        color="#324BA8"
+        :locale="locale"
+      ></v-date-picker>
       <div>
         <button class="back-button" @click="visibleDatePicker = false">
           {{ $t('reschedule.back') }}
@@ -43,7 +48,13 @@ export default {
       date: moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date)).format(
         'YYYY-MM-DD',
       ),
+      locale: '',
     };
+  },
+  mounted() {
+    window.addEventListener('language-changed', (event) => {
+      this.locale = event.detail;
+    });
   },
   methods: {
     allowedDates(date) {
