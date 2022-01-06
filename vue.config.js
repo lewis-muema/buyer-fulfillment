@@ -10,4 +10,14 @@ module.exports = {
   transpileDependencies: [
     'vuetify',
   ],
+  chainWebpack: (config) => {
+    if (process.env.DOCKER_ENV === 'development') {
+      config.merge({
+        target: 'node',
+        devtool: 'eval'
+      })
+    }
+  }
 };
+
+
