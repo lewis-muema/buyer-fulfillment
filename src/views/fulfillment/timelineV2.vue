@@ -140,7 +140,6 @@ export default {
       return this.getData.data.confirmation_pin;
     },
     getLanguage() {
-      console.log('timeline', this.getData.data.language);
       return this.getData.data.language;
     },
   },
