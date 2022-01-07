@@ -1,1 +1,0 @@
-{"parent":null,"pid":7648,"argv":["/usr/local/bin/node","/usr/local/bin/npm","run","test:unit"],"execArgv":[],"cwd":"/Users/dorcas/dev/buyer_fulfillment","time":1641560459230,"ppid":7642,"coverageFilename":"/Users/dorcas/dev/buyer_fulfillment/.nyc_output/d3f108ac-b05d-4f09-8617-1f2da917c574.json","externalId":"","uuid":"d3f108ac-b05d-4f09-8617-1f2da917c574","files":[]}
