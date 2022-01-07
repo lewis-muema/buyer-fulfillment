@@ -8,7 +8,7 @@
     "beta": "cross-env DOCKER_ENV=\"beta\" vue-cli-service build",
     "staging": "cross-env DOCKER_ENV=\"staging\"  vue-cli-service build",
     "lint": "cross-env DOCKER_ENV=\"development\" vue-cli-service lint --fix",
-    "test:unit": "cross-env DOCKER_ENV=\"development\" vue-cli-service test:unit",
+    "test:unit": "cross-env DOCKER_ENV=\"testing\" vue-cli-service test:unit",
     "coverage": "nyc npm run test:unit "
   },
   "nyc": {
