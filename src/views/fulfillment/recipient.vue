@@ -18,14 +18,16 @@
           </p>
         </div>
         <div class="recipient-details">
-          <p class="reciepient-details-rows">
+          <div class="d-flex">
             <i class="el-icon-location-outline"></i>
+          <p class="reciepient-details-rows pl-3">
             {{
               $store.getters.getData.data.destination.delivery_location
                 ? $store.getters.getData.data.destination.delivery_location.description
                 : ""
             }}
           </p>
+          </div>
           <div
             class="recipient-details"
             v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7]).includes($store.getters.getDeliveryStatus)"
