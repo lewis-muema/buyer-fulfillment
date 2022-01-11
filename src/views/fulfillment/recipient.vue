@@ -45,7 +45,7 @@
       </div>
       <el-button
         v-if="
-          !getStatus([9, 10]).includes($store.getters.getDeliveryStatus) &&
+          !getStatus([9, 10,11,12]).includes($store.getters.getDeliveryStatus) &&
             !$store.getters.getMobile
         "
         type="primary"
