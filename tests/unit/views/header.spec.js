@@ -35,5 +35,9 @@ describe('Header.vue', () => {
   it('checks if language changes on selecting dropdown', () => {
     wrapper.vm.changeLanguage('en');
     expect(wrapper.vm.language).to.equal('en');
+    wrapper.vm.changeLanguage('en-ng');
+    expect(wrapper.vm.language).to.equal('en-ng');
+    wrapper.vm.changeLanguage('fr');
+    expect(wrapper.vm.language).to.equal('fr');
   });
 });
