@@ -78,12 +78,12 @@
 </template>
 
 <script>
-import moment from "moment";
-import { mapGetters } from "vuex";
-import statusMixin from "../../mixins/status_mixin";
+import moment from 'moment';
+import { mapGetters } from 'vuex';
+import statusMixin from '../../mixins/status_mixin';
 
 export default {
-  name: "Timeline",
+  name: 'Timeline',
   mixins: [statusMixin],
   data() {
     return {
@@ -91,12 +91,12 @@ export default {
       events: [],
       rider: {},
       timeline: [],
-      activeEvent: "",
+      activeEvent: '',
       activeIndex: 0,
     };
   },
   watch: {
-    "$store.getters.getData.data.event_time_line": function refreshTimeline() {
+    '$store.getters.getData.data.event_time_line': function refreshTimeline() {
       this.sortTimelineEvents();
     },
   },
@@ -109,7 +109,7 @@ export default {
       const timeline = this.$store.getters.getData.data.event_time_line;
       const activeEvent = timeline[timeline.length - 1].event_code;
       this.activeIndex = this.$store.getters.getOrderStatuses.findIndex(
-        (evt) => evt === activeEvent
+        (evt) => evt === activeEvent,
       );
       this.activities = this.filteredEventTimelineV2();
       this.rider = this.$store.getters.getData.data.partner_contact_information;
@@ -119,18 +119,15 @@ export default {
       this.$store.getters.getOrderTimelines.forEach((row, index) => {
         if (this.activeIndex === index) {
           row.steps.forEach((step, i) => {
-            const evts =
-              this.$store.getters.getData.data.event_time_line.filter(
-                (timeline) =>
-                  timeline.event_code ===
-                  this.$store.getters.getOrderStatuses[step]
-              );
-            const evtDate =
-              evts.length > 0 ? evts[evts.length - 1].event_date : "";
+            const evts = this.$store.getters.getData.data.event_time_line.filter(
+              (timeline) => timeline.event_code
+                  === this.$store.getters.getOrderStatuses[step],
+            );
+            const evtDate = evts.length > 0 ? evts[evts.length - 1].event_date : '';
             events.push({
               event_code: this.$store.getters.getOrderStatuses[step],
               index,
-              active: row.colors[i] === "#324ba8",
+              active: row.colors[i] === '#324ba8',
               title: row.titles[i],
               color: row.colors[i],
               icon: row.icons[i],
@@ -147,31 +144,31 @@ export default {
     },
     formatEventDate(date, timeline) {
       if (date.status) {
-        if (date.type === "timeline") {
+        if (date.type === 'timeline') {
           return moment(timeline).format(date.format);
         }
-        if (date.type === "scheduled") {
+        if (date.type === 'scheduled') {
           return moment(
-            this.$store.getters.getData.data.scheduled_delivery_date
+            this.$store.getters.getData.data.scheduled_delivery_date,
           ).format(date.format);
         }
-        if (date.type === "completed") {
+        if (date.type === 'completed') {
           return moment(
-            this.$store.getters.getData.data.order_completion_date
+            this.$store.getters.getData.data.order_completion_date,
           ).format(date.format);
         }
-        if (date.type === "today") {
-          return "Today";
+        if (date.type === 'today') {
+          return 'Today';
         }
       }
-      return "";
+      return '';
     },
     formatDate(date) {
-      return moment(date).format("ddd, MMM Do");
+      return moment(date).format('ddd, MMM Do');
     },
   },
   computed: {
-    ...mapGetters(["getData"]),
+    ...mapGetters(['getData']),
     confirmationPin() {
       return this.getData.data.confirmation_pin;
     },

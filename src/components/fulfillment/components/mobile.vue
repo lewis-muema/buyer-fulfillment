@@ -127,14 +127,14 @@
 </template>
 
 <script>
-import moment from "moment";
-import Header from "../../../views/fulfillment/header.vue";
-import orderItems from "../../../views/fulfillment/orderItems.vue";
-import Timeline from "../../../views/fulfillment/timelineV2.vue";
-import Recipient from "../../../views/fulfillment/recipient.vue";
-import Rating from "../../../views/fulfillment/rating.vue";
-import changeinfo from "../../../views/fulfillment/changeInfo.vue";
-import statusMixin from "../../../mixins/status_mixin";
+import moment from 'moment';
+import Header from '../../../views/fulfillment/header.vue';
+import orderItems from '../../../views/fulfillment/orderItems.vue';
+import Timeline from '../../../views/fulfillment/timelineV2.vue';
+import Recipient from '../../../views/fulfillment/recipient.vue';
+import Rating from '../../../views/fulfillment/rating.vue';
+import changeinfo from '../../../views/fulfillment/changeInfo.vue';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
   components: {
@@ -153,36 +153,36 @@ export default {
     };
   },
   watch: {
-    "$store.getters.getData": function setData() {
+    '$store.getters.getData': function setData() {
       this.data = this.$store.getters.getData;
     },
   },
   methods: {
     showDetailsPicker() {
-      this.$store.commit("setDetailsDialogVisible", true);
+      this.$store.commit('setDetailsDialogVisible', true);
     },
     showDatePicker() {
-      this.$store.commit("setDatePickerVisible", true);
+      this.$store.commit('setDatePickerVisible', true);
     },
     formatDate(date) {
-      return moment(new Date(date)).format("dddd, Do MMMM");
+      return moment(new Date(date)).format('dddd, Do MMMM');
     },
     formatCompletionDate(date) {
-      return `${moment(new Date(date)).format("ddd, Do MMMM")} at ${moment(
-        new Date(date)
-      ).format("h:mm a")}`;
+      return `${moment(new Date(date)).format('ddd, Do MMMM')} at ${moment(
+        new Date(date),
+      ).format('h:mm a')}`;
     },
     formatDeliveryWindow(date) {
       const lowerLimit = moment(
         new Date(
-          date.estimated_delivery_time - date.large_lower_limit * 60 * 1000
-        )
-      ).format("h a");
+          date.estimated_delivery_time - date.large_lower_limit * 60 * 1000,
+        ),
+      ).format('h a');
       const upperLimit = moment(
         new Date(
-          date.estimated_delivery_time + date.large_upper_limit * 60 * 1000
-        )
-      ).format("h a");
+          date.estimated_delivery_time + date.large_upper_limit * 60 * 1000,
+        ),
+      ).format('h a');
       return `${lowerLimit} - ${upperLimit}`;
     },
   },
