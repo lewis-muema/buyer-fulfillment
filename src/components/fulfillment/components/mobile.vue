@@ -47,7 +47,7 @@
         >
           {{ $t('mobile.notIn') }}
         </div>
-        <el-button @click="showDetailsPicker()" class="el-button">
+        <el-button @click="showDetailsPicker()" class="change-delivery-el-button">
           {{ $t('mobile.changeDetails') }}
         </el-button>
       </div>
@@ -86,13 +86,14 @@
     </div>
     <div
       v-if="getStatus([12]).includes($store.getters.getDeliveryStatus)"
-      class="fulfillemnt-order-items-expected-deivery"
+      class="fulfillemnt-order-items-failed-delivery"
     >
-      <p class="delivered-title">{{ $t('desktop.deliveryFailed') }}</p>
-      <p class="delivered-date">
-        {{ formatCompletionDate(
-        data.data.event_time_line[data.data.event_time_line.length - 1].event_date
-      ) }}</p>
+      <p class="failed-delivery-title">{{ $t('desktop.deliveryFailed.title') }}</p>
+        <p class="failed-delivery-desc">{{ $t('desktop.deliveryFailed.unavailable') }}</p>
+          <p class="failed-delivery-desc2">{{ $t('desktop.deliveryFailed.reschedule') }}</p>
+      <el-button @click="showDatePicker()" class="show-datepicker-el-button">
+        {{$t("Reschedule delivery")}}
+        </el-button>
     </div>
     <changeinfo />
     <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
@@ -136,6 +137,9 @@ export default {
     showDetailsPicker() {
       this.$store.commit('setDetailsDialogVisible', true);
     },
+    showDatePicker() {
+      this.$store.commit('setDatePickerVisible', true);
+    },
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
     },
@@ -175,8 +179,12 @@ export default {
 .fulfillemnt-order-items-header {
   text-transform: capitalize;
 }
-.el-button {
+.change-delivery-el-button {
 margin: 0px 0px 20px !important;
 
+}
+.show-datepicker-el-button {
+  margin: 0px 0px 20px !important;
+  max-width: 170px;
 }
 </style>

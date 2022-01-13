@@ -6,22 +6,25 @@
         <el-col :span="12">
           <el-card shadow="never">
             <div class="order">
-              <h3>{{ Object.keys(data).length > 0 ?
-                data.data.seller_name :
-                '--' }}
+              <h3>
+                {{
+                  Object.keys(data).length > 0 ? data.data.seller_name : "--"
+                }}
               </h3>
               <div
                 class="delivery mt-5"
                 v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13])
                   .includes($store.getters.getDeliveryStatus)"
               >
-                <p>{{ $t('mobile.expectedDelivery') }}</p>
-                <p class="date">{{ Object.keys(data).length > 0 ?
-                  formatDate(data.data.scheduled_delivery_date) :
-                  '--' }}
+                <p>{{ $t("mobile.expectedDelivery") }}</p>
+                <p class="date">
+                  {{
+                    Object.keys(data).length > 0
+                      ? formatDate(data.data.scheduled_delivery_date)
+                      : "--"
+                  }}
                 </p>
-                <p v-if="data.data.estimated_delivery_date"
-                  class="date">
+                <p v-if="data.data.estimated_delivery_date" class="date">
                   {{ formatDeliveryWindow(data.data.estimated_delivery_date) }}
                 </p>
               </div>
@@ -31,18 +34,20 @@
               >
                 <p class="rider-pin">
                   <span>
-                    {{ $t('mobile.pin') }}
+                    {{ $t("mobile.pin") }}
                   </span>
                   <span class="rider-pin-value">
-                    {{ Object.keys(data).length > 0 ?
-                        data.data.confirmation_pin :
-                        '--' }}
+                    {{
+                      Object.keys(data).length > 0
+                        ? data.data.confirmation_pin
+                        : "--"
+                    }}
                   </span>
                 </p>
                 <p class="rider-pin-description">
-                 <i class="el-icon-info"></i>
-                 <span class="rider-pin-description-text">
-                   {{ $t('desktop.givePin') }}
+                  <i class="el-icon-info"></i>
+                  <span class="rider-pin-description-text">
+                    {{ $t("desktop.givePin") }}
                   </span>
                 </p>
               </div>
@@ -50,26 +55,43 @@
                 v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
                 class="delivery mt-5"
               >
-                <p class="date">{{ $t('desktop.packageDelivered') }}</p>
-                <p>{{ formatCompletionDate(data.data.order_completion_date) }}</p>
+                <p class="date">{{ $t("desktop.packageDelivered") }}</p>
+                <p>
+                  {{ formatCompletionDate(data.data.order_completion_date) }}
+                </p>
               </div>
               <div
-                v-if="getStatus([10, 11]).includes($store.getters.getDeliveryStatus)"
+                v-if="
+                  getStatus([10, 11]).includes($store.getters.getDeliveryStatus)
+                "
                 class="delivery mt-5"
               >
-                <p class="date">{{ $t('desktop.orderCancelled') }}</p>
-                <p>{{ formatCompletionDate(
-                  data.data.event_time_line[data.data.event_time_line.length - 1].event_date
-                ) }}</p>
+                <p class="date">{{ $t("desktop.orderCancelled") }}</p>
+                <p>
+                  {{
+                    formatCompletionDate(
+                      data.data.event_time_line[
+                        data.data.event_time_line.length - 1
+                      ].event_date
+                    )
+                  }}
+                </p>
               </div>
               <div
-                v-if="getStatus([12]).includes($store.getters.getDeliveryStatus)"
+                v-if="
+                  getStatus([12]).includes($store.getters.getDeliveryStatus)
+                "
                 class="delivery mt-5"
               >
-                <p class="date">{{ $t('desktop.deliveryFailed') }}</p>
-                <p>{{ formatCompletionDate(
-                  data.data.event_time_line[data.data.event_time_line.length - 1].event_date
-                ) }}</p>
+                <p class="failed-delivery-title">{{ $t('desktop.deliveryFailed.title') }}</p>
+        <p class="failed-delivery-desc">{{ $t('desktop.deliveryFailed.unavailable') }}</p>
+          <p class="failed-delivery-desc2">{{ $t('desktop.deliveryFailed.reschedule') }}</p>
+                <el-button
+                  @click="showDatePicker()"
+                  class="show-datepicker-el-button"
+                >
+                  {{$t("Reschedule delivery")}}
+                </el-button>
               </div>
             </div>
           </el-card>
@@ -80,7 +102,9 @@
       </el-row>
       <el-row class="el-row">
         <el-col :span="12">
-          <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
+          <Rating
+            v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
+          />
           <Timeline />
         </el-col>
         <el-col :span="12">
@@ -123,12 +147,25 @@ export default {
     formatDate(date) {
       return moment(new Date(date)).format('dddd, Do MMMM');
     },
+    showDatePicker() {
+      this.$store.commit('setDatePickerVisible', true);
+    },
     formatCompletionDate(date) {
-      return `${moment(new Date(date)).format('ddd, Do MMMM')} at ${moment(new Date(date)).format('h:mm a')}`;
+      return `${moment(new Date(date)).format('ddd, Do MMMM')} at ${moment(
+        new Date(date),
+      ).format('h:mm a')}`;
     },
     formatDeliveryWindow(date) {
-      const lowerLimit = moment(new Date(date.estimated_delivery_time - (date.large_lower_limit * 60 * 1000))).format('h a');
-      const upperLimit = moment(new Date(date.estimated_delivery_time + (date.large_upper_limit * 60 * 1000))).format('h a');
+      const lowerLimit = moment(
+        new Date(
+          date.estimated_delivery_time - date.large_lower_limit * 60 * 1000,
+        ),
+      ).format('h a');
+      const upperLimit = moment(
+        new Date(
+          date.estimated_delivery_time + date.large_upper_limit * 60 * 1000,
+        ),
+      ).format('h a');
       return `${lowerLimit} - ${upperLimit}`;
     },
   },
@@ -160,7 +197,7 @@ export default {
 }
 .rider-pin-value {
   font-size: 20px;
-  color: #EE7D00;
+  color: #ee7d00;
 }
 .rider-pin-description {
   font-size: 12px;

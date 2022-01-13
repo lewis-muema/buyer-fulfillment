@@ -14,10 +14,8 @@ module.exports = {
     if (process.env.DOCKER_ENV === 'testing') {
       config.merge({
         target: 'node',
-        devtool: 'eval'
-      })
+        devtool: 'eval',
+      });
     }
-  }
+  },
 };
-
-
