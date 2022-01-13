@@ -14,7 +14,9 @@
           :color="activity.color"
           :size="activity.size"
         >
-          <span :class="activity.active ? 'active-timeline-text' : '' ">
+          <span :class="activity.active ? 'active-timeline-text' :
+          activity.event_code === 'event.delivery.failed' ? 'failed-delivery-timeline-text' :
+          '' ">
             {{
               formatEventName(
                 $t(`${$store.getters.getOrderEvents[activity.title]}`, { Date: activity.date })
@@ -205,7 +207,7 @@ export default {
   font-weight: 700;
 }
 .failed-delivery-timeline-text {
-  color: #000;
+  color: #9B101C;
 }
 .el-icon-minus {
   background: #324ba8;
