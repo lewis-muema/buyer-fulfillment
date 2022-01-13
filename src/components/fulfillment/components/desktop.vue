@@ -12,7 +12,7 @@
               </h3>
               <div
                 class="delivery mt-5"
-                v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7])
+                v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13])
                   .includes($store.getters.getDeliveryStatus)"
               >
                 <p>{{ $t('mobile.expectedDelivery') }}</p>

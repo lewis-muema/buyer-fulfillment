@@ -70,6 +70,7 @@
   "timeline.preparedDelivery": "Votre livraison a été préparée",
   "timeline.preparingDelivery": "Nous préparons votre livraison",
   "timeline.timeline": "Délai",
+  "timeline.rescheduledByBuyer": "FR_Your order has been rescheduled by the buyer",
   "updateDetails.changeDate": "Vous ne pourrez pas modifier les détails de la livraison le jour de la livraison. Veuillez reprogrammer la livraison à une date ultérieure pour modifier les détails",
   "updateDetails.changeLocation": "Désolé, vous ne pouvez pas mettre à jour les informations ci-dessus le jour de la livraison",
   "updateDetails.deliveryOptions": "Options de livraison",

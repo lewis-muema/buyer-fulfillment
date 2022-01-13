@@ -30,7 +30,8 @@
           </div>
           <div
             class="recipient-details"
-            v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7]).includes($store.getters.getDeliveryStatus)"
+            v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13])
+              .includes($store.getters.getDeliveryStatus)"
           >
             <a class="reciepient-delivery-instructions-mobile pt-3" @click="showUpdateModal"
               >{{$t("recipient.deliveryInstructions")}}</a

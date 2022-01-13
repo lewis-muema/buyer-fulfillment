@@ -26,7 +26,7 @@
     </div>
     <div
       class="fulfillemnt-order-items-expected-deivery"
-      v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7])
+      v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13])
         .includes($store.getters.getDeliveryStatus)"
     >
       <p class="fulfillemnt-order-items-expected-deivery-title">

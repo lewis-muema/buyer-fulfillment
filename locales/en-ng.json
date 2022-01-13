@@ -70,6 +70,7 @@
   "timeline.preparedDelivery": "Your delivery has been prepared",
   "timeline.orderFailed": "Delivery failed on {Date}",
   "timeline.pin": "PIN is",
+  "timeline.rescheduledByBuyer": "Your order has been rescheduled by the buyer",
   "updateDetails.recipientName": "Name is required",
   "updateDetails.phoneNumber": "Phone number",
   "updateDetails.phoneNumberRequired": "Phone number is required",
