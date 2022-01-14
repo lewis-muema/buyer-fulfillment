@@ -29,7 +29,7 @@ describe('changeInfo.vue', () => {
   beforeEach(() => {
     wrapper = shallowMount(recipient, { i18n, store, mixins: [StatusMixin], localVue, router, sync: false, });
   });
-  it('should show details dialog', () => {
+  it('should show datepicker dialog', () => {
     wrapper.vm.showDetailsPicker();
     expect(store.getters.getDetailsDialogVisible).to.equal(false);
   });
