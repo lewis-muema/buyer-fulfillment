@@ -74,7 +74,27 @@
   letter-spacing: 0.25px;
   text-align: left;
 }
-
+.fulfillemnt-order-items-failed-delivery {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px 20px;
+  background:#FBDECF;
+  color: #17224D;
+  border-radius: 5px;
+}
+.failed-delivery-title {
+  margin: 15px 0px 10px !important;
+  font-weight: 700;
+  font-size: 17px;
+  color: #9B101C;
+}
+.failed-delivery-desc, .failed-delivery-desc2 {
+  font-weight: 700;
+  font-size: 17px;
+  color: #680720;
+}
 .reschedule {
   border: none;
   background: #D3DDF6;

@@ -8,7 +8,8 @@
     "beta": "cross-env DOCKER_ENV=\"beta\" vue-cli-service build",
     "staging": "cross-env DOCKER_ENV=\"staging\"  vue-cli-service build",
     "lint": "cross-env DOCKER_ENV=\"development\" vue-cli-service lint --fix",
-    "test:unit": "nyc cross-env DOCKER_ENV=\"development\" vue-cli-service test:unit"
+    "test:unit": "nyc cross-env DOCKER_ENV=\"development\" vue-cli-service test:unit",
+    "showcoverage": "nyc report --reporter html --reporter text -t coverage --report-dir coverage/summary"
   },
   "dependencies": {
     "@firebase/messaging": "^0.9.1",

@@ -1,9 +1,17 @@
 <template>
   <div v-if="$store.getters.getTimelineVisible">
-    <h3 :class="!$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'">
+    <h3
+      :class="
+        !$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'
+      "
+    >
       {{ $t("timeline.timeline") }}
     </h3>
-    <div :class="!$store.getters.getMobile ? 'block mt-3' : 'timeline-events-mobile'">
+    <div
+      :class="
+        !$store.getters.getMobile ? 'block mt-3' : 'timeline-events-mobile'
+      "
+    >
       <el-timeline>
         <el-timeline-item
           :class="!$store.getters.getMobile ? 'el-timeline-item-desktop' : ''"
@@ -14,10 +22,20 @@
           :color="activity.color"
           :size="activity.size"
         >
-          <span :class="activity.active ? 'active-timeline-text' : ''">
+          <span
+            :class="
+              activity.active
+                ? 'active-timeline-text'
+                : activity.event_code === 'event.delivery.failed'
+                ? 'failed-delivery-timeline-text'
+                : ''
+            "
+          >
             {{
               formatEventName(
-                $t(`${$store.getters.getOrderEvents[activity.title]}`, { Date: activity.date })
+                $t(`${$store.getters.getOrderEvents[activity.title]}`, {
+                  Date: activity.date,
+                })
               )
             }}
           </span>
@@ -28,20 +46,31 @@
             <div v-if="rider">
               <p class="timeline-rider-details">{{ rider.name }}</p>
               <p class="timeline-rider-details">{{ rider.vendor_type }}</p>
-              <p class="timeline-rider-details">{{ rider.vehicle_identifier }}</p>
+              <p class="timeline-rider-details">
+                {{ rider.vehicle_identifier }}
+              </p>
               <p class="timeline-rider-details">{{ rider.phone_number }}</p>
             </div>
           </div>
         </el-timeline-item>
       </el-timeline>
       <div
-        :class="getLanguage == 'fr' ? 'd-flex mobile-confirmation-pin-container-french' :
-        'd-flex mobile-confirmation-pin-container'"
-        v-if="!getStatus([9, 10, 11, 12]).includes($store.getters.getDeliveryStatus)"
+        :class="
+          getLanguage == 'fr'
+            ? 'd-flex mobile-confirmation-pin-container-french'
+            : 'd-flex mobile-confirmation-pin-container'
+        "
+        v-if="
+          !getStatus([9, 10, 11, 12]).includes($store.getters.getDeliveryStatus)
+        "
       >
-        <img src="../../assets/keypad.png" class="img-fluid mobile-confirmation-pin-img" />
+        <img
+          src="../../assets/keypad.png"
+          class="img-fluid mobile-confirmation-pin-img"
+        />
         <div class="mobile-confirmation-pin-text">
-          {{ $t("timeline.pin")}} <span class="mobile-confirmation-pin">{{ confirmationPin }}</span>
+          {{ $t("timeline.pin") }}
+          <span class="mobile-confirmation-pin">{{ confirmationPin }}</span>
         </div>
       </div>
     </div>
@@ -79,8 +108,9 @@ export default {
     sortTimelineEvents() {
       const timeline = this.$store.getters.getData.data.event_time_line;
       const activeEvent = timeline[timeline.length - 1].event_code;
-      this.activeIndex = this.$store.getters.getOrderStatuses
-        .findIndex((evt) => evt === activeEvent);
+      this.activeIndex = this.$store.getters.getOrderStatuses.findIndex(
+        (evt) => evt === activeEvent,
+      );
       this.activities = this.filteredEventTimelineV2();
       this.rider = this.$store.getters.getData.data.partner_contact_information;
     },
@@ -90,7 +120,8 @@ export default {
         if (this.activeIndex === index) {
           row.steps.forEach((step, i) => {
             const evts = this.$store.getters.getData.data.event_time_line.filter(
-              (timeline) => timeline.event_code === this.$store.getters.getOrderStatuses[step],
+              (timeline) => timeline.event_code
+                  === this.$store.getters.getOrderStatuses[step],
             );
             const evtDate = evts.length > 0 ? evts[evts.length - 1].event_date : '';
             events.push({
@@ -117,12 +148,14 @@ export default {
           return moment(timeline).format(date.format);
         }
         if (date.type === 'scheduled') {
-          return moment(this.$store.getters.getData.data.scheduled_delivery_date).format(
-            date.format,
-          );
+          return moment(
+            this.$store.getters.getData.data.scheduled_delivery_date,
+          ).format(date.format);
         }
         if (date.type === 'completed') {
-          return moment(this.$store.getters.getData.data.order_completion_date).format(date.format);
+          return moment(
+            this.$store.getters.getData.data.order_completion_date,
+          ).format(date.format);
         }
         if (date.type === 'today') {
           return 'Today';
@@ -203,6 +236,9 @@ export default {
 .active-timeline-text {
   color: #324ba8;
   font-weight: 700;
+}
+.failed-delivery-timeline-text {
+  color: #9b101c;
 }
 .el-icon-minus {
   background: #324ba8;
