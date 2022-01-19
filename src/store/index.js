@@ -41,6 +41,7 @@ export default new Vuex.Store({
         'event.delivery.order.canceled.by.sendy',
         'event.delivery.failed',
         'event.delivery.rescheduled.by.buyer',
+        'event.delivery.rescheduled.by.seller',
       ],
       orderEvents: [
         'timeline.orderCreated',
@@ -67,6 +68,7 @@ export default new Vuex.Store({
         'timeline.preparedDelivery',
         'timeline.arrivingSoon',
         'timeline.rescheduledByBuyer',
+        'timeline.rescheduledBySeller',
       ],
       orderTimelines: [
         {
@@ -344,6 +346,26 @@ export default new Vuex.Store({
             format: 'dddd',
           }],
           titles: [0, 1, 23, 7],
+        },
+        {
+          event: 'event.delivery.rescheduled.by.seller',
+          steps: [0, 1, 14, 7],
+          colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
+          icons: ['el-icon-check', 'el-icon-check', 'el-icon-minus', ''],
+          showDriver: [false, false, false, false],
+          dates: [{
+            type: 'timeline',
+            status: true,
+            format: 'ddd, MMM Do',
+          },
+          { status: false },
+          { status: false },
+          {
+            type: 'today',
+            status: true,
+            format: 'dddd',
+          }],
+          titles: [0, 1, 24, 7],
         },
       ],
     };
