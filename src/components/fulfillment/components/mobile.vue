@@ -35,7 +35,7 @@
     <div
       class="fulfillemnt-order-items-expected-deivery"
       v-if="
-        getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13, 14]).includes(
+        getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13, 14, 15]).includes(
           $store.getters.getDeliveryStatus
         )
       "
