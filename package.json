@@ -8,7 +8,8 @@
     "beta": "cross-env DOCKER_ENV=\"beta\" vue-cli-service build",
     "staging": "cross-env DOCKER_ENV=\"staging\"  vue-cli-service build",
     "lint": "cross-env DOCKER_ENV=\"development\" vue-cli-service lint --fix",
-    "test:unit": "cross-env DOCKER_ENV=\"development\" vue-cli-service test:unit"
+    "test:unit": "nyc cross-env DOCKER_ENV=\"development\" vue-cli-service test:unit",
+    "showcoverage": "nyc report --reporter html --reporter text -t coverage --report-dir coverage/summary"
   },
   "dependencies": {
     "@firebase/messaging": "^0.9.1",
@@ -16,14 +17,13 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^2.0.2",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@popperjs/core": "^2.10.1",
     "axios": "^0.21.3",
     "bootstrap": "^5.1.1",
     "core-js": "^3.6.5",
-    "cross-env": "^7.0.3",
     "element-ui": "^2.15.6",
     "firebase": "^9.1.1",
-    "mocha": "^9.1.3",
     "mocha-webpack": "^1.1.0",
     "moment": "^2.29.1",
     "moxios": "^0.4.0",
@@ -46,16 +46,20 @@
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/eslint-config-airbnb": "^5.0.2",
-    "@vue/test-utils": "^1.0.3",
+    "@vue/test-utils": "^1.3.0",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-istanbul": "^6.1.1",
     "chai": "^4.1.2",
+    "cross-env": "^7.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
+    "nyc": "^15.1.0",
     "sass": "~1.32.0",
     "sass-loader": "^10.0.0",
     "vue-cli-plugin-vuetify": "~2.4.2",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.7.0"
+    "vuetify-loader": "^1.7.0",
+    "webpack-node-externals": "^3.0.0"
   }
 }

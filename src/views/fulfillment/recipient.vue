@@ -30,7 +30,8 @@
           </div>
           <div
             class="recipient-details"
-            v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7]).includes($store.getters.getDeliveryStatus)"
+            v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13, 14, 15])
+              .includes($store.getters.getDeliveryStatus)"
           >
             <a class="reciepient-delivery-instructions-mobile pt-3" @click="showUpdateModal"
               >{{$t("recipient.deliveryInstructions")}}</a
@@ -45,7 +46,7 @@
       </div>
       <el-button
         v-if="
-          !getStatus([9, 10]).includes($store.getters.getDeliveryStatus) &&
+          !getStatus([9, 10,11,12]).includes($store.getters.getDeliveryStatus) &&
             !$store.getters.getMobile
         "
         type="primary"
