@@ -19,7 +19,6 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="en">{{ $t('header.english') }}</el-dropdown-item>
               <el-dropdown-item command="fr">{{ $t('header.french') }}</el-dropdown-item>
-              <el-dropdown-item command="en-ng">{{ $t('header.englishNg') }}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
       </div>
