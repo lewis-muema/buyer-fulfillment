@@ -220,4 +220,7 @@ export default {
   margin: 0px 0px 20px !important;
   max-width: 170px;
 }
+.el-timeline {
+  padding-right: 40px;
+}
 </style>
