@@ -116,7 +116,7 @@
         {{ $t("desktop.deliveryFailed.reschedule") }}
       </p>
       <el-button @click="showDatePicker()" class="show-datepicker-el-button">
-        {{ $t("Reschedule delivery") }}
+        {{ $t("desktop.rescheduleDelivery") }}
       </el-button>
     </div>
     <changeinfo />
@@ -218,7 +218,7 @@ export default {
 }
 .show-datepicker-el-button {
   margin: 0px 0px 20px !important;
-  max-width: 170px;
+  max-width: fit-content;
 }
 .el-timeline {
   padding-right: 40px;

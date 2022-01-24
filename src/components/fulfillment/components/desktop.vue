@@ -99,7 +99,7 @@
                   @click="showDatePicker()"
                   class="show-datepicker-el-button"
                 >
-                  {{ $t("Reschedule delivery") }}
+                  {{ $t("desktop.rescheduleDelivery") }}
                 </el-button>
               </div>
             </div>
