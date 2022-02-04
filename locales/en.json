@@ -64,6 +64,8 @@
   "timeline.orderCreated": "Your order has been created",
   "timeline.orderFail": "Failed Delivery",
   "timeline.orderFailed": "Delivery failed on {Date}",
+  "timeline.attemptFailed": "Delivery attempt failed. Kindly reschedule",
+  "timeline.attemptFail": "Delivery attempt failed.",
   "timeline.orderProcessed": "Your order is being processed",
   "timeline.packageArrived": "The partner has arrived at your location",
   "timeline.packageCollected": "Your package has been collected",

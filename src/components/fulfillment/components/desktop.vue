@@ -14,7 +14,7 @@
               <div
                 class="delivery mt-5"
                 v-if="
-                  getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13, 14, 15]).includes(
+                  getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(
                     $store.getters.getDeliveryStatus
                   )
                 "
@@ -82,7 +82,7 @@
               </div>
               <div
                 v-if="
-                  getStatus([12]).includes($store.getters.getDeliveryStatus)
+                  getStatus([]).includes($store.getters.getDeliveryStatus)
                 "
                 class="delivery mt-5"
               >
