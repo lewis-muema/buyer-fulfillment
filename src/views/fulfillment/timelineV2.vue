@@ -28,6 +28,8 @@
                 ? 'active-timeline-text'
                 : activity.event_code === 'event.delivery.failed'
                 ? 'failed-delivery-timeline-text'
+                : activity.title === 18 && !activity.active
+                ? 'inactive-timeline-text'
                 : ''
             "
           >
@@ -51,6 +53,12 @@
               </p>
               <p class="timeline-rider-details">{{ rider.phone_number }}</p>
             </div>
+          </div>
+          <div v-if="activity.showReschedule">
+            <el-button class="timeline-reschedule" @click="showDatePicker()">
+              <i class="el-icon-date timeline-reschedule-date"></i>
+              {{ $t('desktop.rescheduleDelivery') }}
+            </el-button>
           </div>
         </el-timeline-item>
       </el-timeline>
@@ -105,6 +113,9 @@ export default {
     this.language = localStorage.buyerTimeLocale;
   },
   methods: {
+    showDatePicker() {
+      this.$store.commit('setDatePickerVisible', true);
+    },
     sortTimelineEvents() {
       const timeline = this.$store.getters.getData.data.event_time_line;
       const activeEvent = timeline[timeline.length - 1].event_code;
@@ -133,6 +144,7 @@ export default {
               icon: row.icons[i],
               date: this.formatEventDate(row.dates[i], evtDate),
               showDriver: row.showDriver[i],
+              showReschedule: row.showReschedule[i],
             });
           });
         }
@@ -247,6 +259,13 @@ export default {
   border-radius: 20px;
   animation: pulse-blue 2s infinite;
 }
+.el-icon-remove {
+  background: #9b101c;
+  color: #9b101c !important;
+  box-shadow: 0 0 0 0 #9b101c;
+  border-radius: 20px;
+  animation: pulse-red 2s infinite;
+}
 .mobile-confirmation-pin {
   color: #324ba8;
   font-weight: 700;
@@ -274,10 +293,41 @@ export default {
 .mobile-confirmation-pin-text {
   padding-left: 10px;
 }
+.timeline-reschedule {
+  width: 100%;
+  background: #D3DDF6 !important;
+  border-color: #D3DDF6 !important;
+  color: #324BA8 !important;
+  font-weight: 700;
+}
+.timeline-reschedule-date {
+  font-weight: 600;
+  font-size: 15px;
+  margin-right: 5px;
+}
+.inactive-timeline-text {
+  color: #909399;
+}
 @keyframes pulse-blue {
   0% {
     transform: scale(0.95);
     box-shadow: 0 0 0 0 #324ba8;
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+  }
+}
+@keyframes pulse-red {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 #9b101c;
   }
 
   70% {

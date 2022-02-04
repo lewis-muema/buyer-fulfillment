@@ -35,7 +35,7 @@
     <div
       class="fulfillemnt-order-items-expected-deivery"
       v-if="
-        getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13, 14, 15]).includes(
+        getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(
           $store.getters.getDeliveryStatus
         )
       "
@@ -103,7 +103,7 @@
       </p>
     </div>
     <div
-      v-if="getStatus([12]).includes($store.getters.getDeliveryStatus)"
+      v-if="getStatus([]).includes($store.getters.getDeliveryStatus)"
       class="fulfillemnt-order-items-failed-delivery"
     >
       <p class="failed-delivery-title">

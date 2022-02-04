@@ -71,6 +71,8 @@ export default new Vuex.Store({
         'timeline.rescheduledByBuyer',
         'timeline.rescheduledBySeller',
         'timeline.rescheduledBySendy',
+        'timeline.attemptFailed',
+        'timeline.attemptFail',
       ],
       orderTimelines: [
         {
@@ -92,6 +94,7 @@ export default new Vuex.Store({
             format: 'dddd',
           }],
           titles: [0, 20, 7, 8],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.at.hub.processing.for.delivery',
@@ -112,6 +115,7 @@ export default new Vuex.Store({
             format: 'dddd',
           }],
           titles: [0, 20, 7, 8],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.at.hub.partner.assigned',
@@ -132,6 +136,7 @@ export default new Vuex.Store({
             format: 'dddd',
           }],
           titles: [0, 21, 7, 17],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.at.hub.waiting.for.partner',
@@ -152,6 +157,7 @@ export default new Vuex.Store({
             format: 'dddd',
           }],
           titles: [0, 21, 7, 17],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.partner.enroute.to.hub',
@@ -172,6 +178,7 @@ export default new Vuex.Store({
             format: 'dddd',
           }],
           titles: [0, 21, 7, 17],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.partner.arrived.at.hub',
@@ -192,6 +199,7 @@ export default new Vuex.Store({
             format: 'dddd',
           }],
           titles: [0, 21, 7, 17],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.partner.pickup.from.hub.confirmed.via.code',
@@ -212,6 +220,7 @@ export default new Vuex.Store({
             format: 'dddd',
           }],
           titles: [0, 21, 7, 17],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.partner.enroute.to.buyer.location',
@@ -232,6 +241,7 @@ export default new Vuex.Store({
             format: 'dddd',
           }],
           titles: [0, 21, 22, 17],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.partner.arrived.at.buyer.location',
@@ -252,6 +262,7 @@ export default new Vuex.Store({
             format: 'dddd',
           }],
           titles: [0, 21, 12, 18],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code',
@@ -272,6 +283,7 @@ export default new Vuex.Store({
             format: 'ddd, MMM Do',
           }],
           titles: [0, 21, 13, 19],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.order.canceled.by.seller',
@@ -290,6 +302,7 @@ export default new Vuex.Store({
             format: 'ddd, MMM Do',
           }],
           titles: [0, 16],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.order.canceled.by.sendy',
@@ -308,13 +321,14 @@ export default new Vuex.Store({
             format: 'ddd, MMM Do',
           }],
           titles: [0, 16],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.failed',
-          steps: [0, 1, 7, 12],
-          colors: ['#EE7D00', '#EE7D00', '#324ba8', '#9B101C'],
-          icons: ['el-icon-check', 'el-icon-check', 'el-icon-minus', 'el-icon-close'],
-          showDriver: [false, false, false, false],
+          steps: [0, 1, 7, 12, 9],
+          colors: ['#EE7D00', '#EE7D00', '#EE7D00', '#9B101C', '#909399'],
+          icons: ['el-icon-check', 'el-icon-check', 'el-icon-check', 'el-icon-remove', ''],
+          showDriver: [false, false, false, false, false],
           dates: [{
             type: 'timeline',
             status: true,
@@ -327,14 +341,16 @@ export default new Vuex.Store({
             status: true,
             format: 'ddd, MMM Do',
           },
+          { status: false },
           ],
-          titles: [0, 21, 8, 11],
+          titles: [0, 21, 8, 26, 18],
+          showReschedule: [false, false, false, true, false],
         },
         {
           event: 'event.delivery.rescheduled.by.buyer',
-          steps: [0, 1, 13, 7],
-          colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
-          icons: ['el-icon-check', 'el-icon-check', 'el-icon-minus', ''],
+          steps: [0, 12, 13, 9],
+          colors: ['#EE7D00', '#9B101C', '#EE7D00', ''],
+          icons: ['el-icon-check', 'el-icon-warning', 'el-icon-check', ''],
           showDriver: [false, false, false, false],
           dates: [{
             type: 'timeline',
@@ -349,13 +365,14 @@ export default new Vuex.Store({
           },
           { status: false },
           ],
-          titles: [0, 1, 23, 7],
+          titles: [0, 27, 23, 18],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.rescheduled.by.seller',
-          steps: [0, 1, 14, 7],
-          colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
-          icons: ['el-icon-check', 'el-icon-check', 'el-icon-minus', ''],
+          steps: [0, 12, 14, 9],
+          colors: ['#EE7D00', '#9B101C', '#EE7D00', ''],
+          icons: ['el-icon-check', 'el-icon-warning', 'el-icon-check', ''],
           showDriver: [false, false, false, false],
           dates: [{
             type: 'timeline',
@@ -370,13 +387,14 @@ export default new Vuex.Store({
           },
           { status: false },
           ],
-          titles: [0, 1, 24, 7],
+          titles: [0, 27, 24, 18],
+          showReschedule: [false, false, false, false],
         },
         {
           event: 'event.delivery.rescheduled.by.sendy',
-          steps: [0, 1, 15, 7],
-          colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
-          icons: ['el-icon-check', 'el-icon-check', 'el-icon-minus', ''],
+          steps: [0, 12, 15, 9],
+          colors: ['#EE7D00', '#9B101C', '#EE7D00', ''],
+          icons: ['el-icon-check', 'el-icon-warning', 'el-icon-check', ''],
           showDriver: [false, false, false, false],
           dates: [{
             type: 'timeline',
@@ -391,7 +409,8 @@ export default new Vuex.Store({
           },
           { status: false },
           ],
-          titles: [0, 1, 25, 7],
+          titles: [0, 27, 25, 18],
+          showReschedule: [false, false, false, false],
         },
       ],
     };
