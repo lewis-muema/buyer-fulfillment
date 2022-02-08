@@ -11,6 +11,7 @@ export default {
   getRatingVisible: (state) => state.ratingVisible,
   getOrderStatuses: (state) => state.orderStatuses,
   getOrderTimelines: (state) => state.orderTimelines,
+  getRescheduledOrderTimelines: (state) => state.rescheduledOrderTimelines,
   getOrderEvents: (state) => state.orderEvents,
   getLanguage: (state) => state.language,
   getCountryData: (state) => state.countryData,

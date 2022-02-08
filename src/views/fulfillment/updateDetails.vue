@@ -12,8 +12,7 @@
       <form>
         <div class="form-floating mb-3">
           <input type="text" class="form-control"
-          :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)
-            || isToday" id="floatingInput" v-model="params.name" />
+          :disabled="isToday" id="floatingInput" v-model="params.name" />
           <label for="floatingInput">{{ $t("reviewChanges.recipientName") }}</label>
         </div>
         <div v-if="!$v.params.name.required" class="invalidFeedback">
@@ -44,8 +43,7 @@
           </label>
           <gmap-autocomplete
             :value="params.deliveryLocation.description"
-            :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)
-            || isToday"
+            :disabled="isToday"
             :options="map_options"
             class="form-control form"
             id="floatingInput"
@@ -61,8 +59,7 @@
         </div>
         <div class="form-floating mb-3">
           <input
-            :disabled="!getStatus([0, 1]).includes($store.getters.getDeliveryStatus)
-            || isToday"
+            :disabled="isToday"
             type="text"
             class="form-control"
             id="floatingInput"
@@ -269,7 +266,7 @@ export default {
       return moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date))
         .format(
           'YYYY-MM-DD',
-        ) === moment().format('YYYY-MM-DD') || !this.getStatus([0, 1]).includes(this.$store.getters.getDeliveryStatus);
+        ) === moment().format('YYYY-MM-DD') || !this.getStatus([0, 1, 13, 14, 15]).includes(this.$store.getters.getDeliveryStatus);
     },
   },
   beforeMount() {
