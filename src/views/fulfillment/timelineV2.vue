@@ -136,7 +136,10 @@ export default {
     },
     filteredEventTimelineV2() {
       const events = [];
-      this.$store.getters.getOrderTimelines.forEach((row, index) => {
+      const timelines = this.failedRescheduledStatus()
+        ? this.$store.getters.getRescheduledOrderTimelines
+        : this.$store.getters.getOrderTimelines;
+      timelines.forEach((row, index) => {
         if (this.activeIndex === index) {
           row.steps.forEach((step, i) => {
             const evts = this.$store.getters.getData.data.event_time_line.filter(
@@ -144,38 +147,21 @@ export default {
                   === this.$store.getters.getOrderStatuses[step],
             );
             const evtDate = evts.length > 0 ? evts[evts.length - 1].event_date : '';
-            events.push(this.formatEventRow(row, step, i, evtDate, index));
+            events.push({
+              event_code: this.$store.getters.getOrderStatuses[step],
+              index,
+              active: row.colors[i] === '#324ba8',
+              title: row.titles[i],
+              color: row.colors[i],
+              icon: row.icons[i],
+              date: this.formatEventDate(row.dates[i], evtDate),
+              showDriver: row.showDriver[i],
+              showReschedule: row.showReschedule[i],
+            });
           });
         }
       });
-      if (this.failedRescheduledStatus() && !this.getStatus([12, 13, 14, 15])
-        .includes(this.$store.getters.getDeliveryStatus)) {
-        const evt = this.$store.getters.getOrderTimelines.filter(
-          (timeline) => timeline.event
-                  === this.$store.getters.getOrderStatuses[13],
-        );
-        const positions = [1, 2];
-        const indexes = [1, 2];
-        positions.forEach((row, i) => {
-          events.splice(row, 0, this.formatEventRow(
-            evt[0], 13, indexes[i], this.$store.getters.getData.data.scheduled_delivery_date, 13,
-          ));
-        });
-      }
       return events;
-    },
-    formatEventRow(row, step, i, evtDate, index) {
-      return {
-        event_code: this.$store.getters.getOrderStatuses[step],
-        index,
-        active: row.colors[i] === '#324ba8',
-        title: row.titles[i],
-        color: row.colors[i],
-        icon: row.icons[i],
-        date: this.formatEventDate(row.dates[i], evtDate),
-        showDriver: row.showDriver[i],
-        showReschedule: row.showReschedule[i],
-      };
     },
     formatEventName(name) {
       return name.charAt(0).toUpperCase() + name.slice(1);
