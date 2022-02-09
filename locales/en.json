@@ -62,6 +62,7 @@
   "timeline.orderCancelled": "Your order has been cancelled by the seller",
   "timeline.orderCancelledDate": "Order cancelled on {Date}",
   "timeline.orderCreated": "Your order has been created",
+  "timeline.orderPlaced": "Order placed on {Date}",
   "timeline.orderFail": "Failed Delivery",
   "timeline.orderFailed": "Delivery failed on {Date}",
   "timeline.attemptFailed": "Delivery attempt failed. Kindly reschedule",
