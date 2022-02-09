@@ -73,6 +73,7 @@ export default new Vuex.Store({
         'timeline.rescheduledBySendy',
         'timeline.attemptFailed',
         'timeline.attemptFail',
+        'timeline.orderPlaced',
       ],
       orderTimelines: [
         {
@@ -93,7 +94,7 @@ export default new Vuex.Store({
             status: true,
             format: 'dddd',
           }],
-          titles: [0, 20, 7, 8],
+          titles: [28, 20, 7, 8],
           showReschedule: [false, false, false, false],
         },
         {
@@ -114,7 +115,7 @@ export default new Vuex.Store({
             status: true,
             format: 'dddd',
           }],
-          titles: [0, 20, 7, 8],
+          titles: [28, 20, 7, 8],
           showReschedule: [false, false, false, false],
         },
         {
@@ -135,7 +136,7 @@ export default new Vuex.Store({
             status: true,
             format: 'dddd',
           }],
-          titles: [0, 21, 7, 17],
+          titles: [28, 21, 7, 17],
           showReschedule: [false, false, false, false],
         },
         {
@@ -156,7 +157,7 @@ export default new Vuex.Store({
             status: true,
             format: 'dddd',
           }],
-          titles: [0, 21, 7, 17],
+          titles: [28, 21, 7, 17],
           showReschedule: [false, false, false, false],
         },
         {
@@ -177,7 +178,7 @@ export default new Vuex.Store({
             status: true,
             format: 'dddd',
           }],
-          titles: [0, 21, 7, 17],
+          titles: [28, 21, 7, 17],
           showReschedule: [false, false, false, false],
         },
         {
@@ -198,7 +199,7 @@ export default new Vuex.Store({
             status: true,
             format: 'dddd',
           }],
-          titles: [0, 21, 7, 17],
+          titles: [28, 21, 7, 17],
           showReschedule: [false, false, false, false],
         },
         {
@@ -219,7 +220,7 @@ export default new Vuex.Store({
             status: true,
             format: 'dddd',
           }],
-          titles: [0, 21, 7, 17],
+          titles: [28, 21, 7, 17],
           showReschedule: [false, false, false, false],
         },
         {
@@ -240,7 +241,7 @@ export default new Vuex.Store({
             status: true,
             format: 'dddd',
           }],
-          titles: [0, 21, 22, 17],
+          titles: [28, 21, 22, 17],
           showReschedule: [false, false, false, false],
         },
         {
@@ -261,7 +262,7 @@ export default new Vuex.Store({
             status: true,
             format: 'dddd',
           }],
-          titles: [0, 21, 12, 18],
+          titles: [28, 21, 12, 18],
           showReschedule: [false, false, false, false],
         },
         {
@@ -282,7 +283,7 @@ export default new Vuex.Store({
             status: true,
             format: 'ddd, MMM Do',
           }],
-          titles: [0, 21, 13, 19],
+          titles: [28, 21, 13, 19],
           showReschedule: [false, false, false, false],
         },
         {
@@ -301,7 +302,7 @@ export default new Vuex.Store({
             status: true,
             format: 'ddd, MMM Do',
           }],
-          titles: [0, 16],
+          titles: [28, 16],
           showReschedule: [false, false, false, false],
         },
         {
@@ -320,7 +321,7 @@ export default new Vuex.Store({
             status: true,
             format: 'ddd, MMM Do',
           }],
-          titles: [0, 16],
+          titles: [28, 16],
           showReschedule: [false, false, false, false],
         },
         {
@@ -343,7 +344,7 @@ export default new Vuex.Store({
           },
           { status: false },
           ],
-          titles: [0, 21, 8, 26, 18],
+          titles: [28, 21, 8, 26, 18],
           showReschedule: [false, false, false, true, false],
         },
         {
@@ -366,7 +367,7 @@ export default new Vuex.Store({
           { status: false },
           { status: false },
           ],
-          titles: [0, 23, 1, 7, 18],
+          titles: [28, 23, 1, 7, 18],
           showReschedule: [false, false, false, false, false],
         },
         {
@@ -389,7 +390,7 @@ export default new Vuex.Store({
           { status: false },
           { status: false },
           ],
-          titles: [0, 24, 1, 7, 18],
+          titles: [28, 24, 1, 7, 18],
           showReschedule: [false, false, false, false, false],
         },
         {
@@ -412,7 +413,7 @@ export default new Vuex.Store({
           { status: false },
           { status: false },
           ],
-          titles: [0, 25, 1, 7, 18],
+          titles: [28, 25, 1, 7, 18],
           showReschedule: [false, false, false, false, false],
         },
       ],
@@ -435,7 +436,7 @@ export default new Vuex.Store({
             status: true,
             format: 'dddd',
           }],
-          titles: [0, 20, 7, 8],
+          titles: [28, 20, 7, 8],
           showReschedule: [false, false, false, false],
         },
         {
@@ -458,7 +459,7 @@ export default new Vuex.Store({
           { status: false },
           { status: false },
           ],
-          titles: [0, 27, 23, 20, 17],
+          titles: [28, 27, 23, 20, 17],
           showReschedule: [false, false, false, false, false],
         },
         {
@@ -481,7 +482,7 @@ export default new Vuex.Store({
           { status: false },
           { status: false },
           ],
-          titles: [0, 27, 23, 7, 17],
+          titles: [28, 27, 23, 7, 17],
           showReschedule: [false, false, false, false, false],
         },
         {
@@ -504,7 +505,7 @@ export default new Vuex.Store({
           { status: false },
           { status: false },
           ],
-          titles: [0, 27, 23, 7, 17],
+          titles: [28, 27, 23, 7, 17],
           showReschedule: [false, false, false, false, false],
         },
         {
@@ -527,7 +528,7 @@ export default new Vuex.Store({
           { status: false },
           { status: false },
           ],
-          titles: [0, 27, 23, 7, 17],
+          titles: [28, 27, 23, 7, 17],
           showReschedule: [false, false, false, false, false],
         },
         {
@@ -550,7 +551,7 @@ export default new Vuex.Store({
           { status: false },
           { status: false },
           ],
-          titles: [0, 27, 23, 7, 17],
+          titles: [28, 27, 23, 7, 17],
           showReschedule: [false, false, false, false, false],
         },
         {
@@ -573,7 +574,7 @@ export default new Vuex.Store({
           { status: false },
           { status: false },
           ],
-          titles: [0, 27, 23, 7, 17],
+          titles: [28, 27, 23, 7, 17],
           showReschedule: [false, false, false, false, false],
         },
         {
@@ -596,7 +597,7 @@ export default new Vuex.Store({
           { status: false },
           { status: false },
           ],
-          titles: [0, 27, 23, 7, 17],
+          titles: [28, 27, 23, 7, 17],
           showReschedule: [false, false, false, false, false],
         },
         {
@@ -619,7 +620,7 @@ export default new Vuex.Store({
           { status: false },
           { status: false },
           ],
-          titles: [0, 27, 23, 12, 18],
+          titles: [28, 27, 23, 12, 18],
           showReschedule: [false, false, false, false, false],
         },
         {
@@ -646,7 +647,7 @@ export default new Vuex.Store({
             format: 'ddd, MMM Do',
           },
           ],
-          titles: [0, 27, 23, 7, 19],
+          titles: [28, 27, 23, 7, 19],
           showReschedule: [false, false, false, false, false],
         },
         {
@@ -665,7 +666,7 @@ export default new Vuex.Store({
             status: true,
             format: 'ddd, MMM Do',
           }],
-          titles: [0, 16],
+          titles: [28, 16],
           showReschedule: [false, false, false, false],
         },
         {
@@ -684,7 +685,7 @@ export default new Vuex.Store({
             status: true,
             format: 'ddd, MMM Do',
           }],
-          titles: [0, 16],
+          titles: [28, 16],
           showReschedule: [false, false, false, false],
         },
         {
@@ -707,7 +708,7 @@ export default new Vuex.Store({
           },
           { status: false },
           ],
-          titles: [0, 21, 8, 26, 18],
+          titles: [28, 21, 8, 26, 18],
           showReschedule: [false, false, false, true, false],
         },
         {
@@ -729,7 +730,7 @@ export default new Vuex.Store({
           },
           { status: false },
           ],
-          titles: [0, 27, 23, 18],
+          titles: [28, 27, 23, 18],
           showReschedule: [false, false, false, false],
         },
         {
@@ -751,7 +752,7 @@ export default new Vuex.Store({
           },
           { status: false },
           ],
-          titles: [0, 27, 24, 18],
+          titles: [28, 27, 24, 18],
           showReschedule: [false, false, false, false],
         },
         {
@@ -773,7 +774,7 @@ export default new Vuex.Store({
           },
           { status: false },
           ],
-          titles: [0, 27, 25, 18],
+          titles: [28, 27, 25, 18],
           showReschedule: [false, false, false, false],
         },
       ],
