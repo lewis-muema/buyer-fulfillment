@@ -63,11 +63,7 @@
         </el-timeline-item>
       </el-timeline>
       <div
-        :class="
-          getLanguage == 'fr'
-            ? 'd-flex mobile-confirmation-pin-container-french'
-            : 'd-flex mobile-confirmation-pin-container'
-        "
+        class="d-flex mobile-confirmation-pin-container"
         v-if="
           !getStatus([9, 10, 11, 12]).includes($store.getters.getDeliveryStatus)
         "
@@ -284,21 +280,12 @@ export default {
 }
 .mobile-confirmation-pin-container {
   background: #f5f5f5;
-  width: 150px;
+  width: max-content;
   height: 35px;
   margin-left: 50px;
   margin-top: -20px;
   padding: 7px 10px 7px 10px;
 }
-.mobile-confirmation-pin-container-french {
-  background: #f5f5f5;
-  width: 220px;
-  height: 35px;
-  margin-left: 50px;
-  margin-top: -20px;
-  padding: 7px 10px 7px 10px;
-}
-
 .mobile-confirmation-pin-img {
   margin-top: 2px;
 }
