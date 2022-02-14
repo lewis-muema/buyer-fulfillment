@@ -121,7 +121,7 @@
     </div>
     <changeinfo />
     <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
-    <Timeline />
+    <Timeline v-if="showTimeline"/>
     <Recipient />
   </div>
 </template>
@@ -150,12 +150,21 @@ export default {
     return {
       showItems: false,
       data: this.$store.getters.getData,
+      showTimeline: true,
     };
   },
   watch: {
     '$store.getters.getData': function setData() {
       this.data = this.$store.getters.getData;
     },
+  },
+  mounted() {
+    window.addEventListener('language-changed', () => {
+      this.showTimeline = false;
+      this.$nextTick().then(() => {
+        this.showTimeline = true;
+      });
+    });
   },
   methods: {
     showDetailsPicker() {

@@ -114,7 +114,7 @@
           <Rating
             v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
           />
-          <Timeline />
+          <Timeline v-if="showTimeline"/>
         </el-col>
         <el-col :span="12">
           <OrderItems />
@@ -145,12 +145,21 @@ export default {
   data() {
     return {
       data: this.$store.getters.getData,
+      showTimeline: true,
     };
   },
   watch: {
     '$store.getters.getData': function setData() {
       this.data = this.$store.getters.getData;
     },
+  },
+  mounted() {
+    window.addEventListener('language-changed', () => {
+      this.showTimeline = false;
+      this.$nextTick().then(() => {
+        this.showTimeline = true;
+      });
+    });
   },
   methods: {
     formatDate(date) {
