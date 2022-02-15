@@ -81,6 +81,7 @@
   "timeline.rescheduledBySeller": "Votre commande a été reprogrammée par le vendeur au {Date}",
   "timeline.rescheduledBySendy": "Votre commande a été reprogrammée par sendy au {Date}",
   "timeline.timeline": "Délai",
+  "timeline.today": "aujourd'hui",
   "updateDetails.changeDate": "Vous ne pourrez pas modifier les détails de la livraison le jour de la livraison. Veuillez reprogrammer la livraison à une date ultérieure pour modifier les détails",
   "updateDetails.changeLocation": "Désolé, vous ne pouvez pas mettre à jour les informations ci-dessus le jour de la livraison",
   "updateDetails.deliveryOptions": "Options de livraison",

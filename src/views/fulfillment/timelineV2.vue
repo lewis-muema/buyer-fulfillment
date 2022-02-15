@@ -178,7 +178,7 @@ export default {
           ).format(date.format);
         }
         if (date.type === 'today') {
-          return 'Today';
+          return this.$t('timeline.today');
         }
       }
       return '';
