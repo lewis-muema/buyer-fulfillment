@@ -35,7 +35,7 @@
     <div
       class="fulfillemnt-order-items-expected-deivery"
       v-if="
-        getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13, 14, 15]).includes(
+        getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(
           $store.getters.getDeliveryStatus
         )
       "
@@ -103,7 +103,7 @@
       </p>
     </div>
     <div
-      v-if="getStatus([12]).includes($store.getters.getDeliveryStatus)"
+      v-if="getStatus([]).includes($store.getters.getDeliveryStatus)"
       class="fulfillemnt-order-items-failed-delivery"
     >
       <p class="failed-delivery-title">
@@ -116,12 +116,12 @@
         {{ $t("desktop.deliveryFailed.reschedule") }}
       </p>
       <el-button @click="showDatePicker()" class="show-datepicker-el-button">
-        {{ $t("Reschedule delivery") }}
+        {{ $t("desktop.rescheduleDelivery") }}
       </el-button>
     </div>
     <changeinfo />
     <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
-    <Timeline />
+    <Timeline v-if="showTimeline"/>
     <Recipient />
   </div>
 </template>
@@ -150,12 +150,21 @@ export default {
     return {
       showItems: false,
       data: this.$store.getters.getData,
+      showTimeline: true,
     };
   },
   watch: {
     '$store.getters.getData': function setData() {
       this.data = this.$store.getters.getData;
     },
+  },
+  mounted() {
+    window.addEventListener('language-changed', () => {
+      this.showTimeline = false;
+      this.$nextTick().then(() => {
+        this.showTimeline = true;
+      });
+    });
   },
   methods: {
     showDetailsPicker() {
@@ -218,7 +227,7 @@ export default {
 }
 .show-datepicker-el-button {
   margin: 0px 0px 20px !important;
-  max-width: 170px;
+  max-width: fit-content;
 }
 .el-timeline {
   padding-right: 40px;

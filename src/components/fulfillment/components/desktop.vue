@@ -14,7 +14,7 @@
               <div
                 class="delivery mt-5"
                 v-if="
-                  getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13, 14, 15]).includes(
+                  getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(
                     $store.getters.getDeliveryStatus
                   )
                 "
@@ -82,7 +82,7 @@
               </div>
               <div
                 v-if="
-                  getStatus([12]).includes($store.getters.getDeliveryStatus)
+                  getStatus([]).includes($store.getters.getDeliveryStatus)
                 "
                 class="delivery mt-5"
               >
@@ -99,7 +99,7 @@
                   @click="showDatePicker()"
                   class="show-datepicker-el-button"
                 >
-                  {{ $t("Reschedule delivery") }}
+                  {{ $t("desktop.rescheduleDelivery") }}
                 </el-button>
               </div>
             </div>
@@ -114,7 +114,7 @@
           <Rating
             v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
           />
-          <Timeline />
+          <Timeline v-if="showTimeline"/>
         </el-col>
         <el-col :span="12">
           <OrderItems />
@@ -145,12 +145,21 @@ export default {
   data() {
     return {
       data: this.$store.getters.getData,
+      showTimeline: true,
     };
   },
   watch: {
     '$store.getters.getData': function setData() {
       this.data = this.$store.getters.getData;
     },
+  },
+  mounted() {
+    window.addEventListener('language-changed', () => {
+      this.showTimeline = false;
+      this.$nextTick().then(() => {
+        this.showTimeline = true;
+      });
+    });
   },
   methods: {
     formatDate(date) {
