@@ -59,7 +59,7 @@ export default {
   methods: {
     allowedDates(date) {
       // Can not select days before today and today
-      return new Date(date).valueOf() >= Date.now() - (1000 * 60 * 60 * 24 * 1)
+      return new Date(date).valueOf() >= Date.now() - (1000 * 60 * 60 * 24 * 0)
         && new Date(date).valueOf() <= Date.now() + (1000 * 60 * 60 * 24 * 2);
     },
     rescheduleDelivery() {
