@@ -45,9 +45,7 @@ export default {
   data() {
     return {
       visibleDatePicker: false,
-      date: moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date)).format(
-        'YYYY-MM-DD',
-      ),
+      date: moment().add(1, 'days').format('YYYY-MM-DD'),
       locale: '',
     };
   },
