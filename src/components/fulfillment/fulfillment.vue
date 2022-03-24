@@ -79,6 +79,7 @@ export default {
           this.$store.commit('setData', response.data);
           this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
           window.dispatchEvent(new CustomEvent('language-changed', { detail: response.data.data.language }));
+          window.dispatchEvent(new CustomEvent('register-fcm'));
         });
       }
     },
