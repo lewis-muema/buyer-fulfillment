@@ -44,8 +44,8 @@ export default {
   width: 60px;
 }
 .order-items {
-  line-height: 8px !important;
-  margin: 15px 5px !important;
+  line-height: 20px!important;
+  margin: 5px 5px!important;
 }
 .el-badge__content--primary {
   background-color: #324ba8;

@@ -86,7 +86,7 @@ export default {
       const fullPayload = {
         app: process.env.FULFILMENT_SERVER,
         values: payload,
-        endpoint: `buyer/orders/${this.$route.params.deliveryId}/recipient/update`,
+        endpoint: `buyer/orders/${this.$store.getters.getData.data.order_id}/recipient/update`,
       };
       try {
         const data = await this.updateDeliveryInformation(fullPayload);

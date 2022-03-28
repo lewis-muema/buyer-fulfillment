@@ -143,7 +143,7 @@ export default {
       const fullPayload = {
         app: process.env.FULFILMENT_SERVER,
         values: payload,
-        endpoint: `buyer/orders/${this.$route.params.deliveryId}/rate`,
+        endpoint: `buyer/orders/${this.$store.getters.getData.data.order_id}/rate`,
       };
       try {
         this.submitStatus = true;

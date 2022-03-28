@@ -67,7 +67,7 @@ export default {
       this.$store.commit('setDatePickerVisible', false);
       this.$store.dispatch('requestAxiosPut', {
         app: process.env.FULFILMENT_SERVER,
-        endpoint: `buyer/orders/${this.$route.params.deliveryId}/reschedule`,
+        endpoint: `buyer/orders/${this.$store.getters.getData.data.order_id}/reschedule`,
         values: {
           proposed_scheduled_date: date,
         },

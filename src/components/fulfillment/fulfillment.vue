@@ -34,11 +34,13 @@ export default {
       });
     });
     window.addEventListener('freshchat-initialized', () => {
-      window.fcWidget.user.setProperties({
-        firstName: this.$store.getters.getData.data.destination.name,
-        phone: this.$store.getters.getData.data.destination.phone_number,
-        phoneCountry: this.$store.getters.getCountryData.country,
-      });
+      if (this.$store.getters.getData) {
+        window.fcWidget.user.setProperties({
+          firstName: this.$store.getters.getData.data.destination.name,
+          phone: this.$store.getters.getData.data.destination.phone_number,
+          phoneCountry: this.$store.getters.getCountryData.country,
+        });
+      }
     });
     window.addEventListener('country-fetched', (event) => {
       this.$store.commit('setCountryData', event.detail);
@@ -79,6 +81,7 @@ export default {
           this.$store.commit('setData', response.data);
           this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
           window.dispatchEvent(new CustomEvent('language-changed', { detail: response.data.data.language }));
+          window.dispatchEvent(new CustomEvent('register-fcm'));
         });
       }
     },
