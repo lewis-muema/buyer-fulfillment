@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="order-number">
-        {{ data.data.order_id }}
+        {{ $t("desktop.orderNumber") }}: {{ data.data.order_id }}
       </div>
     </div>
     <div
