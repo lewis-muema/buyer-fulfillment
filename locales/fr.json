@@ -5,6 +5,7 @@
   "changeInfo.Receiver": "Destinataire",
   "changeInfo.Reschadule": "Reprogrammer la date",
   "desktop.deliveryFailed": "La livraison a échoué",
+  "desktop.orderNumber": "Order Number",
   "desktop.deliveryFailed.reschedule": "Veuillez reprogrammer la livraison du colis à un autre jour",
   "desktop.deliveryFailed.title": "Votre livraison a échoué",
   "desktop.deliveryFailed.unavailable": "Nous avons essayé de vous contacter pour livrer votre colis, mais vous n'étiez pas disponible",
