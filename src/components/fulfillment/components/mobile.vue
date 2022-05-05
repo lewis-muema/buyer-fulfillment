@@ -31,6 +31,9 @@
           <order-items v-if="showItems" />
         </div>
       </div>
+      <div class="order-number">
+        {{ data.data.order_id }}
+      </div>
     </div>
     <div
       class="fulfillemnt-order-items-expected-deivery"
@@ -231,5 +234,8 @@ export default {
 }
 .el-timeline {
   padding-right: 40px;
+}
+.order-number {
+  font-weight: 600;
 }
 </style>
