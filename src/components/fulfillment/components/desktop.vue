@@ -31,6 +31,9 @@
                   {{ formatDeliveryWindow(data.data.estimated_delivery_date) }}
                 </p>
               </div>
+              <div class="order-number">
+                {{ $t("desktop.orderNumber") }}: {{ data.data.order_id }}
+              </div>
               <div
                 class="delivery mt-5"
                 v-if="getStatus([8]).includes($store.getters.getDeliveryStatus)"
@@ -224,5 +227,8 @@ export default {
   margin-left: 10px;
   font-size: 14px;
   letter-spacing: 0.4px;
+}
+.order-number {
+  font-weight: 600;
 }
 </style>
