@@ -6,7 +6,6 @@ stages:
   - lint
   - test
   - buildpush
-  - deploy
 
 eslint:
   stage: lint
@@ -39,15 +38,6 @@ buildpush:staging:
   only:
     - staging
 
-#deploys the app to staging environment
-deploy:staging:
-  stage: deploy
-  tags:
-    - shell
-  script:
-    - ssh -v -f -o StrictHostKeyChecking=no -i ~/keys/id_rsa -l admin kubetest-master.sendyit.com "kubectl set image deploy buyer-fulfillment buyer-fulfillment=$STAGING_IMAGE_NAME"
-  only:
-    - staging
   
 buildpush:beta:
   stage: buildpush
