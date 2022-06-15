@@ -6,16 +6,6 @@
 importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.1.1/firebase-messaging-compat.js');
 
-firebase.initializeApp({
-  apiKey: 'AIzaSyDAAvZPAgy7HX8JUqxWsFxn28ixGoOnHPs',
-  authDomain: 'sendy-fulfilment.firebaseapp.com',
-  projectId: 'sendy-fulfilment',
-  storageBucket: 'sendy-fulfilment.appspot.com',
-  messagingSenderId: '724697801657',
-  appId: '1:724697801657:web:69355a1ba4a87949430c68',
-  measurementId: 'G-YFWVL6YKF7',
-});
-
 const messaging = firebase.messaging();
 let notificationData = {};
 let orderId;
