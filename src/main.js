@@ -2,7 +2,6 @@
 
 import Vue from 'vue';
 import moment from 'moment';
-import { initializeApp } from 'firebase/app';
 import lang from 'element-ui/lib/locale/lang/en';
 import locale from 'element-ui/lib/locale';
 import VuePageTitle from 'vue-page-title';
@@ -129,21 +128,6 @@ library.add(faSpinner, faThumbsUp, faThumbsDown);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
-
-initializeApp({
-  apiKey: 'AIzaSyDAAvZPAgy7HX8JUqxWsFxn28ixGoOnHPs',
-  authDomain: 'sendy-fulfilment.firebaseapp.com',
-  projectId: 'sendy-fulfilment',
-  storageBucket: 'sendy-fulfilment.appspot.com',
-  messagingSenderId: '724697801657',
-  appId: '1:724697801657:web:69355a1ba4a87949430c68',
-  measurementId: 'G-YFWVL6YKF7',
-});
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('firebase-messaging-sw.js');
-  });
-}
 
 new Vue({
   router,
