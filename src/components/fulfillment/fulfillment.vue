@@ -27,7 +27,7 @@ export default {
   mounted() {
     window.addEventListener('freshchat-loaded', () => {
       this.sendSegmentEvents({
-        event: 'Select Help Chat',
+        event: 'Select_help_chat',
         data: {
           userId: this.$store.getters.getData.data.destination.name,
         },

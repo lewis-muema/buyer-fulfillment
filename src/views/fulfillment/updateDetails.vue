@@ -248,7 +248,7 @@ export default {
     },
     deliveryOption(val) {
       this.sendSegmentEvents({
-        event: 'Select Delivery Method',
+        event: 'Select_delivery_method',
         data: {
           userId: this.$store.getters.getData.data.destination.name,
           // eslint-disable-next-line max-len
