@@ -61,7 +61,7 @@ export default {
         });
         onMessage(messaging, (payload) => {
           this.sendSegmentEvents({
-            event: 'Trigger for User',
+            event: 'Trigger_for_user',
             data: {
               userId: this.$store.getters.getData.data.destination.name,
               // eslint-disable-next-line max-len
