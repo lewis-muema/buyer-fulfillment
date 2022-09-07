@@ -111,7 +111,7 @@ export default {
               this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
             });
           this.sendSegmentEvents({
-            event: 'Update Delivery Info',
+            event: 'Update_delivery_info',
             data: {
               userId: this.$store.getters.getData.data.destination.name,
               // eslint-disable-next-line max-len
@@ -119,7 +119,7 @@ export default {
             },
           });
           this.sendSegmentEvents({
-            event: 'Confirm Delivery Details',
+            event: 'Confirm_delivery_details',
             data: {
               userId: this.$store.getters.getData.data.destination.name,
               // eslint-disable-next-line max-len

@@ -57,7 +57,7 @@ export default {
       this.language = command;
       window.dispatchEvent(new CustomEvent('language-changed', { detail: this.language }));
       this.sendSegmentEvents({
-        event: 'Select Language',
+        event: 'Select_language',
         data: {
           userId: this.$store.getters.getData.data.destination.name,
           language: command,

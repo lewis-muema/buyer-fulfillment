@@ -112,7 +112,7 @@ export default {
         this.$store.commit('setRecipientVisible', val);
       }
       this.sendSegmentEvents({
-        event: 'View Delivery History',
+        event: 'View_delivery_history',
         data: {
           userId: this.$store.getters.getData.data.destination.name,
         },
@@ -156,7 +156,7 @@ export default {
         this.displayNotification(notification);
         this.$store.commit('setRatingVisible', !this.$store.getters.getRatingVisible);
         this.sendSegmentEvents({
-          event: 'Rate Delivery',
+          event: 'Rate_delivery',
           data: {
             userId: this.$store.getters.getData.data.destination.name,
             // eslint-disable-next-line max-len
