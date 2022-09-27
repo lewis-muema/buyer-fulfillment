@@ -69,7 +69,7 @@
         "
       >
         <img
-          src="../../assets/keypad.png"
+          src="../../../assets/keypad.png"
           class="img-fluid mobile-confirmation-pin-img"
         />
         <div class="mobile-confirmation-pin-text">
@@ -84,13 +84,14 @@
 <script>
 import moment from 'moment';
 import { mapGetters } from 'vuex';
-import statusMixin from '../../mixins/status_mixin';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
   name: 'Timeline',
   mixins: [statusMixin],
   data() {
     return {
+      showTimeline: false,
       activities: [],
       events: [],
       rider: {},
@@ -194,6 +195,11 @@ export default {
     },
     getLanguage() {
       return this.getData.data.language;
+    },
+    podOrder() {
+      return (
+        this.getData.data.sale_of_goods_invoice === null
+      );
     },
   },
 };

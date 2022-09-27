@@ -72,7 +72,7 @@
 
 <script>
 import UpdateDetails from './updateDetails.vue';
-import changeInfo from './changeInfo.vue';
+import changeInfo from './changeInfo/changeInfo.vue';
 import statusMixin from '../../mixins/status_mixin';
 
 export default {

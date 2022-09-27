@@ -46,7 +46,7 @@
 
 <script>
 import moment from 'moment';
-import statusMixin from '../../mixins/status_mixin';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
   name: 'Timeline',

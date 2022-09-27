@@ -131,8 +131,8 @@
 import moment from 'moment';
 import Header from '../../../views/fulfillment/header.vue';
 import Recepient from '../../../views/fulfillment/recipient.vue';
-import Timeline from '../../../views/fulfillment/timelineV2.vue';
-import OrderItems from '../../../views/fulfillment/orderItems.vue';
+import Timeline from '../../../views/fulfillment/timeline/timelineV2.vue';
+import OrderItems from '../../../views/fulfillment/orderedItems/orderItems.vue';
 import Rating from '../../../views/fulfillment/rating.vue';
 import statusMixin from '../../../mixins/status_mixin';
 
