@@ -19,6 +19,7 @@ export default new Vuex.Store({
       recipientVisible: true,
       ratingVisible: true,
       datePickerVisible: false,
+      checkoutDialogVisible: false,
       deliveryStatus: 0,
       updateDelivery: null,
       rateOrder: null,

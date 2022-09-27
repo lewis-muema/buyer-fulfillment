@@ -124,6 +124,7 @@
     </div>
     <changeinfo />
     <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
+    <PaymentsCard />
     <Timeline v-if="showTimeline"/>
     <Recipient />
   </div>
@@ -138,6 +139,7 @@ import Recipient from '../../../views/fulfillment/recipient.vue';
 import Rating from '../../../views/fulfillment/rating.vue';
 import changeinfo from '../../../views/fulfillment/changeInfo.vue';
 import statusMixin from '../../../mixins/status_mixin';
+import PaymentsCard from '../../../views/fulfillment/POD/paymentsCard.vue';
 
 export default {
   components: {
@@ -147,6 +149,7 @@ export default {
     Recipient,
     Rating,
     changeinfo,
+    PaymentsCard,
   },
   mixins: [statusMixin],
   data() {

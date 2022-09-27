@@ -29,6 +29,9 @@ export default {
   setDetailsDialogVisible(state, val) {
     state.detailsDialogVisible = val;
   },
+  setCheckoutDialogVisible(state, val) {
+    state.checkoutDialogVisible = val;
+  },
   setUpdateDelivery(state, val) {
     state.updateDelivery = val;
   },

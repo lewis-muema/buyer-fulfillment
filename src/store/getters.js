@@ -4,6 +4,7 @@ export default {
   getDialogVisible: (state) => state.dialogVisible,
   getLoading: (state) => state.loading,
   getDetailsDialogVisible: (state) => state.detailsDialogVisible,
+  getCheckoutDialogVisible: (state) => state.checkoutDialogVisible,
   getDatePickerVisible: (state) => state.datePickerVisible,
   getDeliveryStatus: (state) => state.deliveryStatus,
   getTimelineVisible: (state) => state.timelineVisible,
