@@ -9,7 +9,8 @@
     "staging": "cross-env DOCKER_ENV=\"staging\"  vue-cli-service build",
     "lint": "cross-env DOCKER_ENV=\"development\" vue-cli-service lint --fix",
     "test:unit": "nyc cross-env DOCKER_ENV=\"development\" vue-cli-service test:unit",
-    "showcoverage": "nyc report --reporter html --reporter text -t coverage --report-dir coverage/summary"
+    "showcoverage": "nyc report --reporter html --reporter text -t coverage --report-dir coverage/summary",
+    "stag": "cross-env DOCKER_ENV=\"staging\" vue-cli-service serve"
   },
   "dependencies": {
     "@firebase/messaging": "^0.9.1",
@@ -19,6 +20,7 @@
     "@fortawesome/vue-fontawesome": "^2.0.2",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@popperjs/core": "^2.10.1",
+    "@sendyit/pay": "^0.1.24",
     "axios": "^0.21.3",
     "bootstrap": "^5.1.1",
     "core-js": "^3.6.5",

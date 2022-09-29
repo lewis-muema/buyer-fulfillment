@@ -9,6 +9,8 @@ export default {
   getDeliveryStatus: (state) => state.deliveryStatus,
   getTimelineVisible: (state) => state.timelineVisible,
   getRecipientVisible: (state) => state.recipientVisible,
+  getPaymentSuccessful: (state) => state.paymentSuccessful,
+  getCheckoutModal: (state) => state.checkoutModal,
   getRatingVisible: (state) => state.ratingVisible,
   getOrderStatuses: (state) => state.orderStatuses,
   getOrderTimelines: (state) => state.orderTimelines,

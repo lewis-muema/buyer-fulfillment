@@ -1,66 +1,51 @@
 <template lang="">
   <div class="payments-on-delivery-container">
-    <div class="" v-if="showMakePaymentsCard">
-      <h1 class="payments-on-delivery-title">
-        Pay for your delivery
-      </h1>
-      <p class="payments-on-delivery-amount">KES 700</p>
-      <p class="payments-on-delivery-text">
-        You can pay now or prepare to pay when your items arrive
-      </p>
-      <span class="payments-on-delivery-button" v-if="!showPayNowCard">
-        <a class="" @click="showCheckoutModal">Make Payment</a>
-        <i class="el-icon-right payments-on-delivery-arrow-icon ml-1"></i>
-      </span>
-    </div>
-    <div v-if="showPayNowCard">
-      <h1 class="pay-now-delivery-title">
-        Pay for your delivery
-      </h1>
-      <p class="payments-on-delivery-amount">KES 700</p>
-      <p class="payments-on-delivery-text">
-        Your items arrive have arrived
-      </p>
-      <span class="payments-on-delivery-button">
-        <el-button class="change-delivery-el-button">
-          Pay Now
-        </el-button>
-      </span>
-    </div>
+    <PayLaterCard v-if="showMakePaymentsCard" :totalAmount="this.totalAmount" />
+    <PayNowCard v-if="showPayNowCard" :totalAmount="this.totalAmount" />
+    <PaidCard v-if="getPaymentSuccessful === true" :totalAmount="this.totalAmount" />
     <Checkout />
   </div>
 </template>
 <script>
-import { mapMutations, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import Checkout from './checkout.vue';
 import statusMixin from '../../../mixins/status_mixin';
+import PayLaterCard from './payLaterCard.vue';
+import PayNowCard from './payNowCard.vue';
+import PaidCard from './paidCard.vue';
 
 export default {
   name: 'PaymentsCard',
-  components: { Checkout },
+  components: {
+    Checkout,
+    PayLaterCard,
+    PayNowCard,
+    PaidCard,
+  },
   data() {
     return {};
   },
   mixins: [statusMixin],
   computed: {
-    ...mapGetters(['getData', 'getDeliveryStatus']),
+    ...mapGetters(['getData', 'getDeliveryStatus', 'getPaymentSuccessful']),
     showMakePaymentsCard() {
       return (
-        this.getData.data.sale_of_goods_invoice === null
-        && this.getStatus([0, 1, 2, 3, 4, 5, 6, 7]).includes(this.getDeliveryStatus)
+        this.getData.data.sale_of_goods_invoice !== null
+        && this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13]).includes(this.getDeliveryStatus)
+        && this.getPaymentSuccessful === false
       );
     },
     showPayNowCard() {
       return (
-        this.getData.data.sale_of_goods_invoice === null
+        this.getData.data.sale_of_goods_invoice !== null
         && this.getStatus([8]).includes(this.getDeliveryStatus)
+        && this.getPaymentSuccessful === false
       );
     },
-  },
-  methods: {
-    ...mapMutations(['setCheckoutDialogVisible']),
-    showCheckoutModal() {
-      this.setCheckoutDialogVisible(true);
+    totalAmount() {
+      return this.getData.data.sale_of_goods_invoice !== null
+        ? this.getData.data.sale_of_goods_invoice.amount_to_charge
+        : 0;
     },
   },
 };
@@ -110,5 +95,8 @@ i {
 }
 .payments-on-delivery-arrow-icon {
   font-weight: 600 !important;
+}
+.paid-sucessful-text {
+  line-height: 10px;
 }
 </style>

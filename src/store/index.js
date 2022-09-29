@@ -23,6 +23,8 @@ export default new Vuex.Store({
       deliveryStatus: 0,
       updateDelivery: null,
       rateOrder: null,
+      paymentSuccessful: false,
+      checkoutModal: '',
       language: 'en',
       countryData: {
         countryCode: 'KE',

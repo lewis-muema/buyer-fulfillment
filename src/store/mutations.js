@@ -32,6 +32,12 @@ export default {
   setCheckoutDialogVisible(state, val) {
     state.checkoutDialogVisible = val;
   },
+  setCheckoutModal(state, val) {
+    state.checkoutModal = val;
+  },
+  setPaymentSuccessful(state, val) {
+    state.paymentSuccessful = val;
+  },
   setUpdateDelivery(state, val) {
     state.updateDelivery = val;
   },
