@@ -1,21 +1,24 @@
-/* eslint-disable import/no-dynamic-require */
-// eslint-disable-next-line import/no-extraneous-dependencies
+const { defineConfig } = require('@vue/cli-service');
 const webpack = require('webpack');
 
+// eslint-disable-next-line import/no-dynamic-require
 const variables = require(`./config/${process.env.DOCKER_ENV}`);
-module.exports = {
+const path = require('path');
+
+module.exports = defineConfig({
+  transpileDependencies: true,
   configureWebpack: {
     plugins: [new webpack.EnvironmentPlugin(variables)],
+    resolve: {
+      symlinks: false,
+      alias: {
+        vue: path.resolve('./node_modules/vue'),
+      },
+    },
   },
-  transpileDependencies: [
-    'vuetify',
-  ],
-  chainWebpack: (config) => {
-    if (process.env.DOCKER_ENV === 'testing') {
-      config.merge({
-        target: 'node',
-        devtool: 'eval',
-      });
-    }
+  pluginOptions: {
+    vuetify: {
+      // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vuetify-loader
+    },
   },
-};
+});

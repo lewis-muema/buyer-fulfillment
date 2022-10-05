@@ -71,6 +71,7 @@
         <img
           src="../../../assets/keypad.png"
           class="img-fluid mobile-confirmation-pin-img"
+          alt="keypad"
         />
         <div class="mobile-confirmation-pin-text">
           {{ $t("timeline.pin") }}
@@ -87,7 +88,7 @@ import { mapGetters } from 'vuex';
 import statusMixin from '../../../mixins/status_mixin';
 
 export default {
-  name: 'Timeline',
+  name: 'TrackingTimeline',
   mixins: [statusMixin],
   data() {
     return {

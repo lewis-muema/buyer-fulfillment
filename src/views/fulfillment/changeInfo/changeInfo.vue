@@ -2,7 +2,7 @@
   <div>
     <el-dialog
       :title="$t('updateDetails.updateDeliveryInfo')"
-      :visible.sync="setDetailsDialogStatus"
+      v-model="setDetailsDialogStatus"
       :width="$store.getters.getMobile ? '100%' : '30%'"
       :fullscreen="$store.getters.getMobile ? true : false"
       :show-close="$store.getters.getMobile ? true : false"
@@ -12,20 +12,20 @@
     <ReceiverSummaryInfo />
     <RescheduleDateButton />
     </el-dialog>
-    <reschedule />
+    <RescheduleCard />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import reschedule from '../reschedule.vue';
 import statusMixin from '../../../mixins/status_mixin';
 import notificationMxn from '../../../mixins/nofication_mixin';
 import ReceiverSummaryInfo from './receiverSummaryInfo.vue';
 import RescheduleDateButton from './rescheduleDateButton.vue';
+import RescheduleCard from '../reschedule/reschedule.vue';
 
 export default {
-  components: { reschedule, ReceiverSummaryInfo, RescheduleDateButton },
+  components: { RescheduleCard, ReceiverSummaryInfo, RescheduleDateButton },
   mixins: [statusMixin, notificationMxn],
   computed: {
     ...mapGetters(['getDetailsDialogVisible', 'getData']),
@@ -57,7 +57,7 @@ export default {
 }
 .change-info-data-fields {
   white-space: nowrap;
-  overflow: hidden;
+  overflow: visible;
   text-overflow: ellipsis;
   width: 100%;
   margin-bottom: 10px !important;
@@ -99,15 +99,15 @@ export default {
 .recepient > div > p > i {
   margin-right: 10px;
 }
-.recepient {
+/* .recepient {
   line-height: 0;
-}
-.recipient-details {
+} */
+/* .recipient-details {
   display: flex;
   height: 40px;
   justify-content: flex-start;
   flex-direction: column;
-}
+} */
 .recipient-indent-text {
   margin-left: 25px;
 }

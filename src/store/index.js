@@ -1,16 +1,14 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
 
-Vue.use(Vuex);
-
-export default new Vuex.Store({
+export default createStore({
   namespaced: true,
   state() {
     return {
       data: {},
+      payOnDelivery: {},
       mobile: false,
       dialogVisible: false,
       detailsDialogVisible: false,
@@ -20,6 +18,7 @@ export default new Vuex.Store({
       ratingVisible: true,
       datePickerVisible: false,
       checkoutDialogVisible: false,
+      reviewDialogVisible: false,
       deliveryStatus: 0,
       updateDelivery: null,
       rateOrder: null,

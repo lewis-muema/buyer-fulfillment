@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      :visible.sync="visibleDatePicker"
+      v-model="visibleDatePicker"
       :width="$store.getters.getMobile ? '80%' : '30%'"
       center
       :close-on-click-modal="true"
@@ -29,10 +29,10 @@
 
 <script>
 import moment from 'moment';
-import notificationMxn from '../../mixins/nofication_mixin';
+import notificationMxn from '../../../mixins/nofication_mixin';
 
 export default {
-  name: 'Reschedule',
+  name: 'RescheduleCard',
   mixins: [notificationMxn],
   watch: {
     '$store.getters.getDatePickerVisible': function setDialogStatus(val) {

@@ -1,7 +1,8 @@
+<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template lang="">
-  <div>
+  <div class="payments-on-delivery-container">
     <div>
-      <div class="payments-on-delivery-text paid-sucessful-text">
+      <div class="payments-on-delivery-text">
         KES {{ totalAmount }} has been paid for this delivery.
       </div>
       <span class="payments-on-delivery-button">

@@ -45,4 +45,10 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+<style>
+  .el-button {
+  background: #324ba8 !important;
+  color: white !important;
+  padding: 22px 12px !important;
+}
+</style>

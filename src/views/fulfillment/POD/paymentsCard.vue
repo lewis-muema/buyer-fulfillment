@@ -1,14 +1,15 @@
+<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template lang="">
-  <div class="payments-on-delivery-container">
+  <div class="">
     <PayLaterCard v-if="showMakePaymentsCard" :totalAmount="this.totalAmount" />
     <PayNowCard v-if="showPayNowCard" :totalAmount="this.totalAmount" />
-    <PaidCard v-if="getPaymentSuccessful === true" :totalAmount="this.totalAmount" />
-    <Checkout />
+    <PaidCard v-if="showPaidCard" :totalAmount="this.invoincedAmount" />
+    <CheckoutCard />
   </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import Checkout from './checkout.vue';
+import CheckoutCard from './checkout.vue';
 import statusMixin from '../../../mixins/status_mixin';
 import PayLaterCard from './payLaterCard.vue';
 import PayNowCard from './payNowCard.vue';
@@ -17,7 +18,7 @@ import PaidCard from './paidCard.vue';
 export default {
   name: 'PaymentsCard',
   components: {
-    Checkout,
+    CheckoutCard,
     PayLaterCard,
     PayNowCard,
     PaidCard,
@@ -32,19 +33,27 @@ export default {
       return (
         this.getData.data.sale_of_goods_invoice !== null
         && this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13]).includes(this.getDeliveryStatus)
-        && this.getPaymentSuccessful === false
+        && !this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID'
       );
     },
     showPayNowCard() {
       return (
         this.getData.data.sale_of_goods_invoice !== null
         && this.getStatus([8]).includes(this.getDeliveryStatus)
-        && this.getPaymentSuccessful === false
+        && !this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID'
       );
+    },
+    showPaidCard() {
+      return this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID';
     },
     totalAmount() {
       return this.getData.data.sale_of_goods_invoice !== null
         ? this.getData.data.sale_of_goods_invoice.amount_to_charge
+        : 0;
+    },
+    invoincedAmount() {
+      return this.getData.data.sale_of_goods_invoice !== null
+        ? this.getData.data.sale_of_goods_invoice.invoiced_amount
         : 0;
     },
   },
@@ -71,6 +80,7 @@ export default {
   color: #606266;
   font-weight: 500;
   font-size: 14px;
+  text-transform: uppercase;
 }
 .payments-on-delivery-amount {
   color: #000000;
@@ -86,7 +96,7 @@ export default {
   color: #000000;
 }
 .payments-on-delivery-button a,
-i {
+.el-icon-right {
   color: #324ba8 !important;
   font-weight: 600;
   font-size: 16px;
@@ -95,8 +105,5 @@ i {
 }
 .payments-on-delivery-arrow-icon {
   font-weight: 600 !important;
-}
-.paid-sucessful-text {
-  line-height: 10px;
 }
 </style>

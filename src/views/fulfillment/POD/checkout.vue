@@ -1,7 +1,8 @@
+<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template lang="">
   <div class="checkout-dialog-container">
     <el-dialog
-      :visible.sync="checkoutDialogStatus"
+      v-model="checkoutDialogStatus"
       :width="getMobile ? '100%' : '30%'"
       :fullscreen="getMobile ? true : false"
       :show-close="getMobile ? true : false"
@@ -9,12 +10,12 @@
       :close-on-click-modal="true"
     >
       <div class="payment-checkout-header">
-        <h5>{{getCheckoutModal === 'checkout' ? 'Checkout' : 'Receipt'}}</h5>
-        <p v-if="getCheckoutModal === 'checkout'">Price breakdown</p>
+        <h5>{{ showCheckoutModal ? "Checkout" : "Receipt" }}</h5>
+        <p v-if="showCheckoutModal">Price breakdown</p>
       </div>
-      <div v-if="getCheckoutModal === 'receipt'" >
+      <div v-if="showReceiptModal">
         <span>Amount Paid&nbsp;</span>
-        <span>Kes 3200</span>
+        <span> {{currency}} {{invoicedAmount}}</span>
         <p>Sept 13, 2022 13:23</p>
       </div>
       <div>
@@ -53,28 +54,28 @@
       </div>
       <span class="checkout-total-amount">
         <p>Total</p>
-        <p>{{ currency }} {{ totalAmount }}</p>
+        <p>{{ currency }} {{showCheckoutModal ?  totalAmount : invoicedAmount }}</p>
       </span>
-      <div class="d-grid gap-2 col-12 mx-auto" v-if="getCheckoutModal === 'checkout'">
+      <div class="d-grid gap-2 col-12 mx-auto" v-if="showCheckoutModal">
         <el-button class="change-delivery-el-button" @click="submitToPay">
           Continue to Pay
         </el-button>
       </div>
-      <div v-if="getCheckoutModal === 'receipt'">
+      <div v-if="showReceiptModal">
         <p>Payment details</p>
         <div class="lineHeight">
           <p>Mpesa</p>
-        <p>0794375045</p>
+          <p>0794375045</p>
         </div>
       </div>
     </el-dialog>
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
-  name: 'Checkout',
+  name: 'CheckoutCard',
   props: ['name'],
   computed: {
     ...mapGetters(['getMobile', 'getCheckoutDialogVisible', 'getData', 'getCheckoutModal']),
@@ -109,13 +110,50 @@ export default {
         ? this.getData.data.sale_of_goods_invoice.amount_to_charge
         : 0;
     },
+    invoicedAmount() {
+      return this.getData.data.sale_of_goods_invoice !== null
+        ? this.getData.data.sale_of_goods_invoice.invoiced_amount
+        : 0;
+    },
+    showCheckoutModal() {
+      return localStorage.getItem('CheckoutModal') === 'Checkout';
+    },
+    showReceiptModal() {
+      return localStorage.getItem('CheckoutModal') === 'Receipt';
+    },
   },
   methods: {
     ...mapMutations(['setCheckoutDialogVisible', 'setPaymentSuccessful', 'setCheckoutModal']),
+    ...mapActions(['payOnDelivery']),
     submitToPay() {
-      this.setPaymentSuccessful(true);
-      this.setCheckoutDialogVisible(false);
-      this.setCheckoutModal('receipt');
+      try {
+        const buPayload = {
+          user_id: '',
+          entity_id: 6,
+          pay_direction: 'PAY_ON_DELIVERY',
+          currency: this.currency,
+          country_code: 'KE',
+          amount: this.totalAmount,
+          success_callback_url: '',
+          fail_callback_url: '',
+          txref: this.getData.data.order_id,
+          bulk: false,
+          paybill_no: '',
+          email: '',
+          authToken: '',
+          firstname: this.getData.data.destination.name,
+          lastname: '',
+          payment_options: '',
+          company_code: 'FFKE',
+          locale: localStorage.language,
+        };
+        this.$paymentInit(buPayload, 'checkout');
+        localStorage.setItem('ItemPaid', true);
+        this.setCheckoutDialogVisible(false);
+        localStorage.setItem('CheckoutModal', 'Receipt');
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

@@ -1,8 +1,9 @@
+<!-- eslint-disable -->
 <template>
   <div>
     <el-dialog
       :title="$t('updateDetails.updateDeliveryInfo')"
-      :visible.sync="visibleDialog"
+      v-model="visibleDialog"
       :width="$store.getters.getMobile ? '100%' : '30%'"
       :fullscreen="$store.getters.getMobile ? true : false"
       :show-close="$store.getters.getMobile ? true : false"
@@ -11,37 +12,44 @@
     >
       <form>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control"
-          :disabled="isToday" id="floatingInput" v-model="params.name" />
-          <label for="floatingInput">{{ $t("reviewChanges.recipientName") }}</label>
+          <input
+            type="text"
+            class="form-control"
+            :disabled="isToday"
+            id="floatingInput"
+            v-model="params.name"
+          />
+          <label htmlFor="floatingInput">{{ $t("reviewChanges.recipientName") }}</label>
         </div>
-        <div v-if="!$v.params.name.required" class="invalidFeedback">
+        <div v-if="!v$.params.name.required" class="invalidFeedback">
           {{ $t("updateDetails.recipientName") }}
         </div>
         <div class="form-floating mb-3">
           <div :class="isToday ? 'phone-no-enabled' : 'phone-no-disabled'"></div>
+          <label for="floatingInput" class="location-input-label">
+            {{ $t("updateDetails.phoneNumber") }}
+          </label>
           <vue-tel-input
-            v-model.trim="params.phone"
-            class="form-control cop-edit-form phone-input-display "
+            class="phone-input"
+            v-model="test"
             name="phone"
             value=""
             data-vv-validate-on="blur"
             v-bind="sendyPhoneProps"
             :input-options="vueTelInputProps"
-          />
-          <label for="floatingInput">{{ $t("updateDetails.phoneNumber") }}</label>
+          ></vue-tel-input>
         </div>
-        <div v-if="!$v.params.phone.required" class="invalidFeedback">
+        <div v-if="!v$.params.phone.required" class="invalidFeedback">
           {{ $t("updateDetails.phoneNumberRequired") }}
         </div>
-        <div v-if="!$v.params.phone.maxLength" class="invalidFeedback">
+        <div v-if="!v$.params.phone.maxLength" class="invalidFeedback">
           {{ $t("updateDetails.validPhoneNumber") }}
         </div>
         <div class="form-floating mb-3">
           <label for="floatingInput" class="location-input-label">
             {{ $t("updateDetails.location") }}
           </label>
-          <gmap-autocomplete
+          <GMapAutocomplete
             :value="params.deliveryLocation.description"
             :disabled="isToday"
             :options="map_options"
@@ -50,12 +58,9 @@
             placeholder="Enter location"
             :select-first-on-enter="true"
             @place_changed="setLocation($event)"
-          />
-          <div
-            class="mobile-changeLocation-warning-container"
-            v-if="isToday"
           >
-          </div>
+          </GMapAutocomplete>
+          <div class="mobile-changeLocation-warning-container" v-if="isToday"></div>
         </div>
         <div class="form-floating mb-3">
           <input
@@ -64,20 +69,16 @@
             class="form-control"
             id="floatingInput"
             placeholder="Floor, apartment or house number"
-            value="Enter FloorNo/Apt/Hse No"
             v-model="params.house_location"
           />
           <label for="floatingInput">{{ $t("updateDetails.floorNumber") }}</label>
         </div>
-           <div
-            class="mobile-changeLocation-warning-container"
-            v-if="isToday"
-          >
-            <i class="el-icon-info mt-3"></i>
-            <p class="ml-2 mt-3 mobile-changeLocation-warning-text">
-              {{ $t("updateDetails.changeLocation") }}
-            </p>
-          </div>
+        <div class="mobile-changeLocation-warning-container" v-if="isToday">
+          <i class="el-icon-info mt-3"></i>
+          <p class="ml-2 mt-3 mobile-changeLocation-warning-text">
+            {{ $t("updateDetails.changeLocation") }}
+          </p>
+        </div>
         <div class="mt-3">
           <label for="Delivery options" class="form-label">
             {{ $t("updateDetails.deliveryOptions") }}
@@ -139,7 +140,6 @@
       </form>
     </el-dialog>
     <ReviewChanges
-      :dialog-visible="showDialog"
       :name="params.name"
       :phone="params.phone"
       :deliveryLocationDescription="params.deliveryLocation.description"
@@ -147,19 +147,20 @@
       :deliveryLocationLatitude="params.deliveryLocation.latitude"
       :houseLocation="params.house_location"
       :deliveryOption="deliveryOption"
-      @close="showDialog = false"
+      @close="cancelReviewModal"
     />
   </div>
 </template>
 
 <script>
+import { mapMutations, mapGetters } from 'vuex';
 import moment from 'moment';
-import eventsMixin from '../../mixins/events_mixin';
-import statusMixin from '../../mixins/status_mixin';
-import notificationMxn from '../../mixins/nofication_mixin';
+import { useVuelidate } from '@vuelidate/core';
+import { required, maxLength } from '@vuelidate/validators';
+import eventsMixin from '../../../mixins/events_mixin';
+import statusMixin from '../../../mixins/status_mixin';
+import notificationMxn from '../../../mixins/nofication_mixin';
 import ReviewChanges from './reviewChanges.vue';
-
-const { required, maxLength } = require('vuelidate/lib/validators');
 
 export default {
   name: 'UpdateDetails',
@@ -167,9 +168,12 @@ export default {
   components: {
     ReviewChanges,
   },
+  setup() {
+    return { v$: useVuelidate() };
+  },
   data() {
     return {
-      test: '',
+      test: '0794375045',
       showDialog: false,
       visibleDialog: false,
       locations: this.location,
@@ -259,14 +263,17 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['getData']),
     countryCodes() {
       return [this.$store.getters.getCountryData.countryCode.toLowerCase()];
     },
     isToday() {
-      return moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date))
-        .format(
+      return (
+        moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date)).format(
           'YYYY-MM-DD',
-        ) === moment().format('YYYY-MM-DD') || !this.getStatus([0, 1, 13, 14, 15]).includes(this.$store.getters.getDeliveryStatus);
+        ) === moment().format('YYYY-MM-DD')
+        || !this.getStatus([0, 1, 13, 14, 15]).includes(this.$store.getters.getDeliveryStatus)
+      );
     },
   },
   beforeMount() {
@@ -276,12 +283,16 @@ export default {
     this.sendyPhoneProps.preferredCountries = this.countryCodes;
   },
   methods: {
+    ...mapMutations(['setReviewDialogVisible']),
+    cancelReviewModal(val) {
+      this.setReviewDialogVisible(val);
+    },
     handleClose() {
       this.$emit('close', false);
     },
     showReviewModal() {
-      if (this.$v.$invalid) return;
-      this.showDialog = true;
+      if (this.v$.$invalid) return;
+      this.setReviewDialogVisible(true);
     },
     showDatePicker() {
       this.$store.commit('setDatePickerVisible', true);
@@ -356,5 +367,12 @@ export default {
   position: absolute;
   display: block;
   background: #c5cad370;
+}
+.vue-tel-input {
+  height: 55px !important;
+  border-radius: 3px !important;
+}
+.phone-input {
+  padding-top: 20px;
 }
 </style>

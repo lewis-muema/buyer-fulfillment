@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header />
+    <TopHeader />
     <div>
       <el-row>
         <el-col :span="12">
@@ -12,7 +12,7 @@
                 }}
               </h3>
               <div
-                class="delivery mt-5"
+                class="delivery"
                 v-if="
                   getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(
                     $store.getters.getDeliveryStatus
@@ -109,15 +109,16 @@
           </el-card>
         </el-col>
         <el-col :span="12">
-          <Recepient />
+          <RecepientDetails />
         </el-col>
       </el-row>
       <el-row class="el-row">
         <el-col :span="12">
-          <Rating
+          <!-- <Rating
             v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
-          />
-          <Timeline v-if="showTimeline"/>
+          /> -->
+          <!-- <PaymentsCard /> -->
+          <TrackingTimeline v-if="showTimeline"/>
         </el-col>
         <el-col :span="12">
           <OrderItems />
@@ -129,20 +130,21 @@
 
 <script>
 import moment from 'moment';
-import Header from '../../../views/fulfillment/header.vue';
-import Recepient from '../../../views/fulfillment/recipient.vue';
-import Timeline from '../../../views/fulfillment/timeline/timelineV2.vue';
+import TopHeader from '../../../views/fulfillment/header.vue';
+import RecepientDetails from '../../../views/fulfillment/recipient/recipient.vue';
+import TrackingTimeline from '../../../views/fulfillment/timeline/timelineV2.vue';
 import OrderItems from '../../../views/fulfillment/orderedItems/orderItems.vue';
-import Rating from '../../../views/fulfillment/rating.vue';
+// import PaymentsCard from '../../../views/fulfillment/POD/paymentsCard.vue';
+// import Rating from '../../../views/fulfillment/rating.vue';
 import statusMixin from '../../../mixins/status_mixin';
 
 export default {
+  name: 'DesktopLayout',
   components: {
-    Header,
-    Recepient,
-    Timeline,
+    TopHeader,
     OrderItems,
-    Rating,
+    TrackingTimeline,
+    RecepientDetails,
   },
   mixins: [statusMixin],
   data() {

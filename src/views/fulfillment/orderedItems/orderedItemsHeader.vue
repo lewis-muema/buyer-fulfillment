@@ -1,3 +1,5 @@
+<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
+<!-- eslint-disable -->
 <template lang="">
   <div>
     <div class="fulfillemnt-order-items-container">
@@ -22,7 +24,10 @@
                 ${getData.data.products.length - 1} ${$t("mobile.otherItems")} `
                 : ""
             }}
-            <i :class="!showItems ? 'el-icon-arrow-down' : 'el-icon-arrow-up'"></i>
+            <i
+              :class="!showItems ? 'bi bi-chevron-down' : 'bi bi-chevron-up'"
+              class="order-items-header-icons"
+            ></i>
           </span>
           <order-items v-if="showItems" />
         </div>
@@ -50,4 +55,8 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+<style>
+.order-items-header-icons {
+  padding-top: 50px;
+}
+</style>

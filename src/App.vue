@@ -39,7 +39,7 @@ export default {
           vapidKey: process.env.VAPIDKEY,
         }).then((currentToken) => {
           if (currentToken) {
-          // ...
+            // ...
             const deviceId = Math.floor(new Date().getTime());
             let device = '';
             if (this.getCookie('deviceId')) {
@@ -68,16 +68,18 @@ export default {
               trigger: payload.notification.body,
             },
           });
-          this.$store.dispatch('requestAxiosGet', {
-            app: process.env.FULFILMENT_SERVER,
-            endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
-          }).then((response) => {
-            this.$store.commit('setData', response.data);
-            this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
-          });
+          this.$store
+            .dispatch('requestAxiosGet', {
+              app: process.env.FULFILMENT_SERVER,
+              endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
+            })
+            .then((response) => {
+              this.$store.commit('setData', response.data);
+              this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
+            });
         });
       } catch (error) {
-      // ...
+        // ...
       }
     });
   },
@@ -105,7 +107,6 @@ export default {
   },
 };
 </script>
-
 <style>
 #app {
   font-family: "Nunito", sans-serif;
@@ -114,16 +115,16 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
+nav {
   padding: 30px;
 }
 
-#nav a {
+nav a {
   font-weight: bold;
   color: #2c3e50;
 }
 
-#nav a.router-link-exact-active {
+nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>

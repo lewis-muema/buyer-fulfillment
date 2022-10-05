@@ -1,3 +1,4 @@
+<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
   <div v-if="$store.getters.getRecipientVisible">
     <div :class="!$store.getters.getMobile ? 'recepient-info-desktop' : 'recepient-info-mobile'">
@@ -71,12 +72,12 @@
 </template>
 
 <script>
-import UpdateDetails from './updateDetails.vue';
-import changeInfo from './changeInfo/changeInfo.vue';
-import statusMixin from '../../mixins/status_mixin';
+import UpdateDetails from '../changeInfo/updateDetails.vue';
+import changeInfo from '../changeInfo/changeInfo.vue';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
-  name: 'Recepient',
+  name: 'RecepientDetails',
   components: {
     UpdateDetails,
     changeInfo,

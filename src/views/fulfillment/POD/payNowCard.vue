@@ -1,17 +1,17 @@
 <template lang="">
-  <div>
+  <div class="payments-on-delivery-container pay-now-container">
     <div>
       <h1 class="pay-now-delivery-title">
         Pay for your delivery
       </h1>
       <p class="payments-on-delivery-amount">
-        {{ totalAmount }}
+        {{currency}} {{ totalAmount }}
       </p>
       <p class="payments-on-delivery-text">
         Your items arrive have arrived
       </p>
       <span class="payments-on-delivery-button">
-        <el-button class="change-delivery-el-button">
+        <el-button class="pay-now-button" @click="showCheckoutModal">
           Pay Now
         </el-button>
       </span>
@@ -19,8 +19,31 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapMutations } from 'vuex';
+
 export default {
   props: ['totalAmount'],
+  computed: {
+    ...mapGetters(['getData']),
+    currency() {
+      return this.getData.data.sale_of_goods_invoice.currency;
+    },
+  },
+  methods: {
+    ...mapMutations(['setCheckoutDialogVisible', 'setCheckoutModal']),
+    showCheckoutModal() {
+      this.setCheckoutDialogVisible(true);
+      localStorage.setItem('CheckoutModal', 'Checkout');
+    },
+  },
 };
 </script>
-<style lang=""></style>
+<style>
+  .pay-now-button {
+    margin: 0 !important;
+    width: 60% !important;
+  }
+  .pay-now-container {
+    background: #F1F4FF !important
+  }
+</style>

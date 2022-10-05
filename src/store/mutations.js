@@ -14,6 +14,9 @@ export default {
   setDatePickerVisible(state, val) {
     state.datePickerVisible = val;
   },
+  setPayOnDelivery(state, val) {
+    state.payOnDelivery = val;
+  },
   setDeliveryStatus(state, val) {
     state.deliveryStatus = val;
   },
@@ -34,6 +37,9 @@ export default {
   },
   setCheckoutModal(state, val) {
     state.checkoutModal = val;
+  },
+  setReviewDialogVisible(state, val) {
+    state.reviewDialogVisible = val;
   },
   setPaymentSuccessful(state, val) {
     state.paymentSuccessful = val;

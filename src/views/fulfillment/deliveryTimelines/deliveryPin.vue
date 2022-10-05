@@ -23,10 +23,12 @@ export default {
   computed: {
     ...mapGetters(['getData', 'getDeliveryStatus', 'getPaymentSuccessful']),
     showOTP() {
-      return (
-        (this.getData.data.sale_of_goods_invoice === null
-        || this.getStatus([8]).includes(this.getDeliveryStatus))
-      );
+      // if(this.getData.data.sale_of_goods_invoice !== null) {
+      //   return localStorage.getItem('ItemPaid')
+      // }
+      return this.getData.data.sale_of_goods_invoice === null
+        ? this.getStatus([8]).includes(this.getDeliveryStatus)
+        : this.getStatus([8]).includes(this.getDeliveryStatus) && localStorage.getItem('ItemPaid');
     },
   },
 };

@@ -1,36 +1,38 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <div class="fulfillment-header">
       <div class="fulfillment-header-logo">
         <img
-            src="https://assets.website-files.com/5be92ce6e4a547dcc61b976c/60253f92874eabf1a8ecf88f_Logo_SendyMain_Colored_Normal_SVG.svg"
-            alt="Sendy logo"
-            class="fulfillment-header-sendy-logo"
-          />
+          src="https://assets.website-files.com/5be92ce6e4a547dcc61b976c/60253f92874eabf1a8ecf88f_Logo_SendyMain_Colored_Normal_SVG.svg"
+          alt="Sendy logo"
+          class="fulfillment-header-sendy-logo"
+        />
       </div>
       <div class="fulfillment-header-menu">
-        <el-dropdown @command="changeLanguage"
-          class="fulfillment-header-language-menu"
-        >
-            <span class="el-dropdown-link language-change ">
-              {{ activeLanguage }}
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="en">{{ $t('header.english') }}</el-dropdown-item>
-              <el-dropdown-item command="fr">{{ $t('header.french') }}</el-dropdown-item>
+        <el-dropdown @command="changeLanguage" class="fulfillment-header-language-menu">
+          <span class="el-dropdown-link language-change">
+            Acttive - {{ activeLanguage }}
+            <el-icon class="el-icon--right"><arrow-down /></el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="en">{{ $t("header.english") }}</el-dropdown-item>
+              <el-dropdown-item command="fr">{{ $t("header.french") }}</el-dropdown-item>
             </el-dropdown-menu>
-          </el-dropdown>
+          </template>
+        </el-dropdown>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// import { ArrowDown } from '@element-plus/icons-vue';
 import eventsMixin from '../../mixins/events_mixin';
 
 export default {
-  name: 'Header',
+  name: 'TopHeader',
   mixins: [eventsMixin],
   data() {
     return {
@@ -54,6 +56,7 @@ export default {
   },
   methods: {
     changeLanguage(command) {
+      console.log(command);
       this.language = command;
       window.dispatchEvent(new CustomEvent('language-changed', { detail: this.language }));
       this.sendSegmentEvents({

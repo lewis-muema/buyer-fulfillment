@@ -1,4 +1,5 @@
 <template>
+  <!-- eslint-disable -->
   <div v-if="$store.getters.getRatingVisible">
     <div :class="$store.getters.getMobile ? 'rate-delivery-mobile' : 'rate-delivery-desktop'">
       <p :class="$store.getters.getMobile ? 'delivery-title-mobile' : 'delivery-title-desktop'">
@@ -83,11 +84,11 @@
 
 <script>
 import { mapActions } from 'vuex';
-import eventsMixin from '../../mixins/events_mixin';
-import NotificationMxn from '../../mixins/nofication_mixin';
+import eventsMixin from '../../../mixins/events_mixin';
+import NotificationMxn from '../../../mixins/nofication_mixin';
 
 export default {
-  name: 'Rating',
+  name: 'RateOrder',
   mixins: [NotificationMxn, eventsMixin],
   data() {
     return {
