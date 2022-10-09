@@ -12,15 +12,15 @@
         !$store.getters.getMobile ? 'block mt-3' : 'timeline-events-mobile'
       "
     >
-      <el-timeline>
+      <el-timeline :class="!$store.getters.getMobile ? 'el-timeline-item-desktop' : ''">
         <el-timeline-item
-          :class="!$store.getters.getMobile ? 'el-timeline-item-desktop' : ''"
           v-for="(activity, index) in activities"
           :key="index"
           :icon="activity.icon"
           :type="activity.type"
           :color="activity.color"
           :size="activity.size"
+          :class="activity.iconClass"
         >
           <span
             :class="
@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import { shallowRef } from 'vue';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
 import statusMixin from '../../../mixins/status_mixin';
@@ -151,7 +152,8 @@ export default {
               active: row.colors[i] === '#324ba8',
               title: row.titles[i],
               color: row.colors[i],
-              icon: row.icons[i],
+              icon: shallowRef(row.icons[i]),
+              class: row.iconClass[i],
               date: this.formatEventDate(row.dates[i], evtDate),
               showDriver: row.showDriver[i],
               showReschedule: row.showReschedule[i],
@@ -190,7 +192,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getData']),
+    ...mapGetters(['getData', 'getOrderTimelines']),
     confirmationPin() {
       return this.getData.data.confirmation_pin;
     },

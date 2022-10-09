@@ -26,25 +26,50 @@ const i18n = createI18n({
   fallbackLocale: 'en',
   messages: loadLocaleMessages(),
 });
+
+// eslint-disable-next-line no-unused-vars
 function ipLookUp() {
-  axios(`https://extreme-ip-lookup.com/json/?key=${process.env.EXTREME_IP_KEY}`)
+  const { EXTREME_IP_KEY } = process.env;
+  console.log('reesponse', EXTREME_IP_KEY);
+  axios(`https://extreme-ip-lookup.com/json/?key=${EXTREME_IP_KEY}`)
     .then((response) => {
+      console.log('reesponse', response);
+      window.dispatchEvent(new CustomEvent('country-fetched', { detail: response.data }));
+      const francoPhoneCountries = ['FR', 'CI'].includes(response.data.countryCode);
+      let lang;
+      let locale;
+      if (francoPhoneCountries) {
+        i18n.locale = 'fr';
+        lang = `fr-${response.data.countryCode}`;
+        locale = 'fr';
+      } else if (response.data.countryCode === 'NG') {
+        i18n.locale = 'en-ng';
+        lang = `en-${response.data.countryCode}`;
+        locale = 'en-ng';
+      } else {
+        i18n.locale = 'en';
+        lang = 'en-US,en;q=0.9';
+        locale = 'en';
+      }
+      localStorage.setItem('buyerTimeLocale', locale);
+      localStorage.setItem('buyerLanguage', lang);
+      localStorage.setItem('buyerCountryCode', response.data.countryCode);
       window.dispatchEvent(
         new CustomEvent('country-fetched', { detail: response.data }),
       );
     })
     .catch((error) => error);
 }
-function changeLanguage() {
+function fetchCountry() {
   window.addEventListener('language-changed', (event) => {
     i18n.locale = event.detail;
+    localStorage.setItem('buyerTimeLocale', event.detail);
     moment.locale(event.detail);
   });
-  window.addEventListener('country-default', () => {
-    ipLookUp();
-  });
 }
-
-changeLanguage();
+window.addEventListener('country-default', () => {
+  ipLookUp();
+});
+fetchCountry();
 
 export default i18n;

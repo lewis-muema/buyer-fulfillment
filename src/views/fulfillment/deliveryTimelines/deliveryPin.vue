@@ -28,7 +28,7 @@ export default {
       // }
       return this.getData.data.sale_of_goods_invoice === null
         ? this.getStatus([8]).includes(this.getDeliveryStatus)
-        : this.getStatus([8]).includes(this.getDeliveryStatus) && localStorage.getItem('ItemPaid');
+        : this.getStatus([8]).includes(this.getDeliveryStatus) && this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID';
     },
   },
 };

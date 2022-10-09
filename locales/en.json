@@ -86,6 +86,7 @@
   "timeline.rescheduledBySendy": "Your order has been rescheduled by the sendy to {Date}",
   "timeline.timeline": "Timeline",
   "timeline.today": "Today",
+  "timeline.orderPaid" : "Order has been Paid",
   "updateDetails.changeDate": "You will not be able to change the delivery details on the day of the delivery. Kindly reschedule to a later date to edit details",
   "updateDetails.changeLocation": "Sorry you can't update the info above on the day of delivery",
   "updateDetails.deliveryOptions": "Delivery options",

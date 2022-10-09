@@ -7,20 +7,27 @@
       :close-on-click-modal="true"
     >
       <div class="date-picker-title">
-        {{ $t('reschedule.pickADate') }}
+        {{ $t("reschedule.pickADate") }}
       </div>
-      <v-date-picker
+      <!-- <v-date-picker
         v-model="date"
         :allowed-dates="allowedDates"
         color="#324BA8"
         :locale="locale"
-      ></v-date-picker>
+      ></v-date-picker> -->
+      <datepicker
+        name="uniquename"
+        :inline="true"
+        :value="date"
+        :disabled-dates="disabledDates"
+        v-model="date"
+      ></datepicker>
       <div>
         <button class="back-button" @click="visibleDatePicker = false">
-          {{ $t('reschedule.back') }}
+          {{ $t("reschedule.back") }}
         </button>
         <el-button class="save-button" @click="rescheduleDelivery()">
-          {{ $t('reschedule.save') }}
+          {{ $t("reschedule.save") }}
         </el-button>
       </div>
     </el-dialog>
@@ -28,12 +35,14 @@
 </template>
 
 <script>
+import Datepicker from 'vuejs3-datepicker';
 import moment from 'moment';
 import notificationMxn from '../../../mixins/nofication_mixin';
 
 export default {
   name: 'RescheduleCard',
   mixins: [notificationMxn],
+  components: { Datepicker },
   watch: {
     '$store.getters.getDatePickerVisible': function setDialogStatus(val) {
       this.visibleDatePicker = val;
@@ -44,9 +53,19 @@ export default {
   },
   data() {
     return {
+      loading: false,
       visibleDatePicker: false,
       date: moment().add(1, 'days').format('YYYY-MM-DD'),
       locale: '',
+      disabledDates: {
+        preventDisableDateSelection: true,
+        customPredictor(date) {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+
+          return date < today || date > new Date(today.getTime() + 1000 * 60 * 60 * 24 * 2);
+        },
+      },
     };
   },
   mounted() {
@@ -55,51 +74,52 @@ export default {
     });
   },
   methods: {
-    allowedDates(date) {
-      // Can not select days before today and today
-      return new Date(date).valueOf() >= Date.now() - (1000 * 60 * 60 * 24 * 0)
-        && new Date(date).valueOf() <= Date.now() + (1000 * 60 * 60 * 24 * 2);
-    },
     rescheduleDelivery() {
       const date = moment().format('YYYY-MM-DD') === this.date
-        ? new Date().getTime() + 60000 : new Date(this.date).getTime();
+        ? new Date().getTime() + 60000
+        : new Date(this.date).getTime();
+      console.log(date);
       this.$store.commit('setLoading', true);
       this.$store.commit('setDatePickerVisible', false);
-      this.$store.dispatch('requestAxiosPut', {
-        app: process.env.FULFILMENT_SERVER,
-        endpoint: `buyer/orders/${this.$store.getters.getData.data.order_id}/reschedule`,
-        values: {
-          proposed_scheduled_date: date,
-        },
-      }).then((res) => {
-        this.$store.commit('setLoading', false);
-        if (res.status === 200) {
-          const message = this.$t('reschedule.success');
-          const notification = {
-            title: '',
-            level: 1,
-            message,
-          };
-          this.displayNotification(notification);
-          this.$store.commit('setDetailsDialogVisible', false);
-          this.$store.dispatch('requestAxiosGet', {
-            app: process.env.FULFILMENT_SERVER,
-            endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
-          }).then((response) => {
-            this.$store.commit('setData', response.data);
-            this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
-          });
-        } else {
-          let message = res.data.message.replaceAll('.', ' ');
-          message = message.charAt(0).toUpperCase() + message.slice(1);
-          const notification = {
-            title: '',
-            level: 3,
-            message,
-          };
-          this.displayNotification(notification);
-        }
-      });
+      this.$store
+        .dispatch('requestAxiosPut', {
+          app: process.env.FULFILMENT_SERVER,
+          endpoint: `buyer/orders/${this.$store.getters.getData.data.order_id}/reschedule`,
+          values: {
+            proposed_scheduled_date: date,
+          },
+        })
+        .then((res) => {
+          this.$store.commit('setLoading', false);
+          if (res.status === 200) {
+            const message = this.$t('reschedule.success');
+            const notification = {
+              title: '',
+              level: 1,
+              message,
+            };
+            this.displayNotification(notification);
+            this.$store.commit('setDetailsDialogVisible', false);
+            this.$store
+              .dispatch('requestAxiosGet', {
+                app: process.env.FULFILMENT_SERVER,
+                endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
+              })
+              .then((response) => {
+                this.$store.commit('setData', response.data);
+                this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
+              });
+          } else {
+            let message = res.data.message.replaceAll('.', ' ');
+            message = message.charAt(0).toUpperCase() + message.slice(1);
+            const notification = {
+              title: '',
+              level: 3,
+              message,
+            };
+            this.displayNotification(notification);
+          }
+        });
     },
   },
 };
@@ -131,5 +151,22 @@ export default {
 .v-date-picker-table {
   padding: 0, 0 !important;
   height: auto !important;
+}
+.vuejs3-datepicker__calendar {
+  box-shadow: none !important;
+}
+.vuejs3-datepicker__calendar-topbar {
+  background-color: #324ba8;
+}
+.vuejs3-datepicker__calendar .cell.selected {
+  background: #324ba8 !important ;
+}
+.vuejs3-datepicker__calendar .cell {
+  border-radius: 50px;
+}
+.vuejs3-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover,
+.vuejs3-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover,
+.vuejs3-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
+  border: 1px solid #324ba8;
 }
 </style>

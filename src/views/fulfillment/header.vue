@@ -12,8 +12,8 @@
       <div class="fulfillment-header-menu">
         <el-dropdown @command="changeLanguage" class="fulfillment-header-language-menu">
           <span class="el-dropdown-link language-change">
-            Acttive - {{ activeLanguage }}
-            <el-icon class="el-icon--right"><arrow-down /></el-icon>
+            {{ activeLanguage }}
+            <el-icon><ArrowDown /></el-icon>
           </span>
           <template #dropdown>
             <el-dropdown-menu>
@@ -28,11 +28,12 @@
 </template>
 
 <script>
-// import { ArrowDown } from '@element-plus/icons-vue';
+import { ArrowDown } from '@element-plus/icons';
 import eventsMixin from '../../mixins/events_mixin';
 
 export default {
   name: 'TopHeader',
+  components: { ArrowDown },
   mixins: [eventsMixin],
   data() {
     return {
@@ -56,8 +57,9 @@ export default {
   },
   methods: {
     changeLanguage(command) {
-      console.log(command);
+      // console.log(command);
       this.language = command;
+      console.log(this.language);
       window.dispatchEvent(new CustomEvent('language-changed', { detail: this.language }));
       this.sendSegmentEvents({
         event: 'Select_language',

@@ -74,9 +74,9 @@ export default {
         if (this.activities.length === index + 1
         && row.event_code !== 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code') {
           this.activities[index].color = '#324ba8';
-          this.activities[index].icon = 'el-icon-minus';
+          this.activities[index].icon = Minus;
         } else {
-          this.activities[index].icon = 'el-icon-check';
+          this.activities[index].icon = Check;
           this.activities[index].color = '#EE7D00';
         }
       });

@@ -24,10 +24,12 @@
                 ${getData.data.products.length - 1} ${$t("mobile.otherItems")} `
                 : ""
             }}
-            <i
+            <!-- <i
               :class="!showItems ? 'bi bi-chevron-down' : 'bi bi-chevron-up'"
               class="order-items-header-icons"
-            ></i>
+            ></i> -->
+            <el-icon v-if="!showItems" class="ordered-items-header-icons"><ArrowDown /></el-icon>
+            <el-icon v-else><ArrowUp /></el-icon>
           </span>
           <order-items v-if="showItems" />
         </div>
@@ -37,6 +39,7 @@
   </div>
 </template>
 <script>
+import { ArrowDown, ArrowUp } from '@element-plus/icons';
 import { mapGetters } from 'vuex';
 import OrderItems from './orderItems.vue';
 
@@ -49,6 +52,8 @@ export default {
   },
   components: {
     OrderItems,
+    ArrowDown,
+    ArrowUp,
   },
   computed: {
     ...mapGetters(['getData']),
@@ -56,7 +61,7 @@ export default {
 };
 </script>
 <style>
-.order-items-header-icons {
-  padding-top: 50px;
+.ordered-items-header-icons {
+  font-size: 15px;
 }
 </style>

@@ -8,20 +8,20 @@
       <div class="recepient">
         <div class="recipient-details">
           <p class="reciepient-details-rows">
-            <i class="el-icon-user"></i>
+            <el-icon><User /></el-icon>
             {{ $store.getters.getData.data.destination.name }}
           </p>
         </div>
         <div class="recipient-details">
           <p class="reciepient-details-rows">
-            <i class="el-icon-phone"></i>
+            <el-icon><PhoneFilled /></el-icon>
             {{ $store.getters.getData.data.destination.phone_number }}
           </p>
         </div>
         <div class="recipient-details">
           <div class="d-flex">
-            <i class="el-icon-location-outline"></i>
           <p class="reciepient-details-rows pl-3">
+            <el-icon><Location /></el-icon>
             {{
               $store.getters.getData.data.destination.delivery_location
                 ? $store.getters.getData.data.destination.delivery_location.description
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { User, PhoneFilled, Location } from '@element-plus/icons';
 import UpdateDetails from '../changeInfo/updateDetails.vue';
 import changeInfo from '../changeInfo/changeInfo.vue';
 import statusMixin from '../../../mixins/status_mixin';
@@ -81,6 +82,9 @@ export default {
   components: {
     UpdateDetails,
     changeInfo,
+    User,
+    PhoneFilled,
+    Location,
   },
   mixins: [statusMixin],
   data() {

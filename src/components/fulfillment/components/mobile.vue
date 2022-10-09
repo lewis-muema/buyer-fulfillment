@@ -9,7 +9,7 @@
     <PaymentsCard />
     <TrackingTimeline v-if="showTimeline"/>
     <RecepientDetails />
-    <RescheduleOrderButton />
+    <!-- <RescheduleOrderButton /> -->
     <!-- <changeinfo /> -->
     <RateOrder v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
     <!-- <Recipient /> -->
@@ -30,7 +30,7 @@ import DeliveryPin from '../../../views/fulfillment/deliveryTimelines/deliveryPi
 import ItemDelivered from '../../../views/fulfillment/deliveryTimelines/itemDelivered.vue';
 import OrderCanceled from '../../../views/fulfillment/deliveryTimelines/orderCanceled.vue';
 // eslint-disable-next-line max-len
-import RescheduleOrderButton from '../../../views/fulfillment/deliveryTimelines/rescheduleOrderButton.vue';
+// import RescheduleOrderButton from '../../../views/fulfillment/deliveryTimelines/rescheduleOrderButton.vue';
 
 export default {
   name: 'MobileLayout',
@@ -44,7 +44,6 @@ export default {
     PaymentsCard,
     TrackingTimeline,
     RecepientDetails,
-    RescheduleOrderButton,
     RateOrder,
   },
   mixins: [statusMixin],

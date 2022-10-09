@@ -25,7 +25,7 @@ import RescheduleDateButton from './rescheduleDateButton.vue';
 import RescheduleCard from '../reschedule/reschedule.vue';
 
 export default {
-  components: { RescheduleCard, ReceiverSummaryInfo, RescheduleDateButton },
+  components: { ReceiverSummaryInfo, RescheduleDateButton, RescheduleCard },
   mixins: [statusMixin, notificationMxn],
   computed: {
     ...mapGetters(['getDetailsDialogVisible', 'getData']),

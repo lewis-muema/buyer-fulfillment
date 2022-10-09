@@ -37,6 +37,7 @@
     "vue-material-design-icons": "^5.1.2",
     "vue-router": "^4.0.3",
     "vue-tel-input": "^6.0.5",
+    "vuejs3-datepicker": "^1.0.12",
     "vuex": "^4.0.0",
     "webpack": "^5.74.0"
   },

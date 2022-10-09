@@ -11,19 +11,19 @@
             <div class="recepient">
               <div class="recipient-details">
                 <p class="change-info-data-fields">
-                  <i class="bi bi-chevron-down"></i>
+                  <el-icon><User /></el-icon>
                   {{ recepientInfo.name }}
                 </p>
               </div>
               <div class="recipient-details">
                 <p class="change-info-data-fields">
-                  <i class="bi bi-chevron-down"></i>
+                  <el-icon><PhoneFilled /></el-icon>
                   {{ recepientInfo.phone_number }}
                 </p>
               </div>
               <div class="recipient-details">
                 <p class="change-info-data-fields text-muted">
-                  <i class="bi bi-chevron-down"></i>
+                  <el-icon><Location /></el-icon>
                   {{
                     recepientInfo.delivery_location
                       ? recepientInfo.delivery_location.description
@@ -56,13 +56,19 @@
   </div>
 </template>
 <script>
+import { User, PhoneFilled, Location } from '@element-plus/icons';
 import { mapMutations, mapGetters } from 'vuex';
 import statusMixin from '../../../mixins/status_mixin';
 import UpdateDetails from './updateDetails.vue';
 
 export default {
   name: 'ReceiverSummaryInfo',
-  components: { UpdateDetails },
+  components: {
+    UpdateDetails,
+    User,
+    PhoneFilled,
+    Location,
+  },
   mixins: [statusMixin],
   computed: {
     ...mapGetters(['getLoading', 'getData']),

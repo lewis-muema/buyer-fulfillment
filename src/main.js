@@ -18,7 +18,6 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
-console.log('env', process.env.DOCKER_ENV);
 const VueTelInputOptions = {
   mode: 'international',
   onlyCountries: ['NG', 'KE', 'UG', 'TZ', 'CI'],
