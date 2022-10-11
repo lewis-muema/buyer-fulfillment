@@ -8,7 +8,6 @@ function loadLocaleMessages() {
     true,
     /[A-Za-z0-9-_,\s]+\.js$/i,
   );
-  console.log('locale', locales);
   const messages = {};
 
   locales.keys().forEach((key) => {
@@ -18,6 +17,7 @@ function loadLocaleMessages() {
       messages[locale] = locales(key).default;
     }
   });
+  console.log(messages);
   return messages;
 }
 
@@ -67,9 +67,9 @@ function fetchCountry() {
     moment.locale(event.detail);
   });
 }
-window.addEventListener('country-default', () => {
-  ipLookUp();
-});
+// window.addEventListener('country-default', () => {
+//   ipLookUp();
+// });
 fetchCountry();
 
 export default i18n;

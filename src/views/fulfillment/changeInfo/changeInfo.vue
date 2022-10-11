@@ -48,6 +48,7 @@ export default {
   color: #324ba8;
   padding: 10px;
   border-radius: 5px;
+  background: transparent;
 }
 .change-info-section-divider {
   border: 1px solid #dcdfe6;

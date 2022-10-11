@@ -20,7 +20,6 @@
           :type="activity.type"
           :color="activity.color"
           :size="activity.size"
-          :class="activity.iconClass"
         >
           <span
             :class="
@@ -121,6 +120,11 @@ export default {
       this.activeIndex = this.$store.getters.getOrderStatuses.findIndex(
         (evt) => evt === activeEvent,
       );
+      console.log(activeEvent);
+
+      if (activeEvent === 'event.delivery.buyer.paid.for.goods') {
+        this.activeIndex = 0;
+      }
       this.activities = this.filteredEventTimelineV2();
       this.rider = this.$store.getters.getData.data.partner_contact_information;
     },
@@ -139,8 +143,10 @@ export default {
         ? this.$store.getters.getRescheduledOrderTimelines
         : this.$store.getters.getOrderTimelines;
       timelines.forEach((row, index) => {
+        console.log(row, index, this.activeIndex);
         if (this.activeIndex === index) {
           row.steps.forEach((step, i) => {
+            console.log('steps', step);
             const evts = this.$store.getters.getData.data.event_time_line.filter(
               (timeline) => timeline.event_code
                   === this.$store.getters.getOrderStatuses[step],
@@ -161,6 +167,7 @@ export default {
           });
         }
       });
+      console.log('events', events);
       return events;
     },
     formatEventName(name) {
@@ -316,6 +323,13 @@ export default {
 .inactive-timeline-text {
   color: #909399;
 }
+/* element.style {
+  background: #324ba8;
+  color: #324ba8 !important;
+  box-shadow: 0 0 0 0 #324ba8;
+  border-radius: 20px;
+  animation: pulse-blue 2s infinite;
+} */
 @keyframes pulse-blue {
   0% {
     transform: scale(0.95);

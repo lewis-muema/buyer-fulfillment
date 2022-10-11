@@ -33,14 +33,14 @@ export default {
       return (
         this.getData.data.sale_of_goods_invoice !== null
         && this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13]).includes(this.getDeliveryStatus)
-        && !this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID'
+        && this.getData.data.sale_of_goods_invoice.invoice_status !== 'INVOICE_COMPLETELY_PAID'
       );
     },
     showPayNowCard() {
       return (
         this.getData.data.sale_of_goods_invoice !== null
         && this.getStatus([8]).includes(this.getDeliveryStatus)
-        && !this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID'
+        && this.getData.data.sale_of_goods_invoice.invoice_status !== 'INVOICE_COMPLETELY_PAID'
       );
     },
     showPaidCard() {
@@ -95,7 +95,7 @@ export default {
   letter-spacing: 0.005em;
   color: #000000;
 }
-.payments-on-delivery-button a,
+.payments-on-delivery-button p,.payments-on-delivery-button a,
 .el-icon-right {
   color: #324ba8 !important;
   font-weight: 600;
@@ -105,5 +105,9 @@ export default {
 }
 .payments-on-delivery-arrow-icon {
   font-weight: 600 !important;
+  padding-top: 10px;
+}
+.el-icon-right {
+  padding-top: 30px;
 }
 </style>

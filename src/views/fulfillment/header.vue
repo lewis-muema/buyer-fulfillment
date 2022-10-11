@@ -42,7 +42,8 @@ export default {
     };
   },
   mounted() {
-    this.language = localStorage.buyerTimeLocale;
+    // this.language = localStorage.buyerTimeLocale;
+    // console.log(this.$t());
   },
   computed: {
     activeLanguage() {

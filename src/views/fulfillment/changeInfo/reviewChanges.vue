@@ -36,7 +36,7 @@
           </el-button>
         </div>
         <div class="d-grid gap-2 col-12 mx-auto mt-3">
-          <button class="btn btn-light" type="primary" @click="handleClose">
+          <button class="btn btn-light" type="primary" @click="this.getReviewDialogVisible = false">
             {{ $t("reviewChanges.cancel") }}
           </button>
         </div>

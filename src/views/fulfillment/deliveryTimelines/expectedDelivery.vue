@@ -2,7 +2,7 @@
   <div>
     <div
       class="fulfillemnt-order-items-expected-deivery"
-      v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 16]).includes(getDeliveryStatus)"
+      v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(getDeliveryStatus)"
     >
       <p class="fulfillemnt-order-items-expected-deivery-title">
         {{ $t("mobile.expectedDelivery") }}
@@ -36,6 +36,15 @@ export default {
   mixins: [statusMixin, formatDates],
   computed: {
     ...mapGetters(['getData', 'getDeliveryStatus']),
+    showExpectedDeliveryCard() {
+      return (
+        this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(this.getDeliveryStatus)
+        || this.getStatus(
+          [0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]
+            && this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID',
+        )
+      );
+    },
   },
   methods: {
     ...mapMutations(['setDetailsDialogVisible']),
@@ -46,7 +55,7 @@ export default {
 };
 </script>
 <style>
-  .el-button {
+.el-button {
   background: #324ba8 !important;
   color: white !important;
   padding: 22px 12px !important;

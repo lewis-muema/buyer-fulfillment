@@ -5,7 +5,7 @@
   "changeInfo.Receiver": "Receiver",
   "changeInfo.Reschadule": "Reschedule Date",
   "desktop.deliveryFailed": "Delivery failed",
-  "desktop.orderNumber": "Order Number",
+  "orderNumber": "Order Number",
   "desktop.deliveryFailed.reschedule": "Please reschedule another day that the package can be delivered ",
   "desktop.deliveryFailed.title": "Your delivery has failed",
   "desktop.deliveryFailed.unavailable": "We tried to reach you to deliver your package, but you were unavailable.",

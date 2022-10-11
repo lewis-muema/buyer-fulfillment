@@ -6,7 +6,7 @@
               {{ $t('changeInfo.deliveryDate') }}
             </p>
             <p>
-              <i class="el-icon-time"></i>
+              <el-icon><Clock /></el-icon>
               {{
                 Object.keys($store.getters.getData).length > 0
                   ? formatDate($store.getters.getData.data.scheduled_delivery_date)
@@ -27,12 +27,16 @@
 </template>
 <script>
 import { mapMutations } from 'vuex';
+import { Clock } from '@element-plus/icons';
 import formatDates from '../../../mixins/formatDate_mixin';
 import statusMixin from '../../../mixins/status_mixin';
 
 export default {
   name: 'RescheduleDateButton',
   mixins: [statusMixin, formatDates],
+  components: {
+    Clock,
+  },
 
   methods: {
     ...mapMutations(['setDatePickerVisible']),

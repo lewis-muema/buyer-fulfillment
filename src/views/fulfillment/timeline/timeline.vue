@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { shallowRef } from 'vue';
 import moment from 'moment';
 import statusMixin from '../../../mixins/status_mixin';
 
@@ -74,9 +75,9 @@ export default {
         if (this.activities.length === index + 1
         && row.event_code !== 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code') {
           this.activities[index].color = '#324ba8';
-          this.activities[index].icon = Minus;
+          this.activities[index].icon = shallowRef(Minus);
         } else {
-          this.activities[index].icon = Check;
+          this.activities[index].icon = shallowRef(Check);
           this.activities[index].color = '#EE7D00';
         }
       });

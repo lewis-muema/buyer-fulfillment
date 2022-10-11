@@ -12,7 +12,7 @@
             :class="rating === 1 ? 'thumbs-outline-active' : activeClass"
             @click="rating = 1"
           >
-            <font-awesome-icon icon="thumbs-up" class="h1 thumbs-icon" />
+            <i class="bi bi-hand-thumbs-up-fill h1"></i>
           </div>
           <div v-if="$store.getters.getMobile">
             {{ $t('rating.liked') }}
@@ -24,7 +24,7 @@
             :class="rating === 2 ? 'thumbs-outline-active' : activeClass"
             @click="rating = 2"
           >
-            <font-awesome-icon icon="thumbs-down" class="h1 thumbs-icon" />
+            <i class="bi bi-hand-thumbs-down-fill h1"></i>
           </div>
           <div v-if="$store.getters.getMobile">
             {{ $t('rating.disliked') }}
@@ -74,7 +74,8 @@
             class="el-dropdown-link view-history"
             @click="$store.commit('setTimelineVisible', !$store.getters.getTimelineVisible)"
           >
-            {{ $t('rating.viewDeliveryHistory') }}<i class="el-icon-arrow-down el-icon--right"></i>
+            {{ $t('rating.viewDeliveryHistory') }}
+            <el-icon><ArrowDown /></el-icon>
           </span>
         </div>
       </div>
@@ -83,13 +84,15 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { ArrowDown } from '@element-plus/icons';
+import { mapActions, mapMutations, mapGetters } from 'vuex';
 import eventsMixin from '../../../mixins/events_mixin';
 import NotificationMxn from '../../../mixins/nofication_mixin';
 
 export default {
   name: 'RateOrder',
   mixins: [NotificationMxn, eventsMixin],
+  components: { ArrowDown },
   data() {
     return {
       rating: 0,
@@ -121,6 +124,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['getTimelineVisible']),
     activeClass() {
       return !this.$store.getters.getMobile ? 'thumbs-outline-desktop' : 'thumbs-outline-mobile';
     },
@@ -136,6 +140,7 @@ export default {
   },
   methods: {
     ...mapActions(['rateOrder']),
+    ...mapMutations(['setTimelineVisible']),
     async submitRating(status) {
       const payload = {
         love: status === 1,
@@ -214,7 +219,7 @@ export default {
   color: #c0c4cc;
 }
 .thumbs-icon {
-  margin: 0px !important;
+  color: #324ba8 !important;
 }
 .thumbs-outline {
   border-radius: 100px;

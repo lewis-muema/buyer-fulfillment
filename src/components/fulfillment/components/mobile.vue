@@ -7,8 +7,8 @@
     <ItemDelivered />
     <OrderCanceled />
     <PaymentsCard />
-    <TrackingTimeline v-if="showTimeline"/>
-    <RecepientDetails />
+    <TrackingTimeline v-if="showTrackingTimeline" />
+    <RecepientDetails v-if="!getStatus([9]).includes($store.getters.getDeliveryStatus)" />
     <!-- <RescheduleOrderButton /> -->
     <!-- <changeinfo /> -->
     <RateOrder v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
@@ -60,6 +60,12 @@ export default {
         this.showTimeline = true;
       });
     });
+  },
+  computed: {
+    showTrackingTimeline() {
+      return !this.getStatus([9]).includes(this.$store.getters.getDeliveryStatus)
+      && this.showTimeline;
+    },
   },
 };
 </script>

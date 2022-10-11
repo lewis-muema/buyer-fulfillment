@@ -12,20 +12,22 @@
       <p class="payments-on-delivery-text">
         You can pay now or prepare to pay when your items arrive
       </p>
-      <span class="payments-on-delivery-button">
-        <a class="" @click="showCheckoutModal">Make Payment</a>
-        <i class="el-icon-right payments-on-delivery-arrow-icon ml-1"></i>
+      <span class="payments-on-delivery-button d-flex">
+        <p class="" @click="showCheckoutModal">Make Payment</p>
+        <el-icon class='payments-on-delivery-arrow-icon ml-2'>
+        <Right class='el-icon-right' /></el-icon>
       </span>
     </div>
   </div>
 </template>
 <script>
+import { Right } from '@element-plus/icons';
 import { mapMutations, mapGetters } from 'vuex';
 
 export default {
   name: 'PayLaterCard',
   props: ['totalAmount'],
-  components: {},
+  components: { Right },
   computed: {
     ...mapGetters(['getData']),
   },

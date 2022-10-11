@@ -47,7 +47,7 @@ export default createStore({
         'event.delivery.rescheduled.by.buyer',
         'event.delivery.rescheduled.by.seller',
         'event.delivery.rescheduled.by.sendy',
-        'event.delivery.buyer.paid.for.goods',
+        // 'event.delivery.buyer.paid.for.goods',
       ],
       orderEvents: [
         'timeline.orderCreated',
@@ -79,7 +79,7 @@ export default createStore({
         'timeline.attemptFailed',
         'timeline.attemptFail',
         'timeline.orderPlaced',
-        'timeline.orderPaid',
+        //
       ],
       orderTimelines: [
         {
@@ -158,7 +158,7 @@ export default createStore({
           event: 'event.delivery.at.hub.waiting.for.partner',
           steps: [0, 1, 7, 8],
           colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Check, Minus, ''],
+          icons: shallowRef([Check, Check, Minus, '']),
           iconClass: ['', '', 'el-icon-minus', ''],
           showDriver: [false, false, false, false],
           dates: [
@@ -182,7 +182,7 @@ export default createStore({
           event: 'event.delivery.partner.enroute.to.hub',
           steps: [0, 1, 7, 8],
           colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Check, Minus, ''],
+          icons: shallowRef([Check, Check, Minus, '']),
           iconClass: ['', 'el-icon-minus', '', ''],
           showDriver: [false, false, false, false],
           dates: [
@@ -206,7 +206,7 @@ export default createStore({
           event: 'event.delivery.partner.arrived.at.hub',
           steps: [0, 1, 7, 8],
           colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Check, Minus, ''],
+          icons: shallowRef([Check, Check, Minus, '']),
           iconClass: ['', '', 'el-icon-minus', ''],
           showDriver: [false, false, false, false],
           dates: [
@@ -230,7 +230,7 @@ export default createStore({
           event: 'event.delivery.partner.pickup.from.hub.confirmed.via.code',
           steps: [0, 1, 7, 8],
           colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Check, Minus, ''],
+          icons: shallowRef([Check, Check, Minus, '']),
           iconClass: ['', '', 'el-icon-minus', ''],
           showDriver: [false, false, false, false],
           dates: [
@@ -254,7 +254,7 @@ export default createStore({
           event: 'event.delivery.partner.enroute.to.buyer.location',
           steps: [0, 1, 7, 8],
           colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Check, Minus, ''],
+          icons: shallowRef([Check, Check, Minus, '']),
           iconClass: ['', '', 'el-icon-minus', ''],
           showDriver: [false, false, true, false],
           dates: [
@@ -278,7 +278,7 @@ export default createStore({
           event: 'event.delivery.partner.arrived.at.buyer.location',
           steps: [0, 1, 8, 9],
           colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Check, Minus, ''],
+          icons: shallowRef([Check, Check, Minus, '']),
           iconClass: ['', '', 'el-icon-minus', ''],
           showDriver: [false, false, true, false],
           dates: [
@@ -299,34 +299,10 @@ export default createStore({
           showReschedule: [false, false, false, false],
         },
         {
-          event: 'event.delivery.buyer.paid.for.goods',
-          steps: [0, 1, 8, 9],
-          colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Check, Minus, ''],
-          iconClass: ['', '', 'el-icon-minus', ''],
-          showDriver: [false, false, true, false],
-          dates: [
-            {
-              type: 'timeline',
-              status: true,
-              format: 'ddd, MMM Do',
-            },
-            { status: false },
-            { status: false },
-            {
-              type: 'today',
-              status: true,
-              format: 'dddd',
-            },
-          ],
-          titles: [28, 21, 28, 18],
-          showReschedule: [false, false, false, false],
-        },
-        {
           event: 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code',
           steps: [0, 1, 7, 9],
           colors: ['#EE7D00', '#EE7D00', '#EE7D00', '#EE7D00'],
-          icons: [Check, Check, Check, Check],
+          icons: shallowRef([Check, Check, Check, Check]),
           iconClass: ['', '', '', ''],
           showDriver: [false, false, false, false],
           dates: [
@@ -350,7 +326,7 @@ export default createStore({
           event: 'event.delivery.order.canceled.by.seller',
           steps: [0, 10],
           colors: ['#EE7D00', '#EE7D00'],
-          icons: [Check, Check],
+          icons: shallowRef([Check, Check]),
           iconClass: ['', ''],
           showDriver: [false, false],
           dates: [
@@ -372,7 +348,7 @@ export default createStore({
           event: 'event.delivery.order.canceled.by.sendy',
           steps: [0, 11],
           colors: ['#EE7D00', '#EE7D00'],
-          icons: [Check, Check],
+          icons: shallowRef([Check, Check]),
           iconClass: ['', ''],
           showDriver: [false, false],
           dates: [
@@ -394,7 +370,7 @@ export default createStore({
           event: 'event.delivery.failed',
           steps: [0, 1, 7, 12, 9],
           colors: ['#EE7D00', '#EE7D00', '#EE7D00', '#9B101C', '#909399'],
-          icons: [Check, Check, Check, 'el-icon-remove', ''],
+          icons: shallowRef([Check, Check, Check, 'el-icon-remove', '']),
           iconClass: ['', '', '', ''],
           showDriver: [false, false, false, false, false],
           dates: [
@@ -419,7 +395,7 @@ export default createStore({
           event: 'event.delivery.rescheduled.by.buyer',
           steps: [0, 13, 1, 7, 9],
           colors: ['#EE7D00', '#EE7D00', '#324ba8', '', ''],
-          icons: [Check, Check, Minus, '', ''],
+          icons: shallowRef([Check, Check, Minus, '', '']),
           iconClass: ['', '', 'el-icon-minus', ''],
           showDriver: [false, false, false, false, false],
           dates: [
@@ -444,7 +420,7 @@ export default createStore({
           event: 'event.delivery.rescheduled.by.seller',
           steps: [0, 14, 1, 7, 9],
           colors: ['#EE7D00', '#EE7D00', '#324ba8', '', ''],
-          icons: [Check, Check, Minus, '', ''],
+          icons: shallowRef([Check, Check, Minus, '', '']),
           iconClass: ['', '', 'el-icon-minus', ''],
           showDriver: [false, false, false, false, false],
           dates: [
@@ -469,7 +445,7 @@ export default createStore({
           event: 'event.delivery.rescheduled.by.sendy',
           steps: [0, 15, 1, 7, 9],
           colors: ['#EE7D00', '#EE7D00', '#324ba8', '', ''],
-          icons: [Check, Check, Minus, '', ''],
+          icons: shallowRef([Check, Check, Minus, '', '']),
           iconClass: ['', '', 'el-icon-minus', ''],
           showDriver: [false, false, false, false, false],
           dates: [
@@ -490,13 +466,37 @@ export default createStore({
           titles: [28, 25, 1, 7, 18],
           showReschedule: [false, false, false, false, false],
         },
+        // {
+        //   event: 'event.delivery.buyer.paid.for.goods',
+        //   steps: [0, 1, 8, 9],
+        //   colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
+        //   icons: shallowRef([Check, Check, Minus, '']),
+        //   iconClass: ['', '', 'el-icon-minus', ''],
+        //   showDriver: [false, false, true, false],
+        //   dates: [
+        //     {
+        //       type: 'timeline',
+        //       status: true,
+        //       format: 'ddd, MMM Do',
+        //     },
+        //     { status: false },
+        //     { status: false },
+        //     {
+        //       type: 'today',
+        //       status: true,
+        //       format: 'dddd',
+        //     },
+        //   ],
+        //   titles: [28, 21, 12, 18],
+        //   showReschedule: [false, false, false, false],
+        // },
       ],
       rescheduledOrderTimelines: [
         {
           event: 'event.delivery.order.created',
           steps: [0, 1, 7, 8],
           colors: ['#EE7D00', '#324ba8', '', ''],
-          icons: [Check, Minus, '', ''],
+          icons: shallowRef([Check, Minus, '', '']),
           iconClass: ['', '', 'el-icon-minus', ''],
           showDriver: [false, false, false, false],
           dates: [
@@ -520,7 +520,7 @@ export default createStore({
           event: 'event.delivery.at.hub.processing.for.delivery',
           steps: [0, 12, 13, 1, 8],
           colors: ['#EE7D00', '#9B101C', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Warning, Check, Minus, ''],
+          icons: shallowRef([Check, Warning, Check, Minus, '']),
           iconClass: ['', '', '', 'el-icon-minus', ''],
           showDriver: [false, false, false, false, false],
           dates: [
@@ -545,7 +545,7 @@ export default createStore({
           event: 'event.delivery.at.hub.partner.assigned',
           steps: [0, 12, 13, 7, 8],
           colors: ['#EE7D00', '#9B101C', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Warning, Check, Minus, ''],
+          icons: shallowRef([Check, Warning, Check, Minus, '']),
           iconClass: ['', '', '', 'el-icon-minus', ''],
           showDriver: [false, false, false, false, false],
           dates: [
@@ -570,7 +570,7 @@ export default createStore({
           event: 'event.delivery.at.hub.waiting.for.partner',
           steps: [0, 12, 13, 7, 8],
           colors: ['#EE7D00', '#9B101C', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Warning, Check, Minus, ''],
+          icons: shallowRef([Check, Warning, Check, Minus, '']),
           iconClass: ['', '', '', 'el-icon-minus', ''],
           showDriver: [false, false, false, false, false],
           dates: [
@@ -595,7 +595,7 @@ export default createStore({
           event: 'event.delivery.partner.enroute.to.hub',
           steps: [0, 12, 13, 7, 8],
           colors: ['#EE7D00', '#9B101C', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Warning, Check, Minus, ''],
+          icons: shallowRef([Check, Warning, Check, Minus, '']),
           showDriver: [false, false, false, false, false],
           dates: [
             {
@@ -619,7 +619,7 @@ export default createStore({
           event: 'event.delivery.partner.arrived.at.hub',
           steps: [0, 12, 13, 7, 8],
           colors: ['#EE7D00', '#9B101C', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Warning, Check, Minus, ''],
+          icons: shallowRef([Check, Warning, Check, Minus, '']),
           showDriver: [false, false, false, false, false],
           dates: [
             {
@@ -643,7 +643,7 @@ export default createStore({
           event: 'event.delivery.partner.pickup.from.hub.confirmed.via.code',
           steps: [0, 12, 13, 7, 8],
           colors: ['#EE7D00', '#9B101C', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Warning, Check, Minus, ''],
+          icons: shallowRef([Check, Warning, Check, Minus, '']),
           showDriver: [false, false, false, false, false],
           dates: [
             {
@@ -667,7 +667,7 @@ export default createStore({
           event: 'event.delivery.partner.enroute.to.buyer.location',
           steps: [0, 12, 13, 7, 8],
           colors: ['#EE7D00', '#9B101C', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Warning, Check, Minus, ''],
+          icons: shallowRef([Check, Warning, Check, Minus, '']),
           showDriver: [false, false, false, false, false],
           dates: [
             {
@@ -691,7 +691,7 @@ export default createStore({
           event: 'event.delivery.partner.arrived.at.buyer.location',
           steps: [0, 12, 13, 8, 9],
           colors: ['#EE7D00', '#9B101C', '#EE7D00', '#324ba8', ''],
-          icons: [Check, Warning, Check, Minus, ''],
+          icons: shallowRef([Check, Warning, Check, Minus, '']),
           showDriver: [false, false, false, true, false],
           dates: [
             {
@@ -715,7 +715,7 @@ export default createStore({
           event: 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code',
           steps: [0, 12, 13, 7, 9],
           colors: ['#EE7D00', '#9B101C', '#EE7D00', '#EE7D00', '#EE7D00'],
-          icons: [Check, Warning, Check, Check, Check],
+          icons: shallowRef([Check, Warning, Check, Check, Check]),
           showDriver: [false, false, false, false, false],
           dates: [
             {
@@ -743,7 +743,7 @@ export default createStore({
           event: 'event.delivery.order.canceled.by.seller',
           steps: [0, 10],
           colors: ['#EE7D00', '#EE7D00'],
-          icons: [Check, Check],
+          icons: shallowRef([Check, Check]),
           showDriver: [false, false],
           dates: [
             {
@@ -785,7 +785,7 @@ export default createStore({
           event: 'event.delivery.failed',
           steps: [0, 1, 7, 12, 9],
           colors: ['#EE7D00', '#EE7D00', '#EE7D00', '#9B101C', '#909399'],
-          icons: [Check, Check, Check, 'el-icon-remove', ''],
+          icons: shallowRef([Check, Check, Check, 'el-icon-remove', '']),
           showDriver: [false, false, false, false, false],
           dates: [
             {
@@ -809,7 +809,7 @@ export default createStore({
           event: 'event.delivery.rescheduled.by.buyer',
           steps: [0, 12, 13, 9],
           colors: ['#EE7D00', '#9B101C', '#EE7D00', ''],
-          icons: [Check, Warning, Check, ''],
+          icons: shallowRef([Check, Warning, Check, '']),
           showDriver: [false, false, false, false],
           dates: [
             {
@@ -832,7 +832,7 @@ export default createStore({
           event: 'event.delivery.rescheduled.by.seller',
           steps: [0, 12, 14, 9],
           colors: ['#EE7D00', '#9B101C', '#EE7D00', ''],
-          icons: [Check, Warning, Check, ''],
+          icons: shallowRef([Check, Warning, Check, '']),
           showDriver: [false, false, false, false],
           dates: [
             {
@@ -855,7 +855,7 @@ export default createStore({
           event: 'event.delivery.rescheduled.by.sendy',
           steps: [0, 12, 15, 9],
           colors: ['#EE7D00', '#9B101C', '#EE7D00', ''],
-          icons: [Check, Warning, Check, ''],
+          icons: shallowRef([Check, Warning, Check, '']),
           showDriver: [false, false, false, false],
           dates: [
             {

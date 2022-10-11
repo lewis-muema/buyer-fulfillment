@@ -1,6 +1,7 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template lang="">
   <div class="checkout-dialog-container">
+    Saved - {{ getSavedPayMethods }}
     <el-dialog
       v-model="checkoutDialogStatus"
       :width="getMobile ? '100%' : '30%'"
@@ -15,7 +16,7 @@
       </div>
       <div v-if="showReceiptModal">
         <span>Amount Paid&nbsp;</span>
-        <span> {{currency}} {{invoicedAmount}}</span>
+        <span> {{ currency }} {{ invoicedAmount }}</span>
         <p>Sept 13, 2022 13:23</p>
       </div>
       <div>
@@ -28,7 +29,7 @@
           </div>
           <div class="col-4">
             <span class="checkout-product-price d-flex">
-              <p>{{ product.product_unit_currency }}</p>
+              <p>{{ product.product_unit_currency }}&nbsp;</p>
               <p class="pl-2">{{ product.product_unit_price }}</p>
             </span>
           </div>
@@ -54,7 +55,7 @@
       </div>
       <span class="checkout-total-amount">
         <p>Total</p>
-        <p>{{ currency }} {{showCheckoutModal ?  totalAmount : invoicedAmount }}</p>
+        <p>{{ currency }} {{ showCheckoutModal ? totalAmount : invoicedAmount }}</p>
       </span>
       <div class="d-grid gap-2 col-12 mx-auto" v-if="showCheckoutModal">
         <el-button class="change-delivery-el-button" @click="submitToPay">
@@ -78,7 +79,7 @@ export default {
   name: 'CheckoutCard',
   props: ['name'],
   computed: {
-    ...mapGetters(['getMobile', 'getCheckoutDialogVisible', 'getData', 'getCheckoutModal']),
+    ...mapGetters(['getMobile', 'getCheckoutDialogVisible', 'getData', 'getCheckoutModal', 'getSavedPayMethods']),
     checkoutDialogStatus: {
       get() {
         return this.getCheckoutDialogVisible;
@@ -91,18 +92,25 @@ export default {
       return this.getData.data.products;
     },
     subtotal() {
+      // eslint-disable-next-line
       return this.getData.data.sale_of_goods_invoice !== null
-        ? this.getData.data.sale_of_goods_invoice.invoice_adjustments_subtotals[1]
-          .adjustment_subtotal
+        ? this.getData.data.sale_of_goods_invoice.invoice_adjustments_subtotals.length > 1
+          ? this.getData.data.sale_of_goods_invoice.invoice_adjustments_subtotals[1]
+            .adjustment_subtotal
+          : this.getData.data.sale_of_goods_invoice.invoice_adjustments_subtotals[0]
+            .adjustment_subtotal
         : 0;
     },
     currency() {
       return this.getData.data.sale_of_goods_invoice.currency;
     },
     fulfillmentFee() {
+      // eslint-disable-next-line
       return this.getData.data.sale_of_goods_invoice !== null
-        ? this.getData.data.sale_of_goods_invoice.invoice_adjustments_subtotals[0]
-          .adjustment_subtotal
+        ? this.getData.data.sale_of_goods_invoice.invoice_adjustments_subtotals.length > 1
+          ? this.getData.data.sale_of_goods_invoice.invoice_adjustments_subtotals[0]
+            .adjustment_subtotal
+          : 0
         : 0;
     },
     totalAmount() {

@@ -28,13 +28,13 @@
               :class="!showItems ? 'bi bi-chevron-down' : 'bi bi-chevron-up'"
               class="order-items-header-icons"
             ></i> -->
-            <el-icon v-if="!showItems" class="ordered-items-header-icons"><ArrowDown /></el-icon>
-            <el-icon v-else><ArrowUp /></el-icon>
           </span>
+          <el-icon v-if="!showItems" class="ordered-items-header-icons"><ArrowDown class="header-arrow-down" /></el-icon>
+          <el-icon v-else><ArrowUp /></el-icon>
           <order-items v-if="showItems" />
         </div>
       </div>
-      <div class="order-number">{{ $t("desktop.orderNumber") }}: {{ getData.data.order_id }}</div>
+      <div class="order-number">{{ $t("orderNumber") }}: {{ getData.data.order_id }}</div>
     </div>
   </div>
 </template>

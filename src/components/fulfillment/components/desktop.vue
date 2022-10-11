@@ -32,7 +32,7 @@
                 </p>
               </div>
               <div class="order-number">
-                {{ $t("desktop.orderNumber") }}: {{ data.data.order_id }}
+                {{ $t("orderNumber") }}: {{ data.data.order_id }}
               </div>
               <div
                 class="delivery mt-5"
@@ -114,9 +114,9 @@
       </el-row>
       <el-row class="el-row">
         <el-col :span="12">
-          <!-- <Rating
+          <Rating
             v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
-          /> -->
+          />
           <!-- <PaymentsCard /> -->
           <TrackingTimeline v-if="showTimeline"/>
         </el-col>
@@ -135,7 +135,7 @@ import RecepientDetails from '../../../views/fulfillment/recipient/recipient.vue
 import TrackingTimeline from '../../../views/fulfillment/timeline/timelineV2.vue';
 import OrderItems from '../../../views/fulfillment/orderedItems/orderItems.vue';
 // import PaymentsCard from '../../../views/fulfillment/POD/paymentsCard.vue';
-// import Rating from '../../../views/fulfillment/rating.vue';
+import Rating from '../../../views/fulfillment/rating/rating.vue';
 import statusMixin from '../../../mixins/status_mixin';
 
 export default {
@@ -145,6 +145,7 @@ export default {
     OrderItems,
     TrackingTimeline,
     RecepientDetails,
+    Rating,
   },
   mixins: [statusMixin],
   data() {

@@ -23,12 +23,9 @@ export default {
   computed: {
     ...mapGetters(['getData', 'getDeliveryStatus', 'getPaymentSuccessful']),
     showOTP() {
-      // if(this.getData.data.sale_of_goods_invoice !== null) {
-      //   return localStorage.getItem('ItemPaid')
-      // }
       return this.getData.data.sale_of_goods_invoice === null
         ? this.getStatus([8]).includes(this.getDeliveryStatus)
-        : this.getStatus([8]).includes(this.getDeliveryStatus) && this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID';
+        : (this.getStatus([8]).includes(this.getDeliveryStatus) && this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID');
     },
   },
 };
