@@ -47,7 +47,6 @@ export default createStore({
         'event.delivery.rescheduled.by.buyer',
         'event.delivery.rescheduled.by.seller',
         'event.delivery.rescheduled.by.sendy',
-        // 'event.delivery.buyer.paid.for.goods',
       ],
       orderEvents: [
         'timeline.orderCreated',
@@ -79,7 +78,6 @@ export default createStore({
         'timeline.attemptFailed',
         'timeline.attemptFail',
         'timeline.orderPlaced',
-        //
       ],
       orderTimelines: [
         {
@@ -466,30 +464,6 @@ export default createStore({
           titles: [28, 25, 1, 7, 18],
           showReschedule: [false, false, false, false, false],
         },
-        // {
-        //   event: 'event.delivery.buyer.paid.for.goods',
-        //   steps: [0, 1, 8, 9],
-        //   colors: ['#EE7D00', '#EE7D00', '#324ba8', ''],
-        //   icons: shallowRef([Check, Check, Minus, '']),
-        //   iconClass: ['', '', 'el-icon-minus', ''],
-        //   showDriver: [false, false, true, false],
-        //   dates: [
-        //     {
-        //       type: 'timeline',
-        //       status: true,
-        //       format: 'ddd, MMM Do',
-        //     },
-        //     { status: false },
-        //     { status: false },
-        //     {
-        //       type: 'today',
-        //       status: true,
-        //       format: 'dddd',
-        //     },
-        //   ],
-        //   titles: [28, 21, 12, 18],
-        //   showReschedule: [false, false, false, false],
-        // },
       ],
       rescheduledOrderTimelines: [
         {

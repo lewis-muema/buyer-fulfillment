@@ -3,10 +3,8 @@ import ElementPlus from 'element-plus';
 import VueGoogleMaps from '@fawmi/vue-google-maps';
 import moment from 'moment';
 import payments from '@sendyit/pay';
-// import { VuelidatePlugin } from '@vuelidate/core';
 import VueTelInput from 'vue-tel-input';
 import 'vue-tel-input/dist/vue-tel-input.css';
-// import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -23,11 +21,6 @@ const VueTelInputOptions = {
   onlyCountries: ['NG', 'KE', 'UG', 'TZ', 'CI'],
 };
 library.add(faUserSecret);
-// const App = {};
-// const app = createApp(App);
-// for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-//   app.component(key, component)
-// }
 createApp(App).use(store).use(router).use(ElementPlus)
   .use(i18n)
   .use(VueGoogleMaps, {

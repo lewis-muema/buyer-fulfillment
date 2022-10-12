@@ -64,9 +64,6 @@ function fetchCountry() {
     moment.locale(event.detail);
   });
 }
-// window.addEventListener('country-default', () => {
-//   ipLookUp();
-// });
 fetchCountry();
 
 export default i18n;
