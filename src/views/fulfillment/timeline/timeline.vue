@@ -45,11 +45,13 @@
 </template>
 
 <script>
+import { shallowRef } from 'vue';
+import { Check, Minus } from '@element-plus/icons';
 import moment from 'moment';
-import statusMixin from '../../mixins/status_mixin';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
-  name: 'Timeline',
+  name: 'TimelineTrack',
   mixins: [statusMixin],
   data() {
     return {
@@ -74,9 +76,9 @@ export default {
         if (this.activities.length === index + 1
         && row.event_code !== 'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code') {
           this.activities[index].color = '#324ba8';
-          this.activities[index].icon = 'el-icon-minus';
+          this.activities[index].icon = shallowRef(Minus);
         } else {
-          this.activities[index].icon = 'el-icon-check';
+          this.activities[index].icon = shallowRef(Check);
           this.activities[index].color = '#EE7D00';
         }
       });

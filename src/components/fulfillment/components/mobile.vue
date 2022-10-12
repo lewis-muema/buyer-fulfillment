@@ -1,165 +1,51 @@
 <template>
   <div>
-    <Header />
-    <div class="fulfillemnt-order-items-container">
-      <div>
-        <div class="fulfillemnt-order-items-title">
-          {{ Object.keys(data).length > 0 ? data.data.seller_name : "--" }}
-        </div>
-        <div class="fulfillemnt-order-items-description">
-          <span
-            class="fulfillemnt-order-items-header"
-            v-if="Object.keys(data).length > 0 && data.data.products.length > 0"
-            @click="showItems = !showItems"
-          >
-            {{
-              Object.keys(data).length > 0 && data.data.products.length > 0
-                ? data.data.products[0].product_name
-                : ""
-            }}
-            {{
-              Object.keys(data).length > 0 && data.data.products.length > 1
-                ? `${$t("mobile.and")} ${data.data.products.length - 1} ${$t(
-                    "mobile.otherItems"
-                  )} `
-                : ""
-            }}
-            <i
-              :class="!showItems ? 'el-icon-arrow-down' : 'el-icon-arrow-up'"
-            ></i>
-          </span>
-          <order-items v-if="showItems" />
-        </div>
-      </div>
-      <div class="order-number">
-        {{ $t("desktop.orderNumber") }}: {{ data.data.order_id }}
-      </div>
-    </div>
-    <div
-      class="fulfillemnt-order-items-expected-deivery"
-      v-if="
-        getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(
-          $store.getters.getDeliveryStatus
-        )
-      "
-    >
-      <p class="fulfillemnt-order-items-expected-deivery-title">
-        {{ $t("mobile.expectedDelivery") }}
-      </p>
-      <p class="fulfillemnt-order-items-expected-deivery-date">
-        {{
-          Object.keys(data).length > 0
-            ? formatDate(data.data.scheduled_delivery_date)
-            : "--"
-        }}
-      </p>
-      <p v-if="data.data.estimated_delivery_date" class="date">
-        {{ formatDeliveryWindow(data.data.estimated_delivery_date) }}
-      </p>
-      <div>
-        <div class="change-details-title">
-          {{ $t("mobile.notIn") }}
-        </div>
-        <el-button
-          @click="showDetailsPicker()"
-          class="change-delivery-el-button"
-        >
-          {{ $t("mobile.changeDetails") }}
-        </el-button>
-      </div>
-    </div>
-    <div
-      class="fulfillemnt-order-items-expected-deivery"
-      v-if="getStatus([8]).includes($store.getters.getDeliveryStatus)"
-    >
-      <p class="fulfillemnt-order-items-expected-deivery-title">
-        {{ $t("desktop.givePin") }}
-      </p>
-      <p class="fulfillemnt-order-items-expected-deivery-date">
-        <span class="rider-pin-mobile">
-          {{ $t("mobile.pin") }}
-          {{ Object.keys(data).length > 0 ? data.data.confirmation_pin : "--" }}
-        </span>
-      </p>
-    </div>
-    <div
-      v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
-      class="fulfillemnt-order-items-expected-deivery"
-    >
-      <p class="delivered-title">{{ $t("desktop.packageDelivered") }}</p>
-      <p class="delivered-date">
-        {{ formatCompletionDate(data.data.order_completion_date) }}
-      </p>
-    </div>
-    <div
-      v-if="getStatus([10, 11]).includes($store.getters.getDeliveryStatus)"
-      class="fulfillemnt-order-items-expected-deivery"
-    >
-      <p class="delivered-title">{{ $t("desktop.orderCancelled") }}</p>
-      <p class="delivered-date">
-        {{
-          formatCompletionDate(
-            data.data.event_time_line[data.data.event_time_line.length - 1]
-              .event_date
-          )
-        }}
-      </p>
-    </div>
-    <div
-      v-if="getStatus([]).includes($store.getters.getDeliveryStatus)"
-      class="fulfillemnt-order-items-failed-delivery"
-    >
-      <p class="failed-delivery-title">
-        {{ $t("desktop.deliveryFailed.title") }}
-      </p>
-      <p class="failed-delivery-desc">
-        {{ $t("desktop.deliveryFailed.unavailable") }}
-      </p>
-      <p class="failed-delivery-desc2">
-        {{ $t("desktop.deliveryFailed.reschedule") }}
-      </p>
-      <el-button @click="showDatePicker()" class="show-datepicker-el-button">
-        {{ $t("desktop.rescheduleDelivery") }}
-      </el-button>
-    </div>
-    <changeinfo />
-    <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
-    <Timeline v-if="showTimeline"/>
-    <Recipient />
+    <TopHeader />
+    <OrderedItemsHeader />
+    <ExpectedDelivery />
+    <DeliveryPin />
+    <ItemDelivered />
+    <OrderCanceled />
+    <PaymentsCard />
+    <TrackingTimelines v-if="showTrackingTimeline" />
+    <RecepientDetails v-if="!getStatus([9]).includes($store.getters.getDeliveryStatus)" />
+    <RateOrder v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
   </div>
 </template>
 
 <script>
-import moment from 'moment';
-import Header from '../../../views/fulfillment/header.vue';
-import orderItems from '../../../views/fulfillment/orderItems.vue';
-import Timeline from '../../../views/fulfillment/timelineV2.vue';
-import Recipient from '../../../views/fulfillment/recipient.vue';
-import Rating from '../../../views/fulfillment/rating.vue';
-import changeinfo from '../../../views/fulfillment/changeInfo.vue';
+import TopHeader from '../../../views/fulfillment/header.vue';
+import TrackingTimelines from '../../../views/fulfillment/timeline/timelines.vue';
+import RecepientDetails from '../../../views/fulfillment/recipient/recipient.vue';
+import RateOrder from '../../../views/fulfillment/rating/rating.vue';
 import statusMixin from '../../../mixins/status_mixin';
+import PaymentsCard from '../../../views/fulfillment/POD/paymentsCard.vue';
+import OrderedItemsHeader from '../../../views/fulfillment/orderedItems/orderedItemsHeader.vue';
+import ExpectedDelivery from '../../../views/fulfillment/deliveryTimelines/expectedDelivery.vue';
+import DeliveryPin from '../../../views/fulfillment/deliveryTimelines/deliveryPin.vue';
+import ItemDelivered from '../../../views/fulfillment/deliveryTimelines/itemDelivered.vue';
+import OrderCanceled from '../../../views/fulfillment/deliveryTimelines/orderCanceled.vue';
 
 export default {
+  name: 'MobileLayout',
   components: {
-    Header,
-    orderItems,
-    Timeline,
-    Recipient,
-    Rating,
-    changeinfo,
+    TopHeader,
+    OrderedItemsHeader,
+    ExpectedDelivery,
+    DeliveryPin,
+    ItemDelivered,
+    OrderCanceled,
+    PaymentsCard,
+    TrackingTimelines,
+    RecepientDetails,
+    RateOrder,
   },
   mixins: [statusMixin],
   data() {
     return {
-      showItems: false,
       data: this.$store.getters.getData,
       showTimeline: true,
     };
-  },
-  watch: {
-    '$store.getters.getData': function setData() {
-      this.data = this.$store.getters.getData;
-    },
   },
   mounted() {
     window.addEventListener('language-changed', () => {
@@ -169,33 +55,10 @@ export default {
       });
     });
   },
-  methods: {
-    showDetailsPicker() {
-      this.$store.commit('setDetailsDialogVisible', true);
-    },
-    showDatePicker() {
-      this.$store.commit('setDatePickerVisible', true);
-    },
-    formatDate(date) {
-      return moment(new Date(date)).format('dddd, Do MMMM');
-    },
-    formatCompletionDate(date) {
-      return `${moment(new Date(date)).format('ddd, Do MMMM')} at ${moment(
-        new Date(date),
-      ).format('h:mm a')}`;
-    },
-    formatDeliveryWindow(date) {
-      const lowerLimit = moment(
-        new Date(
-          date.estimated_delivery_time - date.large_lower_limit * 60 * 1000,
-        ),
-      ).format('h a');
-      const upperLimit = moment(
-        new Date(
-          date.estimated_delivery_time + date.large_upper_limit * 60 * 1000,
-        ),
-      ).format('h a');
-      return `${lowerLimit} - ${upperLimit}`;
+  computed: {
+    showTrackingTimeline() {
+      return !this.getStatus([9]).includes(this.$store.getters.getDeliveryStatus)
+      && this.showTimeline;
     },
   },
 };

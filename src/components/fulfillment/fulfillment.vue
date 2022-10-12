@@ -13,7 +13,7 @@ import Mobile from './components/mobile.vue';
 
 export default {
   title: 'Buyer Fulfilment',
-  name: 'fulfillment',
+  name: 'Fulfillment-App',
   components: {
     Desktop,
     Mobile,

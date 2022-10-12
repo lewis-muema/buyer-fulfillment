@@ -92,4 +92,13 @@ export default {
       return error.response;
     }
   },
+  async payOnDelivery({ dispatch, commit }, payload) {
+    try {
+      const res = await dispatch('requestAxiosPost', payload, { root: true });
+      commit('setPayOnDelivery', res.data);
+      return res.data;
+    } catch (error) {
+      return error.response;
+    }
+  },
 };
