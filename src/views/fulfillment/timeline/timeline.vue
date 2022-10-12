@@ -46,6 +46,7 @@
 
 <script>
 import { shallowRef } from 'vue';
+import { Check, Minus } from '@element-plus/icons';
 import moment from 'moment';
 import statusMixin from '../../../mixins/status_mixin';
 
