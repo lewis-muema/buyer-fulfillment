@@ -8,7 +8,6 @@
     <OrderCanceled />
     <PaymentsCard />
     <TrackingTimelines v-if="showTrackingTimeline" />
-    <PODTimeline />
     <RecepientDetails v-if="!getStatus([9]).includes($store.getters.getDeliveryStatus)" />
     <RateOrder v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
   </div>

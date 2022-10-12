@@ -44,6 +44,11 @@ export default {
   mounted() {
     this.language = localStorage.buyerTimeLocale;
   },
+  watch: {
+    language(val) {
+      this.$i18n.locale = val;
+    },
+  },
   computed: {
     activeLanguage() {
       if (this.language === 'en-ng') {
