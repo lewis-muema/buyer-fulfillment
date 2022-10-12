@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      :visible.sync="dialogVisible"
+      v-model="reviewDialogStatus"
       :width="$store.getters.getMobile ? '80%' : '30%'"
       center
       :show-close="false"
@@ -9,35 +9,35 @@
     >
       <form action="">
         <div class="">
-          <div class="review-modal-title">{{ $t('reviewChanges.reviewChanges') }}</div>
+          <div class="review-modal-title">{{ $t("reviewChanges.reviewChanges") }}</div>
           <br />
         </div>
         <div class="">
-          <div class="review-modal-description">{{ $t('reviewChanges.recipientName') }}</div>
+          <div class="review-modal-description">{{ $t("reviewChanges.recipientName") }}</div>
           <div class="review-modal-item">{{ name }}</div>
         </div>
         <div class="mt-3">
-          <div class="review-modal-description">{{ $t('reviewChanges.phoneNumber') }}</div>
+          <div class="review-modal-description">{{ $t("reviewChanges.phoneNumber") }}</div>
           <div class="review-modal-item">{{ phone }}</div>
         </div>
         <div class="mt-3">
-          <div class="review-modal-description">{{ $t('reviewChanges.houseLocation') }}</div>
+          <div class="review-modal-description">{{ $t("reviewChanges.houseLocation") }}</div>
           <div class="review-modal-item">{{ houseLocation }}</div>
         </div>
         <div class="d-grid gap-2 col-12 mx-auto mt-3">
           <el-button
             class="btn btn-primary update-info-button"
-            type="button"
+            type="primary"
             @click="updateDeliveryInfo"
             v-loading="loading"
             element-loading-background="rgba(0, 0, 0, 0.5)"
           >
-            {{ $t('reviewChanges.confirmChanges') }}
+            {{ $t("reviewChanges.confirmChanges") }}
           </el-button>
         </div>
         <div class="d-grid gap-2 col-12 mx-auto mt-3">
-          <button class="btn btn-light" type="button" @click="handleClose">
-            {{ $t('reviewChanges.cancel') }}
+          <button class="btn btn-light" type="primary" @click="this.getReviewDialogVisible = false">
+            {{ $t("reviewChanges.cancel") }}
           </button>
         </div>
       </form>
@@ -46,13 +46,12 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import eventsMixin from '../../mixins/events_mixin';
-import NotificationMxn from '../../mixins/nofication_mixin';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+import eventsMixin from '../../../mixins/events_mixin';
+import NotificationMxn from '../../../mixins/nofication_mixin';
 
 export default {
   props: [
-    'dialogVisible',
     'name',
     'phone',
     'deliveryLocationDescription',
@@ -68,7 +67,19 @@ export default {
       loading: false,
     };
   },
+  computed: {
+    ...mapGetters(['getReviewDialogVisible']),
+    reviewDialogStatus: {
+      get() {
+        return this.getReviewDialogVisible;
+      },
+      set(val) {
+        return this.setReviewDialogVisible(val);
+      },
+    },
+  },
   methods: {
+    ...mapMutations(['setReviewDialogVisible', 'setDialogVisible', 'setDetailsDialogVisible']),
     ...mapActions(['updateDeliveryInformation']),
     async updateDeliveryInfo() {
       this.loading = true;
@@ -99,8 +110,9 @@ export default {
           };
           this.displayNotification(notification);
           this.$emit('close', false);
-          this.$store.commit('setDialogVisible', false);
-          this.$store.commit('setDetailsDialogVisible', false);
+          this.setReviewDialogVisible(false);
+          this.setDialogVisible(false);
+          this.setDetailsDialogVisible(false);
           this.$store
             .dispatch('requestAxiosGet', {
               app: process.env.FULFILMENT_SERVER,

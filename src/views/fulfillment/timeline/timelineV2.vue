@@ -12,9 +12,8 @@
         !$store.getters.getMobile ? 'block mt-3' : 'timeline-events-mobile'
       "
     >
-      <el-timeline>
+      <el-timeline :class="!$store.getters.getMobile ? 'el-timeline-item-desktop' : ''">
         <el-timeline-item
-          :class="!$store.getters.getMobile ? 'el-timeline-item-desktop' : ''"
           v-for="(activity, index) in activities"
           :key="index"
           :icon="activity.icon"
@@ -69,8 +68,9 @@
         "
       >
         <img
-          src="../../assets/keypad.png"
+          src="../../../assets/keypad.png"
           class="img-fluid mobile-confirmation-pin-img"
+          alt="keypad"
         />
         <div class="mobile-confirmation-pin-text">
           {{ $t("timeline.pin") }}
@@ -82,15 +82,17 @@
 </template>
 
 <script>
+import { shallowRef } from 'vue';
 import moment from 'moment';
 import { mapGetters } from 'vuex';
-import statusMixin from '../../mixins/status_mixin';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
-  name: 'Timeline',
+  name: 'TrackingTimeline',
   mixins: [statusMixin],
   data() {
     return {
+      showTimeline: false,
       activities: [],
       events: [],
       rider: {},
@@ -118,6 +120,10 @@ export default {
       this.activeIndex = this.$store.getters.getOrderStatuses.findIndex(
         (evt) => evt === activeEvent,
       );
+
+      if (activeEvent === 'event.delivery.buyer.paid.for.goods') {
+        this.activeIndex = 0;
+      }
       this.activities = this.filteredEventTimelineV2();
       this.rider = this.$store.getters.getData.data.partner_contact_information;
     },
@@ -149,7 +155,8 @@ export default {
               active: row.colors[i] === '#324ba8',
               title: row.titles[i],
               color: row.colors[i],
-              icon: row.icons[i],
+              icon: shallowRef(row.icons[i]),
+              class: row.iconClass[i],
               date: this.formatEventDate(row.dates[i], evtDate),
               showDriver: row.showDriver[i],
               showReschedule: row.showReschedule[i],
@@ -188,12 +195,17 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getData']),
+    ...mapGetters(['getData', 'getOrderTimelines']),
     confirmationPin() {
       return this.getData.data.confirmation_pin;
     },
     getLanguage() {
       return this.getData.data.language;
+    },
+    podOrder() {
+      return (
+        this.getData.data.sale_of_goods_invoice === null
+      );
     },
   },
 };
@@ -307,6 +319,13 @@ export default {
 .inactive-timeline-text {
   color: #909399;
 }
+/* element.style {
+  background: #324ba8;
+  color: #324ba8 !important;
+  box-shadow: 0 0 0 0 #324ba8;
+  border-radius: 20px;
+  animation: pulse-blue 2s infinite;
+} */
 @keyframes pulse-blue {
   0% {
     transform: scale(0.95);

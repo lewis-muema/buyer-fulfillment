@@ -1,12 +1,13 @@
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 import axios from 'axios';
 import moment from 'moment';
 
-Vue.use(VueI18n);
-
 function loadLocaleMessages() {
-  const locales = require.context('../locales/', true, /[A-Za-z0-9-_,\s]+\.js$/i);
+  const locales = require.context(
+    '../locales/',
+    true,
+    /[A-Za-z0-9-_,\s]+\.js$/i,
+  );
   const messages = {};
 
   locales.keys().forEach((key) => {
@@ -19,19 +20,11 @@ function loadLocaleMessages() {
   return messages;
 }
 
-const i18n = new VueI18n({
+const i18n = createI18n({
   locale: 'en',
   fallbackLocale: 'en',
   messages: loadLocaleMessages(),
 });
-
-function fetchCountry() {
-  window.addEventListener('language-changed', (event) => {
-    i18n.locale = event.detail;
-    localStorage.setItem('buyerTimeLocale', event.detail);
-    moment.locale(event.detail);
-  });
-}
 
 // eslint-disable-next-line no-unused-vars
 function ipLookUp() {
@@ -58,10 +51,19 @@ function ipLookUp() {
       localStorage.setItem('buyerTimeLocale', locale);
       localStorage.setItem('buyerLanguage', lang);
       localStorage.setItem('buyerCountryCode', response.data.countryCode);
+      window.dispatchEvent(
+        new CustomEvent('country-fetched', { detail: response.data }),
+      );
     })
     .catch((error) => error);
 }
-
+function fetchCountry() {
+  window.addEventListener('language-changed', (event) => {
+    i18n.locale = event.detail;
+    localStorage.setItem('buyerTimeLocale', event.detail);
+    moment.locale(event.detail);
+  });
+}
 fetchCountry();
 
 export default i18n;

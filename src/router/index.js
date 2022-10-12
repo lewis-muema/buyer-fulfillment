@@ -1,20 +1,16 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import fullfillment from '../components/fulfillment/fulfillment.vue';
-
-Vue.use(VueRouter);
+import { createRouter, createWebHistory } from 'vue-router';
+import fulfillment from '../components/fulfillment/fulfillment.vue';
 
 const routes = [
   {
     path: '/:deliveryId',
     name: 'fulfillment',
-    component: fullfillment,
+    component: fulfillment,
   },
 ];
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
   routes,
 });
 
