@@ -764,7 +764,7 @@ export default createStore({
           event: 'event.delivery.order.canceled.by.sendy',
           steps: [0, 11],
           colors: ['#EE7D00', '#EE7D00'],
-          icons: [Check, Check],
+          icons: shallowRef([Check, Check]),
           showDriver: [false, false],
           dates: [
             {

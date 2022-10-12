@@ -111,10 +111,10 @@ export default {
       this.comment = '';
       this.submitStatus = false;
     },
-    '$store.getters.getTimelineVisible': function getTimelineVisible() {
-      // if (this.$store.getters.getMobile) {
-      //   this.$store.commit('setRecipientVisible', val);
-      // }
+    '$store.getters.getTimelineVisible': function getTimelineVisible(val) {
+      if (this.$store.getters.getMobile) {
+        this.$store.commit('setRecipientVisible', val);
+      }
       this.sendSegmentEvents({
         event: 'View_delivery_history',
         data: {

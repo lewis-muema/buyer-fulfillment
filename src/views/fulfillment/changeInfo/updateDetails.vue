@@ -31,7 +31,7 @@
           </label>
           <vue-tel-input
             class="phone-input"
-            v-model="test"
+            v-model="params.phone"
             name="phone"
             value=""
             data-vv-validate-on="blur"
@@ -173,7 +173,6 @@ export default {
   },
   data() {
     return {
-      test: '0794375045',
       showDialog: false,
       visibleDialog: false,
       locations: this.location,
