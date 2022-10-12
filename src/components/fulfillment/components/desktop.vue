@@ -35,8 +35,8 @@
                 {{ $t("orderNumber") }}: {{ data.data.order_id }}
               </div>
               <div
-                class="delivery mt-5"
-                v-if="getStatus([8]).includes($store.getters.getDeliveryStatus)"
+                class="delivery mt-5 desktop-deliverypin-container"
+                v-if="showOTP"
               >
                 <p class="rider-pin">
                   <span>
@@ -117,7 +117,7 @@
           <Rating
             v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
           />
-          <!-- <PaymentsCard /> -->
+          <PaymentsCard />
           <TrackingTimeline v-if="showTimeline"/>
         </el-col>
         <el-col :span="12">
@@ -129,12 +129,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import moment from 'moment';
 import TopHeader from '../../../views/fulfillment/header.vue';
 import RecepientDetails from '../../../views/fulfillment/recipient/recipient.vue';
 import TrackingTimeline from '../../../views/fulfillment/timeline/timelineV2.vue';
 import OrderItems from '../../../views/fulfillment/orderedItems/orderItems.vue';
-// import PaymentsCard from '../../../views/fulfillment/POD/paymentsCard.vue';
+import PaymentsCard from '../../../views/fulfillment/POD/paymentsCard.vue';
 import Rating from '../../../views/fulfillment/rating/rating.vue';
 import statusMixin from '../../../mixins/status_mixin';
 
@@ -146,6 +147,7 @@ export default {
     TrackingTimeline,
     RecepientDetails,
     Rating,
+    PaymentsCard,
   },
   mixins: [statusMixin],
   data() {
@@ -166,6 +168,14 @@ export default {
         this.showTimeline = true;
       });
     });
+  },
+  computed: {
+    ...mapGetters(['getDeliveryStatus', 'getData']),
+    showOTP() {
+      return this.getData.data.sale_of_goods_invoice === null
+        ? this.getStatus([8]).includes(this.getDeliveryStatus)
+        : (this.getStatus([8]).includes(this.getDeliveryStatus) && this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID');
+    },
   },
   methods: {
     formatDate(date) {
@@ -233,5 +243,8 @@ export default {
 }
 .order-number {
   font-weight: 600;
+}
+.desktop-payments-container{
+  padding-left: 60px;
 }
 </style>

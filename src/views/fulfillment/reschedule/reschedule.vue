@@ -78,7 +78,6 @@ export default {
       const date = moment().format('YYYY-MM-DD') === this.date
         ? new Date().getTime() + 60000
         : new Date(this.date).getTime();
-      console.log(date);
       this.$store.commit('setLoading', true);
       this.$store.commit('setDatePickerVisible', false);
       this.$store

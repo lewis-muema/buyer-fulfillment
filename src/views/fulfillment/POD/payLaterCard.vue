@@ -14,7 +14,7 @@
       </p>
       <span class="payments-on-delivery-button d-flex">
         <p class="" @click="showCheckoutModal">Make Payment</p>
-        <el-icon class='payments-on-delivery-arrow-icon ml-2'>
+        <el-icon class='payments-on-delivery-arrow-icon ml-5'>
         <Right class='el-icon-right' /></el-icon>
       </span>
     </div>

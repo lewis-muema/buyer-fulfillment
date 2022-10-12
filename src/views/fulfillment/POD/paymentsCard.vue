@@ -1,6 +1,6 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template lang="">
-  <div class="">
+  <div :class="!this.getMobile ? 'desktop-payments-container' : ''">
     <PayLaterCard v-if="showMakePaymentsCard" :totalAmount="this.totalAmount" />
     <PayNowCard v-if="showPayNowCard" :totalAmount="this.totalAmount" />
     <PaidCard v-if="showPaidCard" :totalAmount="this.invoincedAmount" />
@@ -28,7 +28,7 @@ export default {
   },
   mixins: [statusMixin],
   computed: {
-    ...mapGetters(['getData', 'getDeliveryStatus', 'getPaymentSuccessful']),
+    ...mapGetters(['getData', 'getDeliveryStatus', 'getPaymentSuccessful', 'getMobile']),
     showMakePaymentsCard() {
       return (
         this.getData.data.sale_of_goods_invoice !== null
@@ -105,7 +105,8 @@ export default {
 }
 .payments-on-delivery-arrow-icon {
   font-weight: 600 !important;
-  padding-top: 10px;
+  padding-top: 5px;
+  font-size: 20px;
 }
 .el-icon-right {
   padding-top: 30px;

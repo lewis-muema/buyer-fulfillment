@@ -1,7 +1,6 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template lang="">
   <div class="checkout-dialog-container">
-    Saved - {{ getSavedPayMethods }}
     <el-dialog
       v-model="checkoutDialogStatus"
       :width="getMobile ? '100%' : '30%'"

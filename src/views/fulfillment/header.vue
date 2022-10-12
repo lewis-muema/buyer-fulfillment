@@ -42,8 +42,7 @@ export default {
     };
   },
   mounted() {
-    // this.language = localStorage.buyerTimeLocale;
-    // console.log(this.$t());
+    this.language = localStorage.buyerTimeLocale;
   },
   computed: {
     activeLanguage() {
@@ -58,9 +57,7 @@ export default {
   },
   methods: {
     changeLanguage(command) {
-      // console.log(command);
       this.language = command;
-      console.log(this.language);
       window.dispatchEvent(new CustomEvent('language-changed', { detail: this.language }));
       this.sendSegmentEvents({
         event: 'Select_language',

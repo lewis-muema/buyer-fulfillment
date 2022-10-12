@@ -7,21 +7,18 @@
     <ItemDelivered />
     <OrderCanceled />
     <PaymentsCard />
-    <TrackingTimeline v-if="showTrackingTimeline" />
+    <TrackingTimelines v-if="showTrackingTimeline" />
+    <PODTimeline />
     <RecepientDetails v-if="!getStatus([9]).includes($store.getters.getDeliveryStatus)" />
-    <!-- <RescheduleOrderButton /> -->
-    <!-- <changeinfo /> -->
     <RateOrder v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
-    <!-- <Recipient /> -->
   </div>
 </template>
 
 <script>
 import TopHeader from '../../../views/fulfillment/header.vue';
-import TrackingTimeline from '../../../views/fulfillment/timeline/timelineV2.vue';
+import TrackingTimelines from '../../../views/fulfillment/timeline/timelines.vue';
 import RecepientDetails from '../../../views/fulfillment/recipient/recipient.vue';
 import RateOrder from '../../../views/fulfillment/rating/rating.vue';
-// import changeinfo from '../../../views/fulfillment/changeInfo/changeInfo.vue';
 import statusMixin from '../../../mixins/status_mixin';
 import PaymentsCard from '../../../views/fulfillment/POD/paymentsCard.vue';
 import OrderedItemsHeader from '../../../views/fulfillment/orderedItems/orderedItemsHeader.vue';
@@ -29,8 +26,6 @@ import ExpectedDelivery from '../../../views/fulfillment/deliveryTimelines/expec
 import DeliveryPin from '../../../views/fulfillment/deliveryTimelines/deliveryPin.vue';
 import ItemDelivered from '../../../views/fulfillment/deliveryTimelines/itemDelivered.vue';
 import OrderCanceled from '../../../views/fulfillment/deliveryTimelines/orderCanceled.vue';
-// eslint-disable-next-line max-len
-// import RescheduleOrderButton from '../../../views/fulfillment/deliveryTimelines/rescheduleOrderButton.vue';
 
 export default {
   name: 'MobileLayout',
@@ -42,7 +37,7 @@ export default {
     ItemDelivered,
     OrderCanceled,
     PaymentsCard,
-    TrackingTimeline,
+    TrackingTimelines,
     RecepientDetails,
     RateOrder,
   },

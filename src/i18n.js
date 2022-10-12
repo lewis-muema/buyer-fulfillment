@@ -17,7 +17,6 @@ function loadLocaleMessages() {
       messages[locale] = locales(key).default;
     }
   });
-  console.log(messages);
   return messages;
 }
 
@@ -30,10 +29,8 @@ const i18n = createI18n({
 // eslint-disable-next-line no-unused-vars
 function ipLookUp() {
   const { EXTREME_IP_KEY } = process.env;
-  console.log('reesponse', EXTREME_IP_KEY);
   axios(`https://extreme-ip-lookup.com/json/?key=${EXTREME_IP_KEY}`)
     .then((response) => {
-      console.log('reesponse', response);
       window.dispatchEvent(new CustomEvent('country-fetched', { detail: response.data }));
       const francoPhoneCountries = ['FR', 'CI'].includes(response.data.countryCode);
       let lang;

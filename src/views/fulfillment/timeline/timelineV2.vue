@@ -120,7 +120,6 @@ export default {
       this.activeIndex = this.$store.getters.getOrderStatuses.findIndex(
         (evt) => evt === activeEvent,
       );
-      console.log(activeEvent);
 
       if (activeEvent === 'event.delivery.buyer.paid.for.goods') {
         this.activeIndex = 0;
@@ -143,10 +142,8 @@ export default {
         ? this.$store.getters.getRescheduledOrderTimelines
         : this.$store.getters.getOrderTimelines;
       timelines.forEach((row, index) => {
-        console.log(row, index, this.activeIndex);
         if (this.activeIndex === index) {
           row.steps.forEach((step, i) => {
-            console.log('steps', step);
             const evts = this.$store.getters.getData.data.event_time_line.filter(
               (timeline) => timeline.event_code
                   === this.$store.getters.getOrderStatuses[step],
@@ -167,7 +164,6 @@ export default {
           });
         }
       });
-      console.log('events', events);
       return events;
     },
     formatEventName(name) {
