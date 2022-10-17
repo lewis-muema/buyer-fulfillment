@@ -19,8 +19,7 @@
           </p>
         </div>
         <div class="recipient-details">
-          <div class="d-flex">
-          <p class="reciepient-details-rows pl-3">
+          <p class="reciepient-details-rows">
             <el-icon><Location /></el-icon>
             {{
               $store.getters.getData.data.destination.delivery_location
@@ -28,7 +27,6 @@
                 : ""
             }}
           </p>
-          </div>
           <div
             class="recipient-details"
             v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13, 14, 15])

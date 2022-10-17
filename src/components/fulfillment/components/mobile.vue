@@ -8,8 +8,8 @@
     <OrderCanceled />
     <PaymentsCard />
     <TrackingTimelines v-if="showTrackingTimeline" />
-    <RecepientDetails v-if="!getStatus([9]).includes($store.getters.getDeliveryStatus)" />
     <RateOrder v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
+    <RecepientDetails />
   </div>
 </template>
 
@@ -85,9 +85,9 @@ export default {
   font-size: 13px;
   margin: 5px 0px;
 }
-.fulfillemnt-order-items-header {
-  text-transform: capitalize;
-}
+/* .fulfillemnt-order-items-header {
+  text-transform: none;
+} */
 .change-delivery-el-button {
   margin: 0px 0px 20px !important;
 }
@@ -100,5 +100,6 @@ export default {
 }
 .order-number {
   font-weight: 600;
+  font-size: 12px;
 }
 </style>

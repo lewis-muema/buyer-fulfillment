@@ -8,7 +8,7 @@
         {{currency}} {{ totalAmount }}
       </p>
       <p class="payments-on-delivery-text">
-        Your items arrive have arrived
+        Your items have arrived
       </p>
       <span class="payments-on-delivery-button">
         <el-button class="pay-now-button" @click="showCheckoutModal">
@@ -22,18 +22,14 @@
 import { mapGetters, mapMutations } from 'vuex';
 
 export default {
-  props: ['totalAmount'],
+  props: ['totalAmount', 'currency'],
   computed: {
     ...mapGetters(['getData']),
-    currency() {
-      return this.getData.data.sale_of_goods_invoice.currency;
-    },
   },
   methods: {
     ...mapMutations(['setCheckoutDialogVisible', 'setCheckoutModal']),
     showCheckoutModal() {
       this.setCheckoutDialogVisible(true);
-      localStorage.setItem('CheckoutModal', 'Checkout');
     },
   },
 };

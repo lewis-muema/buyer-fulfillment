@@ -1,9 +1,13 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template lang="">
   <div :class="!this.getMobile ? 'desktop-payments-container' : ''">
-    <PayLaterCard v-if="showMakePaymentsCard" :totalAmount="this.totalAmount" />
-    <PayNowCard v-if="showPayNowCard" :totalAmount="this.totalAmount" />
-    <PaidCard v-if="showPaidCard" :totalAmount="this.invoincedAmount" />
+    <PayLaterCard
+      v-if="showMakePaymentsCard"
+      :totalAmount="this.totalAmount"
+      :currency="this.currency"
+    />
+    <PayNowCard v-if="showPayNowCard" :totalAmount="this.totalAmount" :currency="this.currency" />
+    <PaidCard v-if="showPaidCard" :totalAmount="this.invoincedAmount" :currency="this.currency" />
     <CheckoutCard />
   </div>
 </template>
@@ -44,7 +48,8 @@ export default {
       );
     },
     showPaidCard() {
-      return this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID';
+      return this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID'
+      && !this.getStatus([9]).includes(this.getDeliveryStatus);
     },
     totalAmount() {
       return this.getData.data.sale_of_goods_invoice !== null
@@ -56,6 +61,9 @@ export default {
         ? this.getData.data.sale_of_goods_invoice.invoiced_amount
         : 0;
     },
+    currency() {
+      return this.getData.data.sale_of_goods_invoice.currency;
+    },
   },
 };
 </script>
@@ -66,7 +74,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   padding: 20px;
-  border: 1px solid #f3f3f3;
+  border: 1px solid #c0c4cc;
   border-radius: 5px;
 }
 .payments-on-delivery-title {
@@ -95,7 +103,8 @@ export default {
   letter-spacing: 0.005em;
   color: #000000;
 }
-.payments-on-delivery-button p,.payments-on-delivery-button a,
+.payments-on-delivery-button p,
+.payments-on-delivery-button a,
 .el-icon-right {
   color: #324ba8 !important;
   font-weight: 600;
@@ -103,10 +112,14 @@ export default {
   line-height: 28px;
   text-decoration: none;
 }
+/* .view-receipt {
+  margin-left: 25px;
+} */
 .payments-on-delivery-arrow-icon {
   font-weight: 600 !important;
   padding-top: 5px;
   font-size: 20px;
+  margin-left: 5px;
 }
 .el-icon-right {
   padding-top: 30px;

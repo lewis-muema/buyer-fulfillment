@@ -5,7 +5,7 @@
         !$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'
       "
     >
-      {{ $t("timeline.timeline") }}
+      {{ podOrder ? '' : $t("timeline.timeline") }}
     </h3>
     <div
       :class="
@@ -64,7 +64,7 @@
       <div
         class="d-flex mobile-confirmation-pin-container"
         v-if="
-          !getStatus([9, 10, 11, 12]).includes($store.getters.getDeliveryStatus)
+          showOTP
         "
       >
         <img
@@ -120,10 +120,10 @@ export default {
       this.activeIndex = this.$store.getters.getOrderStatuses.findIndex(
         (evt) => evt === activeEvent,
       );
-
-      if (activeEvent === 'event.delivery.buyer.paid.for.goods') {
-        this.activeIndex = 0;
+      if (this.activeIndex === 16) {
+        this.activeEvent -= 1;
       }
+      console.log('activeEvent', activeEvent);
       this.activities = this.filteredEventTimelineV2();
       this.rider = this.$store.getters.getData.data.partner_contact_information;
     },
@@ -202,9 +202,14 @@ export default {
     getLanguage() {
       return this.getData.data.language;
     },
+    showOTP() {
+      return this.getData.data.sale_of_goods_invoice === null
+        ? this.getStatus([8]).includes(this.getDeliveryStatus)
+        : this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID';
+    },
     podOrder() {
       return (
-        this.getData.data.sale_of_goods_invoice === null
+        this.getData.data.sale_of_goods_invoice !== null
       );
     },
   },

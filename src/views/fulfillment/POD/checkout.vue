@@ -5,13 +5,17 @@
       v-model="checkoutDialogStatus"
       :width="getMobile ? '100%' : '30%'"
       :fullscreen="getMobile ? true : false"
-      :show-close="getMobile ? true : false"
+      :show-close="getMobile ? false : true"
       center
       :close-on-click-modal="true"
     >
-      <div class="payment-checkout-header">
-        <h5>{{ showCheckoutModal ? "Checkout" : "Receipt" }}</h5>
+      <div>
+        <div @click="closeCheckoutModal">
+          <el-icon class="payment-checkout-header-icon"><Back /></el-icon></div>
+          <div class="text-desc">
+            <h5>{{ showCheckoutModal ? "Checkout" : "Receipt" }}</h5>
         <p v-if="showCheckoutModal">Price breakdown</p>
+          </div>
       </div>
       <div v-if="showReceiptModal">
         <span>Amount Paid&nbsp;</span>
@@ -20,13 +24,13 @@
       </div>
       <div>
         <div class="row" v-for="(product, index) in products" :key="index">
-          <div class="col-3">
+          <div class="col-2">
             <p class="checkout-product-quantity">{{ product.product_unit_count }}</p>
           </div>
-          <div class="col-5">
+          <div class="col-7">
             <p class="checkout-product-name">{{ product.product_name }}</p>
           </div>
-          <div class="col-4">
+          <div class="col-3">
             <span class="checkout-product-price d-flex">
               <p>{{ product.product_unit_currency }}&nbsp;</p>
               <p class="pl-2">{{ product.product_unit_price }}</p>
@@ -63,7 +67,7 @@
       </div>
       <div v-if="showReceiptModal">
         <p>Payment details</p>
-        <div class="lineHeight">
+        <div class="text-desc">
           <p>Mpesa</p>
           <p>0794375045</p>
         </div>
@@ -73,10 +77,12 @@
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { Back } from '@element-plus/icons';
 
 export default {
   name: 'CheckoutCard',
   props: ['name'],
+  components: { Back },
   computed: {
     ...mapGetters(['getMobile', 'getCheckoutDialogVisible', 'getData', 'getCheckoutModal', 'getSavedPayMethods']),
     checkoutDialogStatus: {
@@ -123,10 +129,10 @@ export default {
         : 0;
     },
     showCheckoutModal() {
-      return localStorage.getItem('CheckoutModal') === 'Checkout';
+      return this.getData.data.sale_of_goods_invoice.invoice_status !== 'INVOICE_COMPLETELY_PAID';
     },
     showReceiptModal() {
-      return localStorage.getItem('CheckoutModal') === 'Receipt';
+      return this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID';
     },
   },
   methods: {
@@ -162,16 +168,13 @@ export default {
         console.log(e);
       }
     },
+    closeCheckoutModal() {
+      this.setCheckoutDialogVisible(false);
+    },
   },
 };
 </script>
 <style>
-/* .price-breakdown-container {
-  display: flex;
-  flex-direction: row;
-  padding-top: 16px;
-  justify-content: flex-start;
-} */
 .checkout-dialog-container {
   overflow: scroll !important;
 }
@@ -190,8 +193,11 @@ export default {
 .price-breakdown-divider {
   margin: 0 !important;
 }
-.payment-checkout-header {
-  margin-top: -35px;
+.payment-checkout-header-icon {
+  margin-top: -5px;
+  font-size: 30px !important;
+  font-weight: 700px !important;
+  color: #909399 !important;
 }
 /* .el-dialog--center  {
     text-align: left !important;
@@ -233,7 +239,7 @@ export default {
 .checkout-product-price {
   float: right !important;
 }
-.lineHeight {
+.text-desc {
   line-height: 10px;
 }
 </style>

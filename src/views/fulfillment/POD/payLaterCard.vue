@@ -6,7 +6,7 @@
         Pay for your delivery
       </h1>
       <p class="payments-on-delivery-amount">
-        <span> {{ getData.data.sale_of_goods_invoice.currency }}</span>
+        <span> {{ currency }}</span>
         {{ totalAmount }}
       </p>
       <p class="payments-on-delivery-text">
@@ -35,7 +35,6 @@ export default {
     ...mapMutations(['setCheckoutDialogVisible', 'setCheckoutModal']),
     showCheckoutModal() {
       this.setCheckoutDialogVisible(true);
-      localStorage.setItem('CheckoutModal', 'Checkout');
     },
   },
 };
