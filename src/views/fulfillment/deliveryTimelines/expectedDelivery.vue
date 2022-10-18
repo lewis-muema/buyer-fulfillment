@@ -1,8 +1,9 @@
 <template lang="">
   <div>
+    YYY - {{ showExpectedDeliveryCard }}
     <div
       class="fulfillemnt-order-items-expected-deivery"
-      v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(getDeliveryStatus)"
+      v-if="showExpectedDeliveryCard"
     >
       <p class="fulfillemnt-order-items-expected-deivery-title">
         {{ $t("mobile.expectedDelivery") }}

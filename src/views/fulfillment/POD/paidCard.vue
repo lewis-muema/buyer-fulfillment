@@ -39,7 +39,6 @@ export default {
   color: #064a23;
   width: 26px;
   height: 26px;
-  /* padding-left: 20px; */
 }
 .paid-card-desc p{
   margin: 0;

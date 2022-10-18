@@ -48,8 +48,7 @@ export default {
       );
     },
     showPaidCard() {
-      return this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID'
-      && !this.getStatus([9]).includes(this.getDeliveryStatus);
+      return this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID';
     },
     totalAmount() {
       return this.getData.data.sale_of_goods_invoice !== null

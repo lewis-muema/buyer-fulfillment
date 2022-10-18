@@ -4,7 +4,7 @@
     <div :class="$store.getters.getMobile ? 'rate-delivery-mobile' : 'rate-delivery-desktop'">
       <RatingCard />
     </div>
-    <PaidCard />
+    <PaymentsCard v-if="payCard" />
     <div :class="!$store.getters.getMobile ? 'items mt-3' : 'items-mobile'">
       <RatingIssues />
       <DeliveryHistory />
@@ -13,15 +13,25 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import RatingCard from './ratingCard.vue';
 import RatingIssues from './ratingIssues.vue';
 import DeliveryHistory from './deliveryHistory.vue';
-import PaidCard from '../POD/paidCard.vue';
+import PaymentsCard from '../POD/paymentsCard.vue';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
   name: 'RateOrder',
+  mixins: [statusMixin],
   components: {
-    RatingCard, RatingIssues, DeliveryHistory, PaidCard,
+    RatingCard, RatingIssues, DeliveryHistory, PaymentsCard,
+  },
+  computed: {
+    ...mapGetters(['getDeliveryStatus']),
+    payCard() {
+      return this.getStatus([9]).includes(this.getDeliveryStatus)
+      && this.getData.data.rated === false;
+    },
   },
 };
 </script>

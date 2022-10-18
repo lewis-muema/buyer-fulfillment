@@ -30,6 +30,21 @@ export default createStore({
       countryData: {
         countryCode: 'KE',
       },
+      timelineIcons: {
+        PAST: {
+          icon: shallowRef(Check),
+          color: '#EE7D00',
+          iconClass: 'el-icon-check',
+        },
+        PRESENT: {
+          icon: shallowRef(Minus),
+          color: '#EE7D00',
+          iconClass: 'el-icon-minuss',
+        },
+        FUTURE: {
+          hollow: false,
+        },
+      },
       orderStatuses: [
         'event.delivery.order.created',
         'event.delivery.at.hub.processing.for.delivery',

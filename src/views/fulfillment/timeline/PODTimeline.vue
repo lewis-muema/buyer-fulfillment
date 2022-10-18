@@ -10,18 +10,18 @@
       <el-icon class="timeline-arrow-icon" v-if="trackingTimeline"><ArrowDown /></el-icon>
       <el-icon v-else class="timeline-arrow-icon" ><ArrowUp /></el-icon>
     </div>
-    <TrackingTimeline v-if="!trackingTimeline" />
+    <NewTimeline v-if="!trackingTimeline" />
   </div>
 </template>
 
 <script>
 import { mapMutations, mapGetters } from 'vuex';
 import { ArrowDown, ArrowUp } from '@element-plus/icons';
-import TrackingTimeline from './timelineV2.vue';
+import NewTimeline from './newTimeline.vue';
 
 export default {
   name: 'PODTimeline',
-  components: { ArrowDown, TrackingTimeline, ArrowUp },
+  components: { ArrowDown, NewTimeline, ArrowUp },
   data() {
     return {
       trackingTimeline: true,

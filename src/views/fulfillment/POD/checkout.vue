@@ -11,11 +11,12 @@
     >
       <div>
         <div @click="closeCheckoutModal">
-          <el-icon class="payment-checkout-header-icon"><Back /></el-icon></div>
-          <div class="text-desc">
-            <h5>{{ showCheckoutModal ? "Checkout" : "Receipt" }}</h5>
-        <p v-if="showCheckoutModal">Price breakdown</p>
-          </div>
+          <el-icon class="payment-checkout-header-icon"><Back /></el-icon>
+        </div>
+        <div class="text-desc">
+          <h5>{{ showCheckoutModal ? "Checkout" : "Receipt" }}</h5>
+          <p v-if="showCheckoutModal">Price breakdown</p>
+        </div>
       </div>
       <div v-if="showReceiptModal">
         <span>Amount Paid&nbsp;</span>
@@ -23,17 +24,22 @@
         <p>Sept 13, 2022 13:23</p>
       </div>
       <div>
-        <div class="row" v-for="(product, index) in products" :key="index">
+        <div
+          class="row"
+          v-for="(product, index) in products"
+          :key="index"
+        >
+          <div></div>
           <div class="col-2">
-            <p class="checkout-product-quantity">{{ product.product_unit_count }}</p>
+            <p class="checkout-product-quantity">{{ product.adjustment_quantity }}</p>
           </div>
           <div class="col-7">
-            <p class="checkout-product-name">{{ product.product_name }}</p>
+            <p class="checkout-product-name">{{ product.adjustment_description }}</p>
           </div>
           <div class="col-3">
             <span class="checkout-product-price d-flex">
-              <p>{{ product.product_unit_currency }}&nbsp;</p>
-              <p class="pl-2">{{ product.product_unit_price }}</p>
+              <p>{{ product.currency }}&nbsp;</p>
+              <p class="pl-2">{{ product.adjustment_value }}</p>
             </span>
           </div>
         </div>
@@ -84,7 +90,13 @@ export default {
   props: ['name'],
   components: { Back },
   computed: {
-    ...mapGetters(['getMobile', 'getCheckoutDialogVisible', 'getData', 'getCheckoutModal', 'getSavedPayMethods']),
+    ...mapGetters([
+      'getMobile',
+      'getCheckoutDialogVisible',
+      'getData',
+      'getCheckoutModal',
+      'getSavedPayMethods',
+    ]),
     checkoutDialogStatus: {
       get() {
         return this.getCheckoutDialogVisible;
@@ -94,7 +106,9 @@ export default {
       },
     },
     products() {
-      return this.getData.data.products;
+      return this.getData.data.sale_of_goods_invoice.invoice_adjustments.filter(
+        (i) => i.adjustment_type === 'SALE_OF_GOOD',
+      );
     },
     subtotal() {
       // eslint-disable-next-line

@@ -26,7 +26,7 @@ import { mapMutations, mapGetters } from 'vuex';
 
 export default {
   name: 'PayLaterCard',
-  props: ['totalAmount'],
+  props: ['totalAmount', 'currency'],
   components: { Right },
   computed: {
     ...mapGetters(['getData']),

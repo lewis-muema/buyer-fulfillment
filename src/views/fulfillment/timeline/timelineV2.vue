@@ -117,13 +117,11 @@ export default {
     sortTimelineEvents() {
       const timeline = this.$store.getters.getData.data.event_time_line;
       const activeEvent = timeline[timeline.length - 1].event_code;
+      console.log('activeEvent', activeEvent);
       this.activeIndex = this.$store.getters.getOrderStatuses.findIndex(
         (evt) => evt === activeEvent,
       );
-      if (this.activeIndex === 16) {
-        this.activeEvent -= 1;
-      }
-      console.log('activeEvent', activeEvent);
+      console.log('activeIndex', this.activeIndex);
       this.activities = this.filteredEventTimelineV2();
       this.rider = this.$store.getters.getData.data.partner_contact_information;
     },
