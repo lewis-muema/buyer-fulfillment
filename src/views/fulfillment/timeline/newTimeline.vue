@@ -22,28 +22,15 @@
             :hollow="$store.getters.getTimelineIcons[activity.event_tense].hollow"
             :class="$store.getters.getTimelineIcons[activity.event_tense].iconClass"
           >
-            <span>
+          <span :class="
+              activity.event_code === 'EVENT_DELIVERY_FAILED'
+                ? 'failed-delivery-timeline-text'
+                : `${activity.event_tense}-timeline-text`
+            ">
+             <span>
               {{ activity.translated_event_code }}
             </span>
-            <!-- <span
-              :class="
-                activity.active
-                  ? 'active-timeline-text'
-                  : activity.event_code === 'event.delivery.failed'
-                  ? 'failed-delivery-timeline-text'
-                  : activity.title === 18 && !activity.active
-                  ? 'inactive-timeline-text'
-                  : ''
-              "
-            >
-              {{
-                formatEventName(
-                  $t(`${$store.getters.getOrderEvents[activity.title]}`, {
-                    Date: activity.date,
-                  })
-                )
-              }}
-            </span> -->
+            </span>
             <div
               v-if="
                 activity.event_code === 'EVENT_DELIVERY_PARTNER_ARRIVED_AT_BUYER_LOCATION' &&
@@ -94,7 +81,7 @@
 import { mapGetters, mapMutations } from 'vuex';
 import { shallowRef } from 'vue';
 import { Close } from '@element-plus/icons';
-import eventsMixin from '../../../mixins/events_mixin';
+import eventsMixin from '../../../mixins/status_mixin';
 
 export default {
   name: 'NewTimeline',
@@ -143,5 +130,15 @@ export default {
   box-shadow: 0 0 0 0 #324ba8;
   border-radius: 20px;
   animation: pulse-blue 2s infinite;
+}
+.failed-delivery-timeline-text {
+  color: #9b101c;
+}
+.past-timeline-text {
+  color: #303133;
+}
+.present-timeline-text {
+  color: #324ba8;
+  font-weight: 700;
 }
 </style>

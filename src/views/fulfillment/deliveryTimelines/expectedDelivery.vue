@@ -1,10 +1,6 @@
 <template lang="">
   <div>
-    YYY - {{ showExpectedDeliveryCard }}
-    <div
-      class="fulfillemnt-order-items-expected-deivery"
-      v-if="showExpectedDeliveryCard"
-    >
+    <div class="fulfillemnt-order-items-expected-deivery" v-if="showExpectedDeliveryCard">
       <p class="fulfillemnt-order-items-expected-deivery-title">
         {{ $t("mobile.expectedDelivery") }}
       </p>
@@ -40,10 +36,8 @@ export default {
     showExpectedDeliveryCard() {
       return (
         this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(this.getDeliveryStatus)
-        || this.getStatus(
-          [0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]
-            && this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID',
-        )
+        || this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 16])
+          .includes(this.getDeliveryStatus)
       );
     },
   },
