@@ -88,9 +88,6 @@ export default {
   font-size: 13px;
   margin: 5px 0px;
 }
-/* .fulfillemnt-order-items-header {
-  text-transform: none;
-} */
 .change-delivery-el-button {
   margin: 0px 0px 20px !important;
 }
