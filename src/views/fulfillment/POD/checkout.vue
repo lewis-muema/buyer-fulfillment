@@ -21,7 +21,7 @@
       <div v-if="showReceiptModal">
         <span>Amount Paid&nbsp;</span>
         <span> {{ currency }} {{ invoicedAmount }}</span>
-        <p>Sept 13, 2022 13:23</p>
+        <p>{{formatDate(getData.data.scheduled_delivery_date)}}</p>
       </div>
       <div>
         <div
@@ -75,7 +75,6 @@
         <p>Payment details</p>
         <div class="text-desc">
           <p>Mpesa</p>
-          <p>0794375045</p>
         </div>
       </div>
     </el-dialog>
@@ -84,9 +83,11 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 import { Back } from '@element-plus/icons';
+import formatDates from '../../../mixins/formatDate_mixin';
 
 export default {
   name: 'CheckoutCard',
+  mixins: [formatDates],
   props: ['name'],
   components: { Back },
   computed: {

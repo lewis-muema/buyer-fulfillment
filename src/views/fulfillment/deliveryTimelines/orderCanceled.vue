@@ -5,7 +5,7 @@
       class="fulfillemnt-order-items-expected-deivery"
     >
       <p class="delivered-title">{{ $t("desktop.orderCancelled") }}</p>
-      <p class="delivered-date">
+      <p :class="getMobile ? 'delivered-date' : 'delivered-date-desktop'">
         {{
           formatCompletionDate(
             getData.data.event_time_line[data.data.event_time_line.length - 1].event_date
@@ -24,7 +24,7 @@ export default {
   mixins: [statusMixin, formatDates],
   name: 'orderCanceled',
   computed: {
-    ...mapGetters(['getData']),
+    ...mapGetters(['getData', 'getMobile']),
   },
 };
 </script>

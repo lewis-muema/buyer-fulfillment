@@ -57,7 +57,8 @@ export default {
 <style>
 .make-payment-button {
   background: #9b101c !important;
-  padding: 18px 12px !important
+  padding: 18px 12px !important;
+  border-color: transparent !important;
 }
 .make-payment-button-container {
   float: right;

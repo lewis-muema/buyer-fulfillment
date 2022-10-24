@@ -1,7 +1,7 @@
 <template>
   <div>
     <TopHeader />
-    <PaymentsCard />
+    <PaymentsCard  v-if="!showPaidCard" />
     <div>
       <el-row>
         <el-col :span="12">
@@ -25,6 +25,7 @@
           </el-card>
         </el-col>
         <el-col :span="12">
+          <PaymentsCard v-if="showPaidCard"/>
           <RecepientDetails />
         </el-col>
       </el-row>
@@ -35,7 +36,10 @@
           />
           <TrackingTimelines v-if="showTimeline"/>
         </el-col>
-        <el-col :span="12" class="ordered-items-container-desktop">
+        <el-col :span="12" :class="!getStatus([8,9,10,11,12]).
+        includes($store.getters.getDeliveryStatus) ?
+        'ordered-items-container-desktop' :
+        'ordered-items-container-desktp'">
           <OrderedItemsHeader />
         </el-col>
       </el-row>
@@ -95,6 +99,9 @@ export default {
   },
   computed: {
     ...mapGetters(['getDeliveryStatus', 'getData']),
+    showPaidCard() {
+      return this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID';
+    },
   },
 };
 </script>
@@ -137,7 +144,11 @@ export default {
   padding-left: 60px;
 }
 .ordered-items-container-desktop {
-  /* margin-top: -10%; */
+  margin-top: -10%;
   padding-left: 100px;
+}
+.ordered-items-container-desktp {
+  margin-top: -3%;
+  padding-left: 85px;
 }
 </style>

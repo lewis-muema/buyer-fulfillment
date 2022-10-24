@@ -36,10 +36,12 @@
   </div>
 </template>
 <script>
+import { WarningFilled } from '@element-plus/icons';
 import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   props: ['totalAmount', 'currency'],
+  components: { WarningFilled },
   computed: {
     ...mapGetters(['getData', 'getMobile']),
   },
