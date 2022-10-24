@@ -214,10 +214,7 @@ export default {
   font-weight: 700px !important;
   color: #909399 !important;
 }
-/* .el-dialog--center  {
-    text-align: left !important;
-}
-*/
+
 .el-dialog__close {
   font-size: 20px !important;
   color: #000000 !important;

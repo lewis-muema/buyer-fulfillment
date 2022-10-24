@@ -7,7 +7,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-// import TrackingTimeline from './timelineV2.vue';
 import PODTimeline from './PODTimeline.vue';
 import NewTimeline from './newTimeline.vue';
 

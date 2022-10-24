@@ -111,9 +111,6 @@ export default {
   line-height: 28px;
   text-decoration: none;
 }
-/* .view-receipt {
-  margin-left: 25px;
-} */
 .payments-on-delivery-arrow-icon {
   font-weight: 600 !important;
   padding-top: 5px;
