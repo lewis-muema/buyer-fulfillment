@@ -5,7 +5,7 @@
       v-model="checkoutDialogStatus"
       :width="getMobile ? '100%' : '30%'"
       :fullscreen="getMobile ? true : false"
-      :show-close="getMobile ? false : true"
+      :show-close="false"
       center
       :close-on-click-modal="true"
     >

@@ -1,8 +1,9 @@
 <template lang="">
   <div>
-    <div v-if="$store.getters.getTimelineVisible">
+    <div v-if="$store.getters.getTimelineVisible"
+    :class="!$store.getters.getMobile ? 'timeline-desktop-container' : ''">
       <h3 :class="!$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'">
-        {{ podOrder ? "" : $t("timeline.timeline") }}
+        {{ podTimelineTitle ? "" : $t("timeline.timeline") }}
       </h3>
       <div :class="!$store.getters.getMobile ? 'block mt-3' : 'timeline-events-mobile'">
         <el-timeline :class="!$store.getters.getMobile ? 'el-timeline-item-desktop' : ''">
@@ -92,7 +93,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getData']),
+    ...mapGetters(['getData', 'getMobile']),
     rider() {
       return this.$store.getters.getData.data.partner_contact_information;
     },
@@ -111,8 +112,9 @@ export default {
         : this.$store.getters.getData.data.sale_of_goods_invoice.invoice_status
             === 'INVOICE_COMPLETELY_PAID';
     },
-    podOrder() {
-      return this.$store.getters.getData.data.sale_of_goods_invoice !== null;
+    podTimelineTitle() {
+      return this.$store.getters.getData.data.sale_of_goods_invoice !== null
+      && this.getMobile;
     },
   },
   methods: {
@@ -140,5 +142,62 @@ export default {
 .present-timeline-text {
   color: #324ba8;
   font-weight: 700;
+}
+.timeline-desktop {
+  margin-left: 30px;
+}
+.el-timeline-item-desktop {
+  padding-right: 40% !important;
+}
+.timeline-mobile {
+  margin: 10px 20px;
+  color: #606266;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 1.5px;
+  text-align: left;
+}
+.timeline-events-mobile {
+  margin: 25px 0px;
+}
+.timeline-desktop-container {
+  padding-left: 45px;
+}
+.mobile-confirmation-pin-container {
+  background: #f5f5f5;
+  width: max-content;
+  height: 35px;
+  margin-left: 50px;
+  margin-top: -20px;
+  padding: 7px 10px 7px 10px;
+}
+.mobile-confirmation-pin-img {
+  margin-top: 2px;
+}
+.mobile-confirmation-pin-text {
+  padding-left: 10px;
+}
+.mobile-confirmation-pin {
+  color: #324ba8;
+  font-weight: 700;
+}
+@keyframes pulse-blue {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 #324ba8;
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+  }
 }
 </style>

@@ -1,7 +1,6 @@
 <template>
   <div>
     <div :class="!$store.getters.getMobile ? 'items-delivered-desktop' : 'items-delivered-mobile'">
-      <h3 v-if="!$store.getters.getMobile">{{ $t('orderItems.itemsDelivered') }}</h3>
       <div class="d-flex flex-row" v-for="(orderItem, index) in orderItems" :key="index">
         <el-badge :value="orderItem.product_unit_count" class="item" type="primary">
           <div class="p-2">
@@ -32,10 +31,6 @@ export default {
 </script>
 
 <style>
-.items-delivered-desktop {
-  text-align: left;
-  padding-left: 100px;
-}
 .items-delivered-mobile {
   margin: 15px 0px;
 }

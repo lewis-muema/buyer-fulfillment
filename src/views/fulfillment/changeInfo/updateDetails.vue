@@ -167,8 +167,8 @@ export default {
   name: 'UpdateDetails',
   mixins: [eventsMixin, statusMixin, notificationMxn],
   components: {
-    ReviewChanges,
     InfoFilled,
+    ReviewChanges,
   },
   setup() {
     return { v$: useVuelidate() };

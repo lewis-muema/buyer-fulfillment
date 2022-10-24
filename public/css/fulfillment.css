@@ -54,6 +54,13 @@
   color: #17224D;
   border-radius: 5px;
 }
+.fulfillemnt-order-items-expected-deivery-desktop {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #17224D;
+  border-radius: 5px;
+}
 
 .fulfillemnt-order-items-expected-deivery-title {
   margin: 10px 0px;

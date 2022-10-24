@@ -4,9 +4,10 @@
   <div>
     <div class="fulfillemnt-order-items-container">
       <div>
-        <div class="fulfillemnt-order-items-title">
+        <div class="fulfillemnt-order-items-title" v-if="$store.getters.getMobile">
           {{ Object.keys(getData).length > 0 ? getData.data.seller_name : "--" }}
         </div>
+        <h3 v-if="!$store.getters.getMobile">{{ $t('orderItems.itemsDelivered') }}</h3>
         <div class="fulfillemnt-order-items-description d-flex">
           <div
             class="fulfillemnt-order-items-header"
@@ -30,7 +31,7 @@
         </div>
         <order-items v-if="showItems" />
       </div>
-      <div class="order-number">{{ $t("orderNumber") }}: {{ getData.data.order_id }}</div>
+      <div class="order-number" v-if="$store.getters.getMobile">{{ $t("orderNumber") }}: {{ getData.data.order_id }}</div>
     </div>
   </div>
 </template>

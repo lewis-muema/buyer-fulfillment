@@ -1,6 +1,13 @@
 <template lang="">
   <div>
-    <div class="fulfillemnt-order-items-expected-deivery" v-if="showExpectedDeliveryCard">
+    <div
+      :class="
+        getMobile
+          ? 'fulfillemnt-order-items-expected-deivery'
+          : 'fulfillemnt-order-items-expected-deivery-desktop'
+      "
+      v-if="showExpectedDeliveryCard"
+    >
       <p class="fulfillemnt-order-items-expected-deivery-title">
         {{ $t("mobile.expectedDelivery") }}
       </p>
@@ -32,12 +39,13 @@ export default {
   name: 'ExpectedDelivery',
   mixins: [statusMixin, formatDates],
   computed: {
-    ...mapGetters(['getData', 'getDeliveryStatus']),
+    ...mapGetters(['getData', 'getDeliveryStatus', 'getMobile']),
     showExpectedDeliveryCard() {
       return (
         this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(this.getDeliveryStatus)
-        || this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 16])
-          .includes(this.getDeliveryStatus)
+        || this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 16]).includes(
+          this.getDeliveryStatus,
+        )
       );
     },
   },

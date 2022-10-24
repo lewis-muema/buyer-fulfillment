@@ -6,6 +6,7 @@
     <DeliveryPin />
     <ItemDelivered />
     <OrderCanceled />
+    <RescheduleOrderButton />
     <PaymentsCard />
     <TrackingTimelines v-if="showTrackingTimeline" />
     <RateOrder v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
@@ -25,6 +26,7 @@ import ExpectedDelivery from '../../../views/fulfillment/deliveryTimelines/expec
 import DeliveryPin from '../../../views/fulfillment/deliveryTimelines/deliveryPin.vue';
 import ItemDelivered from '../../../views/fulfillment/deliveryTimelines/itemDelivered.vue';
 import OrderCanceled from '../../../views/fulfillment/deliveryTimelines/orderCanceled.vue';
+import RescheduleOrderButton from '../../../views/fulfillment/deliveryTimelines/rescheduleOrderButton.vue';
 
 export default {
   name: 'MobileLayout',
@@ -35,6 +37,7 @@ export default {
     DeliveryPin,
     ItemDelivered,
     OrderCanceled,
+    RescheduleOrderButton,
     PaymentsCard,
     TrackingTimelines,
     RecepientDetails,
