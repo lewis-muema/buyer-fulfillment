@@ -1,7 +1,9 @@
 <template lang="">
   <div>
-    <div v-if="itemDelivered" class="fulfillemnt-order-items-expected-deivery">
-      <p class="delivered-title">{{ $t("desktop.packageDelivered") }}</p>
+    <div v-if="itemDelivered" :class="getMobile ? 'fulfillemnt-order-items-expected-deivery'
+    : 'items-delivered-container'">
+      <p :class="getMobile ? 'delivered-date' :
+      'delivered-date-desktop'">{{ $t("desktop.packageDelivered") }}</p>
       <p class="delivered-date">
         {{ formatCompletionDate(getData.data.order_completion_date) }}
       </p>
@@ -17,11 +19,19 @@ export default {
   mixins: [statusMixin, formatDates],
   name: 'ItemDelivered',
   computed: {
-    ...mapGetters(['getData']),
+    ...mapGetters(['getData', 'getMobile']),
     itemDelivered() {
       return this.getStatus([9]).includes(this.$store.getters.getDeliveryStatus);
     },
   },
 };
 </script>
-<style lang=""></style>
+<style>
+.items-delivered-container {
+  margin: 0 !important;
+}
+.delivered-date-desktop {
+  color: #324ba8;
+  font-weight: 700;
+}
+</style>

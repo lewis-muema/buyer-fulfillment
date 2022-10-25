@@ -1,114 +1,31 @@
 <template>
   <div>
     <TopHeader />
+    <PaymentsCard  v-if="!showPaidCard" />
     <div>
       <el-row>
         <el-col :span="12">
-          <el-card shadow="never">
-            <div class="order">
+          <el-card shadow="never" class="expected-delivery-desktop-container">
+            <div>
               <h3>
                 {{
                   Object.keys(data).length > 0 ? data.data.seller_name : "--"
                 }}
               </h3>
-              <div
-                class="delivery"
-                v-if="
-                  getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(
-                    $store.getters.getDeliveryStatus
-                  )
-                "
-              >
-                <p>{{ $t("mobile.expectedDelivery") }}</p>
-                <p class="date">
-                  {{
-                    Object.keys(data).length > 0
-                      ? formatDate(data.data.scheduled_delivery_date)
-                      : "--"
-                  }}
-                </p>
-                <p v-if="data.data.estimated_delivery_date" class="date">
-                  {{ formatDeliveryWindow(data.data.estimated_delivery_date) }}
-                </p>
-              </div>
               <div class="order-number">
                 {{ $t("orderNumber") }}: {{ data.data.order_id }}
               </div>
-              <div
-                class="delivery mt-5 desktop-deliverypin-container"
-                v-if="showOTP"
-              >
-                <p class="rider-pin">
-                  <span>
-                    {{ $t("mobile.pin") }}
-                  </span>
-                  <span class="rider-pin-value">
-                    {{
-                      Object.keys(data).length > 0
-                        ? data.data.confirmation_pin
-                        : "--"
-                    }}
-                  </span>
-                </p>
-                <p class="rider-pin-description">
-                  <i class="el-icon-info"></i>
-                  <span class="rider-pin-description-text">
-                    {{ $t("desktop.givePin") }}
-                  </span>
-                </p>
-              </div>
-              <div
-                v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
-                class="delivery mt-5"
-              >
-                <p class="date">{{ $t("desktop.packageDelivered") }}</p>
-                <p>
-                  {{ formatCompletionDate(data.data.order_completion_date) }}
-                </p>
-              </div>
-              <div
-                v-if="
-                  getStatus([10, 11]).includes($store.getters.getDeliveryStatus)
-                "
-                class="delivery mt-5"
-              >
-                <p class="date">{{ $t("desktop.orderCancelled") }}</p>
-                <p>
-                  {{
-                    formatCompletionDate(
-                      data.data.event_time_line[
-                        data.data.event_time_line.length - 1
-                      ].event_date
-                    )
-                  }}
-                </p>
-              </div>
-              <div
-                v-if="
-                  getStatus([]).includes($store.getters.getDeliveryStatus)
-                "
-                class="delivery mt-5"
-              >
-                <p class="failed-delivery-title">
-                  {{ $t("desktop.deliveryFailed.title") }}
-                </p>
-                <p class="failed-delivery-desc">
-                  {{ $t("desktop.deliveryFailed.unavailable") }}
-                </p>
-                <p class="failed-delivery-desc2">
-                  {{ $t("desktop.deliveryFailed.reschedule") }}
-                </p>
-                <el-button
-                  @click="showDatePicker()"
-                  class="show-datepicker-el-button"
-                >
-                  {{ $t("desktop.rescheduleDelivery") }}
-                </el-button>
-              </div>
+              <hr />
+              <ExpectedDelivery />
+              <DeliveryPin />
+              <ItemDelivered />
+              <OrderCanceled />
+              <RescheduleOrderButton />
             </div>
           </el-card>
         </el-col>
         <el-col :span="12">
+          <PaymentsCard v-if="showPaidCard"/>
           <RecepientDetails />
         </el-col>
       </el-row>
@@ -117,11 +34,13 @@
           <Rating
             v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
           />
-          <PaymentsCard />
-          <TrackingTimeline v-if="showTimeline"/>
+          <TrackingTimelines v-if="showTimeline"/>
         </el-col>
-        <el-col :span="12">
-          <OrderItems />
+        <el-col :span="12" :class="!getStatus([8,9,10,11,12]).
+        includes($store.getters.getDeliveryStatus) ?
+        'ordered-items-container-desktop' :
+        'ordered-items-container-desktp'">
+          <OrderedItemsHeader />
         </el-col>
       </el-row>
     </div>
@@ -130,11 +49,15 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import moment from 'moment';
 import TopHeader from '../../../views/fulfillment/header.vue';
 import RecepientDetails from '../../../views/fulfillment/recipient/recipient.vue';
-import TrackingTimeline from '../../../views/fulfillment/timeline/timelineV2.vue';
-import OrderItems from '../../../views/fulfillment/orderedItems/orderItems.vue';
+import TrackingTimelines from '../../../views/fulfillment/timeline/timelines.vue';
+import ExpectedDelivery from '../../../views/fulfillment/deliveryTimelines/expectedDelivery.vue';
+import DeliveryPin from '../../../views/fulfillment/deliveryTimelines/deliveryPin.vue';
+import ItemDelivered from '../../../views/fulfillment/deliveryTimelines/itemDelivered.vue';
+import OrderCanceled from '../../../views/fulfillment/deliveryTimelines/orderCanceled.vue';
+import RescheduleOrderButton from '../../../views/fulfillment/deliveryTimelines/rescheduleOrderButton.vue';
+import OrderedItemsHeader from '../../../views/fulfillment/orderedItems/orderedItemsHeader.vue';
 import PaymentsCard from '../../../views/fulfillment/POD/paymentsCard.vue';
 import Rating from '../../../views/fulfillment/rating/rating.vue';
 import statusMixin from '../../../mixins/status_mixin';
@@ -143,11 +66,16 @@ export default {
   name: 'DesktopLayout',
   components: {
     TopHeader,
-    OrderItems,
-    TrackingTimeline,
+    TrackingTimelines,
     RecepientDetails,
+    ExpectedDelivery,
+    ItemDelivered,
+    OrderCanceled,
+    RescheduleOrderButton,
+    DeliveryPin,
     Rating,
     PaymentsCard,
+    OrderedItemsHeader,
   },
   mixins: [statusMixin],
   data() {
@@ -171,48 +99,16 @@ export default {
   },
   computed: {
     ...mapGetters(['getDeliveryStatus', 'getData']),
-    showOTP() {
-      return this.getData.data.sale_of_goods_invoice === null
-        ? this.getStatus([8]).includes(this.getDeliveryStatus)
-        : (this.getStatus([8]).includes(this.getDeliveryStatus) && this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID');
-    },
-  },
-  methods: {
-    formatDate(date) {
-      return moment(new Date(date)).format('dddd, Do MMMM');
-    },
-    showDatePicker() {
-      this.$store.commit('setDatePickerVisible', true);
-    },
-    formatCompletionDate(date) {
-      return `${moment(new Date(date)).format('ddd, Do MMMM')} at ${moment(
-        new Date(date),
-      ).format('h:mm a')}`;
-    },
-    formatDeliveryWindow(date) {
-      const lowerLimit = moment(
-        new Date(
-          date.estimated_delivery_time - date.large_lower_limit * 60 * 1000,
-        ),
-      ).format('h a');
-      const upperLimit = moment(
-        new Date(
-          date.estimated_delivery_time + date.large_upper_limit * 60 * 1000,
-        ),
-      ).format('h a');
-      return `${lowerLimit} - ${upperLimit}`;
+    showPaidCard() {
+      return this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID';
     },
   },
 };
 </script>
 
 <style>
-.el-card {
+.expected-delivery-desktop-container {
   margin-left: 80px;
-  height: 14rem;
-}
-.order {
-  text-align: left;
 }
 .date {
   color: #324ba8;
@@ -246,5 +142,13 @@ export default {
 }
 .desktop-payments-container{
   padding-left: 60px;
+}
+.ordered-items-container-desktop {
+  margin-top: -10%;
+  padding-left: 100px;
+}
+.ordered-items-container-desktp {
+  margin-top: -3%;
+  padding-left: 85px;
 }
 </style>

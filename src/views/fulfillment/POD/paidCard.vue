@@ -1,21 +1,28 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template lang="">
-  <div class="payments-on-delivery-container">
-    <div>
-      <div class="payments-on-delivery-text">
-        KES {{ totalAmount }} has been paid for this delivery.
-      </div>
-      <span class="payments-on-delivery-button">
-        <a class="" @click="viewReceipt">View payment receipt</a>
+  <div class="payments-on-delivery-container paid-card-container">
+    <div class="d-flex">
+      <span>
+        <el-icon class="paid-check-icon"><SuccessFilled /></el-icon>
       </span>
+      <div class="paid-card-desc">
+        <p class="payments-on-delivery-text">
+          {{ currency }} {{ totalAmount }} {{$t("payments.paidForDelivery")}}.
+        </p>
+        <p class="payments-on-delivery-button">
+          <a class="view-receipt" @click="viewReceipt">{{$t("payments.viewPaymentReceipt")}}</a>
+        </p>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import { mapMutations } from 'vuex';
+import { SuccessFilled } from '@element-plus/icons';
 
 export default {
-  props: ['totalAmount'],
+  props: ['totalAmount', 'currency'],
+  components: { SuccessFilled },
   data() {
     return {};
   },
@@ -27,4 +34,20 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+<style>
+.paid-check-icon {
+  color: #064a23;
+  width: 26px;
+  height: 26px;
+}
+.paid-card-desc p{
+  margin: 0;
+  padding: 0
+}
+.paid-card-desc {
+  padding-left: 10px;
+}
+.paid-card-container {
+  padding: 20px 20px 20px 10px !important;
+}
+</style>
