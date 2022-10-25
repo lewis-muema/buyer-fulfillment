@@ -76,6 +76,15 @@ export default {
   border: 1px solid #c0c4cc;
   border-radius: 5px;
 }
+.payments-on-delivery-containerr {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  border: 1px solid #c0c4cc;
+  border-radius: 5px;
+}
 .payments-on-delivery-title {
   color: #9b101c;
   text-transform: uppercase;

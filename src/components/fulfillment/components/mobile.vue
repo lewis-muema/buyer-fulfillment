@@ -95,9 +95,6 @@ export default {
   margin: 0px 0px 20px !important;
   max-width: fit-content;
 }
-.el-timeline {
-  padding-right: 40px;
-}
 .order-number {
   font-weight: 600;
   font-size: 12px;

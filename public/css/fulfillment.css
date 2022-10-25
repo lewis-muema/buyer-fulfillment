@@ -23,12 +23,20 @@
 .fulfillment-header-sendy-logo {
   height: 50px;
   float: left;
-  margin-left: 10%;
+  margin-left: 10px;
+}
+.fulfillment-header-sendy-logo-desktop {
+  height: 50px;
+  float: left;
 }
 
 .fulfillment-header-language-menu {
   float: right;
+  width: max-content;
   margin-right: 20%;
+}
+.fulfillment-header-language-menu-desktop {
+  float: right;
   width: max-content;
 }
 .fulfillemnt-order-items-container {

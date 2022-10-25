@@ -17,7 +17,7 @@
         :disabled-dates="disabledDates"
         v-model="date"
         :wrapper-class="this.$store.getters.getMobile ?
-        'date-picker-mobile' : 'date-picker-desktop'"
+        '' : 'date-picker-desktop'"
       ></datepicker>
       <div>
         <button class="back-button" @click="visibleDatePicker = false">
@@ -152,7 +152,7 @@ export default {
   box-shadow: none !important;
 }
 .vuejs3-datepicker__calendar-topbar {
-  background-color: #324ba8;
+  background-color: #324ba8 !important;
 }
 .vuejs3-datepicker__calendar .cell.selected {
   background: #324ba8 !important ;
@@ -170,5 +170,8 @@ export default {
 }
 .date-picker-mobile {
   margin-left: 30px
+}
+.vuejs3-datepicker__calendar .disabled {
+  color: grey !important;
 }
 </style>

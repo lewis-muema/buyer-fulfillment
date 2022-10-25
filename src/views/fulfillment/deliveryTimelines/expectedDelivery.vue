@@ -1,5 +1,6 @@
 <template lang="">
   <div>
+    TT {{ showExpectedDeliveryCard }}
     <div
       :class="
         getMobile
@@ -41,12 +42,13 @@ export default {
   computed: {
     ...mapGetters(['getData', 'getDeliveryStatus', 'getMobile']),
     showExpectedDeliveryCard() {
-      return (
-        this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(this.getDeliveryStatus)
-        || this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 16]).includes(
-          this.getDeliveryStatus,
-        )
-      );
+      return this.getData.data.sale_of_goods_invoice !== null
+        ? (this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID'
+            && this.getStatus([16]).includes(this.getDeliveryStatus))
+            || this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(
+              this.getDeliveryStatus,
+            )
+        : this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(this.getDeliveryStatus);
     },
   },
   methods: {

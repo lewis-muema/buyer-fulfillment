@@ -209,7 +209,7 @@ export default {
   margin: 0 !important;
 }
 .payment-checkout-header-icon {
-  margin-top: -5px;
+  margin-top: -10px;
   font-size: 30px !important;
   font-weight: 700px !important;
   color: #909399 !important;
