@@ -1,6 +1,5 @@
 <template lang="">
   <div>
-    TT {{ showExpectedDeliveryCard }}
     <div
       :class="
         getMobile
