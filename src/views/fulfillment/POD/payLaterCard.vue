@@ -1,6 +1,6 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template lang="">
-  <div class="payments-on-delivery-container">
+  <div :class="getMobile ? 'payments-on-delivery-container' : 'payments-on-delivery-containerr'">
     <div class="" v-if="getMobile">
       <h1 class="payments-on-delivery-title">{{$t("payments.payYorDelivery")}}</h1>
       <p class="payments-on-delivery-amount">

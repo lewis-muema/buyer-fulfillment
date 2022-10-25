@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="desktop-container">
     <TopHeader />
     <PaymentsCard  v-if="!showPaidCard" />
     <div>
@@ -25,7 +25,7 @@
           </el-card>
         </el-col>
         <el-col :span="12">
-          <PaymentsCard v-if="showPaidCard"/>
+          <PaymentsCard v-if="showPaidCard" class="desktop-paid-card"/>
           <RecepientDetails />
         </el-col>
       </el-row>
@@ -36,10 +36,9 @@
           />
           <TrackingTimelines v-if="showTimeline"/>
         </el-col>
-        <el-col :span="12" :class="!getStatus([8,9,10,11,12]).
-        includes($store.getters.getDeliveryStatus) ?
-        'ordered-items-container-desktp' :
-        'ordered-items-container-desktop'">
+        <el-col :span="12" :class="orderedItemsStyling ?
+        'ordered-items-container-desktop' :
+        'ordered-items-container-desktp'">
           <OrderedItemsHeader />
         </el-col>
       </el-row>
@@ -102,14 +101,15 @@ export default {
     showPaidCard() {
       return this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID';
     },
+    orderedItemsStyling() {
+      return !this.getStatus([8, 9, 10, 11, 12]).includes(this.$store.getters.getDeliveryStatus)
+      && !this.showPaidCard;
+    },
   },
 };
 </script>
 
 <style>
-.expected-delivery-desktop-container {
-  margin-left: 80px;
-}
 .date {
   color: #324ba8;
   font-weight: 700;
@@ -140,15 +140,22 @@ export default {
 .order-number {
   font-weight: 600;
 }
-.desktop-payments-container{
-  padding-left: 60px;
-}
 .ordered-items-container-desktop {
   margin-top: -10%;
   padding-left: 100px;
 }
 .ordered-items-container-desktp {
   margin-top: -3%;
-  padding-left: 85px;
+  padding-left: 80px;
+}
+.desktop-paid-card {
+  margin-top: -20px;
+  margin-left: 80px;
+
+}
+.desktop-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

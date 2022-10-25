@@ -3,9 +3,9 @@
   <div class="pod-timeline-container">
     <p class="pod-timeline-title">Track Delivery</p>
     <div class="d-flex">
-      <p class="el-icon-minus timeline-pulse-icon"></p>
+      <p class="el-icon-minusss timeline-pulse-icon"></p>
       <div @click="trackingTimeline = !trackingTimeline" class="pod-timeline-desc mr-5">
-        View Progress
+        {{$t("timeline.viewProgress")}}
       </div>
       <el-icon class="timeline-arrow-icon" v-if="trackingTimeline"><ArrowDown /></el-icon>
       <el-icon v-else class="timeline-arrow-icon" ><ArrowUp /></el-icon>
@@ -60,5 +60,12 @@ export default {
 .timeline-arrow-icon {
   padding-top: 5px;
   margin-left: 5px
+}
+.el-icon-minusss {
+  background: #324ba8;
+  color: #324ba8 !important;
+  box-shadow: 0 0 0 0 #324ba8;
+  border-radius: 20px;
+  animation: pulse-blue 2s infinite;
 }
 </style>

@@ -26,6 +26,7 @@
   "mobile.otherItems": "other items",
   "mobile.pin": "PIN:",
   "orderItems.itemsDelivered": "Items being delivered",
+  "orderItems.products": "Products",
   "rating.contact": "If you have issues with your items, contact",
   "rating.deliveryHistory": "Delivery history",
   "rating.disliked": "I didn't like it",
@@ -118,5 +119,6 @@
   "payments.delivery": "delivery",
   "payments.itemsArrived": "Your items have arrived",
   "payments.payNow": "Pay Now",
-  "payments.pleasePayNow": "Please pay now, your items have arrived"
+  "payments.pleasePayNow": "Please pay now, your items have arrived",
+  "timeline.viewProgress": "View Progress"
 }

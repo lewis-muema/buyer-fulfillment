@@ -1,6 +1,6 @@
 <template lang="">
   <div :class="getMobile ? 'payments-on-delivery-container pay-now-container' :
-  'payments-on-delivery-container'">
+  'payments-on-delivery-containerr'">
     <div v-if="getMobile">
       <h1 class="pay-now-delivery-title">
         {{$t("payments.payYorDelivery")}}
@@ -23,7 +23,7 @@
         <el-icon class="warning-filled-icon"><WarningFilled /></el-icon>
         <div class="paid-card-desc">
           <p class="desktop-pay-text">{{$t("payments.pay")}}
-          {{ currency }} {{ totalAmount }} {{$t("payments.delivery")}}.</p>
+            {{ currency }} {{ totalAmount }} {{$t("payments.delivery")}}.</p>
           <p>{{$t("payments.pleasePayNow")}}.</p>
         </div>
         </div>

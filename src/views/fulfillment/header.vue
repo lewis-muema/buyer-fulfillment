@@ -6,11 +6,14 @@
         <img
           src="https://assets.website-files.com/5be92ce6e4a547dcc61b976c/60253f92874eabf1a8ecf88f_Logo_SendyMain_Colored_Normal_SVG.svg"
           alt="Sendy logo"
-          class="fulfillment-header-sendy-logo"
+          :class="this.$store.getters.getMobile ?
+          'fulfillment-header-sendy-logo': 'fulfillment-header-sendy-logo-desktop' "
         />
       </div>
       <div class="fulfillment-header-menu">
-        <el-dropdown @command="changeLanguage" class="fulfillment-header-language-menu">
+        <el-dropdown @command="changeLanguage" :class="this.$store.getters.getMobile ?
+        'fulfillment-header-language-menu'
+        : 'fulfillment-header-language-menu-desktop'">
           <span class="el-dropdown-link language-change">
             {{ activeLanguage }}
             <el-icon><ArrowDown /></el-icon>
