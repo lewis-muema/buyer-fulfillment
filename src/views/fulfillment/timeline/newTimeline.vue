@@ -116,6 +116,10 @@ export default {
       return this.$store.getters.getData.data.sale_of_goods_invoice !== null
       && this.getMobile;
     },
+    timelineStyling() {
+      return !this.getMobile
+      && this.getStatus([8, 9, 10, 11, 12]).includes(this.$store.getters.getDeliveryStatus);
+    },
   },
   methods: {
     ...mapMutations(['setDatePickerVisible']),
@@ -143,12 +147,6 @@ export default {
   color: #324ba8;
   font-weight: 700;
 }
-.timeline-desktop {
-  margin-left: 30px;
-}
-.el-timeline-item-desktop {
-  padding-right: 40% !important;
-}
 .timeline-mobile {
   margin: 10px 20px;
   color: #606266;
@@ -162,9 +160,6 @@ export default {
 }
 .timeline-events-mobile {
   margin: 25px 0px;
-}
-.timeline-desktop-container {
-  padding-left: 45px;
 }
 .mobile-confirmation-pin-container {
   background: #f5f5f5;

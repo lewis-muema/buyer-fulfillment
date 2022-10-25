@@ -5,7 +5,7 @@
       v-model="setDetailsDialogStatus"
       :width="$store.getters.getMobile ? '100%' : '30%'"
       :fullscreen="$store.getters.getMobile ? true : false"
-      :show-close="$store.getters.getMobile ? true : false"
+      :show-close="true"
       center
       :close-on-click-modal="true"
     >

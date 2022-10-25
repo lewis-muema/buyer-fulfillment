@@ -7,7 +7,7 @@
         <div class="fulfillemnt-order-items-title" v-if="$store.getters.getMobile">
           {{ Object.keys(getData).length > 0 ? getData.data.seller_name : "--" }}
         </div>
-        <h3 v-if="!$store.getters.getMobile">{{ $t('orderItems.itemsDelivered') }}</h3>
+        <h3 v-if="!$store.getters.getMobile">{{ $t('orderItems.products') }}</h3>
         <div class="fulfillemnt-order-items-description d-flex">
           <div
             class="fulfillemnt-order-items-header"
