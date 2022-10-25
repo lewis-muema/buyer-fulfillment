@@ -97,5 +97,22 @@
   "updateDetails.recipientName": "Nom est obligatoire",
   "updateDetails.updateDeliveryInfo": "Mettre à jour les renseignements de la livraison",
   "updateDetails.validPhoneNumber": "Saisissez un numéro de téléphone valide",
-  "updateDetails.warning": "Avertissement"
+  "updateDetails.warning": "Avertissement",
+  "checkout.amountPaid": "Amount Paid",
+  "checkout.subTotal":"SubTotal",
+  "checkout.deliveryFee": "Delivery Fee",
+  "checkout.total": "Total",
+  "checkout.continueToPay": "Continue to pay",
+  "checkout.paymentDetails": "Payment details",
+  "checkout.priceBreakdown": "Price breakdown",
+  "payments.viewPaymentReceipt": "View payment receipt",
+  "payments.paidForDelivery": "has been paid for this delivery",
+  "payments.payYorDelivery": "Pay for your delivery",
+  "payments.youCanPayNow": "You can pay now or prepare to pay when your items arrive",
+  "payments.makePayment": "Make Payment",
+  "payments.pay":"Pay",
+  "payments.delivery": "delivery",
+  "payments.itemsArrived": "Your items have arrived",
+  "payments.payNow": "Pay Now",
+  "payments.pleasePayNow": "Please pay now, your items have arrived"
 }

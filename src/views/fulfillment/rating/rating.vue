@@ -2,184 +2,30 @@
   <!-- eslint-disable -->
   <div v-if="$store.getters.getRatingVisible">
     <div :class="$store.getters.getMobile ? 'rate-delivery-mobile' : 'rate-delivery-desktop'">
-      <p :class="$store.getters.getMobile ? 'delivery-title-mobile' : 'delivery-title-desktop'">
-        {{ $t('rating.howWasYourDelivery') }}
-      </p>
-      <div :class="$store.getters.getMobile ? 'icons-mobile' : 'icons-desktop'">
-        <div class="thumbs" :class="$store.getters.getMobile ? 'thumbs-mobile' : 'thumbs-desktop'">
-          <div
-            class="thumbs-outline"
-            :class="rating === 1 ? 'thumbs-outline-active' : activeClass"
-            @click="rating = 1"
-          >
-            <i class="bi bi-hand-thumbs-up-fill h1"></i>
-          </div>
-          <div v-if="$store.getters.getMobile">
-            {{ $t('rating.liked') }}
-          </div>
-        </div>
-        <div class="thumbs" :class="$store.getters.getMobile ? 'thumbs-mobile' : 'thumbs-desktop'">
-          <div
-            class="thumbs-outline"
-            :class="rating === 2 ? 'thumbs-outline-active' : activeClass"
-            @click="rating = 2"
-          >
-            <i class="bi bi-hand-thumbs-down-fill h1"></i>
-          </div>
-          <div v-if="$store.getters.getMobile">
-            {{ $t('rating.disliked') }}
-          </div>
-        </div>
-      </div>
-      <div
-        v-if="[1, 2].includes(rating) && !submitStatus"
-        :class="
-          $store.getters.getMobile
-            ? 'rating-feedback-container-mobile'
-            : 'rating-feedback-container-desktop'
-        "
-      >
-        <div class="rating-feedback">
-          <div>
-            {{ title }}
-          </div>
-          <textarea
-            class="feedback-input"
-            cols="40"
-            rows="5"
-            :placeholder="placeholder"
-            v-model="comment"
-          >
-          </textarea>
-          <button class="feedback-submit-button" @click="submitRating(rating)">
-            {{ $t('rating.submitFeedback') }}
-          </button>
-        </div>
-      </div>
+      <RatingCard />
     </div>
     <div :class="!$store.getters.getMobile ? 'items mt-3' : 'items-mobile'">
-      <h5 :class="$store.getters.getMobile ? 'items-title-mobile' : ''">
-        {{ $t('rating.issues') }}
-      </h5>
-      <p>
-        {{ $t('rating.contact') }} {{ seller_name }}
-      </p>
-      <br />
-      <div class="div">
-        <h5 :class="$store.getters.getMobile ? 'items-title-mobile' : ''">
-          {{ $t('rating.deliveryHistory') }}
-        </h5>
-        <div>
-          <span
-            class="el-dropdown-link view-history"
-            @click="$store.commit('setTimelineVisible', !$store.getters.getTimelineVisible)"
-          >
-            {{ $t('rating.viewDeliveryHistory') }}
-            <el-icon><ArrowDown /></el-icon>
-          </span>
-        </div>
-      </div>
+      <RatingIssues />
+      <DeliveryHistory />
     </div>
   </div>
 </template>
 
 <script>
-import { ArrowDown } from '@element-plus/icons';
-import { mapActions, mapMutations, mapGetters } from 'vuex';
-import eventsMixin from '../../../mixins/events_mixin';
-import NotificationMxn from '../../../mixins/nofication_mixin';
+import { mapGetters } from 'vuex';
+import RatingCard from './ratingCard.vue';
+import RatingIssues from './ratingIssues.vue';
+import DeliveryHistory from './deliveryHistory.vue';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
   name: 'RateOrder',
-  mixins: [NotificationMxn, eventsMixin],
-  components: { ArrowDown },
-  data() {
-    return {
-      rating: 0,
-      rate: true,
-      comment: '',
-      submitStatus: false,
-      placeholder: '',
-      title: '',
-      seller_name: this.$store.getters.getData.data.seller_name,
-    };
-  },
-  watch: {
-    rating() {
-      this.title = this.rating === 1 ? this.$t('rating.whatDidYouLike') : this.$t('rating.whatWentWrong');
-      this.placeholder = this.rating === 1 ? this.$t('rating.tellUsWhatYouLiked') : this.$t('rating.tellUsWhatWentWrong');
-      this.comment = '';
-      this.submitStatus = false;
-    },
-    '$store.getters.getTimelineVisible': function getTimelineVisible(val) {
-      if (this.$store.getters.getMobile) {
-        this.$store.commit('setRecipientVisible', val);
-      }
-      this.sendSegmentEvents({
-        event: 'View_delivery_history',
-        data: {
-          userId: this.$store.getters.getData.data.destination.name,
-        },
-      });
-    },
+  mixins: [statusMixin],
+  components: {
+    RatingCard, RatingIssues, DeliveryHistory,
   },
   computed: {
-    ...mapGetters(['getTimelineVisible']),
-    activeClass() {
-      return !this.$store.getters.getMobile ? 'thumbs-outline-desktop' : 'thumbs-outline-mobile';
-    },
-  },
-  mounted() {
-    if (this.$store.getters.getData.data.rated === true) {
-      this.$store.commit('setRatingVisible', !this.$store.getters.getRatingVisible);
-    }
-    window.addEventListener('language-changed', () => {
-      this.title = this.rating === 1 ? this.$t('rating.whatDidYouLike') : this.$t('rating.whatWentWrong');
-      this.placeholder = this.rating === 1 ? this.$t('rating.tellUsWhatYouLiked') : this.$t('rating.tellUsWhatWentWrong');
-    });
-  },
-  methods: {
-    ...mapActions(['rateOrder']),
-    ...mapMutations(['setTimelineVisible']),
-    async submitRating(status) {
-      const payload = {
-        love: status === 1,
-        comment: this.comment,
-      };
-      const fullPayload = {
-        app: process.env.FULFILMENT_SERVER,
-        values: payload,
-        endpoint: `buyer/orders/${this.$store.getters.getData.data.order_id}/rate`,
-      };
-      try {
-        this.submitStatus = true;
-        const data = await this.rateOrder(fullPayload);
-        const notification = {
-          title: this.$t('rating.ratingSubmitted'),
-          level: 1,
-          message: '',
-        };
-        this.displayNotification(notification);
-        this.$store.commit('setRatingVisible', !this.$store.getters.getRatingVisible);
-        this.sendSegmentEvents({
-          event: 'Rate_delivery',
-          data: {
-            userId: this.$store.getters.getData.data.destination.name,
-            // eslint-disable-next-line max-len
-            rating: status === 1 ? status : 0,
-          },
-        });
-        return data;
-      } catch (error) {
-        const notification = {
-          title: this.$t('rating.ratingFailed'),
-          level: 3,
-          message: '',
-        };
-        this.displayNotification(notification);
-        return error;
-      }
-    },
+    ...mapGetters(['getDeliveryStatus', 'getData']),
   },
 };
 </script>
@@ -297,7 +143,6 @@ export default {
 }
 .icons-desktop {
   display: flex;
-  width: 30%;
 }
 .el-dropdown-link {
   color: #324ba8;

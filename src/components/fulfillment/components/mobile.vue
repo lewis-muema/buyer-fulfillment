@@ -6,10 +6,11 @@
     <DeliveryPin />
     <ItemDelivered />
     <OrderCanceled />
+    <RescheduleOrderButton />
     <PaymentsCard />
     <TrackingTimelines v-if="showTrackingTimeline" />
-    <RecepientDetails v-if="!getStatus([9]).includes($store.getters.getDeliveryStatus)" />
     <RateOrder v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
+    <RecepientDetails />
   </div>
 </template>
 
@@ -25,6 +26,7 @@ import ExpectedDelivery from '../../../views/fulfillment/deliveryTimelines/expec
 import DeliveryPin from '../../../views/fulfillment/deliveryTimelines/deliveryPin.vue';
 import ItemDelivered from '../../../views/fulfillment/deliveryTimelines/itemDelivered.vue';
 import OrderCanceled from '../../../views/fulfillment/deliveryTimelines/orderCanceled.vue';
+import RescheduleOrderButton from '../../../views/fulfillment/deliveryTimelines/rescheduleOrderButton.vue';
 
 export default {
   name: 'MobileLayout',
@@ -35,6 +37,7 @@ export default {
     DeliveryPin,
     ItemDelivered,
     OrderCanceled,
+    RescheduleOrderButton,
     PaymentsCard,
     TrackingTimelines,
     RecepientDetails,
@@ -85,9 +88,6 @@ export default {
   font-size: 13px;
   margin: 5px 0px;
 }
-.fulfillemnt-order-items-header {
-  text-transform: capitalize;
-}
 .change-delivery-el-button {
   margin: 0px 0px 20px !important;
 }
@@ -100,5 +100,6 @@ export default {
 }
 .order-number {
   font-weight: 600;
+  font-size: 12px;
 }
 </style>

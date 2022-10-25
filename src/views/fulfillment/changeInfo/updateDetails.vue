@@ -74,7 +74,7 @@
           <label for="floatingInput">{{ $t("updateDetails.floorNumber") }}</label>
         </div>
         <div class="mobile-changeLocation-warning-container" v-if="isToday">
-          <i class="el-icon-info mt-3"></i>
+          <el-icon><InfoFilled /></el-icon>
           <p class="ml-2 mt-3 mobile-changeLocation-warning-text">
             {{ $t("updateDetails.changeLocation") }}
           </p>
@@ -154,6 +154,7 @@
 
 <script>
 import { mapMutations, mapGetters } from 'vuex';
+import { InfoFilled } from '@element-plus/icons';
 import moment from 'moment';
 import { useVuelidate } from '@vuelidate/core';
 import { required, maxLength } from '@vuelidate/validators';
@@ -166,6 +167,7 @@ export default {
   name: 'UpdateDetails',
   mixins: [eventsMixin, statusMixin, notificationMxn],
   components: {
+    InfoFilled,
     ReviewChanges,
   },
   setup() {

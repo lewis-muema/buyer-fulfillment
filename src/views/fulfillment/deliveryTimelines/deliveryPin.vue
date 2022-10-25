@@ -1,6 +1,7 @@
 <template lang="">
   <div>
-    <div class="fulfillemnt-order-items-expected-deivery" v-if="showOTP">
+    <div :class="getMobile ? 'fulfillemnt-order-items-expected-deivery' :
+    'desktop-delivery-pin-container'" v-if="showOTP">
       <p class="fulfillemnt-order-items-expected-deivery-title">
         {{ $t("desktop.givePin") }}
       </p>
@@ -21,7 +22,7 @@ export default {
   mixins: [statusMixin],
   name: 'DeliveryPin',
   computed: {
-    ...mapGetters(['getData', 'getDeliveryStatus', 'getPaymentSuccessful']),
+    ...mapGetters(['getData', 'getDeliveryStatus', 'getPaymentSuccessful', 'getMobile']),
     showOTP() {
       return this.getData.data.sale_of_goods_invoice === null
         ? this.getStatus([8]).includes(this.getDeliveryStatus)
@@ -30,4 +31,8 @@ export default {
   },
 };
 </script>
-<style lang=""></style>
+<style>
+.desktop-delivery-pin-container {
+  margin: 0 !important;
+}
+</style>

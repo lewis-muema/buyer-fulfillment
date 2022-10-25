@@ -3,24 +3,21 @@
     <el-dialog
       v-model="visibleDatePicker"
       :width="$store.getters.getMobile ? '80%' : '30%'"
-      center
+      :center="true"
+      :align-center="true"
       :close-on-click-modal="true"
+      :fullscreen="$store.getters.getMobile ? true : false"
     >
       <div class="date-picker-title">
         {{ $t("reschedule.pickADate") }}
       </div>
-      <!-- <v-date-picker
-        v-model="date"
-        :allowed-dates="allowedDates"
-        color="#324BA8"
-        :locale="locale"
-      ></v-date-picker> -->
       <datepicker
-        name="uniquename"
         :inline="true"
         :value="date"
         :disabled-dates="disabledDates"
         v-model="date"
+        :wrapper-class="this.$store.getters.getMobile ?
+        'date-picker-mobile' : 'date-picker-desktop'"
       ></datepicker>
       <div>
         <button class="back-button" @click="visibleDatePicker = false">
@@ -161,11 +158,17 @@ export default {
   background: #324ba8 !important ;
 }
 .vuejs3-datepicker__calendar .cell {
-  border-radius: 50px;
+  border-radius: 50%;
 }
 .vuejs3-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover,
 .vuejs3-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover,
 .vuejs3-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
   border: 1px solid #324ba8;
+}
+.date-picker-desktop {
+  margin-left: 17%;
+}
+.date-picker-mobile {
+  margin-left: 30px
 }
 </style>
