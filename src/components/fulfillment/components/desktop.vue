@@ -38,8 +38,8 @@
         </el-col>
         <el-col :span="12" :class="!getStatus([8,9,10,11,12]).
         includes($store.getters.getDeliveryStatus) ?
-        'ordered-items-container-desktop' :
-        'ordered-items-container-desktp'">
+        'ordered-items-container-desktp' :
+        'ordered-items-container-desktop'">
           <OrderedItemsHeader />
         </el-col>
       </el-row>
