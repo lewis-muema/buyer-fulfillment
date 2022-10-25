@@ -3,17 +3,17 @@
   'payments-on-delivery-container'">
     <div v-if="getMobile">
       <h1 class="pay-now-delivery-title">
-        Pay for your delivery
+        {{$t("payments.payYorDelivery")}}
       </h1>
       <p class="payments-on-delivery-amount">
         {{currency}} {{ totalAmount }}
       </p>
       <p class="payments-on-delivery-text">
-        Your items have arrived
+        {{$t("payments.itemsArrived")}}
       </p>
       <span class="payments-on-delivery-button">
         <el-button class="pay-now-button" @click="showCheckoutModal">
-          Pay Now
+          {{$t("payments.payNow")}}
         </el-button>
       </span>
     </div>
@@ -22,13 +22,14 @@
         <div class="d-flex">
         <el-icon class="warning-filled-icon"><WarningFilled /></el-icon>
         <div class="paid-card-desc">
-          <p class="desktop-pay-text">Pay {{ currency }} {{ totalAmount }} delivery.</p>
-          <p>Please pay now, your items have arrived.</p>
+          <p class="desktop-pay-text">{{$t("payments.pay")}}
+          {{ currency }} {{ totalAmount }} {{$t("payments.delivery")}}.</p>
+          <p>{{$t("payments.pleasePayNow")}}.</p>
         </div>
         </div>
         <div class="make-payment-button-container">
           <el-button @click="showCheckoutModal" class="make-payment-button">
-            Make Payment
+            {{$t("payments.makePayment")}}
           </el-button>
         </div>
       </div>

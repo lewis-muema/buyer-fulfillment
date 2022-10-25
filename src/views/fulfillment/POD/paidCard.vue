@@ -7,10 +7,10 @@
       </span>
       <div class="paid-card-desc">
         <p class="payments-on-delivery-text">
-          {{ currency }} {{ totalAmount }} has been paid for this delivery.
+          {{ currency }} {{ totalAmount }} {{$t("payments.paidForDelivery")}}.
         </p>
         <p class="payments-on-delivery-button">
-          <a class="view-receipt" @click="viewReceipt">View payment receipt</a>
+          <a class="view-receipt" @click="viewReceipt">{{$t("payments.viewPaymentReceipt")}}</a>
         </p>
       </div>
     </div>

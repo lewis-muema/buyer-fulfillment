@@ -2,16 +2,16 @@
 <template lang="">
   <div class="payments-on-delivery-container">
     <div class="" v-if="getMobile">
-      <h1 class="payments-on-delivery-title">Pay for your delivery</h1>
+      <h1 class="payments-on-delivery-title">{{$t("payments.payYorDelivery")}}</h1>
       <p class="payments-on-delivery-amount">
         <span> {{ currency }}</span>
         {{ totalAmount }}
       </p>
       <p class="payments-on-delivery-text">
-        You can pay now or prepare to pay when your items arrive
+        {{$t("payments.youCanPayNow")}}
       </p>
       <span class="payments-on-delivery-button d-flex">
-        <p class="" @click="showCheckoutModal">Make Payment</p>
+        <p class="" @click="showCheckoutModal">{{$t("payments.makePayment")}}</p>
         <el-icon class="payments-on-delivery-arrow-icon ml-5">
           <Right class="el-icon-right"
         /></el-icon>
@@ -22,13 +22,14 @@
         <div class="d-flex">
         <el-icon class="warning-filled-icon"><WarningFilled /></el-icon>
         <div class="paid-card-desc">
-          <p class="desktop-pay-text">Pay {{ currency }} {{ totalAmount }} delivery.</p>
-          <p>You can pay now or prepare to pay when your items arrive.</p>
+          <p class="desktop-pay-text">{{$t("payments.pay")}} {{ currency }}
+          {{ totalAmount }} {{$t("payments.delivery")}}.</p>
+          <p> {{$t("payments.youCanPayNow")}}.</p>
         </div>
         </div>
         <div class="make-payment-button-container">
           <el-button @click="showCheckoutModal" class="make-payment-button">
-            Make Payment
+            {{$t("payments.makePayment")}}
           </el-button>
         </div>
       </div>

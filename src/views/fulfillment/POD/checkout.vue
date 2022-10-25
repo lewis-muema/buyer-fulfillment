@@ -15,11 +15,11 @@
         </div>
         <div class="text-desc">
           <h5>{{ showCheckoutModal ? "Checkout" : "Receipt" }}</h5>
-          <p v-if="showCheckoutModal">Price breakdown</p>
+          <p v-if="showCheckoutModal">{{ $t("checkout.priceBreakdown") }}</p>
         </div>
       </div>
       <div v-if="showReceiptModal">
-        <span>Amount Paid&nbsp;</span>
+        <span>{{ $t("checkout.amountPaid") }}&nbsp;</span>
         <span> {{ currency }} {{ invoicedAmount }}</span>
         <p>{{formatDate(getData.data.scheduled_delivery_date)}}</p>
       </div>
@@ -47,14 +47,14 @@
       </div>
       <div class="payment-amount-summary-container">
         <span class="checkout-subtotal">
-          <p>SubTotal</p>
+          <p>{{$t("checkout.subTotal")}}</p>
           <p>
             {{ currency }}
             {{ subtotal }}
           </p>
         </span>
         <span class="checkout-delivery-fee">
-          <p>Delivery Fee</p>
+          <p>{{$t("checkout.deliveryFee")}}</p>
           <p>
             {{ currency }}
             {{ fulfillmentFee }}
@@ -63,16 +63,16 @@
         <hr class="price-breakdown-divider" />
       </div>
       <span class="checkout-total-amount">
-        <p>Total</p>
+        <p>{{$t("checkout.total")}}</p>
         <p>{{ currency }} {{ showCheckoutModal ? totalAmount : invoicedAmount }}</p>
       </span>
       <div class="d-grid gap-2 col-12 mx-auto" v-if="showCheckoutModal">
         <el-button class="change-delivery-el-button" @click="submitToPay">
-          Continue to Pay
+          {{$t("checkout.continueToPay")}}
         </el-button>
       </div>
       <div v-if="showReceiptModal">
-        <p>Payment details</p>
+        <p> {{$t("checkout.paymentDetails")}}</p>
         <div class="text-desc">
           <p>Mpesa</p>
         </div>
