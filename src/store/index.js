@@ -18,6 +18,7 @@ export default createStore({
       timelineVisible: true,
       recipientVisible: true,
       ratingVisible: true,
+      ratingcardVisible: true,
       datePickerVisible: false,
       checkoutDialogVisible: false,
       reviewDialogVisible: false,

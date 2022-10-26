@@ -1,5 +1,5 @@
 <template lang="">
-  <div>
+  <div v-if="$store.getters.getRatingVisible">
     <h5 :class="$store.getters.getMobile ? 'items-title-mobile' : ''">
         {{ $t('rating.issues') }}
       </h5>
