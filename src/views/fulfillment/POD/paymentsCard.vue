@@ -1,6 +1,6 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template lang="">
-  <div :class="!this.getMobile ? 'desktop-payments-container' : ''">
+  <div :class="!this.getMobile ? 'desktop-payments-container' : ''" v-if="podCard">
     <PayLaterCard
       v-if="showMakePaymentsCard"
       :totalAmount="this.totalAmount"
@@ -62,6 +62,9 @@ export default {
     },
     currency() {
       return this.getData.data.sale_of_goods_invoice.currency;
+    },
+    podCard() {
+      return this.getData.data.sale_of_goods_invoice !== null;
     },
   },
 };

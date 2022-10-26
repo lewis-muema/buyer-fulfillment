@@ -1,20 +1,16 @@
 <template>
   <div class="desktop-container">
     <TopHeader />
-    <PaymentsCard  v-if="!showPaidCard" />
+    <PaymentsCard v-if="!showPaidCard" />
     <div>
       <el-row>
         <el-col :span="12">
           <el-card shadow="never" class="expected-delivery-desktop-container">
             <div>
               <h3>
-                {{
-                  Object.keys(data).length > 0 ? data.data.seller_name : "--"
-                }}
+                {{ Object.keys(data).length > 0 ? data.data.seller_name : "--" }}
               </h3>
-              <div class="order-number">
-                {{ $t("orderNumber") }}: {{ data.data.order_id }}
-              </div>
+              <div class="order-number">{{ $t("orderNumber") }}: {{ data.data.order_id }}</div>
               <hr />
               <ExpectedDelivery />
               <DeliveryPin />
@@ -25,20 +21,23 @@
           </el-card>
         </el-col>
         <el-col :span="12">
-          <PaymentsCard v-if="showPaidCard" class="desktop-paid-card"/>
+          <PaymentsCard v-if="showPaidCard" class="desktop-paid-card" />
           <RecepientDetails />
         </el-col>
       </el-row>
       <el-row class="el-row">
         <el-col :span="12">
-          <Rating
-            v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)"
-          />
-          <TrackingTimelines v-if="showTimeline"/>
+          <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
+          <TrackingTimelines v-if="showTimeline" />
         </el-col>
-        <el-col :span="12" :class="orderedItemsStyling ?
-        'ordered-items-container-desktop' :
-        'ordered-items-container-desktp'">
+        <el-col
+          :span="12"
+          :class="
+            orderedItemsStyling
+              ? 'ordered-items-container-desktop'
+              : 'ordered-items-container-desktp'
+          "
+        >
           <OrderedItemsHeader />
         </el-col>
       </el-row>
@@ -99,11 +98,15 @@ export default {
   computed: {
     ...mapGetters(['getDeliveryStatus', 'getData']),
     showPaidCard() {
-      return this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID';
+      return this.getData.data.sale_of_goods_invoice !== null
+        ? this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID'
+        : '';
     },
     orderedItemsStyling() {
-      return !this.getStatus([8, 9, 10, 11, 12]).includes(this.$store.getters.getDeliveryStatus)
-      && !this.showPaidCard;
+      return (
+        !this.getStatus([8, 9, 10, 11, 12]).includes(this.$store.getters.getDeliveryStatus)
+        && !this.showPaidCard
+      );
     },
   },
 };
@@ -151,7 +154,6 @@ export default {
 .desktop-paid-card {
   margin-top: -20px;
   margin-left: 80px;
-
 }
 .desktop-container {
   max-width: 1200px;

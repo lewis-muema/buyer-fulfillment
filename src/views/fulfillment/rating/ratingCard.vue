@@ -1,6 +1,6 @@
 <!-- eslint-disable -->
 <template lang="">
-      <div>
+      <div v-if="getRatingcardVisible" :class="$store.getters.getMobile ? 'rate-delivery-mobile' : 'rate-delivery-desktop'">
       <p :class="$store.getters.getMobile ? 'delivery-title-mobile' : 'delivery-title-desktop'">
         {{ $t('rating.howWasYourDelivery') }}
       </p>
@@ -58,7 +58,7 @@
       </div>
 </template>
 <script>
-import { mapActions, mapMutations } from 'vuex';
+import { mapActions, mapMutations, mapGetters } from 'vuex';
 import NotificationMxn from '../../../mixins/nofication_mixin';
 import eventsMixin from '../../../mixins/events_mixin';
 
@@ -79,6 +79,9 @@ export default {
     if (this.$store.getters.getData.data.rated === true) {
       this.$store.commit('setRatingVisible', !this.$store.getters.getRatingVisible);
     }
+    if (this.$store.getters.getData.data.rated === true) {
+      this.setRatingcardVisible(false);
+    }
     window.addEventListener('language-changed', () => {
       this.title = this.rating === 1 ? this.$t('rating.whatDidYouLike') : this.$t('rating.whatWentWrong');
       this.placeholder = this.rating === 1 ? this.$t('rating.tellUsWhatYouLiked') : this.$t('rating.tellUsWhatWentWrong');
@@ -93,13 +96,14 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['getRatingcardVisible']),
     activeClass() {
       return !this.$store.getters.getMobile ? 'thumbs-outline-desktop' : 'thumbs-outline-mobile';
     },
   },
   methods: {
     ...mapActions(['rateOrder']),
-    ...mapMutations(['setTimelineVisible']),
+    ...mapMutations(['setTimelineVisible', 'setRatingcardVisible']),
     async submitRating(status) {
       const payload = {
         love: status === 1,
@@ -119,7 +123,7 @@ export default {
           message: '',
         };
         this.displayNotification(notification);
-        this.$store.commit('setRatingVisible', !this.$store.getters.getRatingVisible);
+        this.setRatingcardVisible(false);
         this.sendSegmentEvents({
           event: 'Rate_delivery',
           data: {
@@ -143,5 +147,4 @@ export default {
 };
 </script>
 <style lang="">
-
 </style>

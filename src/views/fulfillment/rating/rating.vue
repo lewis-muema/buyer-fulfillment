@@ -1,9 +1,7 @@
 <template>
   <!-- eslint-disable -->
-  <div v-if="$store.getters.getRatingVisible">
-    <div :class="$store.getters.getMobile ? 'rate-delivery-mobile' : 'rate-delivery-desktop'">
-      <RatingCard />
-    </div>
+  <div>
+    <RatingCard />
     <div :class="!$store.getters.getMobile ? 'items mt-3' : 'items-mobile'">
       <RatingIssues />
       <DeliveryHistory />
@@ -59,6 +57,7 @@ export default {
 }
 .thumbs-desktop {
   color: #c0c4cc;
+  padding-right: 50px;
 }
 .thumbs-mobile {
   color: #c0c4cc;

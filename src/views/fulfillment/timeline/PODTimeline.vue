@@ -1,7 +1,7 @@
 <!-- eslint-disable  -->
 <template>
-  <div class="pod-timeline-container">
-    <p class="pod-timeline-title">Track Delivery</p>
+  <div class="pod-timeline-container" v-if="$store.getters.getTimelineVisible">
+    <p class="pod-timeline-title">{{$t("timeline.trackDelivery")}}</p>
     <div class="d-flex">
       <p class="el-icon-minusss timeline-pulse-icon"></p>
       <div @click="trackingTimeline = !trackingTimeline" class="pod-timeline-desc mr-5">
