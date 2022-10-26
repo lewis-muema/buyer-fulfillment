@@ -8,8 +8,8 @@
     <OrderCanceled />
     <RescheduleOrderButton />
     <PaymentsCard />
-    <TrackingTimelines v-if="showTrackingTimeline" />
     <RateOrder v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
+    <TrackingTimelines  />
     <RecepientDetails />
   </div>
 </template>

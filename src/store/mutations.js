@@ -59,4 +59,7 @@ export default {
   setOrderTimelines(state, val) {
     state.orderTimelines = val;
   },
+  setRatingcardVisible(state, val) {
+    state.ratingcardVisible = val;
+  },
 };

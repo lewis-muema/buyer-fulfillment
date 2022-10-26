@@ -20,4 +20,5 @@ export default {
   getOrderEvents: (state) => state.orderEvents,
   getLanguage: (state) => state.language,
   getCountryData: (state) => state.countryData,
+  getRatingcardVisible: (state) => state.ratingcardVisible,
 };

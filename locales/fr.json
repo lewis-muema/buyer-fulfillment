@@ -114,5 +114,6 @@
   "payments.delivery": "delivery",
   "payments.itemsArrived": "Your items have arrived",
   "payments.payNow": "Pay Now",
-  "payments.pleasePayNow": "Please pay now, your items have arrived"
+  "payments.pleasePayNow": "Please pay now, your items have arrived",
+  "timeline.trackDelivery" : "Track Delivery"
 }
