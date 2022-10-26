@@ -1,6 +1,5 @@
 <template>
   <div class="desktop-container">
-    TTTT -- {{ showPaidCard }}
     <TopHeader />
     <PaymentsCard v-if="!showPaidCard" />
     <div>

@@ -120,5 +120,6 @@
   "payments.itemsArrived": "Your items have arrived",
   "payments.payNow": "Pay Now",
   "payments.pleasePayNow": "Please pay now, your items have arrived",
-  "timeline.viewProgress": "View Progress"
+  "timeline.viewProgress": "View Progress",
+  "timeline.trackDelivery" : "Track Delivery"
 }
