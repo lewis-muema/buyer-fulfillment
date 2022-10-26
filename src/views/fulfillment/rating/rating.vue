@@ -32,7 +32,6 @@ export default {
 
 <style>
 .rate-delivery-desktop {
-  margin-left: 80px;
   border: 1px solid #c8c8c8;
   border-radius: 5px;
   display: flex;
@@ -121,7 +120,6 @@ export default {
 }
 .items {
   text-align: left;
-  margin-left: 80px;
   margin-bottom: 50px;
 }
 .items-mobile {

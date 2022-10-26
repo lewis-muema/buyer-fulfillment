@@ -119,6 +119,7 @@ export default {
   font-size: 16px;
   line-height: 28px;
   text-decoration: none;
+  cursor: pointer;
 }
 .payments-on-delivery-arrow-icon {
   font-weight: 600 !important;
