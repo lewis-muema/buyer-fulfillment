@@ -41,13 +41,10 @@ export default {
   computed: {
     ...mapGetters(['getData', 'getDeliveryStatus', 'getMobile']),
     showExpectedDeliveryCard() {
-      return this.getData.data.sale_of_goods_invoice !== null
-        ? (this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID'
-            && this.getStatus([16]).includes(this.getDeliveryStatus))
-            || this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(
-              this.getDeliveryStatus,
-            )
-        : this.getStatus([0, 1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15]).includes(this.getDeliveryStatus);
+      const partnerArrived = (this.getData.data.event_time_line
+        .map((e) => e.event_code)
+        .indexOf('event.delivery.partner.arrived.at.buyer.location') > -1);
+      return !partnerArrived;
     },
   },
   methods: {

@@ -213,6 +213,7 @@ export default {
   font-size: 30px !important;
   font-weight: 700px !important;
   color: #909399 !important;
+  cursor: pointer;
 }
 
 .el-dialog__close {

@@ -24,11 +24,23 @@ export default {
   computed: {
     ...mapGetters(['getData', 'getDeliveryStatus', 'getPaymentSuccessful', 'getMobile']),
     showOTP() {
-      return this.getData.data.sale_of_goods_invoice === null
-        ? this.getStatus([8]).includes(this.getDeliveryStatus)
-        : (this.getStatus([8]).includes(this.getDeliveryStatus) && this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID' && this.getStatus([8]).includes(this.getDeliveryStatus)
-        && !this.getStatus([16]).includes(this.getDeliveryStatus));
+      const partnerArrived = (this.getData.data.event_time_line
+        .map((e) => e.event_code)
+        .indexOf('event.delivery.partner.arrived.at.buyer.location') > -1);
+      let outcome = false;
+      const orderCompleted = (this.getData.data.order_status === 'ORDER_COMPLETED');
+      if (!orderCompleted && partnerArrived) {
+        if (this.getData.data.sale_of_goods_invoice === null) {
+          outcome = true;
+        } else if ((this.getData.data.sale_of_goods_invoice !== null) && (this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID')) {
+          outcome = true;
+        } else {
+          outcome = false;
+        }
+      }
+      return outcome;
     },
+
   },
 };
 </script>

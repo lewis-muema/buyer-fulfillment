@@ -35,12 +35,12 @@
             {{ $t("reviewChanges.confirmChanges") }}
           </el-button>
         </div>
-        <div class="d-grid gap-2 col-12 mx-auto mt-3">
-          <button class="btn btn-light" type="primary" @click="this.getReviewDialogVisible = false">
-            {{ $t("reviewChanges.cancel") }}
-          </button>
-        </div>
       </form>
+      <div class="d-grid gap-2 col-12 mx-auto mt-3">
+        <button class="btn btn-light" @click="closeReviewModal">
+          {{ $t("reviewChanges.cancel") }}
+        </button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -81,6 +81,9 @@ export default {
   methods: {
     ...mapMutations(['setReviewDialogVisible', 'setDialogVisible', 'setDetailsDialogVisible']),
     ...mapActions(['updateDeliveryInformation']),
+    closeReviewModal() {
+      return this.setReviewDialogVisible(false);
+    },
     async updateDeliveryInfo() {
       this.loading = true;
       const payload = {

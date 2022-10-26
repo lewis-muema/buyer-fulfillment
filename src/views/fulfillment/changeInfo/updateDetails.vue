@@ -74,8 +74,8 @@
           <label for="floatingInput">{{ $t("updateDetails.floorNumber") }}</label>
         </div>
         <div class="mobile-changeLocation-warning-container" v-if="isToday">
-          <el-icon><InfoFilled /></el-icon>
-          <p class="ml-2 mt-3 mobile-changeLocation-warning-text">
+          <el-icon class="ml-2"><InfoFilled /></el-icon>
+          <p class="ml-2 mobile-changeLocation-warning-text">
             {{ $t("updateDetails.changeLocation") }}
           </p>
         </div>
