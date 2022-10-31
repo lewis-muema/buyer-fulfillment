@@ -76,6 +76,7 @@
   "timeline.partnerIsHere": "Votre coursier est arrivé",
   "timeline.partnerPickup": "Le partenaire est en route pour récupérer votre commande",
   "timeline.pin": "Le code PIN est",
+  "timeline.on": "on",
   "timeline.preparedDelivery": "Votre livraison a été préparée",
   "timeline.preparingDelivery": "Nous préparons votre livraison",
   "timeline.rescheduledByBuyer": "Votre commande a été reprogrammée au {Date}",

@@ -65,38 +65,40 @@ export default createStore({
         'event.delivery.rescheduled.by.sendy',
         'event.delivery.buyer.paid.for.goods',
       ],
-      orderEvents: [
-        'timeline.orderCreated',
-        'timeline.orderProcessed',
-        'timeline.partnerAssigned',
-        'timeline.partnerCollection',
-        'timeline.partnerPickup',
-        'timeline.partnerArrived',
-        'timeline.packageCollected',
-        'timeline.packageInTransit',
-        'timeline.packageArrived',
-        'timeline.deliveryComplete',
-        'timeline.orderCancelled',
-        'timeline.orderFailed',
-        'timeline.partnerIsHere',
-        'timeline.partnerAtDestination',
-        'timeline.deliveryAttempted',
-        'timeline.delay',
-        'timeline.orderCancelledDate',
-        'timeline.arriving',
-        'timeline.deliveryCompleted',
-        'timeline.deliveryCompletedDate',
-        'timeline.preparingDelivery',
-        'timeline.preparedDelivery',
-        'timeline.arrivingSoon',
-        'timeline.rescheduledByBuyer',
-        'timeline.rescheduledBySeller',
-        'timeline.rescheduledBySendy',
-        'timeline.attemptFailed',
-        'timeline.attemptFail',
-        'timeline.orderPlaced',
-      ],
-
+      orderEvents: {
+        'event.delivery.order.created': 'timeline.orderCreated',
+        'event.delivery.at.hub.processing.for.delivery':
+          'timeline.orderProcessed',
+        'event.delivery.at.hub.waiting.for.partner':
+          'timeline.partnerCollection',
+        'event.delivery.at.hub.partner.assigned':
+          'timeline.partnerAssigned',
+        'event.delivery.partner.enroute.to.hub':
+          'timeline.partnerPickup',
+        'event.delivery.partner.arrived.at.hub':
+          'timeline.partnerArrived',
+        'event.delivery.partner.pickup.from.hub.confirmed.via.code':
+          'timeline.packageCollected',
+        'event.delivery.partner.enroute.to.buyer.location':
+          'timeline.packageInTransit',
+        'event.delivery.partner.arrived.at.buyer.location':
+          'timeline.packageArrived',
+        'event.delivery.buyer.paid.for.goods':
+          'deliveries.theBuyerHasPaidForThePackage',
+        'event.delivery.partner.submitted.items.to.buyer.confirmed.via.code':
+          'timeline.deliveryCompletedDate',
+        'event.delivery.failed': 'timeline.orderFailed',
+        'event.delivery.order.canceled.by.seller':
+          'timeline.orderCancelledBySeller',
+        'event.delivery.order.canceled.by.sendy':
+          'timeline.orderCancelledBySendy',
+        'event.delivery.rescheduled.by.seller':
+          'timeline.rescheduledBySeller',
+        'event.delivery.rescheduled.by.sendy':
+          'timeline.rescheduledBySendy',
+        'event.delivery.rescheduled.by.buyer':
+          'timeline.rescheduledByBuyer',
+      },
     };
   },
   actions,

@@ -29,7 +29,7 @@
                 : `${activity.event_tense}-timeline-text`
             ">
              <span>
-              {{ activity.translated_event_code }}
+              {{ formatStatus(activity.event_code, activity) }}
             </span>
             </span>
             <div
@@ -83,10 +83,11 @@ import { mapGetters, mapMutations } from 'vuex';
 import { shallowRef } from 'vue';
 import { Close } from '@element-plus/icons';
 import eventsMixin from '../../../mixins/status_mixin';
+import formatStatusMixin from '../../../mixins/formatStatus_Mixin';
 
 export default {
   name: 'NewTimeline',
-  mixins: [eventsMixin],
+  mixins: [eventsMixin, formatStatusMixin],
   data() {
     return {
       closeIcon: shallowRef(Close),
@@ -95,16 +96,16 @@ export default {
   computed: {
     ...mapGetters(['getData', 'getMobile', 'getTimelineVisible']),
     rider() {
-      return this.$store.getters.getData.data.partner_contact_information;
+      return this.getData.data.partner_contact_information !== null ? this.getData.data.partner_contact_information : '';
     },
     activities() {
-      return this.$store.getters.getData.data.summarised_event_time_line;
+      return this.getData.data.summarised_event_time_line;
     },
     confirmationPin() {
-      return this.$store.getters.getData.data.confirmation_pin;
+      return this.getData.data.confirmation_pin;
     },
     getLanguage() {
-      return this.$store.getters.getData.data.language;
+      return this.getData.data.language;
     },
     showOTP() {
       return this.$store.getters.getData.data.sale_of_goods_invoice === null
@@ -131,6 +132,10 @@ export default {
     ...mapMutations(['setDatePickerVisible']),
     showDatePicker() {
       this.$store.commit('setDatePickerVisible', true);
+    },
+    formatStatus(status, item) {
+      const newStatus = status.toLowerCase();
+      return this.showEventLabels(newStatus, item);
     },
   },
 };
