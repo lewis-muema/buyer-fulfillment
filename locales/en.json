@@ -63,7 +63,7 @@
   "timeline.deliveryAttempted": "Delivery was attempted",
   "timeline.deliveryComplete": "Your delivery is complete",
   "timeline.deliveryCompleted": "Delivery completed",
-  "timeline.deliveryCompletedDate": "Delivery completed {on} {Date}",
+  "timeline.deliveryCompletedDate": "Delivery completed {Date}",
   "timeline.orderCancelledBySeller": "Your order has been cancelled by the seller",
   "timeline.orderCancelledBySendy": "Your order has been cancelled by the sendy",
   "timeline.orderCancelledDate": "Order cancelled on {Date}",
