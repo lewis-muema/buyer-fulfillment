@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable -->
-  <div>
+  <div v-if="showRatingCard">
     <RatingCard />
     <div :class="!$store.getters.getMobile ? 'items mt-3' : 'items-mobile'">
       <RatingIssues />
@@ -24,6 +24,9 @@ export default {
   },
   computed: {
     ...mapGetters(['getDeliveryStatus', 'getData']),
+    showRatingCard() {
+      return this.getData.data.order_status === 'ORDER_COMPLETED';
+    },
   },
 };
 </script>
@@ -137,9 +140,11 @@ export default {
 .icons-mobile {
   display: flex;
   width: 100%;
+  cursor: pointer;
 }
 .icons-desktop {
   display: flex;
+  cursor: pointer;
 }
 .el-dropdown-link {
   color: #324ba8;

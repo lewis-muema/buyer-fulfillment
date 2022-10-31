@@ -176,9 +176,7 @@ export default {
           locale: localStorage.language,
         };
         this.$paymentInit(buPayload, 'checkout');
-        localStorage.setItem('ItemPaid', true);
         this.setCheckoutDialogVisible(false);
-        localStorage.setItem('CheckoutModal', 'Receipt');
       } catch (e) {
         console.log(e);
       }

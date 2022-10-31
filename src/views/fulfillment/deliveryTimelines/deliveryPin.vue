@@ -29,7 +29,9 @@ export default {
         .indexOf('event.delivery.partner.arrived.at.buyer.location') > -1);
       let outcome = false;
       const orderCompleted = (this.getData.data.order_status === 'ORDER_COMPLETED');
-      if (!orderCompleted && partnerArrived) {
+      const orderCancelled = this.getData.data.order_status === 'ORDER_CANCELED';
+      const orderFailed = this.getData.data.order_status === 'ORDER_FAILED';
+      if (!orderCompleted && partnerArrived && !orderCancelled && !orderFailed) {
         if (this.getData.data.sale_of_goods_invoice === null) {
           outcome = true;
         } else if ((this.getData.data.sale_of_goods_invoice !== null) && (this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID')) {

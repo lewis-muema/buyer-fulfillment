@@ -1,8 +1,8 @@
 <template lang="">
   <div>
     <div
-      v-if="getStatus([]).includes($store.getters.getDeliveryStatus)"
-      class="fulfillemnt-order-items-failed-delivery"
+      v-if="showFailedDeliveryCard"
+      :class="getMobile ? 'fulfillemnt-order-items-failed-delivery' : 'itemsCancelled'"
     >
       <p class="failed-delivery-title">
         {{ $t("desktop.deliveryFailed.title") }}
@@ -20,12 +20,18 @@
   </div>
 </template>
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapGetters } from 'vuex';
 import statusMixin from '../../../mixins/status_mixin';
 
 export default {
   mixins: [statusMixin],
   name: 'RescheduleOrderButton',
+  computed: {
+    ...mapGetters(['getData', 'getMobile']),
+    showFailedDeliveryCard() {
+      return this.getData.data.order_status === 'ORDER_FAILED';
+    },
+  },
   methods: {
     ...mapMutations(['setDatePickerVisible']),
     showDatePicker() {

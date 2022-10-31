@@ -60,7 +60,7 @@ export default {
           const today = new Date();
           today.setHours(0, 0, 0, 0);
 
-          return date < today || date > new Date(today.getTime() + 1000 * 60 * 60 * 24 * 3);
+          return (date < today || date > new Date(today.getTime() + 1000 * 60 * 60 * 24 * 3));
         },
       },
     };
