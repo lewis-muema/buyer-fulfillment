@@ -1,6 +1,6 @@
 <template lang="">
   <div>
-    <div v-if="$store.getters.getTimelineVisible"
+    <div v-if="showTimeline"
     :class="!$store.getters.getMobile ? 'timeline-desktop-container' : ''">
       <h3 :class="!$store.getters.getMobile ? 'timeline-desktop' : 'timeline-mobile'">
         {{ podTimelineTitle ? "" : $t("timeline.timeline") }}
@@ -93,7 +93,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getData', 'getMobile']),
+    ...mapGetters(['getData', 'getMobile', 'getTimelineVisible']),
     rider() {
       return this.$store.getters.getData.data.partner_contact_information;
     },
@@ -111,6 +111,12 @@ export default {
         ? this.getStatus([8]).includes(this.$store.getters.getDeliveryStatus)
         : this.$store.getters.getData.data.sale_of_goods_invoice.invoice_status
             === 'INVOICE_COMPLETELY_PAID';
+    },
+    showTimeline() {
+      if (this.getData.data.order_status === 'ORDER_COMPLETED') {
+        return this.getTimelineVisible;
+      }
+      return !this.getTimelineVisible;
     },
     podTimelineTitle() {
       return this.$store.getters.getData.data.sale_of_goods_invoice !== null

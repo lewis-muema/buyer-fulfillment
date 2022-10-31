@@ -1,14 +1,14 @@
 <template lang="">
   <div>
     <div
-      v-if="getStatus([10, 11]).includes($store.getters.getDeliveryStatus)"
-      class="fulfillemnt-order-items-expected-deivery"
+      v-if="showCancelledCard"
+      :class="getMobile ? 'fulfillemnt-order-items-expected-deivery' : 'items-cancelled-container'"
     >
       <p class="delivered-title">{{ $t("desktop.orderCancelled") }}</p>
       <p :class="getMobile ? 'delivered-date' : 'delivered-date-desktop'">
         {{
           formatCompletionDate(
-            getData.data.event_time_line[data.data.event_time_line.length - 1].event_date
+            getData.data.event_time_line[getData.data.event_time_line.length - 1].event_date
           )
         }}
       </p>
@@ -25,6 +25,9 @@ export default {
   name: 'orderCanceled',
   computed: {
     ...mapGetters(['getData', 'getMobile']),
+    showCancelledCard() {
+      return this.getData.data.order_status === 'ORDER_CANCELED';
+    },
   },
 };
 </script>

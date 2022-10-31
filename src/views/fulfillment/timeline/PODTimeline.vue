@@ -1,6 +1,6 @@
 <!-- eslint-disable  -->
 <template>
-  <div class="pod-timeline-container" v-if="$store.getters.getTimelineVisible">
+  <div class="pod-timeline-container" v-if="showTimeline">
     <p class="pod-timeline-title">{{$t("timeline.trackDelivery")}}</p>
     <div class="d-flex">
       <p class="el-icon-minusss timeline-pulse-icon"></p>
@@ -30,6 +30,12 @@ export default {
   },
   computed: {
     ...mapGetters(['getTimelineVisible', 'getData', 'getMobile']),
+    showTimeline() {
+      if (this.getData.data.order_status === 'ORDER_COMPLETED') {
+        return this.getTimelineVisible;
+      }
+      return !this.getTimelineVisible;
+    },
   },
   methods: {
     ...mapMutations(['setTimelineVisible']),

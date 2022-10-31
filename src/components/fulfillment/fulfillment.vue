@@ -66,10 +66,8 @@ export default {
         || navigator.userAgent.match(/iPod/i)
       ) {
         this.$store.commit('setMobile', true);
-        this.$store.commit('setRecipientVisible', this.$store.getters.getTimelineVisible);
       } else {
         this.$store.commit('setMobile', false);
-        this.$store.commit('setRecipientVisible', true);
       }
     },
     getDeliveryDetails() {

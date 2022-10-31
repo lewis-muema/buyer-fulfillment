@@ -8,7 +8,7 @@
     <OrderCanceled />
     <RescheduleOrderButton />
     <PaymentsCard />
-    <RateOrder v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
+    <RateOrder />
     <TrackingTimelines  />
     <RecepientDetails />
   </div>
@@ -46,7 +46,6 @@ export default {
   mixins: [statusMixin],
   data() {
     return {
-      data: this.$store.getters.getData,
       showTimeline: true,
     };
   },
@@ -57,12 +56,6 @@ export default {
         this.showTimeline = true;
       });
     });
-  },
-  computed: {
-    showTrackingTimeline() {
-      return !this.getStatus([9]).includes(this.$store.getters.getDeliveryStatus)
-      && this.showTimeline;
-    },
   },
 };
 </script>
