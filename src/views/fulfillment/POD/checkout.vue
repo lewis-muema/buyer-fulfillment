@@ -21,14 +21,17 @@
       <div v-if="showReceiptModal">
         <span>{{ $t("checkout.amountPaid") }}&nbsp;</span>
         <span> {{ currency }} {{ invoicedAmount }}</span>
-        <p>{{formatDate(getData.data.scheduled_delivery_date)}}</p>
+        <p>
+          {{
+            formatDate(
+              getData.data.event_time_line[0]
+                .event_date
+            )
+          }}
+        </p>
       </div>
       <div>
-        <div
-          class="row"
-          v-for="(product, index) in products"
-          :key="index"
-        >
+        <div class="row" v-for="(product, index) in products" :key="index">
           <div></div>
           <div class="col-2">
             <p class="checkout-product-quantity">{{ product.adjustment_quantity }}</p>
@@ -47,14 +50,14 @@
       </div>
       <div class="payment-amount-summary-container">
         <span class="checkout-subtotal">
-          <p>{{$t("checkout.subTotal")}}</p>
+          <p>{{ $t("checkout.subTotal") }}</p>
           <p>
             {{ currency }}
             {{ subtotal }}
           </p>
         </span>
         <span class="checkout-delivery-fee">
-          <p>{{$t("checkout.deliveryFee")}}</p>
+          <p>{{ $t("checkout.deliveryFee") }}</p>
           <p>
             {{ currency }}
             {{ fulfillmentFee }}
@@ -63,16 +66,16 @@
         <hr class="price-breakdown-divider" />
       </div>
       <span class="checkout-total-amount">
-        <p>{{$t("checkout.total")}}</p>
+        <p>{{ $t("checkout.total") }}</p>
         <p>{{ currency }} {{ showCheckoutModal ? totalAmount : invoicedAmount }}</p>
       </span>
       <div class="d-grid gap-2 col-12 mx-auto" v-if="showCheckoutModal">
         <el-button class="change-delivery-el-button" @click="submitToPay">
-          {{$t("checkout.continueToPay")}}
+          {{ $t("checkout.continueToPay") }}
         </el-button>
       </div>
       <div v-if="showReceiptModal">
-        <p> {{$t("checkout.paymentDetails")}}</p>
+        <p>{{ $t("checkout.paymentDetails") }}</p>
         <div class="text-desc">
           <p>Mpesa</p>
         </div>
