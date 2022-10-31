@@ -7,10 +7,7 @@
         <el-col :span="12">
           <el-card shadow="never" class="expected-delivery-desktop-container">
             <div>
-              <h3>
-                {{ Object.keys(data).length > 0 ? data.data.seller_name : "--" }}
-              </h3>
-              <div class="order-number">{{ $t("orderNumber") }}: {{ data.data.order_id }}</div>
+              <SellerInfo />
               <hr />
               <ExpectedDelivery />
               <DeliveryPin />
@@ -27,7 +24,7 @@
       </el-row>
       <el-row class="el-row">
         <el-col :span="12">
-          <Rating v-if="getStatus([9]).includes($store.getters.getDeliveryStatus)" />
+          <Rating />
           <TrackingTimelines v-if="showTimeline" />
         </el-col>
         <el-col
@@ -48,6 +45,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import TopHeader from '../../../views/fulfillment/header.vue';
+import SellerInfo from '../../../views/fulfillment/deliveryTimelines/sellerInfo.vue';
 import RecepientDetails from '../../../views/fulfillment/recipient/recipient.vue';
 import TrackingTimelines from '../../../views/fulfillment/timeline/timelines.vue';
 import ExpectedDelivery from '../../../views/fulfillment/deliveryTimelines/expectedDelivery.vue';
@@ -74,18 +72,13 @@ export default {
     Rating,
     PaymentsCard,
     OrderedItemsHeader,
+    SellerInfo,
   },
   mixins: [statusMixin],
   data() {
     return {
-      data: this.$store.getters.getData,
       showTimeline: true,
     };
-  },
-  watch: {
-    '$store.getters.getData': function setData() {
-      this.data = this.$store.getters.getData;
-    },
   },
   mounted() {
     window.addEventListener('language-changed', () => {
@@ -103,10 +96,22 @@ export default {
         : '';
     },
     orderedItemsStyling() {
-      return (
-        !this.getStatus([8, 9, 10, 11, 12]).includes(this.$store.getters.getDeliveryStatus)
+      let paddingStyle = false;
+      if (
+        this.getData.data.sale_of_goods_invoice !== null
+        && !this.getStatus([8, 9, 10, 11]).includes(this.$store.getters.getDeliveryStatus)
         && !this.showPaidCard
-      );
+      ) {
+        paddingStyle = true;
+      } else if (
+        this.getData.data.sale_of_goods_invoice === null
+        && !this.getStatus([8, 9, 10, 11]).includes(this.$store.getters.getDeliveryStatus)
+      ) {
+        paddingStyle = true;
+      } else {
+        paddingStyle = false;
+      }
+      return paddingStyle;
     },
   },
 };
@@ -139,9 +144,6 @@ export default {
   margin-left: 10px;
   font-size: 14px;
   letter-spacing: 0.4px;
-}
-.order-number {
-  font-weight: 600;
 }
 .ordered-items-container-desktop {
   margin-top: -10%;

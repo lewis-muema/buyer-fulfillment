@@ -1,6 +1,7 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
-  <div v-if="$store.getters.getRecipientVisible">
+  <div>
+  <div v-if="showRecepient">
     <div :class="!$store.getters.getMobile ? 'recepient-info-desktop' : 'recepient-info-mobile'">
       <h3 :class="!$store.getters.getMobile ? '' : 'recepient-info-title-mobile'">
         {{ $t("changeInfo.Receiver") }}
@@ -57,9 +58,11 @@
     />
     <changeInfo />
   </div>
+</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import { User, PhoneFilled, Location } from '@element-plus/icons';
 import UpdateDetails from '../changeInfo/updateDetails.vue';
 import changeInfo from '../changeInfo/changeInfo.vue';
@@ -79,6 +82,15 @@ export default {
     return {
       showDialog: false,
     };
+  },
+  computed: {
+    ...mapGetters(['getRecipientVisible', 'getMobile', 'getData']),
+    showRecepient() {
+      if (this.getData.data.order_status === 'ORDER_COMPLETED' && this.getMobile) {
+        return this.getRecipientVisible;
+      }
+      return !this.getRecipientVisible;
+    },
   },
   methods: {
     showDetailsPicker() {
@@ -139,6 +151,7 @@ export default {
   line-height: 3em !important;
   color: #324ba8 !important;
   padding-top: 25px;
+  cursor: pointer;
 }
 .recipient-details-leave-delivery {
   color: #324ba8 !important;

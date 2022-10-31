@@ -69,7 +69,11 @@
   color: #17224D;
   border-radius: 5px;
 }
-
+.items-delivered-container,
+.items-cancelled-container
+.itemsCancelled {
+  margin: 0 !important;
+}
 .fulfillemnt-order-items-expected-deivery-title {
   margin: 10px 0px;
   color: #606266;

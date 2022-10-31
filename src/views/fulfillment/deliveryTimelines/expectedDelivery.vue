@@ -41,10 +41,17 @@ export default {
   computed: {
     ...mapGetters(['getData', 'getDeliveryStatus', 'getMobile']),
     showExpectedDeliveryCard() {
+      let showExpectedDeliveryCard = false;
       const partnerArrived = (this.getData.data.event_time_line
         .map((e) => e.event_code)
         .indexOf('event.delivery.partner.arrived.at.buyer.location') > -1);
-      return !partnerArrived;
+      const orderCancelled = this.getData.data.order_status === 'ORDER_CANCELED';
+      const orderCompleted = this.getData.data.order_status === 'ORDER_COMPLETED';
+      const orderFailed = this.getData.data.order_status === 'ORDER_FAILED';
+      if (!partnerArrived && !orderCancelled && !orderCompleted && !orderFailed) {
+        showExpectedDeliveryCard = true;
+      }
+      return showExpectedDeliveryCard;
     },
   },
   methods: {
