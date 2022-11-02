@@ -14,8 +14,7 @@
               }}
             </p>
             <button
-            :disabled="!getStatus([0, 1, 12, 13, 14, 15])
-              .includes($store.getters.getDeliveryStatus)"
+            :disabled="isToday"
               class="reschedule-button"
               @click="showDatePicker()"
             >
@@ -27,6 +26,7 @@
 </template>
 <script>
 import { mapMutations } from 'vuex';
+import moment from 'moment';
 import { Clock } from '@element-plus/icons';
 import formatDates from '../../../mixins/formatDate_mixin';
 import statusMixin from '../../../mixins/status_mixin';
@@ -37,7 +37,16 @@ export default {
   components: {
     Clock,
   },
-
+  computed: {
+    isToday() {
+      return (
+        moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date)).format(
+          'YYYY-MM-DD',
+        ) === moment().format('YYYY-MM-DD')
+        || !this.getStatus([0, 1, 13, 14, 15]).includes(this.$store.getters.getDeliveryStatus)
+      );
+    },
+  },
   methods: {
     ...mapMutations(['setDatePickerVisible']),
     showDatePicker() {

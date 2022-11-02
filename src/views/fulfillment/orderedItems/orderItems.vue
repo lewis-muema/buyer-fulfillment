@@ -22,10 +22,10 @@
 
 export default {
   name: 'OrderItems',
-  data() {
-    return {
-      orderItems: this.$store.getters.getData.data.products,
-    };
+  computed: {
+    orderItems() {
+      return this.$store.getters.getData.data.products;
+    },
   },
 };
 </script>
