@@ -16,8 +16,7 @@
         :value="date"
         :disabled-dates="disabledDates"
         v-model="date"
-        :wrapper-class="this.$store.getters.getMobile ?
-        '' : 'date-picker-desktop'"
+        :wrapper-class="this.$store.getters.getMobile ? '' : 'date-picker-desktop'"
       ></datepicker>
       <div>
         <button class="back-button" @click="visibleDatePicker = false">
@@ -59,8 +58,12 @@ export default {
         customPredictor(date) {
           const today = new Date();
           today.setHours(0, 0, 0, 0);
-
-          return (date < today || date > new Date(today.getTime() + 1000 * 60 * 60 * 24 * 3));
+          const sunday = new Date().getDay() === 6;
+          return (
+            date < today
+            || date >= new Date(today.getTime() + 1000 * 60 * 60 * 24 * 3)
+            || sunday
+          );
         },
       },
     };
@@ -169,7 +172,7 @@ export default {
   margin-left: 17%;
 }
 .date-picker-mobile {
-  margin-left: 30px
+  margin-left: 30px;
 }
 .vuejs3-datepicker__calendar .disabled {
   color: grey !important;
