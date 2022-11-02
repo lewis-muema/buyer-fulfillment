@@ -18,10 +18,11 @@
             :disabled="isToday"
             id="floatingInput"
             v-model="params.name"
+            @blur="v$.params.name.$touch"
           />
           <label htmlFor="floatingInput">{{ $t("reviewChanges.recipientName") }}</label>
         </div>
-        <div v-if="!v$.params.name.required" class="invalidFeedback">
+        <div v-if="v$.params.name.$error" class="invalidFeedback">
           {{ $t("updateDetails.recipientName") }}
         </div>
         <div class="form-floating mb-3">
@@ -37,13 +38,11 @@
             data-vv-validate-on="blur"
             v-bind="sendyPhoneProps"
             :input-options="vueTelInputProps"
+            @blur="v$.params.phone.$touch"
           ></vue-tel-input>
         </div>
-        <div v-if="!v$.params.phone.required" class="invalidFeedback">
+        <div v-if="v$.params.phone.$error" class="invalidFeedback">
           {{ $t("updateDetails.phoneNumberRequired") }}
-        </div>
-        <div v-if="!v$.params.phone.maxLength" class="invalidFeedback">
-          {{ $t("updateDetails.validPhoneNumber") }}
         </div>
         <div class="form-floating mb-3">
           <label for="floatingInput" class="location-input-label">
@@ -70,8 +69,12 @@
             id="floatingInput"
             placeholder="Floor, apartment or house number"
             v-model="params.house_location"
+            @blur="v$.params.house_location.$touch"
           />
           <label for="floatingInput">{{ $t("updateDetails.floorNumber") }}</label>
+          <div v-if="v$.params.house_location.$error" class="invalidFeedback">
+          {{ $t("updateDetails.floorNumberRequired") }}
+        </div>
         </div>
         <div class="mobile-changeLocation-warning-container" v-if="isToday">
           <el-icon class="ml-2"><InfoFilled /></el-icon>

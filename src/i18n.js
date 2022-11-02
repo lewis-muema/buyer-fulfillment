@@ -58,6 +58,7 @@ function ipLookUp() {
     .catch((error) => error);
 }
 function fetchCountry() {
+  ipLookUp();
   window.addEventListener('language-changed', (event) => {
     i18n.locale = event.detail;
     localStorage.setItem('buyerTimeLocale', event.detail);
