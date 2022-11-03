@@ -1,5 +1,7 @@
+<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
-  <div v-if="$store.getters.getRecipientVisible">
+  <div>
+  <div v-if="showRecepient">
     <div :class="!$store.getters.getMobile ? 'recepient-info-desktop' : 'recepient-info-mobile'">
       <h3 :class="!$store.getters.getMobile ? '' : 'recepient-info-title-mobile'">
         {{ $t("changeInfo.Receiver") }}
@@ -7,27 +9,25 @@
       <div class="recepient">
         <div class="recipient-details">
           <p class="reciepient-details-rows">
-            <i class="el-icon-user"></i>
+            <el-icon><User /></el-icon>
             {{ $store.getters.getData.data.destination.name }}
           </p>
         </div>
         <div class="recipient-details">
           <p class="reciepient-details-rows">
-            <i class="el-icon-phone"></i>
+            <el-icon><PhoneFilled /></el-icon>
             {{ $store.getters.getData.data.destination.phone_number }}
           </p>
         </div>
         <div class="recipient-details">
-          <div class="d-flex">
-            <i class="el-icon-location-outline"></i>
-          <p class="reciepient-details-rows pl-3">
+          <p class="reciepient-details-rows">
+            <el-icon><Location /></el-icon>
             {{
               $store.getters.getData.data.destination.delivery_location
                 ? $store.getters.getData.data.destination.delivery_location.description
                 : ""
             }}
           </p>
-          </div>
           <div
             class="recipient-details"
             v-if="getStatus([0, 1, 2, 3, 4, 5, 6, 7, 13, 14, 15])
@@ -44,16 +44,6 @@
         >
         </div>
       </div>
-      <el-button
-        v-if="
-          !getStatus([9, 10,11,12]).includes($store.getters.getDeliveryStatus) &&
-            !$store.getters.getMobile
-        "
-        type="primary"
-        @click="showDetailsPicker"
-        class="update-info-button-desktop"
-        >{{ $t("mobile.changeDetails") }}</el-button
-      >
     </div>
     <UpdateDetails
       :name="$store.getters.getData.data.destination.name"
@@ -68,24 +58,39 @@
     />
     <changeInfo />
   </div>
+</div>
 </template>
 
 <script>
-import UpdateDetails from './updateDetails.vue';
-import changeInfo from './changeInfo.vue';
-import statusMixin from '../../mixins/status_mixin';
+import { mapGetters } from 'vuex';
+import { User, PhoneFilled, Location } from '@element-plus/icons';
+import UpdateDetails from '../changeInfo/updateDetails.vue';
+import changeInfo from '../changeInfo/changeInfo.vue';
+import statusMixin from '../../../mixins/status_mixin';
 
 export default {
-  name: 'Recepient',
+  name: 'RecepientDetails',
   components: {
     UpdateDetails,
     changeInfo,
+    User,
+    PhoneFilled,
+    Location,
   },
   mixins: [statusMixin],
   data() {
     return {
       showDialog: false,
     };
+  },
+  computed: {
+    ...mapGetters(['getRecipientVisible', 'getMobile', 'getData']),
+    showRecepient() {
+      if (this.getData.data.order_status === 'ORDER_COMPLETED' && this.getMobile) {
+        return this.getRecipientVisible;
+      }
+      return !this.getRecipientVisible;
+    },
   },
   methods: {
     showDetailsPicker() {
@@ -146,6 +151,7 @@ export default {
   line-height: 3em !important;
   color: #324ba8 !important;
   padding-top: 25px;
+  cursor: pointer;
 }
 .recipient-details-leave-delivery {
   color: #324ba8 !important;

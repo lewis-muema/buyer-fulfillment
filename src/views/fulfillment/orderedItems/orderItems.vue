@@ -1,8 +1,7 @@
 <template>
   <div>
     <div :class="!$store.getters.getMobile ? 'items-delivered-desktop' : 'items-delivered-mobile'">
-      <h3 v-if="!$store.getters.getMobile">{{ $t('orderItems.itemsDelivered') }}</h3>
-      <div class="d-flex flex-row mt-3" v-for="(orderItem, index) in orderItems" :key="index">
+      <div class="d-flex flex-row" v-for="(orderItem, index) in orderItems" :key="index">
         <el-badge :value="orderItem.product_unit_count" class="item" type="primary">
           <div class="p-2">
             <img :src="orderItem.product_image_link" alt="" class="item-image" />
@@ -23,19 +22,15 @@
 
 export default {
   name: 'OrderItems',
-  data() {
-    return {
-      orderItems: this.$store.getters.getData.data.products,
-    };
+  computed: {
+    orderItems() {
+      return this.$store.getters.getData.data.products;
+    },
   },
 };
 </script>
 
 <style>
-.items-delivered-desktop {
-  text-align: left;
-  padding-left: 100px;
-}
 .items-delivered-mobile {
   margin: 15px 0px;
 }
