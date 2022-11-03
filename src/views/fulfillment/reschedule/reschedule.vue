@@ -57,7 +57,6 @@ export default {
         preventDisableDateSelection: true,
         customPredictor(date) {
           const today = new Date();
-          today.setHours(0, 0, 0, 0);
           const sunday = new Date().getDay() === 6;
           return (
             date < today
