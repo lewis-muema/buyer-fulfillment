@@ -2,7 +2,7 @@
 <template lang="">
   <div :class="getMobile ? 'payments-on-delivery-container' : 'payments-on-delivery-containerr'">
     <div class="" v-if="getMobile">
-      <h1 class="payments-on-delivery-title">{{$t("payments.payYorDelivery")}}</h1>
+      <h1 class="payments-on-delivery-title">{{$t("payments.payYourDelivery")}}</h1>
       <p class="payments-on-delivery-amount">
         <span> {{ currency }}</span>
         {{ totalAmount }}
