@@ -8,8 +8,7 @@
     "beta": "cross-env DOCKER_ENV=\"beta\" vue-cli-service build",
     "staging": "cross-env DOCKER_ENV=\"staging\"  vue-cli-service build",
     "lint": "cross-env DOCKER_ENV=\"development\" vue-cli-service lint --fix",
-    "test:unit": "nyc cross-env DOCKER_ENV=\"development\" vue-cli-service test:unit",
-    "showcoverage": "nyc report --reporter html --reporter text -t coverage --report-dir coverage/summary"
+    "test:unit": "cross-env DOCKER_ENV=\"development\" vue-cli-service test:unit"
   },
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
@@ -31,8 +30,10 @@
     "core-js": "^3.8.3",
     "element-plus": "^2.2.17",
     "firebase": "^9.10.0",
+    "mocha": "^10.1.0",
     "moment": "^2.29.4",
     "nyc": "^15.1.0",
+    "save-dev": "^0.0.1-security",
     "vue": "^3.2.13",
     "vue-i18n": "^9.3.0-beta.6",
     "vue-material-design-icons": "^5.1.2",
@@ -53,7 +54,7 @@
     "@vue/cli-service": "~5.0.0",
     "@vue/eslint-config-airbnb": "^6.0.0",
     "@vue/test-utils": "^2.0.0-0",
-    "chai": "^4.2.0",
+    "chai": "^4.3.6",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.3",
