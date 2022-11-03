@@ -92,8 +92,8 @@ export default {
     ...mapGetters(['getDeliveryStatus', 'getData']),
     showPaidCard() {
       return this.getData.data.sale_of_goods_invoice !== null
-        ? this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID'
-        : '';
+        ? this.getData.data?.sale_of_goods_invoice?.invoice_status === 'INVOICE_COMPLETELY_PAID'
+        : false;
     },
     orderedItemsStyling() {
       let paddingStyle = false;
