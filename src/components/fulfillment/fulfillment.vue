@@ -76,6 +76,7 @@ export default {
           app: process.env.FULFILMENT_SERVER,
           endpoint: `buyer/orders/${this.$route.params.deliveryId}`,
         }).then((response) => {
+          localStorage.setItem('OrderNo', response.data.data.order_id);
           this.$store.commit('setData', response.data);
           this.$store.commit('setDeliveryStatus', response.data.data.order_event_status);
           window.dispatchEvent(new CustomEvent('language-changed', { detail: response.data.data.language }));
