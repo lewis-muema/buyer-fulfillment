@@ -178,7 +178,7 @@ export default {
           company_code: 'FFKE',
           locale: localStorage.language,
         };
-        this.$paymentInit(buPayload, 'checkout');
+        this.$paymentInit(buPayload, 'choose-payment-checkout');
         this.setCheckoutDialogVisible(false);
       } catch (e) {
         console.log(e);
