@@ -12,6 +12,7 @@
     "showcoverage": "nyc report --reporter html --reporter text -t coverage --report-dir coverage/summary"
   },
   "dependencies": {
+    "@datadog/browser-rum": "^4.23.3",
     "@element-plus/icons": "^0.0.11",
     "@element-plus/icons-vue": "^2.0.9",
     "@fawmi/vue-google-maps": "^0.9.79",
