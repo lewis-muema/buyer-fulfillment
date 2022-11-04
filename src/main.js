@@ -1,3 +1,4 @@
+// eslint-disable
 import { createApp } from 'vue';
 import ElementPlus from 'element-plus';
 import VueGoogleMaps from '@fawmi/vue-google-maps';
@@ -8,6 +9,7 @@ import 'vue-tel-input/dist/vue-tel-input.css';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { datadogRum } from '@datadog/browser-rum';
 import i18n from './i18n';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
@@ -21,6 +23,20 @@ const VueTelInputOptions = {
   onlyCountries: ['NG', 'KE', 'UG', 'TZ', 'CI'],
 };
 library.add(faUserSecret);
+datadogRum.init({
+  applicationId: '2a6825f4-1339-409a-9180-44b0c904e781',
+  clientToken: 'pub6c0dd7a5d33deda005dfa3d1c0770e2e',
+  site: 'datadoghq.eu',
+  service: 'fulfillment-buyerapp',
+  env: process.env.DOCKER_ENV,
+  sampleRate: 100,
+  sessionReplaySampleRate: 20,
+  trackInteractions: true,
+  trackResources: true,
+  trackLongTasks: true,
+  defaultPrivacyLevel: 'mask-user-input',
+});
+datadogRum.startSessionReplayRecording();
 createApp(App).use(store).use(router).use(ElementPlus)
   .use(i18n)
   .use(VueGoogleMaps, {
