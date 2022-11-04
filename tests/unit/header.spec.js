@@ -3,9 +3,10 @@ import ElementPlus from 'element-plus';
 import { createI18n } from 'vue-i18n';
 import messages from './messages';
 import { expect } from 'chai';
-import OrderItems from '../../src/views/fulfillment/orderedItems/orderItems.vue'
+import Header from '../../src/views/fulfillment/header.vue'
 import store from './store';
 import { mount } from '@vue/test-utils'
+import './localStorage';
 
 const i18n = createI18n({
   locale: 'en',
@@ -13,17 +14,17 @@ const i18n = createI18n({
   messages: messages,
 });
 
-describe('OrderItems.vue', () => {
+describe('Header.vue', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = mount(OrderItems, {
+    wrapper = mount(Header, {
       global: {
         plugins: [store, ElementPlus, i18n]
       }
     })
   })
-  it('check if products are retrieved correctly ', async () => {
-    await wrapper.vm.orderItems;
-    expect(wrapper.vm.orderItems).to.be.an('array').with.lengthOf(1);
+  it('checks if language changes on selecting dropdown', () => {
+    wrapper.vm.changeLanguage('en');
+    expect(wrapper.vm.language).to.equal('en');
   });
 });

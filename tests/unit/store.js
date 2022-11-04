@@ -1,16 +1,8 @@
 /* eslint-disable */
-import Vuex from 'vuex';
-import { createLocalVue } from '@vue/test-utils';
 import { createStore } from 'vuex'
-// import './localstorage';
 import storeMutations from '../../src/store/mutations';
 import storeActions from '../../src/store/actions';
-import storeGetters from '../../src/store/getters';
 
-// const localVue = createLocalVue();
-// localVue.use(Vuex);
-
-// let store;
 let getters;
 let actions;
 let mutations;
@@ -102,11 +94,6 @@ mutations = {
   setRateOrder: storeMutations.setRateOrder,
   setLanguage: storeMutations.setLanguage,
 };
-// store = new Vuex.Store({
-//   getters,
-//   actions,
-//   mutations,
-// });
 const store = createStore({
   getters,
   actions,

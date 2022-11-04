@@ -25,16 +25,11 @@ import { mapGetters } from 'vuex';
 
 export default {
   name: 'OrderItems',
-  data() {
-    return {
-      orderItems: this.getData?.data.products,
-    };
-  },
   computed: {
     ...mapGetters(['getData']),
-    // orderItems() {
-    //   return this.getData?.data.products;
-    // },
+    orderItems() {
+      return this.getData.data.products;
+    },
   },
 };
 </script>
