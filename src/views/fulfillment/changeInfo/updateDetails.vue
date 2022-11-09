@@ -53,10 +53,10 @@
             :disabled="isToday"
             :options="map_options"
             class="form-control form"
-            id="floatingInput"
+            id="floatingInput location"
             placeholder="Enter location"
             :select-first-on-enter="true"
-            @place_changed="setLocation($event)"
+            @place_changed="setLocation"
           >
           </GMapAutocomplete>
           <div class="mobile-changeLocation-warning-container" v-if="isToday"></div>
@@ -192,9 +192,6 @@ export default {
         house_location: this.$store.getters.getData.data.destination.house_location,
       },
       map_options: {
-        componentRestrictions: {
-          country: ['ke', 'ug', 'tz', 'ci'],
-        },
         bounds: {
           north: 35.6,
           east: 59.4,
@@ -306,7 +303,7 @@ export default {
       this.$store.commit('setDatePickerVisible', true);
     },
     setLocation(place) {
-      this.params.deliveryLocation.description = place.name;
+      this.params.deliveryLocation.description = document.querySelector('#location').value;
       this.params.deliveryLocation.latitude = place.geometry.location.lat();
       this.params.deliveryLocation.longitude = place.geometry.location.lng();
     },
