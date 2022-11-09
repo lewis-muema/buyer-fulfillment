@@ -62,4 +62,7 @@ export default {
   setRatingcardVisible(state, val) {
     state.ratingcardVisible = val;
   },
+  setChangeInfo(state, val) {
+    state.changeInfo = val;
+  },
 };

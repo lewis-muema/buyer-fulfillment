@@ -77,8 +77,10 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(['setDialogVisible']),
+    ...mapMutations(['setDialogVisible', 'setChangeInfo']),
     showUpdateModal() {
+      this.$store.commit('setDetailsDialogVisible', false);
+      this.setChangeInfo(true);
       this.setDialogVisible(true);
     },
   },
