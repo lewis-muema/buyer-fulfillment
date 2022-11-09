@@ -250,6 +250,10 @@ export default {
     },
     visibleDialog(val) {
       this.$store.commit('setDialogVisible', val);
+      if (this.getChangeInfo && !val) {
+        this.$store.commit('setDetailsDialogVisible', true);
+        this.setChangeInfo(false);
+      }
       this.deliveryOption = val
         ? this.$store.getters.getData.data.destination.delivery_instructions
         : '';
@@ -267,7 +271,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getData']),
+    ...mapGetters(['getData', 'getChangeInfo']),
     countryCodes() {
       return [this.$store.getters.getCountryData.countryCode.toLowerCase()];
     },
@@ -287,7 +291,7 @@ export default {
     this.sendyPhoneProps.preferredCountries = this.countryCodes;
   },
   methods: {
-    ...mapMutations(['setReviewDialogVisible']),
+    ...mapMutations(['setReviewDialogVisible', 'setChangeInfo']),
     cancelReviewModal(val) {
       this.setReviewDialogVisible(val);
     },
@@ -378,5 +382,10 @@ export default {
 }
 .phone-input {
   padding-top: 20px;
+}
+.el-loading-spinner {
+  width: 20px !important;
+  left: 50%;
+  top: 70%;
 }
 </style>
