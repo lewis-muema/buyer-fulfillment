@@ -21,4 +21,5 @@ export default {
   getLanguage: (state) => state.language,
   getCountryData: (state) => state.countryData,
   getRatingcardVisible: (state) => state.ratingcardVisible,
+  getChangeInfo: (state) => state.changeInfo,
 };
