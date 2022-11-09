@@ -53,7 +53,7 @@
             :disabled="isToday"
             :options="map_options"
             class="form-control form"
-            id="floatingInput"
+            id="floatingInput location"
             placeholder="Enter location"
             :select-first-on-enter="true"
             @place_changed="setLocation"
@@ -303,7 +303,7 @@ export default {
       this.$store.commit('setDatePickerVisible', true);
     },
     setLocation(place) {
-      this.params.deliveryLocation.description = place.name;
+      this.params.deliveryLocation.description = document.querySelector('#location').value;
       this.params.deliveryLocation.latitude = place.geometry.location.lat();
       this.params.deliveryLocation.longitude = place.geometry.location.lng();
     },
