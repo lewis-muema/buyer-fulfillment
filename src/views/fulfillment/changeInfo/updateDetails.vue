@@ -56,7 +56,7 @@
             id="floatingInput"
             placeholder="Enter location"
             :select-first-on-enter="true"
-            @place_changed="setLocation($event)"
+            @place_changed="setLocation"
           >
           </GMapAutocomplete>
           <div class="mobile-changeLocation-warning-container" v-if="isToday"></div>
@@ -192,9 +192,6 @@ export default {
         house_location: this.$store.getters.getData.data.destination.house_location,
       },
       map_options: {
-        componentRestrictions: {
-          country: ['ke', 'ug', 'tz', 'ci'],
-        },
         bounds: {
           north: 35.6,
           east: 59.4,
