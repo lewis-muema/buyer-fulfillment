@@ -53,10 +53,10 @@
             :disabled="isToday"
             :options="map_options"
             class="form-control form"
-            id="floatingInput"
+            id="floatingInput location"
             placeholder="Enter location"
             :select-first-on-enter="true"
-            @place_changed="setLocation($event)"
+            @place_changed="setLocation"
           >
           </GMapAutocomplete>
           <div class="mobile-changeLocation-warning-container" v-if="isToday"></div>
@@ -192,9 +192,6 @@ export default {
         house_location: this.$store.getters.getData.data.destination.house_location,
       },
       map_options: {
-        componentRestrictions: {
-          country: ['ke', 'ug', 'tz', 'ci'],
-        },
         bounds: {
           north: 35.6,
           east: 59.4,
@@ -250,6 +247,10 @@ export default {
     },
     visibleDialog(val) {
       this.$store.commit('setDialogVisible', val);
+      if (this.getChangeInfo && !val) {
+        this.$store.commit('setDetailsDialogVisible', true);
+        this.setChangeInfo(false);
+      }
       this.deliveryOption = val
         ? this.$store.getters.getData.data.destination.delivery_instructions
         : '';
@@ -267,7 +268,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getData']),
+    ...mapGetters(['getData', 'getChangeInfo']),
     countryCodes() {
       return [this.$store.getters.getCountryData.countryCode.toLowerCase()];
     },
@@ -287,7 +288,7 @@ export default {
     this.sendyPhoneProps.preferredCountries = this.countryCodes;
   },
   methods: {
-    ...mapMutations(['setReviewDialogVisible']),
+    ...mapMutations(['setReviewDialogVisible', 'setChangeInfo']),
     cancelReviewModal(val) {
       this.setReviewDialogVisible(val);
     },
@@ -302,7 +303,7 @@ export default {
       this.$store.commit('setDatePickerVisible', true);
     },
     setLocation(place) {
-      this.params.deliveryLocation.description = place.name;
+      this.params.deliveryLocation.description = document.querySelector('#location').value;
       this.params.deliveryLocation.latitude = place.geometry.location.lat();
       this.params.deliveryLocation.longitude = place.geometry.location.lng();
     },
@@ -378,5 +379,10 @@ export default {
 }
 .phone-input {
   padding-top: 20px;
+}
+.el-loading-spinner {
+  width: 20px !important;
+  left: 50%;
+  top: 70%;
 }
 </style>
