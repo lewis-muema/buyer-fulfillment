@@ -20,8 +20,10 @@
 <script>
 import { ArrowDown } from '@element-plus/icons';
 import { mapMutations, mapGetters } from 'vuex';
+import eventsMixin from '../../../mixins/events_mixin';
 
 export default {
+  mixins: [eventsMixin],
   components: { ArrowDown },
   watch: {
     '$store.getters.getTimelineVisible': function getTimelineVisible(val) {
