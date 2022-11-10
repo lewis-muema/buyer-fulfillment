@@ -192,6 +192,9 @@ export default {
         house_location: this.$store.getters.getData.data.destination.house_location,
       },
       map_options: {
+        componentRestrictions: {
+          country: ['ke', 'ug', 'ci', 'ng'],
+        },
         bounds: {
           north: 35.6,
           east: 59.4,
@@ -282,6 +285,7 @@ export default {
     },
   },
   beforeMount() {
+    console.log(this.map_options.componentRestrictions);
     this.map_options.componentRestrictions.country = this.countryCodes;
     this.sendyPhoneProps.defaultCountry = this.$store.getters.getCountryData.countryCode
       .toLowerCase();
