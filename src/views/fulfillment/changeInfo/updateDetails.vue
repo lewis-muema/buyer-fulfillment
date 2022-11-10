@@ -52,8 +52,8 @@
             :value="params.deliveryLocation.description"
             :disabled="isToday"
             :options="map_options"
-            class="form-control form"
-            id="floatingInput location"
+            class="form-control form set-location"
+            id="floatingInput"
             placeholder="Enter location"
             :select-first-on-enter="true"
             @place_changed="setLocation"
@@ -285,7 +285,6 @@ export default {
     },
   },
   beforeMount() {
-    this.map_options.componentRestrictions.country = this.countryCodes;
     this.sendyPhoneProps.defaultCountry = this.$store.getters.getCountryData.countryCode
       .toLowerCase();
     this.sendyPhoneProps.preferredCountries = this.countryCodes;
@@ -306,7 +305,7 @@ export default {
       this.$store.commit('setDatePickerVisible', true);
     },
     setLocation(place) {
-      this.params.deliveryLocation.description = document.querySelector('#location').value;
+      this.params.deliveryLocation.description = document.querySelector('.set-location').value;
       this.params.deliveryLocation.latitude = place.geometry.location.lat();
       this.params.deliveryLocation.longitude = place.geometry.location.lng();
     },
