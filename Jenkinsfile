@@ -13,13 +13,14 @@ pipeline {
 
     stages {
         stage('ES Lint') {
-            agent { docker { image 'node:14.20.0-alpine' } }
+            agent { docker { image 'node:14.20.0-alpine'
+                              args '--user root' 
+                            } }
             
             steps {
                           
                 sh '''
                     id
-                    chown -R 0777 .
                     npm i eslint
                     npm run lint
                 '''
@@ -28,7 +29,9 @@ pipeline {
         }
 
         stage('Unit Test') {
-            agent { docker { image 'node:14.18.1-alpine' } }
+            agent { docker { image 'node:14.18.1-alpine'
+                             args '--user root' 
+                             } }
             steps {
 
                 sh '''
