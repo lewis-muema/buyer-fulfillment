@@ -1,5 +1,5 @@
 pipeline {
-    agent { docker { image 'node:14.18.1-alpine' } }
+    agent any
     parameters {
         string(name: 'ENV_TAG', defaultValue: 'dev')
         string(name: 'DOCKER_ENV', defaultValue: 'staging')
@@ -12,6 +12,7 @@ pipeline {
     }
 
     stages {
+        agent { docker { image 'node:14.18.1-alpine' } }
         stage('Lint') {
             
             steps {
@@ -25,6 +26,7 @@ pipeline {
         }
 
         stage('Unit Test') {
+            agent { docker { image 'node:14.18.1-alpine' } }
             steps {
 
                 sh '''
@@ -36,7 +38,6 @@ pipeline {
         }
 
         stage('Docker Build & Push Image') {
-          node {
             steps {
               script {
                 
@@ -70,7 +71,6 @@ pipeline {
 
                 '''
               }
-            }
         }
     }
 }
