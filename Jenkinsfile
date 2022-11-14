@@ -18,7 +18,7 @@ pipeline {
             steps {
                           
                 sh '''
-                    npm i lint
+                    npm i eslint
                     npm run lint
                 '''
 
