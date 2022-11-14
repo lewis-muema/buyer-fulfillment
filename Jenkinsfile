@@ -18,7 +18,7 @@ pipeline {
             steps {
                           
                 sh '''
-                    sudo chown -R 113:118 "/.npm"
+                    chown -R 113:118 "/.npm"
                     npm i eslint
                     npm run lint
                 '''
