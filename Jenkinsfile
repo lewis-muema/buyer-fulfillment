@@ -18,6 +18,7 @@ pipeline {
             steps {
                           
                 sh '''
+                    who
                     npm cache clean --force 
                     npm i eslint
                     npm run lint
