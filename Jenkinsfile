@@ -18,7 +18,7 @@ pipeline {
             steps {
                           
                 sh '''
-                    /bin/sh -c apk add --no-cache su-exec
+                    apk add --no-cache su-exec
                     exec su-exec root chown -R 113:118 "/.npm"
                     npm i eslint
                     npm run lint
