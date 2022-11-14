@@ -12,14 +12,14 @@ pipeline {
     }
 
     stages {
-        stage('Lint') {
+        stage('ES Lint') {
             agent { docker { image 'node:14.18.1-alpine' } }
             
             steps {
                           
                 sh '''
-                    chown -R 113:118 "/.npm"
                     npm i eslint
+                    node_modules/eslint/bin/eslint.js --fix . --ext .js,.vue ./src
                     npm run lint
                 '''
 
