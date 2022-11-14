@@ -13,13 +13,11 @@ pipeline {
 
     stages {
         stage('ES Lint') {
-            agent { docker { image 'node:14.18.1-alpine' } }
+            agent { docker { image 'node:14.20.0-alpine' } }
             
             steps {
                           
                 sh '''
-                    apk add --no-cache su-exec
-                    exec su-exec root chown -R 113:118 "/.npm"
                     npm i eslint
                     npm run lint
                 '''
