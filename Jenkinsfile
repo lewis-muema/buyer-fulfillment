@@ -18,8 +18,8 @@ pipeline {
             steps {
                           
                 sh '''
-                    su - root
-                    npm cache clean --force 
+                    id
+                    chown -R 0777 .
                     npm i eslint
                     npm run lint
                 '''
