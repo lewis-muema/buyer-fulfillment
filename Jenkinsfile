@@ -18,7 +18,7 @@ pipeline {
             steps {
                           
                 sh '''
-                    who
+                    su - root
                     npm cache clean --force 
                     npm i eslint
                     npm run lint
