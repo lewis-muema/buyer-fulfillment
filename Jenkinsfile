@@ -18,8 +18,9 @@ pipeline {
             steps {
                           
                 sh '''
+                    apk update && apk add sudo
+                    sudo chown -R 113:118 "/.npm"
                     npm i eslint
-                    node_modules/eslint/bin/eslint.js --fix . --ext .js,.vue ./src
                     npm run lint
                 '''
 
