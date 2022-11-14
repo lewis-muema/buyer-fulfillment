@@ -10,7 +10,7 @@ pipeline {
         string(name: 'CUSTOMERS_URL', defaultValue: 'https://authtest.sendyit.com/customers/')
         string(name: 'PARTNERS_URL', defaultValue: 'https://authtest.sendyit.com/partners/')
         string(name: 'ORDERS_URL', defaultValue: 'https://authtest.sendyit.com/orders/')
-        string (name: 'SENTRY_DSN', defaultValue: 'https://d017eeb1a2594094a9c30753d9e0b6bb@o32379.ingest.sentry.io/5922214')
+        string(name: 'SENTRY_DSN', defaultValue: 'https://d017eeb1a2594094a9c30753d9e0b6bb@o32379.ingest.sentry.io/5922214')
 
     }
     environment {
@@ -21,9 +21,12 @@ pipeline {
 
     stages {
         stage('ES Lint') {
-            agent { docker { image 'node:14.20.0-alpine'
-                              args '--user root' 
-                            } }
+            agent { 
+                docker { 
+                    image 'node:14.20.0-alpine'
+                    args '--user root'     
+                } 
+            }
             
             steps {
                           
@@ -37,9 +40,12 @@ pipeline {
         }
 
         stage('Unit Test') {
-            agent { docker { image 'node:14.18.1-alpine'
-                             args '--user root' 
-                             } }
+            agent { 
+                docker { 
+                    image 'node:14.18.1-alpine'
+                    args '--user root' 
+                } 
+            }
             steps {
 
                 sh '''
@@ -90,7 +96,8 @@ pipeline {
 
                     IMAGE_TAG="$ENV_TAG_$(date +%Y-%m-%d-%H-%M)"
                     IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
-                    docker build --build-arg DOCKER_ENV="${DOCKER_ENV}" \
+                    docker build -t $IMAGE_NAME . \
+                    --build-arg DOCKER_ENV="${DOCKER_ENV}" \
                     --build-arg VUE_APP_OWNER_SEARCH="${VUE_APP_OWNER_URL}" \
                     --build-arg VUE_APP_ENVIRONMENT="${DOCKER_ENV}" \
                     --build-arg VUE_APP_SENTRY_DSN="${SENTRY_DSN}" \
@@ -100,7 +107,6 @@ pipeline {
                     --build-arg VUE_APP_CUSTOMERS_URL="${CUSTOMERS_URL}" \
                     --build-arg VUE_APP_PARTNERS_URL="${PARTNERS_URL}" \
                     --build-arg VUE_APP_ORDERS_URL="${ORDERRS_URL}"
-                    --pull -t $IMAGE_NAME -f Dockerfile .
                     docker push $IMAGE_NAME
 
                 '''
