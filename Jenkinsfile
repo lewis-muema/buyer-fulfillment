@@ -18,7 +18,7 @@ pipeline {
             steps {
                           
                 sh '''
-                    apk update && apk add sudo
+                    set -ex && apk --no-cache add sudo
                     sudo chown -R 113:118 "/.npm"
                     npm i eslint
                     npm run lint
