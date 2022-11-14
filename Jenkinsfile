@@ -46,7 +46,7 @@ pipeline {
                         env.DOCKER_ENV = "production"
                         env.VUE_APP_OWNER_URL = "https://gate.sendyit.com/solr/owner/"
 
-                    } else if {env.BRANCH_NAME == "beta"} {
+                    } else if (env.BRANCH_NAME == "beta") {
 
                         env.ENV_TAG = "beta"
                         env.DOCKER_ENV = "beta"
