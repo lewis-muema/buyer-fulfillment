@@ -71,7 +71,17 @@ pipeline {
 
                     IMAGE_TAG="$ENV_TAG_$(date +%Y-%m-%d-%H-%M)"
                     IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
-                    docker build --build-arg DOCKER_ENV="${DOCKER_ENV}" --build=arg VUE_APP_OWNER_SEARCH="${VUE_APP_OWNER_URL}" VUE_APP_ENVIRONMENT="${DOCKER_ENV}" --build-arg VUE_APP_SENTRY_DSN="https://d017eeb1a2594094a9c30753d9e0b6bb@o32379.ingest.sentry.io/5922214" --build-arg VUE_APP_NODE_PRIVATE_URL="https://auth.sendyit.com/v1/" --build-arg VUE_APP_AUTH_URL="https://auth.sendyit.com/" --build-arg VUE_APP_ADONIS_URL="https://auth.sendyit.com/adonis/" --build-arg VUE_APP_CUSTOMERS_URL="https://auth.sendyit.com/customers/" --build-arg VUE_APP_PARTNERS_URL="https://auth.sendyit.com/partners/" --build-arg VUE_APP_ORDERS_URL="https://auth.sendyit.com/orders/" --pull -t $IMAGE_NAME -f Dockerfile .
+                    docker build --pull -t $FLUX_IMAGE_NAME -f Dockerfile . \
+                    --build-arg DOCKER_ENV="${DOCKER_ENV}" \
+                    --build=arg VUE_APP_OWNER_SEARCH="${VUE_APP_OWNER_URL}" \
+                    --build=arg VUE_APP_ENVIRONMENT="${DOCKER_ENV}" \
+                    --build-arg VUE_APP_SENTRY_DSN="https://d017eeb1a2594094a9c30753d9e0b6bb@o32379.ingest.sentry.io/5922214" \
+                    --build-arg VUE_APP_NODE_PRIVATE_URL="https://auth.sendyit.com/v1/" \
+                    --build-arg VUE_APP_AUTH_URL="https://auth.sendyit.com/" \
+                    --build-arg VUE_APP_ADONIS_URL="https://auth.sendyit.com/adonis/" \
+                    --build-arg VUE_APP_CUSTOMERS_URL="https://auth.sendyit.com/customers/" \
+                    --build-arg VUE_APP_PARTNERS_URL="https://auth.sendyit.com/partners/" \
+                    --build-arg VUE_APP_ORDERS_URL="https://auth.sendyit.com/orders/"
                     docker push $IMAGE_NAME
 
                 '''
