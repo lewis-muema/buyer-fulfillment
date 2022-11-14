@@ -57,6 +57,11 @@ pipeline {
         }
 
         stage('Docker Build & Push Image') {
+             when {
+                anyOf {
+                    branch "master"; branch "staging"; branch "beta"
+                }
+            }
             steps {
               script {
                 
