@@ -7,6 +7,9 @@ let getters;
 let actions;
 let mutations;
 const detailsDialogVisible = false;
+const cardVisible = false;
+const loading = false;
+const reviewDialogVisible = false;
 const orderData = {
   message: 'order.retrieve.success',
   data: {
@@ -71,6 +74,9 @@ getters = {
   ],
   getDetailsDialogVisible: () => detailsDialogVisible,
   getDatePickerVisible: () => true,
+  getLoading: () => loading,
+  getRatingcardVisible: () => cardVisible,
+  getReviewDialogVisible: () => reviewDialogVisible
 };
 actions = {
   requestAxiosPost: storeActions.requestAxiosPost,
@@ -93,6 +99,8 @@ mutations = {
   setUpdateDelivery: storeMutations.setUpdateDelivery,
   setRateOrder: storeMutations.setRateOrder,
   setLanguage: storeMutations.setLanguage,
+  setReviewDialogVisible: storeMutations.setReviewDialogVisible,
+  setRatingcardVisible: storeMutations.setRatingcardVisible,
 };
 const store = createStore({
   getters,
