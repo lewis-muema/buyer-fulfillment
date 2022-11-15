@@ -3,7 +3,7 @@
   'payments-on-delivery-containerr'">
     <div v-if="getMobile">
       <h1 class="pay-now-delivery-title">
-        {{$t("payments.payYorDelivery")}}
+        {{$t("payments.payYourDelivery")}}
       </h1>
       <p class="payments-on-delivery-amount">
         {{currency}} {{ totalAmount }}

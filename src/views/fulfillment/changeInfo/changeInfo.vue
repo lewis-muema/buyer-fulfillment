@@ -58,10 +58,11 @@ export default {
 }
 .change-info-data-fields {
   white-space: nowrap;
-  overflow: visible;
+  overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  margin-bottom: 10px !important;
+  margin-bottom: 0px;
+  height: 37px;
 }
 .section-alignment {
   margin-left: -20px !important;

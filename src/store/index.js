@@ -31,6 +31,7 @@ export default createStore({
       countryData: {
         countryCode: 'KE',
       },
+      changeInfo: false,
       timelineIcons: {
         PAST: {
           icon: shallowRef(Check),

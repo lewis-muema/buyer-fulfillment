@@ -11,9 +11,10 @@
     "test:unit": "cross-env DOCKER_ENV=\"development\" vue-cli-service test:unit"
   },
   "dependencies": {
+    "@datadog/browser-rum": "^4.23.3",
     "@element-plus/icons": "^0.0.11",
     "@element-plus/icons-vue": "^2.0.9",
-    "@fawmi/vue-google-maps": "^0.9.79",
+    "@fawmi/vue-google-maps": "^0.9.67",
     "@firebase/messaging": "^0.9.16",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-brands-svg-icons": "^6.2.0",
@@ -21,7 +22,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "@popperjs/core": "^2.11.6",
-    "@sendyit/pay": "^0.1.24",
+    "@sendyit/pay": "^0.1.43",
     "@vuelidate/core": "^2.0.0",
     "@vuelidate/validators": "^2.0.0",
     "axios": "^0.27.2",
