@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    parameters {
-        string(name: 'ENV_TAG', defaultValue: 'dev')
-        string(name: 'DOCKER_ENV', defaultValue: 'staging')
-    }
     environment {
 
            APP_NAME = "buyer-fulfillment"
@@ -11,7 +7,7 @@ pipeline {
     }
 
     stages {
-        stage('ES Lint') {
+        stage('Lint Test') {
             agent { 
                 docker { 
                     image 'node:14.20.0-alpine'
@@ -46,72 +42,6 @@ pipeline {
                 '''
             }
         }
-
-        stage('Docker Build Prod') {
-             when {
-                branch 'master'
-             }
-            steps {
-                    sh '''
-                         export ENV_TAG="prod"
-                        export VUE_APP_OWNER_URL="https://gate.sendyit.com/solr/owner/"
-                        export NODE_PRIVATE_URL="https://authtest.sendyit.com/v1/"
-                        export AUTH_URL="https://auth.sendyit.com/"
-                        export ADONIS_URL="https://auth.sendyit.com/adonis/"
-                        export CUSTOMERS_URL="https://auth.sendyit.com/customers/"
-                        export PARTNERS_URL="https://auth.sendyit.com/partners/"
-                        export ORDERS_URL="https://auth.sendyit.com/orders/"
-                        IMAGE_TAG="$ENV_TAG_$(date +%Y-%m-%d-%H-%M)"
-                        IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
-                        docker build -t $IMAGE_NAME . \
-                        --build-arg DOCKER_ENV="production" \
-                        --build-arg VUE_APP_OWNER_SEARCH="${VUE_APP_OWNER_URL}" \
-                        --build-arg VUE_APP_ENVIRONMENT="${DOCKER_ENV}" \
-                        --build-arg VUE_APP_SENTRY_DSN="${SENTRY_DSN}" \
-                        --build-arg VUE_APP_NODE_PRIVATE_URL="${NODE_PRIVATE_URL}" \
-                        --build-arg VUE_APP_AUTH_URL="${AUTH_URL}" \
-                        --build-arg VUE_APP_ADONIS_URL="${ADONIS_URL}" \
-                        --build-arg VUE_APP_CUSTOMERS_URL="${CUSTOMERS_URL}" \
-                        --build-arg VUE_APP_PARTNERS_URL="${PARTNERS_URL}" \
-                        --build-arg VUE_APP_ORDERS_URL="${ORDERS_URL}"
-                        docker push $IMAGE_NAME
-                        '''
-
-            }
-        }
-        stage('Docker Build Beta') {
-            when {
-                branch 'beta'
-             }
-            steps {
-                sh '''
-                        export ENV_TAG="beta"
-                        export VUE_APP_OWNER_URL="https://gate.sendyit.com/solr/owner/"
-                        export NODE_PRIVATE_URL="https://authtest.sendyit.com/v1/"
-                        export AUTH_URL="https://auth.sendyit.com/"
-                        export ADONIS_URL="https://auth.sendyit.com/adonis/"
-                        export CUSTOMERS_URL="https://auth.sendyit.com/customers/"
-                        export PARTNERS_URL="https://auth.sendyit.com/partners/"
-                        export ORDERS_URL="https://auth.sendyit.com/orders/"
-                        IMAGE_TAG="${ENV_TAG}_$(date +%Y-%m-%d-%H-%M)"
-                        IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
-                        docker build -t $IMAGE_NAME . \
-                        --build-arg DOCKER_ENV="beta" \
-                        --build-arg VUE_APP_OWNER_SEARCH="${VUE_APP_OWNER_URL}" \
-                        --build-arg VUE_APP_ENVIRONMENT="${DOCKER_ENV}" \
-                        --build-arg VUE_APP_SENTRY_DSN="${SENTRY_DSN}" \
-                        --build-arg VUE_APP_NODE_PRIVATE_URL="${NODE_PRIVATE_URL}" \
-                        --build-arg VUE_APP_AUTH_URL="${AUTH_URL}" \
-                        --build-arg VUE_APP_ADONIS_URL="${ADONIS_URL}" \
-                        --build-arg VUE_APP_CUSTOMERS_URL="${CUSTOMERS_URL}" \
-                        --build-arg VUE_APP_PARTNERS_URL="${PARTNERS_URL}" \
-                        --build-arg VUE_APP_ORDERS_URL="${ORDERS_URL}"
-                        docker push $IMAGE_NAME
-                    '''
-
-            }
-        }
-
         stage('Docker Build Staging') {      
             when {
                 branch 'staging'
@@ -144,6 +74,69 @@ pipeline {
                         '''
             }
        }
-            
+        stage('Docker Build Beta') {
+            when {
+                branch 'beta'
+             }
+            steps {
+                sh '''
+                        export ENV_TAG="beta"
+                        export VUE_APP_OWNER_URL="https://gate.sendyit.com/solr/owner/"
+                        export NODE_PRIVATE_URL="https://authtest.sendyit.com/v1/"
+                        export AUTH_URL="https://auth.sendyit.com/"
+                        export ADONIS_URL="https://auth.sendyit.com/adonis/"
+                        export CUSTOMERS_URL="https://auth.sendyit.com/customers/"
+                        export PARTNERS_URL="https://auth.sendyit.com/partners/"
+                        export ORDERS_URL="https://auth.sendyit.com/orders/"
+                        IMAGE_TAG="${ENV_TAG}_$(date +%Y-%m-%d-%H-%M)"
+                        IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
+                        docker build -t $IMAGE_NAME . \
+                        --build-arg DOCKER_ENV="beta" \
+                        --build-arg VUE_APP_OWNER_SEARCH="${VUE_APP_OWNER_URL}" \
+                        --build-arg VUE_APP_ENVIRONMENT="${DOCKER_ENV}" \
+                        --build-arg VUE_APP_SENTRY_DSN="${SENTRY_DSN}" \
+                        --build-arg VUE_APP_NODE_PRIVATE_URL="${NODE_PRIVATE_URL}" \
+                        --build-arg VUE_APP_AUTH_URL="${AUTH_URL}" \
+                        --build-arg VUE_APP_ADONIS_URL="${ADONIS_URL}" \
+                        --build-arg VUE_APP_CUSTOMERS_URL="${CUSTOMERS_URL}" \
+                        --build-arg VUE_APP_PARTNERS_URL="${PARTNERS_URL}" \
+                        --build-arg VUE_APP_ORDERS_URL="${ORDERS_URL}"
+                        docker push $IMAGE_NAME
+                    '''
+
+            }
+        }
+        stage('Docker Build Prod') {
+             when {
+                branch 'master'
+             }
+            steps {
+                    sh '''
+                        export ENV_TAG="prod"
+                        export VUE_APP_OWNER_URL="https://gate.sendyit.com/solr/owner/"
+                        export NODE_PRIVATE_URL="https://authtest.sendyit.com/v1/"
+                        export AUTH_URL="https://auth.sendyit.com/"
+                        export ADONIS_URL="https://auth.sendyit.com/adonis/"
+                        export CUSTOMERS_URL="https://auth.sendyit.com/customers/"
+                        export PARTNERS_URL="https://auth.sendyit.com/partners/"
+                        export ORDERS_URL="https://auth.sendyit.com/orders/"
+                        IMAGE_TAG="$ENV_TAG_$(date +%Y-%m-%d-%H-%M)"
+                        IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
+                        docker build -t $IMAGE_NAME . \
+                        --build-arg DOCKER_ENV="production" \
+                        --build-arg VUE_APP_OWNER_SEARCH="${VUE_APP_OWNER_URL}" \
+                        --build-arg VUE_APP_ENVIRONMENT="${DOCKER_ENV}" \
+                        --build-arg VUE_APP_SENTRY_DSN="${SENTRY_DSN}" \
+                        --build-arg VUE_APP_NODE_PRIVATE_URL="${NODE_PRIVATE_URL}" \
+                        --build-arg VUE_APP_AUTH_URL="${AUTH_URL}" \
+                        --build-arg VUE_APP_ADONIS_URL="${ADONIS_URL}" \
+                        --build-arg VUE_APP_CUSTOMERS_URL="${CUSTOMERS_URL}" \
+                        --build-arg VUE_APP_PARTNERS_URL="${PARTNERS_URL}" \
+                        --build-arg VUE_APP_ORDERS_URL="${ORDERS_URL}"
+                        docker push $IMAGE_NAME
+                        '''
+
+            }
+        }             
     }
   }
