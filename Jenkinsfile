@@ -68,7 +68,6 @@ pipeline {
                     if(env.BRANCH_NAME == "master") {
 
                         env.ENV_TAG = "prod"
-                        env.DOCKER_ENV = "production"
                         env.VUE_APP_OWNER_URL = "https://gate.sendyit.com/solr/owner/"
                         env.NODE_PRIVATE_URL = "https://auth.sendyit.com/v1/"
                         env.AUTH_URL = "https://auth.sendyit.com/"
@@ -76,10 +75,10 @@ pipeline {
                         env.CUSTOMERS_URL = "https://auth.sendyit.com/customers/"
                         env.PARTNERS_URL = "https://auth.sendyit.com/partners/"
                         env.ORDERS_URL = "https://auth.sendyit.com/orders/"
-                        IMAGE_TAG="${env.ENV_TAG}_\$(date +%Y-%m-%d-%H-%M)"
+                        IMAGE_TAG="$ENV_TAG_\$(date +%Y-%m-%d-%H-%M)"
                         IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
                         docker build -t $IMAGE_NAME . \
-                        --build-arg DOCKER_ENV="${DOCKER_ENV}" \
+                        --build-arg DOCKER_ENV="production" \
                         --build-arg VUE_APP_OWNER_SEARCH="${VUE_APP_OWNER_URL}" \
                         --build-arg VUE_APP_ENVIRONMENT="${DOCKER_ENV}" \
                         --build-arg VUE_APP_SENTRY_DSN="${SENTRY_DSN}" \
@@ -95,7 +94,6 @@ pipeline {
                     } else if (env.BRANCH_NAME == "beta") {
 
                         env.ENV_TAG = "beta"
-                        env.DOCKER_ENV = "beta"
                         env.VUE_APP_OWNER_URL = "https://gate.sendyit.com/solr/owner/"
                         env.NODE_PRIVATE_URL = "https://authtest.sendyit.com/v1/"
                         env.AUTH_URL = "https://auth.sendyit.com/"
@@ -106,7 +104,7 @@ pipeline {
                         IMAGE_TAG="${ENV_TAG}_\$(date +%Y-%m-%d-%H-%M)"
                         IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
                         docker build -t $IMAGE_NAME . \
-                        --build-arg DOCKER_ENV="${DOCKER_ENV}" \
+                        --build-arg DOCKER_ENV="beta" \
                         --build-arg VUE_APP_OWNER_SEARCH="${VUE_APP_OWNER_URL}" \
                         --build-arg VUE_APP_ENVIRONMENT="${DOCKER_ENV}" \
                         --build-arg VUE_APP_SENTRY_DSN="${SENTRY_DSN}" \
@@ -132,7 +130,7 @@ pipeline {
                         IMAGE_TAG="${ENV_TAG}_\$(date +%Y-%m-%d-%H-%M)"
                         IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
                         docker build -t $IMAGE_NAME . \
-                        --build-arg DOCKER_ENV="${DOCKER_ENV}" \
+                        --build-arg DOCKER_ENV="staging" \
                         --build-arg VUE_APP_OWNER_SEARCH="${VUE_APP_OWNER_URL}" \
                         --build-arg VUE_APP_ENVIRONMENT="${DOCKER_ENV}" \
                         --build-arg VUE_APP_SENTRY_DSN="${SENTRY_DSN}" \
