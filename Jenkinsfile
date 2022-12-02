@@ -76,6 +76,20 @@ pipeline {
                         env.CUSTOMERS_URL = "https://auth.sendyit.com/customers/"
                         env.PARTNERS_URL = "https://auth.sendyit.com/partners/"
                         env.ORDERS_URL = "https://auth.sendyit.com/orders/"
+                        IMAGE_TAG="$ENV_TAG_$(date +%Y-%m-%d-%H-%M)"
+                        IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
+                        docker build -t $IMAGE_NAME . \
+                        --build-arg DOCKER_ENV="${env.DOCKER_ENV}" \
+                        --build-arg VUE_APP_OWNER_SEARCH="${env.VUE_APP_OWNER_URL}" \
+                        --build-arg VUE_APP_ENVIRONMENT="${env.DOCKER_ENV}" \
+                        --build-arg VUE_APP_SENTRY_DSN="${env.SENTRY_DSN}" \
+                        --build-arg VUE_APP_NODE_PRIVATE_URL="${env.NODE_PRIVATE_URL}" \
+                        --build-arg VUE_APP_AUTH_URL="${env.AUTH_URL}" \
+                        --build-arg VUE_APP_ADONIS_URL="${env.ADONIS_URL}" \
+                        --build-arg VUE_APP_CUSTOMERS_URL="${env.CUSTOMERS_URL}" \
+                        --build-arg VUE_APP_PARTNERS_URL="${env.PARTNERS_URL}" \
+                        --build-arg VUE_APP_ORDERS_URL="${env.ORDERS_URL}"
+                        docker push $IMAGE_NAME
 
 
                     } else if (env.BRANCH_NAME == "beta") {
@@ -89,32 +103,42 @@ pipeline {
                         env.CUSTOMERS_URL = "https://auth.sendyit.com/customers/"
                         env.PARTNERS_URL = "https://auth.sendyit.com/partners/"
                         env.ORDERS_URL = "https://auth.sendyit.com/orders/"
+                        IMAGE_TAG="$ENV_TAG_$(date +%Y-%m-%d-%H-%M)"
+                        IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
+                        docker build -t $IMAGE_NAME . \
+                        --build-arg DOCKER_ENV="${env.DOCKER_ENV}" \
+                        --build-arg VUE_APP_OWNER_SEARCH="${env.VUE_APP_OWNER_URL}" \
+                        --build-arg VUE_APP_ENVIRONMENT="${env.DOCKER_ENV}" \
+                        --build-arg VUE_APP_SENTRY_DSN="${env.SENTRY_DSN}" \
+                        --build-arg VUE_APP_NODE_PRIVATE_URL="${env.NODE_PRIVATE_URL}" \
+                        --build-arg VUE_APP_AUTH_URL="${env.AUTH_URL}" \
+                        --build-arg VUE_APP_ADONIS_URL="${env.ADONIS_URL}" \
+                        --build-arg VUE_APP_CUSTOMERS_URL="${env.CUSTOMERS_URL}" \
+                        --build-arg VUE_APP_PARTNERS_URL="${env.PARTNERS_URL}" \
+                        --build-arg VUE_APP_ORDERS_URL="${env.ORDERRS_URL}"
+                        docker push $IMAGE_NAME
 
                     }else {
 
                         env.ENV_TAG = "dev"
+                        IMAGE_TAG="${env.ENV_TAG}_$(date +%Y-%m-%d-%H-%M)"
+                        IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
+                        docker build -t $IMAGE_NAME . \
+                        --build-arg DOCKER_ENV="${env.DOCKER_ENV}" \
+                        --build-arg VUE_APP_OWNER_SEARCH="${env.VUE_APP_OWNER_URL}" \
+                        --build-arg VUE_APP_ENVIRONMENT="${env.DOCKER_ENV}" \
+                        --build-arg VUE_APP_SENTRY_DSN="${env.SENTRY_DSN}" \
+                        --build-arg VUE_APP_NODE_PRIVATE_URL="${env.NODE_PRIVATE_URL}" \
+                        --build-arg VUE_APP_AUTH_URL="${env.AUTH_URL}" \
+                        --build-arg VUE_APP_ADONIS_URL="${env.ADONIS_URL}" \
+                        --build-arg VUE_APP_CUSTOMERS_URL="${env.CUSTOMERS_URL}" \
+                        --build-arg VUE_APP_PARTNERS_URL="${env.PARTNERS_URL}" \
+                        --build-arg VUE_APP_ORDERS_URL="${env.ORDERS_URL}"
+                        docker push $IMAGE_NAME
 
                     }
             }
 
-                sh '''
-
-                    IMAGE_TAG="$ENV_TAG_$(date +%Y-%m-%d-%H-%M)"
-                    IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
-                    docker build -t $IMAGE_NAME . \
-                    --build-arg DOCKER_ENV="${DOCKER_ENV}" \
-                    --build-arg VUE_APP_OWNER_SEARCH="${VUE_APP_OWNER_URL}" \
-                    --build-arg VUE_APP_ENVIRONMENT="${DOCKER_ENV}" \
-                    --build-arg VUE_APP_SENTRY_DSN="${SENTRY_DSN}" \
-                    --build-arg VUE_APP_NODE_PRIVATE_URL="${NODE_PRIVATE_URL}" \
-                    --build-arg VUE_APP_AUTH_URL="${AUTH_URL}" \
-                    --build-arg VUE_APP_ADONIS_URL="${ADONIS_URL}" \
-                    --build-arg VUE_APP_CUSTOMERS_URL="${CUSTOMERS_URL}" \
-                    --build-arg VUE_APP_PARTNERS_URL="${PARTNERS_URL}" \
-                    --build-arg VUE_APP_ORDERS_URL="${ORDERRS_URL}"
-                    docker push $IMAGE_NAME
-
-                '''
               }
         }
     }
