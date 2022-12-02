@@ -76,7 +76,7 @@ pipeline {
                         env.CUSTOMERS_URL = "https://auth.sendyit.com/customers/"
                         env.PARTNERS_URL = "https://auth.sendyit.com/partners/"
                         env.ORDERS_URL = "https://auth.sendyit.com/orders/"
-                        IMAGE_TAG="$ENV_TAG_$(date +%Y-%m-%d-%H-%M)"
+                        IMAGE_TAG="${env.ENV_TAG}_\$(date +%Y-%m-%d-%H-%M)"
                         IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
                         docker build -t $IMAGE_NAME . \
                         --build-arg DOCKER_ENV="${env.DOCKER_ENV}" \
@@ -103,7 +103,7 @@ pipeline {
                         env.CUSTOMERS_URL = "https://auth.sendyit.com/customers/"
                         env.PARTNERS_URL = "https://auth.sendyit.com/partners/"
                         env.ORDERS_URL = "https://auth.sendyit.com/orders/"
-                        IMAGE_TAG="$ENV_TAG_$(date +%Y-%m-%d-%H-%M)"
+                        IMAGE_TAG="${env.ENV_TAG}_\$(date +%Y-%m-%d-%H-%M)"
                         IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
                         docker build -t $IMAGE_NAME . \
                         --build-arg DOCKER_ENV="${env.DOCKER_ENV}" \
@@ -121,7 +121,7 @@ pipeline {
                     }else {
 
                         env.ENV_TAG = "dev"
-                        IMAGE_TAG="${env.ENV_TAG}_$(date +%Y-%m-%d-%H-%M)"
+                        IMAGE_TAG="${env.ENV_TAG}_\$(date +%Y-%m-%d-%H-%M)"
                         IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
                         docker build -t $IMAGE_NAME . \
                         --build-arg DOCKER_ENV="${env.DOCKER_ENV}" \
