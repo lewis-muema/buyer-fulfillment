@@ -121,6 +121,7 @@ pipeline {
                     }else {
 
                         env.ENV_TAG = "dev"
+                        env.DOCKER_ENV = "testing"
                         env.VUE_APP_OWNER_URL = "https://gate.sendyit.com/solr/ownerstaging/"
                         env.NODE_PRIVATE_URL = "https://authtest.sendyit.com/v1/"
                         env.AUTH_URL = "https://authtest.sendyit.com/"
