@@ -12,7 +12,7 @@ RUN npm install
 
 COPY . .
 
-RUN if [ "$DOCKER_ENV" = "testing" ]; \
+RUN if [ "$DOCKER_ENV" = "staging" ]; \
         then npm run staging; \
         elif [ "$DOCKER_ENV" = "beta" ]; \
         then npm run beta; \
