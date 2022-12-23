@@ -191,8 +191,8 @@ export default {
         };
         this.$paymentInit(buPayload, 'choose-payment-checkout');
         this.setCheckoutDialogVisible(false);
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error);
       }
     },
     closeCheckoutModal() {
