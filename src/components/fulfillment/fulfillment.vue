@@ -2,7 +2,6 @@
   <div v-if="Object.keys(this.$store.getters.getData).length > 0">
     <Mobile v-if="$store.getters.getMobile" />
     <Desktop v-else />
-    <div>App Version : 0.1.1</div>
   </div>
 </template>
 
