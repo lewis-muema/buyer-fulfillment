@@ -21,7 +21,7 @@ RUN if [ "$DOCKER_ENV" = "staging" ]; \
 
 
 #############################
-FROM sendy-docker-local.jfrog.io/nginx:base_frontend
+FROM sendy-docker-local.jfrog.io/nginx:base
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 WORKDIR /usr/src/app
