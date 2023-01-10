@@ -182,7 +182,7 @@ export default {
           paybill_no: '',
           email: '',
           authToken: '',
-          mobile_number: this.getData.data.destination.phone_number,
+          phonenumber: this.getData.data.destination.phone_number,
           firstname: this.getData.data.destination.name,
           lastname: '',
           payment_options: '',
