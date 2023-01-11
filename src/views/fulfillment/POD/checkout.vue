@@ -184,7 +184,7 @@ export default {
           authToken: '',
           phonenumber: this.getData.data.destination.phone_number,
           firstname: this.getData.data.destination.name,
-          lastname: '',
+          lastname: this.getData.data.destination.name,
           payment_options: '',
           company_code: 'FFKE',
           locale: this.getData.data.language,
