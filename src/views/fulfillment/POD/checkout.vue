@@ -168,6 +168,7 @@ export default {
     ...mapActions(['payOnDelivery']),
     submitToPay() {
       try {
+        const name = this.getData.data.destination.name.split(' ');
         const buPayload = {
           user_id: '',
           entity_id: 6,
@@ -183,8 +184,8 @@ export default {
           email: '',
           authToken: '',
           phonenumber: this.getData.data.destination.phone_number,
-          firstname: this.getData.data.destination.name,
-          lastname: '',
+          firstname: name[0],
+          lastname: name[1] || name[0],
           payment_options: '',
           company_code: 'FFKE',
           locale: this.getData.data.language,
