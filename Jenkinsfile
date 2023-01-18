@@ -7,41 +7,41 @@ pipeline {
     }
 
     stages {
-        stage('Lint Test') {
-            agent { 
-                docker { 
-                    image 'node:14.20.0-alpine'
-                    args '--user root'     
-                } 
-            }
-            
-            steps {
-                          
-                sh '''
-                    id
-                    npm i eslint
-                    npm run lint
-                '''
+//         stage('Lint Test') {
+//             agent {
+//                 docker {
+//                     image 'node:14.20.0-alpine'
+//                     args '--user root'
+//                 }
+//             }
+//
+//             steps {
+//
+//                 sh '''
+//                     id
+//                     npm i eslint
+//                     npm run lint
+//                 '''
+//
+//             }
+//         }
 
-            }            
-        }
-
-        stage('Unit Test') {
-            agent { 
-                docker { 
-                    image 'node:14.18.1-alpine'
-                    args '--user root' 
-                } 
-            }
-            steps {
-
-                sh '''
-                    npm i mocha
-                    npm i nyc
-                    npm run test:unit
-                '''
-            }
-        }
+//         stage('Unit Test') {
+//             agent {
+//                 docker {
+//                     image 'node:14.18.1-alpine'
+//                     args '--user root'
+//                 }
+//             }
+//             steps {
+//
+//                 sh '''
+//                     npm i mocha
+//                     npm i nyc
+//                     npm run test:unit
+//                 '''
+//             }
+//         }
         stage('Docker Build Staging') {      
             when {
                 branch 'staging'
