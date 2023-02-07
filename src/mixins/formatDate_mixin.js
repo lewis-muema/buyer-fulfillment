@@ -11,13 +11,16 @@ const formatDates = {
       )}`;
     },
     formatDeliveryWindow(date) {
-      const lowerLimit = moment(
-        new Date(date.estimated_delivery_time - date.large_lower_limit * 60 * 1000),
-      ).format('h a');
-      const upperLimit = moment(
-        new Date(date.estimated_delivery_time + date.large_upper_limit * 60 * 1000),
-      ).format('h a');
-      return `${lowerLimit} - ${upperLimit}`;
+      if (date.estimated_delivery_time !== null) {
+        const lowerLimit = moment(
+          new Date(date.estimated_delivery_time - date.large_lower_limit * 60 * 1000),
+        ).format('h a');
+        const upperLimit = moment(
+          new Date(date.estimated_delivery_time + date.large_upper_limit * 60 * 1000),
+        ).format('h a');
+        return `${lowerLimit} - ${upperLimit}`;
+      }
+      return '';
     },
   },
 };
