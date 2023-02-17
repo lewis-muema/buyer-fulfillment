@@ -22,7 +22,7 @@
           />
           <label htmlFor="floatingInput">{{ $t("reviewChanges.recipientName") }}</label>
         </div>
-        <div v-if="v$.params.name.$error" class="invalidFeedback">
+        <div v-if="v$.params.name.$invalid" class="invalidFeedback">
           {{ $t("updateDetails.recipientName") }}
         </div>
         <div class="form-floating mb-3">
@@ -41,7 +41,7 @@
             @blur="v$.params.phone.$touch"
           ></vue-tel-input>
         </div>
-        <div v-if="v$.params.phone.$error" class="invalidFeedback">
+        <div v-if="v$.params.phone.$invalid" class="invalidFeedback">
           {{ $t("updateDetails.phoneNumberRequired") }}
         </div>
         <div class="form-floating mb-3">
@@ -72,7 +72,7 @@
             @blur="v$.params.house_location.$touch"
           />
           <label for="floatingInput">{{ $t("updateDetails.floorNumber") }}</label>
-          <div v-if="v$.params.house_location.$error" class="invalidFeedback">
+          <div v-if="v$.params.house_location.$invalid && !isToday" class="invalidFeedback">
           {{ $t("updateDetails.floorNumberRequired") }}
         </div>
         </div>
