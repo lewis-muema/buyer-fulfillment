@@ -1,0 +1,19 @@
+{
+  "message": "order.recipient.update.success",
+  "data": {
+    "name": "Dorcas Cherono",
+    "buyer_type": "INDIVIDUAL",
+    "phone_number": "+254 794 375045",
+    "secondary_phone_number": "",
+    "delivery_location": {
+      "description": "Kinoo, Rungiri, Kenya",
+      "longitude": 36.6930253,
+      "latitude": -1.2526258,
+      "zone_name": null,
+      "zone_id": null
+    },
+    "house_location": "Floor 3",
+    "delivery_instructions": "Leave with guard"
+  },
+  "errors": []
+}

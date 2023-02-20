@@ -1,0 +1,79 @@
+{
+  "message": "order.retrieve.success",
+  "data": {
+    "seller_name": "Peter Pans",
+    "order_id": "D-UYBEI-01423",
+    "country": "KENYA",
+    "language": "en",
+    "consolidated": false,
+    "order_event_status": "event.delivery.rescheduled.by.buyer",
+    "order_status": "ORDER_RESCHEDULED",
+    "order_completion_date": null,
+    "scheduled_delivery_date": 1676966400000,
+    "estimated_delivery_date": {
+      "order_no": null,
+      "estimated_delivery_time": null,
+      "estimated_delivery_time_human_readable": null,
+      "large_upper_limit": null,
+      "large_lower_limit": null,
+      "small_upper_limit": null,
+      "small_lower_limit": null
+    },
+    "confirmation_pin": "2860",
+    "partner_contact_information": null,
+    "products": [
+      {
+        "product_name": "Black Board Chalk",
+        "product_variant_description": "White",
+        "product_unit_price": 30.0,
+        "product_unit_currency": "KES",
+        "product_image_link": "https://s3.eu-west-1.amazonaws.com/sendy-partner-docs/fulfillment_products/B-AEB-9648_1634543004898_image_picker_254DACC4-5844-4D17-89ED-D164DEAF6561-11577-00000A2C2B3F339F.jpg",
+        "product_unit_count": 1
+      }
+    ],
+    "event_time_line": [
+      {
+        "event_code": "event.delivery.rescheduled.by.buyer",
+        "event_date": 1676890249000,
+        "event_notes": null,
+        "meta_data": []
+      }
+    ],
+    "summarised_event_time_line": [
+      {
+        "event_date": 1676890249000,
+        "event_code": "EVENT_DELIVERY_ORDER_CREATED",
+        "translated_event_code": "Order placed on Tuesday, Feb 14th",
+        "notes": "",
+        "event_tense": "PAST",
+        "metadata": {}
+      },
+      {
+        "event_date": 1676890249000,
+        "event_code": "EVENT_DELIVERY_RESCHEDULED_BY_BUYER",
+        "translated_event_code": "The customer rescheduled this order for Tuesday, Feb 21st",
+        "notes": null,
+        "event_tense": "PAST",
+        "metadata": {}
+      }
+    ],
+    "destination": {
+      "name": "Dorcas Cherono",
+      "buyer_type": "INDIVIDUAL",
+      "phone_number": "+254 794 375045",
+      "secondary_phone_number": "",
+      "delivery_location": {
+        "description": "Kinoo, Rungiri, Kenya",
+        "longitude": 36.6930253,
+        "latitude": -1.2526258,
+        "zone_name": null,
+        "zone_id": null
+      },
+      "house_location": "Floor 3",
+      "delivery_instructions": "Leave with guard"
+    },
+    "rated": false,
+    "sale_of_goods_invoice": null
+  },
+  "errors": []
+}

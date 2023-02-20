@@ -305,7 +305,7 @@ export default {
       this.$store.commit('setDatePickerVisible', true);
     },
     setLocation(place) {
-      this.params.deliveryLocation.description = document.querySelector('.set-location').value;
+      this.params.deliveryLocation.description = document.querySelector('.set-location')?.value;
       this.params.deliveryLocation.latitude = place.geometry.location.lat();
       this.params.deliveryLocation.longitude = place.geometry.location.lng();
     },

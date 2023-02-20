@@ -2,6 +2,9 @@
 node_modules
 /dist
 .git
+cypress
+coverage
+test-results
 
 # local env files
 .env.local
@@ -23,3 +26,4 @@ yarn-error.log*
 node_modules
 
 *.rdb
+.nyc_output

@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ orderItems }}
     <div :class="!$store.getters.getMobile ? 'items-delivered-desktop' : 'items-delivered-mobile'">
       <div class="d-flex flex-row" v-for="(orderItem, index) in orderItems" :key="index">
         <el-badge :value="orderItem.product_unit_count" class="item" type="primary">
@@ -20,11 +21,14 @@
 
 <script>
 
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'OrderItems',
   computed: {
+    ...mapGetters(['getData']),
     orderItems() {
-      return this.$store.getters.getData.data.products;
+      return this.getData.data.products;
     },
   },
 };
