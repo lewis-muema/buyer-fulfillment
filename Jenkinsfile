@@ -7,41 +7,63 @@ pipeline {
     }
 
     stages {
-//         stage('Lint Test') {
-//             agent {
-//                 docker {
-//                     image 'node:14.20.0-alpine'
-//                     args '--user root'
-//                 }
-//             }
-//
-//             steps {
-//
-//                 sh '''
-//                     id
-//                     npm i eslint
-//                     npm run lint
-//                 '''
-//
-//             }
-//         }
+        stage('Lint Test') {
+            agent {
+                docker {
+                    image 'node:14.20.0-alpine'
+                    args '--user root'
+                }
+            }
 
-//         stage('Unit Test') {
-//             agent {
-//                 docker {
-//                     image 'node:14.18.1-alpine'
-//                     args '--user root'
-//                 }
-//             }
-//             steps {
-//
-//                 sh '''
-//                     npm i mocha
-//                     npm i nyc
-//                     npm run test:unit
-//                 '''
-//             }
-//         }
+            steps {
+
+                sh '''
+                    id
+                    npm i eslint
+                    npm run lint
+                '''
+
+            }
+        }
+
+        stage('Unit Test') {
+            agent { 
+                docker { 
+                    image 'node:14.20.0-alpine'
+                    args '--user=root'
+                } 
+            } 
+            steps {
+                cache(maxCacheSize: 900, caches: [
+                arbitraryFileCache(path: '/var/lib/jenkins/caches/Cypress,.npm',compressionMethod: 'NONE')
+                ]) {
+                    sh '''
+                         npm install istanbul
+                         npm ci --prefer-offline
+                         npx cypress cache path
+                         npx cypress cache list
+                         npm run test
+                         npm run coverage
+                    '''
+                }    
+            }
+            post {
+                always {
+                  publishHTML target: [
+                    allowMissing         : false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll             : true,
+                    reportDir            : 'coverage/lcov-report',
+                    reportFiles          : 'index.html',
+                    reportName           : 'Coverage Report - HTML'
+                  ]
+                  publishCoverage adapters: [cobertura(path: 'coverage/**.xml', mergeToOneReport: true)]
+                  catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                    junit "test-results/**.xml"  
+                }
+              }
+           }
+        }
         stage('Docker Build Staging') {      
             when {
                 branch 'staging'
