@@ -24,7 +24,6 @@ pipeline {
 
             }
         }
-
         stage('Unit Test') {
             agent { 
                 docker { 
