@@ -1,0 +1,7 @@
+{
+  "message": "order.reschedule.success",
+  "data": {
+    "scheduled_date": 1676966400000
+  },
+  "errors": []
+}

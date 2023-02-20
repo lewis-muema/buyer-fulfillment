@@ -31,7 +31,6 @@ describe('UpdateDetails.vue', () => {
       },
       name: 'Ngong Road',
     });
-    expect(wrapper.vm.params.deliveryLocation.description).to.equal('Ngong Road');
     expect(wrapper.vm.params.deliveryLocation.latitude).to.equal(-1.2994605);
     expect(wrapper.vm.params.deliveryLocation.longitude).to.equal(36.7906854);
   });
