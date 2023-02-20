@@ -14,7 +14,6 @@ pipeline {
                     args '--user root'
                 }
             }
-
             steps {
 
                 sh '''
