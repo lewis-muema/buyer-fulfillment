@@ -29,7 +29,7 @@ pipeline {
         stage('Unit Test') {
             agent { 
                 docker { 
-                    image 'node:16.14.0-alpine'
+                    image 'cypress/base:14.16.0'
                     args '--user=root'
                 } 
             } 
