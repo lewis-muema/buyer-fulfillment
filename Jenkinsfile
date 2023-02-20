@@ -10,7 +10,7 @@ pipeline {
         stage('Lint Test') {
             agent {
                 docker {
-                    image 'node:14.20.0-alpine'
+                    image 'node:16.14.0-alpine'
                     args '--user root'
                 }
             }
@@ -29,7 +29,7 @@ pipeline {
         stage('Unit Test') {
             agent { 
                 docker { 
-                    image 'node:14.20.0-alpine'
+                    image 'node:16.14.0-alpine'
                     args '--user=root'
                 } 
             } 
