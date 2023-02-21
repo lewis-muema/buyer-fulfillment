@@ -1,4 +1,5 @@
 // import { expect } from 'chai';
+import moment from 'moment';
 
 const timeout = 60000;
 
@@ -38,7 +39,7 @@ describe('Order details page', () => {
     cy.wait(1000);
     cy.get('.reschedule-button').click();
     cy.wait(1000);
-    cy.get('.day').contains(21).click();
+    cy.get('.day').contains(moment().add(1, 'days').format('D')).click();
     cy.rescheduleStubs();
     cy.get('.save-button').contains('Save').click();
     cy.get('.fulfillemnt-order-items-expected-deivery-date').contains('Tuesday, 21st February');
