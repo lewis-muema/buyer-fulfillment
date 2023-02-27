@@ -4,7 +4,7 @@
     <div class="fulfillment-header">
       <div class="fulfillment-header-logo">
         <img
-          src="https://assets.website-files.com/5be92ce6e4a547dcc61b976c/60253f92874eabf1a8ecf88f_Logo_SendyMain_Colored_Normal_SVG.svg"
+          src="https://images.sendyit.com/fulfilment/buyer/Main_Colored_Normal_SVG.svg"
           alt="Sendy logo"
           :class="$store.getters.getMobile ?
           'fulfillment-header-sendy-logo': 'fulfillment-header-sendy-logo-desktop' "
