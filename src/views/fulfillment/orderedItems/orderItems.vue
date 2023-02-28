@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ orderItems }}
     <div :class="!$store.getters.getMobile ? 'items-delivered-desktop' : 'items-delivered-mobile'">
       <div class="d-flex flex-row" v-for="(orderItem, index) in orderItems" :key="index">
         <el-badge :value="orderItem.product_unit_count" class="item" type="primary">
