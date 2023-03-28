@@ -43,7 +43,8 @@ export default {
         moment(new Date(this.$store.getters.getData.data.scheduled_delivery_date)).format(
           'YYYY-MM-DD',
         ) === moment().format('YYYY-MM-DD')
-        || !this.getStatus([0, 1, 13, 14, 15]).includes(this.$store.getters.getDeliveryStatus)
+        || this.getStatus([2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 16])
+          .includes(this.$store.getters.getDeliveryStatus)
       );
     },
   },
