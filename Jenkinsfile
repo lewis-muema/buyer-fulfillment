@@ -126,6 +126,21 @@ pipeline {
 
             }
         }
+        stage('Docker Build pre-prod') {
+            when {
+                branch 'pre-prod'
+            }
+            steps {
+                sh  '''
+                    export ENV_TAG="staging"
+                    IMAGE_TAG="$ENV_TAG_$(date +%Y-%m-%d-%H-%M)"
+                    IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
+                    docker build -t $IMAGE_NAME . \
+                    --build-arg DOCKER_ENV="preprod" \
+                    docker push $IMAGE_NAME
+                    '''
+            }
+        }
         stage('Docker Build Prod') {
              when {
                 branch 'master'
