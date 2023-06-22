@@ -103,7 +103,7 @@ pipeline {
              }
             steps {
                 sh '''
-                        export ENV_TAG="pre-prod"
+                        export ENV_TAG="staging"
                         export DOCKER_ENV="preprod"
                         export VUE_APP_OWNER_URL="https://auth.sendy.tech/solr/owner/"
                         export NODE_PRIVATE_URL="https://authtest.sendy.tech/v1/"
