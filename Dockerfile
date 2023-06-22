@@ -7,8 +7,8 @@ ARG DOCKER_ENV
 ENV DOCKER_ENV=$DOCKER_ENV
 RUN echo ${DOCKER_ENV}
 
-COPY package*.json ./ 
-RUN npm install 
+COPY package*.json ./
+RUN npm install
 
 COPY . .
 
@@ -16,6 +16,8 @@ RUN if [ "$DOCKER_ENV" = "staging" ]; \
         then npm run staging; \
         elif [ "$DOCKER_ENV" = "beta" ]; \
         then npm run beta; \
+        elif [ "$DOCKER_ENV" = "preprod"]; \
+        then npm run preprod; \
         else npm run build; \
         fi
 

@@ -13,7 +13,8 @@
     "beta": "cross-env DOCKER_ENV=\"beta\" vue-cli-service build",
     "coverage": "npx nyc report --reporter=text-summary --reporter=cobertura --extension=.vue --report-dir=./ --reporter-options 'mochaFile=results/my-test-output-[hash].xml' && node -e \"require('fs').rename('cobertura-coverage.xml', 'cobertura.xml', function(err) {})\"",
     "dev": "cross-env DOCKER_ENV=\"development\" vue-cli-service serve",
-    "staging": "cross-env DOCKER_ENV=\"staging\"  vue-cli-service build"
+    "staging": "cross-env DOCKER_ENV=\"staging\"  vue-cli-service build",
+    "preprod": "cross-env DOCKER_ENV=\"pre-prod\" vue-cli-service build"
   },
   "dependencies": {
     "@cypress/code-coverage": "^3.10.0",
