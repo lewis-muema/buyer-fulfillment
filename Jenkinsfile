@@ -57,7 +57,7 @@ pipeline {
                   ]
                   recordCoverage(tools: [[parser: 'COBERTURA']],
                     sourceDirectories: [[path: 'coverage/**.xml']],
-                    id: 'COBERTURA-COVERAGE-REPORT-FULFILMENT-SELLER-WEB-APP', name: 'COBERTURA COVERAGE REPORT'
+                    id: 'COBERTURA-COVERAGE-REPORT-FULFILMENT-BUYER-WEB-APP', name: 'COBERTURA COVERAGE REPORT'
                   )
                   catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
                     junit "test-results/**.xml"  
