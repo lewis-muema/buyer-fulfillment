@@ -16,7 +16,7 @@ RUN if [ "$DOCKER_ENV" = "staging" ]; \
         then npm run staging; \
         elif [ "$DOCKER_ENV" = "beta" ]; \
         then npm run beta; \
-        elif [ "$DOCKER_ENV" = "preprod"]; \
+        elif [ "$DOCKER_ENV" = "preprod" ]; \
         then npm run preprod; \
         else npm run build; \
         fi
