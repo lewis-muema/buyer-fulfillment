@@ -1,4 +1,4 @@
-FROM sendy-docker-local.jfrog.io/node:16.14.0-alpine AS build-stage
+FROM sendy-docker-local.jfrog.io/node:14-alpine AS build-stage
 
 WORKDIR /build
 
