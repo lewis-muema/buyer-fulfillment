@@ -114,7 +114,7 @@ pipeline {
                         IMAGE_TAG="${ENV_TAG}_$(date +%Y-%m-%d-%H-%M)"
                         IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
                         docker build -t $IMAGE_NAME . \
-                        --build-arg DOCKER_ENV="beta" \
+                        --build-arg DOCKER_ENV="preprod" \
                         --build-arg VUE_APP_OWNER_SEARCH="${VUE_APP_OWNER_URL}" \
                         --build-arg VUE_APP_ENVIRONMENT="${DOCKER_ENV}" \
                         --build-arg VUE_APP_SENTRY_DSN="${SENTRY_DSN}" \
