@@ -97,7 +97,7 @@ pipeline {
                         '''
             }
        }
-        stage('Docker Build Beta') {
+        stage('Docker Build pre-prod') {
             when {
                 branch 'pre-prod'
              }
