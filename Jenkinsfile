@@ -99,18 +99,18 @@ pipeline {
        }
         stage('Docker Build Beta') {
             when {
-                branch 'beta'
+                branch 'pre-prod'
              }
             steps {
                 sh '''
-                        export ENV_TAG="beta"
-                        export VUE_APP_OWNER_URL="https://gate.sendyit.com/solr/owner/"
-                        export NODE_PRIVATE_URL="https://authtest.sendyit.com/v1/"
-                        export AUTH_URL="https://auth.sendyit.com/"
-                        export ADONIS_URL="https://auth.sendyit.com/adonis/"
-                        export CUSTOMERS_URL="https://auth.sendyit.com/customers/"
-                        export PARTNERS_URL="https://auth.sendyit.com/partners/"
-                        export ORDERS_URL="https://auth.sendyit.com/orders/"
+                        export ENV_TAG="pre-prod"
+                        export VUE_APP_OWNER_URL="https://auth.sendy.tech/solr/owner/"
+                        export NODE_PRIVATE_URL="https://authtest.sendy.tech/v1/"
+                        export AUTH_URL="https://auth.sendy.tech/"
+                        export ADONIS_URL="https://auth.sendy.tech/adonis/"
+                        export CUSTOMERS_URL="https://auth.sendy.tech/customers/"
+                        export PARTNERS_URL="https://auth.sendy.tech/partners/"
+                        export ORDERS_URL="https://auth.sendy.tech/orders/"
                         IMAGE_TAG="${ENV_TAG}_$(date +%Y-%m-%d-%H-%M)"
                         IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
                         docker build -t $IMAGE_NAME . \
@@ -127,21 +127,6 @@ pipeline {
                         docker push $IMAGE_NAME
                     '''
 
-            }
-        }
-        stage('Docker Build pre-prod') {
-            when {
-                branch 'pre-prod'
-            }
-            steps {
-                sh  '''
-                    export ENV_TAG="staging"
-                    IMAGE_TAG="$ENV_TAG_$(date +%Y-%m-%d-%H-%M)"
-                    IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
-                    docker build -t $IMAGE_NAME . \
-                    --build-arg DOCKER_ENV="preprod" \
-                    docker push $IMAGE_NAME
-                    '''
             }
         }
         stage('Docker Build Prod') {
