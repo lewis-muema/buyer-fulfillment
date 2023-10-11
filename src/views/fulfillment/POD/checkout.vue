@@ -22,12 +22,7 @@
         <span>{{ $t("checkout.amountPaid") }}&nbsp;</span>
         <span> {{ currency }} {{ invoicedAmount }}</span>
         <p>
-          {{
-            formatDate(
-              getData.data.event_time_line[0]
-                .event_date
-            )
-          }}
+          {{ formatDate(getData.data.event_time_line[0].event_date) }}
         </p>
       </div>
       <div>
@@ -152,18 +147,34 @@ export default {
     showReceiptModal() {
       return this.getData.data.sale_of_goods_invoice.invoice_status === 'INVOICE_COMPLETELY_PAID';
     },
+    countryCode() {
+      const { country } = this.getData.data;
+      const countries = [
+        {
+          country: 'KENYA',
+          value: 'KE',
+        },
+        {
+          country: 'NIGERIA',
+          value: 'NG',
+        },
+      ];
+      const entry = countries.find((item) => item.country === country);
+      return entry ? entry.value : null;
+    },
   },
   methods: {
     ...mapMutations(['setCheckoutDialogVisible', 'setPaymentSuccessful', 'setCheckoutModal']),
     ...mapActions(['payOnDelivery']),
     submitToPay() {
       try {
+        const name = this.getData.data.destination.name.split(' ');
         const buPayload = {
           user_id: '',
           entity_id: 6,
           pay_direction: 'PAY_ON_DELIVERY',
           currency: this.currency,
-          country_code: 'KE',
+          country_code: this.countryCode,
           amount: this.totalAmount,
           success_callback_url: '',
           fail_callback_url: '',
@@ -172,16 +183,17 @@ export default {
           paybill_no: '',
           email: '',
           authToken: '',
-          firstname: this.getData.data.destination.name,
-          lastname: '',
+          phonenumber: this.getData.data.destination.phone_number,
+          firstname: name[0],
+          lastname: name[1] || name[0],
           payment_options: '',
           company_code: 'FFKE',
-          locale: localStorage.language,
+          locale: this.getData.data.language,
         };
-        this.$paymentInit(buPayload, 'checkout');
+        this.$paymentInit(buPayload, 'choose-payment-checkout');
         this.setCheckoutDialogVisible(false);
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error);
       }
     },
     closeCheckoutModal() {

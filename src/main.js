@@ -37,7 +37,7 @@ datadogRum.init({
   defaultPrivacyLevel: 'mask-user-input',
 });
 datadogRum.startSessionReplayRecording();
-createApp(App).use(store).use(router).use(ElementPlus)
+createApp(App).use(store).use(ElementPlus)
   .use(i18n)
   .use(VueGoogleMaps, {
     load: {
@@ -57,4 +57,5 @@ createApp(App).use(store).use(router).use(ElementPlus)
       VGS_ENVIRONMENT: process.env.VUE_APP_VGS_ENVIRONMENT,
     },
   })
+  .use(router)
   .mount('#app');

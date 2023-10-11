@@ -12,7 +12,7 @@ RUN npm install
 
 COPY . .
 
-RUN if [ "$DOCKER_ENV" = "testing" ]; \
+RUN if [ "$DOCKER_ENV" = "staging" ]; \
         then npm run staging; \
         elif [ "$DOCKER_ENV" = "beta" ]; \
         then npm run beta; \
@@ -21,7 +21,7 @@ RUN if [ "$DOCKER_ENV" = "testing" ]; \
 
 
 #############################
-FROM sendy-docker-local.jfrog.io/nginx:base_frontend
+FROM sendy-docker-local.jfrog.io/nginx:base
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 WORKDIR /usr/src/app
