@@ -144,7 +144,7 @@ pipeline {
                         export CUSTOMERS_URL="https://auth.sendyit.com/customers/"
                         export PARTNERS_URL="https://auth.sendyit.com/partners/"
                         export ORDERS_URL="https://auth.sendyit.com/orders/"
-                        IMAGE_TAG="$ENV_TAG_$(date +%Y-%m-%d-%H-%M)"
+                        IMAGE_TAG="prod_$(date +%Y-%m-%d-%H-%M)"
                         IMAGE_NAME="${IMAGE_BASE_NAME}:${IMAGE_TAG}"
                         docker build -t $IMAGE_NAME . \
                         --build-arg DOCKER_ENV="production" \
